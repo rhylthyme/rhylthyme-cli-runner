@@ -7,23 +7,24 @@ It provides a command-line interface to visualize program execution and
 allows manual triggering of steps with variable durations.
 """
 
-import json
-import sys
-import os
-import time
 import argparse
-import threading
-import datetime
-import signal
 import curses
-import re  # Add import for regular expressions
-from typing import Dict, List, Any, Optional, Set, Tuple, Union
-from enum import Enum
-import queue
-from colorama import Fore, Style
-import subprocess
-import yaml  # Add import for YAML support
+import datetime
+import json
 import logging
+import os
+import queue
+import re  # Add import for regular expressions
+import signal
+import subprocess
+import sys
+import threading
+import time
+from enum import Enum
+from typing import Any, Dict, List, Optional, Set, Tuple, Union
+
+import yaml  # Add import for YAML support
+from colorama import Fore, Style
 
 
 # Define sort modes for the display
@@ -46,12 +47,11 @@ class DurationType(Enum):
 
 # Try to import the validator to reuse its functions
 try:
-    from .validate_program import (
-        load_program_file,
-        validate_program,
-        perform_additional_validations,
-    )
-    from .environment_loader import load_resource_constraints, EnvironmentLoader
+    from .environment_loader import (EnvironmentLoader,
+                                     load_resource_constraints)
+    from .validate_program import (load_program_file,
+                                   perform_additional_validations,
+                                   validate_program)
 except ImportError:
     # Define our own load_program_file function if the validator is not available
     def load_program_file(file_path: str) -> Dict[str, Any]:

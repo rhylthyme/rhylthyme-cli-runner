@@ -4,9 +4,10 @@ Test the CLI interface of rhylthyme-cli-runner.
 This module tests the command-line interface functionality.
 """
 
-import pytest
-import os
 import json
+import os
+
+import pytest
 
 
 @pytest.mark.cli
@@ -218,8 +219,9 @@ def test_cli_with_real_examples(cli_runner, examples_dir):
     if not examples_dir:
         pytest.skip("Examples directory not available")
 
-    from rhylthyme_cli_runner.cli import cli
     import glob
+
+    from rhylthyme_cli_runner.cli import cli
 
     programs_dir = os.path.join(examples_dir, "programs")
     if not os.path.exists(programs_dir):

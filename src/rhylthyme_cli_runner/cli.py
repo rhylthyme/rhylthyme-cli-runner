@@ -7,15 +7,17 @@ allowing users to validate and run real-time program schedules.
 """
 
 import os
-import sys
-import click
 import subprocess
-import pkg_resources
+import sys
 from pathlib import Path
-from .validate_program import validate_program_file
-from .program_runner import run_program
-from .program_planner import plan_program
+
+import click
+import pkg_resources
+
 from .environment_loader import EnvironmentLoader
+from .program_planner import plan_program
+from .program_runner import run_program
+from .validate_program import validate_program_file
 
 # Global environment loader instance
 _environment_loader = None
@@ -261,7 +263,8 @@ def validate_environments(environments_dir, verbose):
     should have appropriate kitchen tasks and equipment).
     """
     try:
-        from .environment_schemas import validate_all_environments, EnvironmentValidator
+        from .environment_schemas import (EnvironmentValidator,
+                                          validate_all_environments)
     except ImportError:
         click.echo("Error: Environment validation not available. Missing dependencies.")
         sys.exit(1)
@@ -312,8 +315,8 @@ def environment_info(environment_type):
     actor types for a given environment type (e.g., kitchen, laboratory, bakery).
     """
     try:
-        from .environment_schemas import EnvironmentValidator
         from .environment_icons import get_environment_icon
+        from .environment_schemas import EnvironmentValidator
     except ImportError:
         click.echo("Error: Environment schemas not available.")
         sys.exit(1)

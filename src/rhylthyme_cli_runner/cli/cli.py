@@ -1,7 +1,8 @@
-import click
-import sys
-import os
 import json
+import os
+import sys
+
+import click
 
 
 @click.group()
@@ -39,8 +40,9 @@ def run(program_file, env, debug):
 def validate(input_file, type):
     """Validate a Rhylthyme program or environment file against the spec."""
     click.echo(f"Validating {type}: {input_file}")
-    import jsonschema
     import importlib.resources
+
+    import jsonschema
 
     if type == "program":
         with open(input_file) as f:

@@ -6,11 +6,12 @@ This module handles loading environment catalogs and providing resource constrai
 for programs that reference environments instead of embedding constraints directly.
 """
 
-import os
 import json
-import yaml
-from typing import Dict, List, Any, Optional
+import os
 from pathlib import Path
+from typing import Any, Dict, List, Optional
+
+import yaml
 
 
 class EnvironmentLoader:

@@ -5,18 +5,20 @@ Validate all examples for CI - converted to pytest format.
 This module can be run as a pytest test or as a standalone script.
 """
 
-import pytest
+import glob
+import json
 import os
 import sys
-import json
-import glob
 from pathlib import Path
+
+import pytest
 
 # Add src to path
 src_path = os.path.join(os.path.dirname(__file__), "..", "src")
 sys.path.insert(0, src_path)
 
-from rhylthyme_cli_runner.validate_program import validate_program_file_structured
+from rhylthyme_cli_runner.validate_program import \
+    validate_program_file_structured
 
 
 @pytest.mark.integration

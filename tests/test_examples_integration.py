@@ -7,28 +7,29 @@ This module tests the CLI runner by:
 3. Testing environment loading and validation
 """
 
-import unittest
+import json
 import os
-import sys
-import tempfile
 import shutil
 import subprocess
-import json
-import yaml
-import time
+import sys
+import tempfile
 import threading
+import time
+import unittest
 from pathlib import Path
-from unittest.mock import patch, MagicMock, call
-from click.testing import CliRunner
+from unittest.mock import MagicMock, call, patch
+
 import requests
+import yaml
+from click.testing import CliRunner
 
 # Add the src directory to the path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
 from rhylthyme_cli_runner.cli import cli
+from rhylthyme_cli_runner.environment_loader import EnvironmentLoader
 from rhylthyme_cli_runner.program_runner import ProgramRunner, StepStatus
 from rhylthyme_cli_runner.validate_program import validate_program_file
-from rhylthyme_cli_runner.environment_loader import EnvironmentLoader
 
 
 class TestExamplesIntegration(unittest.TestCase):

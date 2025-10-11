@@ -18,7 +18,7 @@ pip install -e .
 pip install -e ".[dev]"
 ```
 
-### From PyPI (when published)
+### From PyPI
 
 ```bash
 pip install rhylthyme-cli-runner

@@ -4,9 +4,10 @@ Unit tests for the ProgramRunner class.
 This module tests the core program execution functionality.
 """
 
-import pytest
 import json
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
+
+import pytest
 
 from rhylthyme_cli_runner.program_runner import ProgramRunner, StepStatus
 

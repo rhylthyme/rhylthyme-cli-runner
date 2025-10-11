@@ -7,9 +7,10 @@ ensuring they conform to the expected structure for their environment type.
 """
 
 import json
-import jsonschema
-from typing import Dict, List, Any, Optional, Set
 from pathlib import Path
+from typing import Any, Dict, List, Optional, Set
+
+import jsonschema
 
 # Base environment schema that all environments must conform to
 BASE_ENVIRONMENT_SCHEMA = {

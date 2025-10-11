@@ -5,13 +5,15 @@ This module tests validation of real example programs to ensure they
 comply with the schema and don't have logic errors.
 """
 
-import pytest
-import os
 import glob
+import os
 from pathlib import Path
 
+import pytest
+
 # Import the validation function
-from rhylthyme_cli_runner.validate_program import validate_program_file_structured
+from rhylthyme_cli_runner.validate_program import \
+    validate_program_file_structured
 
 
 @pytest.mark.integration
@@ -202,9 +204,7 @@ def test_validation_imports():
     """Test that we can import validation modules successfully."""
     try:
         from rhylthyme_cli_runner.validate_program import (
-            validate_program_file_structured,
-        )
-        from rhylthyme_cli_runner.validate_program import validate_program_file
+            validate_program_file, validate_program_file_structured)
 
         assert callable(validate_program_file_structured)
         assert callable(validate_program_file)

@@ -9,11 +9,12 @@ staggering track and step starts to reduce resource contention.
 
 import copy
 import json
-import yaml
+import logging
 import os
 import sys
-import logging
-from typing import Dict, List, Set, Tuple, Optional, Any, Union
+from typing import Any, Dict, List, Optional, Set, Tuple, Union
+
+import yaml
 
 
 def load_program_file(file_path: str) -> dict:

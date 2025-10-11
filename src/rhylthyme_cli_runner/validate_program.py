@@ -6,17 +6,19 @@ This script validates JSON and YAML program files against the program schema.
 It ensures that programs conform to the specification for real-time schedules.
 """
 
-import json
-import sys
-import os
-import yaml
-from jsonschema import validate, ValidationError, SchemaError
-from typing import Dict, List, Any, Tuple
 import argparse
+import json
+import os
+import sys
+from typing import Any, Dict, List, Tuple
+
+import yaml
+from jsonschema import SchemaError, ValidationError, validate
 
 # Import environment loader for environment-based validation
 try:
-    from .environment_loader import load_resource_constraints, get_default_loader
+    from .environment_loader import (get_default_loader,
+                                     load_resource_constraints)
 except ImportError:
     # Fallback if running as standalone script
     def load_resource_constraints(program):
