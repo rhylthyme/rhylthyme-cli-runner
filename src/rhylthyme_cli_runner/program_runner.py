@@ -393,9 +393,15 @@ class Step:
             return False
         
         if self.duration_type == "fixed":
-            return current_time >= self.expected_end_time
+            if self.expected_end_time is None:
+                return False
+            # Add small epsilon for floating point precision
+            # If we're within 0.05 seconds of completion, complete it
+            return current_time >= (self.expected_end_time - 0.05)
         elif self.duration_type == "variable":
             # For variable duration, we check if we've reached the minimum duration
+            if self.start_time is None or self.min_seconds is None:
+                return False
             return current_time >= (self.start_time + self.min_seconds)
         elif self.duration_type == "indefinite":
             # Indefinite steps are never automatically completed
@@ -424,17 +430,37 @@ class Step:
                 # For indefinite steps, we don't show progress
                 return -1.0
             
+            # Defensive checks
+            if self.start_time is None:
+                logging.warning(f"Step {self.step_id} is RUNNING but start_time is None!")
+                return 0.0
+            
             elapsed = current_time - self.start_time
             if self.duration_type == "fixed":
-                return min(100.0, (elapsed / self.duration_seconds) * 100.0)
+                if self.duration_seconds is None or self.duration_seconds == 0:
+                    logging.warning(f"Step {self.step_id} has invalid duration_seconds: {self.duration_seconds}")
+                    return 0.0
+                progress = (elapsed / self.duration_seconds) * 100.0
+                # Debug: Store values for display
+                self._debug_elapsed = elapsed
+                self._debug_duration = self.duration_seconds
+                self._debug_progress = progress
+                return min(100.0, progress)
             elif self.duration_type == "variable":
+                if self.default_seconds is None or self.default_seconds == 0:
+                    logging.warning(f"Step {self.step_id} has invalid default_seconds: {self.default_seconds}")
+                    return 0.0
                 return min(100.0, (elapsed / self.default_seconds) * 100.0)
         
         return 0.0
     
     def get_remaining_time(self, current_time: float) -> Optional[float]:
         """Get the remaining time in seconds."""
-        if self.status != StepStatus.RUNNING or not self.expected_end_time:
+        if self.status != StepStatus.RUNNING:
+            return None
+        
+        if self.expected_end_time is None:
+            logging.warning(f"Step {self.step_id} is RUNNING but expected_end_time is None!")
             return None
         
         return max(0, self.expected_end_time - current_time)
@@ -759,15 +785,16 @@ class ProgramRunner:
     
     def update(self) -> None:
         """Update the program state."""
+        # Always process commands first, even if not running
+        # (this allows starting the program via 's' key)
+        self.process_commands()
+        
         if not self.is_running:
             return
         
         # Update current time
         real_elapsed = time.time() - self.program_start_time
         self.current_time = self.program_start_time + (real_elapsed * self.time_scale)
-        
-        # Process commands from the queue
-        self.process_commands()
         
         # Start steps that are ready
         self.start_ready_steps(self.current_time)
@@ -787,6 +814,10 @@ class ProgramRunner:
                 command = self.command_queue.get_nowait()
                 if command == "start_program":
                     self.is_running = True
+                    # Initialize program start time if not already set
+                    if self.program_start_time is None:
+                        self.program_start_time = time.time()
+                        self.current_time = self.program_start_time
                     self.status_message = "Program started manually."
                 elif command.startswith("trigger:"):
                     parts = command.split(":", 2)
@@ -906,6 +937,12 @@ class ProgramRunner:
         for step in self.steps.values():
             if step.is_ready_to_complete(self.current_time):
                 self.complete_step(step, self.current_time)
+            # Aggressive completion: if remaining time displays as "< 0.1s", force complete
+            elif step.status == StepStatus.RUNNING:
+                remaining = step.get_remaining_time(self.current_time)
+                if remaining is not None and remaining < 0.1:
+                    logging.info(f"Force completing step {step.step_id} with {remaining:.3f}s remaining (< 0.1s threshold)")
+                    self.complete_step(step, self.current_time)
     
     def complete_step(self, step: Step, current_time: float) -> None:
         """Complete a step."""
@@ -1156,24 +1193,35 @@ class ProgramRunner:
         if seconds == float('inf'):
             return "∞"
         
+        # For times less than 10 seconds, show decimal precision
+        if seconds < 10.0:
+            if seconds < 0.05:
+                return "< 0.1s"
+            return f"{seconds:.1f}s"
+        
         hours, remainder = divmod(int(seconds), 3600)
-        minutes, seconds = divmod(remainder, 60)
+        minutes, secs = divmod(remainder, 60)
         
         if hours > 0:
-            return f"{hours}h {minutes}m {seconds}s"
+            return f"{hours}h {minutes}m {secs}s"
         elif minutes > 0:
-            return f"{minutes}m {seconds}s"
+            return f"{minutes}m {secs}s"
         else:
-            return f"{seconds}s"
+            return f"{int(seconds)}s"
     
     def get_step_display_info(self, step: Step) -> Dict[str, Any]:
         """Get display information for a step."""
         progress = step.get_progress(self.current_time)
         remaining = step.get_remaining_time(self.current_time)
         
+        # Debug: Add timing info to status for selected step
+        debug_info = ""
+        if hasattr(step, '_debug_elapsed') and step.status == StepStatus.RUNNING:
+            debug_info = f" [DBG: e={step._debug_elapsed:.1f}s d={step._debug_duration:.1f}s p={step._debug_progress:.1f}%]"
+        
         return {
             "id": step.step_id,
-            "name": step.name,
+            "name": step.name + debug_info,
             "track": step.track_id,
             "status": step.status.value,
             "progress": progress,
@@ -1779,10 +1827,12 @@ def draw_ui(stdscr, runner: ProgramRunner) -> None:
         safe_addstr(header_y, 80, "Remaining", curses.A_BOLD)
     
     # Table rows
+    last_row_y = header_y  # Track the last row we drew
     for i, step_info in enumerate(steps_info):
         row_y = header_y + 1 + i
         if row_y >= height - 13:  # Leave space for resources, upcoming events, and triggers
             break
+        last_row_y = row_y
         
         # Get status color
         status_color = 0
@@ -1816,43 +1866,20 @@ def draw_ui(stdscr, runner: ProgramRunner) -> None:
         if step_info["status"] == "RUNNING" and step_info["progress"] >= 0:
             progress_width = 10
             filled = int((step_info["progress"] / 100) * progress_width)
-            progress_bar = "[" + "#" * filled + " " * (progress_width - filled) + "]"
+            # Show at least 1 symbol if progress > 0 but < 10%
+            if step_info["progress"] > 0 and filled == 0:
+                progress_bar = "[>" + " " * (progress_width - 1) + "]"
+            elif filled == progress_width:
+                progress_bar = "[" + "#" * filled + "]"
+            else:
+                progress_bar = "[" + "#" * filled + ">" + " " * (progress_width - filled - 1) + "]"
             safe_addstr(row_y, 65, progress_bar, attr)
         else:
             safe_addstr(row_y, 65, "N/A", attr)
         
         safe_addstr(row_y, 80, step_info["remaining"], attr)
     
-    # Draw upcoming events panel
-    events_y = min(height - 20, max(10, len(runner.steps) + 5))  # Adjust based on number of steps and leave more space
-    safe_addstr(events_y, 2, "Upcoming Events:", curses.A_BOLD | curses.color_pair(5))
-    
-    # Get upcoming events
-    upcoming_events = runner.get_upcoming_events(5)
-    
-    if upcoming_events:
-        # Draw event header
-        safe_addstr(events_y + 1, 4, "Event", curses.A_BOLD | curses.color_pair(5))
-        safe_addstr(events_y + 1, 15, "Step", curses.A_BOLD | curses.color_pair(5))
-        safe_addstr(events_y + 1, 40, "In", curses.A_BOLD | curses.color_pair(5))
-        
-        # Draw events
-        for i, event in enumerate(upcoming_events):
-            row_y = events_y + 2 + i
-            if row_y >= height - 15:  # Leave more space for resources and triggers
-                break
-            
-            event_type = event["event_type"].capitalize()
-            step_name = event["name"]
-            time_str = event["time_str"]
-            
-            safe_addstr(row_y, 4, event_type, curses.color_pair(5))
-            safe_addstr(row_y, 15, step_name[:23], curses.color_pair(5))
-            safe_addstr(row_y, 40, time_str, curses.color_pair(5))
-    else:
-        safe_addstr(events_y + 1, 4, "No upcoming events", curses.color_pair(5))
-    
-    # Draw resource usage
+    # Draw resource usage (left column in bottom section)
     resource_y = height - 12  # Move up to make room for actor types
     safe_addstr(resource_y, 2, "Resource Usage:", curses.A_BOLD)
     
@@ -1889,6 +1916,39 @@ def draw_ui(stdscr, runner: ProgramRunner) -> None:
         color_attr = curses.color_pair(1) if actor_type['percentage'] > 80 else curses.A_NORMAL
         safe_addstr(row_y, 25, bar, color_attr)
     
+    # Draw upcoming events (right column in bottom section)
+    events_col_x = 55  # Start column for events (right of resource usage)
+    events_y = resource_y  # Same Y position as resource usage
+    
+    safe_addstr(events_y, events_col_x, "Upcoming Events:", curses.A_BOLD | curses.color_pair(5))
+    
+    # Get upcoming events
+    upcoming_events = runner.get_upcoming_events(8)  # Show up to 8 events
+    
+    if upcoming_events:
+        # Draw event header
+        safe_addstr(events_y + 1, events_col_x + 2, "Event", curses.A_BOLD | curses.color_pair(5))
+        safe_addstr(events_y + 1, events_col_x + 10, "Step", curses.A_BOLD | curses.color_pair(5))
+        safe_addstr(events_y + 1, events_col_x + 30, "In", curses.A_BOLD | curses.color_pair(5))
+        
+        # Draw events
+        for i, event in enumerate(upcoming_events):
+            row_y = events_y + 2 + i
+            if row_y >= height - 4:  # Stop before triggers section
+                break
+            
+            event_type = event["event_type"].capitalize()
+            step_name = event["name"]
+            time_str = event["time_str"]
+            
+            # Ensure we don't exceed terminal width
+            if events_col_x + 35 < width:
+                safe_addstr(row_y, events_col_x + 2, event_type[:5], curses.color_pair(5))
+                safe_addstr(row_y, events_col_x + 10, step_name[:18], curses.color_pair(5))
+                safe_addstr(row_y, events_col_x + 30, time_str[:10], curses.color_pair(5))
+    else:
+        safe_addstr(events_y + 1, events_col_x + 2, "No upcoming events", curses.color_pair(5))
+    
     # Draw available triggers
     triggers_y = height - 4
     available_triggers = runner.get_available_triggers()
@@ -1904,7 +1964,7 @@ def draw_ui(stdscr, runner: ProgramRunner) -> None:
         safe_addstr(status_y, 2, runner.status_message[:width - 4])
     
     # Draw help
-    help_text = " q: Quit | s: Start | ↑↓: Select Step | t: Trigger Selected | T: Trigger Menu | +/-: Time Scale | o: Sort "
+    help_text = " q: Quit | s: Start | ↑↓: Select | t: Trigger | a: Abort | c: Complete | T: Menu | +/-: Speed | o: Sort "
     # Ensure help text fits on screen
     if len(help_text) > width - 2:
         help_text = help_text[:width - 5] + "..."
@@ -1939,9 +1999,12 @@ def handle_input(stdscr, runner: ProgramRunner) -> bool:
         
         selected_step = runner.steps[selected_step_id]
         
-        # Check if the step has a manual trigger
+        # Check if the step has a manual trigger or can be aborted
         if not selected_step.manual_trigger_name:
-            runner.status_message = f"Selected step '{selected_step.name}' has no manual trigger."
+            if selected_step.can_be_aborted():
+                runner.status_message = f"Step '{selected_step.name}' has no manual trigger. Press 'a' to abort or 'T' for menu."
+            else:
+                runner.status_message = f"Step '{selected_step.name}' has no manual trigger."
             return True
         
         # Check if the step can be triggered
@@ -1962,6 +2025,37 @@ def handle_input(stdscr, runner: ProgramRunner) -> bool:
         else:
             runner.status_message = f"Step '{selected_step.name}' cannot be triggered in its current state."
             return True
+    elif key == 'a':
+        # Abort the selected step
+        selected_step_id = runner.get_selected_step_id()
+        if not selected_step_id or selected_step_id not in runner.steps:
+            runner.status_message = "No step selected."
+            return True
+        
+        selected_step = runner.steps[selected_step_id]
+        
+        # Check if the step can be aborted
+        if selected_step.can_be_aborted():
+            runner.command_queue.put(f"abort:{selected_step_id}")
+            runner.status_message = f"Aborting step '{selected_step.name}'..."
+        else:
+            runner.status_message = f"Step '{selected_step.name}' cannot be aborted (not running)."
+        return True
+    elif key == 'c':
+        # Force complete the selected running step (debug feature)
+        selected_step_id = runner.get_selected_step_id()
+        if not selected_step_id or selected_step_id not in runner.steps:
+            runner.status_message = "No step selected."
+            return True
+        
+        selected_step = runner.steps[selected_step_id]
+        
+        if selected_step.status == StepStatus.RUNNING:
+            runner.complete_step(selected_step, runner.current_time)
+            runner.status_message = f"Force completed step '{selected_step.name}'"
+        else:
+            runner.status_message = f"Step '{selected_step.name}' is not running (status: {selected_step.status.value})"
+        return True
     elif key == 'T':
         # Show trigger selection menu (original behavior)
         available_triggers = runner.get_available_triggers()
@@ -2078,9 +2172,14 @@ def run_program(program_file: str, schema_file: str = 'program_schema.json',
     # Load the program
     program = load_program_file(program_file)
     
-    # Handle environment resolution
-    from .environment_loader import EnvironmentLoader
-    loader = EnvironmentLoader()
+    # Handle environment resolution using the CLI's environment loader
+    try:
+        from .cli import get_environment_loader
+        loader = get_environment_loader()
+    except ImportError:
+        # Fallback to default loader if CLI module not available
+        from .environment_loader import EnvironmentLoader
+        loader = EnvironmentLoader()
     
     if environment:
         # Override environment if specified via command line

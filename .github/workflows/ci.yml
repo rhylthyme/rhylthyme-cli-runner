@@ -1,0 +1,115 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8, 3.9, '3.10', '3.11']
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        # Checkout with submodules if needed
+        submodules: recursive
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e ".[dev]"
+
+    - name: Lint with flake8
+      run: |
+        # Stop the build if there are Python syntax errors or undefined names
+        flake8 src --count --select=E9,F63,F7,F82 --show-source --statistics
+        # Exit-zero treats all errors as warnings. GitHub editor is 127 chars wide
+        flake8 src --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+    - name: Check code formatting with black
+      run: |
+        black --check src tests
+
+    - name: Sort imports with isort
+      run: |
+        isort --check-only src tests
+
+    - name: Run unit tests
+      run: |
+        pytest tests -v -m "unit" --cov=src --cov-report=xml
+
+    - name: Run integration tests
+      run: |
+        pytest tests -v -m "integration" --cov=src --cov-append --cov-report=xml
+
+    - name: Run CLI tests
+      run: |
+        pytest tests -v -m "cli" --cov=src --cov-append --cov-report=xml
+
+    - name: Run example validation tests
+      run: |
+        pytest tests/test_validate_examples_ci.py -v --cov=src --cov-append --cov-report=xml
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage.xml
+        flags: unittests
+        name: codecov-umbrella
+        fail_ci_if_error: false
+
+  validate-examples:
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e .
+        
+    - name: Validate all examples
+      run: |
+        python tests/test_validate_examples_ci.py
+
+  type-check:
+    runs-on: ubuntu-latest
+    continue-on-error: true  # Don't fail CI if type checking fails
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e .
+        pip install mypy
+
+    - name: Run type checking
+      run: |
+        mypy src --ignore-missing-imports --no-strict-optional

@@ -11,38 +11,75 @@ import sys
 import click
 import subprocess
 import pkg_resources
+from pathlib import Path
 from .validate_program import validate_program_file
 from .program_runner import run_program
 from .program_planner import plan_program
-from .environment_loader import get_default_loader
+from .environment_loader import EnvironmentLoader
+
+# Global environment loader instance
+_environment_loader = None
+
+def get_environment_loader(environments_dir=None):
+    """Get the environment loader instance, creating it if necessary."""
+    global _environment_loader
+    
+    if _environment_loader is None:
+        if environments_dir is None:
+            # Check for environment variable first
+            env_dir = os.environ.get('RHYLTHYME_ENVIRONMENTS_DIR')
+            if env_dir:
+                environments_dir = env_dir
+            else:
+                # Check for environments directory in current working directory
+                cwd_environments = Path.cwd() / "environments"
+                if cwd_environments.exists():
+                    environments_dir = str(cwd_environments)
+        
+        _environment_loader = EnvironmentLoader(environments_dir)
+    
+    return _environment_loader
 
 # Set up the main CLI group
 @click.group()
+@click.option('--environments-dir', type=click.Path(exists=True),
+              help='Directory containing environment files (default: check current directory, then package default)')
 @click.version_option()
-def cli():
+@click.pass_context
+def cli(ctx, environments_dir):
     """
     Rhylthyme - A tool for working with real-time program schedules.
     
     This CLI tool provides commands for validating and running real-time
     program schedules defined using the Rhylthyme JSON or YAML schema.
     """
-    pass
+    # Store the environments directory in the context
+    ctx.ensure_object(dict)
+    ctx.obj['environments_dir'] = environments_dir
+    
+    # Initialize the environment loader
+    get_environment_loader(environments_dir)
 
 # Validate command
 @cli.command()
 @click.argument('program_file', type=click.Path(exists=True))
 @click.option('--schema', type=click.Path(exists=True), 
-              default=lambda: pkg_resources.resource_filename('rhylthyme', 'program_schema.json'),
+              default=lambda: pkg_resources.resource_filename('rhylthyme_spec', 'schemas/program_schema_0.1.0-alpha.json'),
               help='Path to the schema file (default: built-in schema)')
 @click.option('--verbose', '-v', is_flag=True, help='Show detailed validation information')
-def validate(program_file, schema, verbose):
+@click.option('--json', '-j', 'json_output', is_flag=True, help='Print machine-readable JSON result')
+@click.option('--strict', '-s', is_flag=True, help='Enforce all tasks must be defined in resourceConstraints (strict mode)')
+def validate(program_file, schema, verbose, json_output, strict):
     """
     Validate a program file against the schema.
     
     This command checks if the provided program file (JSON or YAML) conforms to the
     Rhylthyme schema and performs additional semantic validations.
+    
+    Use --json to get machine-readable output for CI or scripting.
+    Use --strict to require all tasks used in steps/buffers to be defined in resourceConstraints.
     """
-    success = validate_program_file(program_file, schema, verbose)
+    success = validate_program_file(program_file, schema, verbose, json_output, strict)
     if not success:
         sys.exit(1)
 
@@ -50,10 +87,10 @@ def validate(program_file, schema, verbose):
 @cli.command()
 @click.argument('program_file', type=click.Path(exists=True))
 @click.option('--schema', type=click.Path(exists=True), 
-              default=lambda: pkg_resources.resource_filename('rhylthyme', 'program_schema.json'),
+              default=lambda: pkg_resources.resource_filename('rhylthyme_spec', 'schemas/program_schema_0.1.0-alpha.json'),
               help='Path to the schema file (default: built-in schema)')
 @click.option('-e', '--environment', type=str,
-              help='Environment ID to use (overrides program environment setting)')
+              help='Environment file path or ID to use (overrides program environment setting)')
 @click.option('--time-scale', type=float, default=1.0, 
               help='Time scale factor (default: 1.0)')
 @click.option('--validate/--no-validate', default=True, 
@@ -77,8 +114,9 @@ def run(program_file, schema, environment, time_scale, validate, auto_start):
 @cli.command()
 @click.argument('input_file', type=click.Path(exists=True))
 @click.argument('output_file', type=click.Path())
+@click.option('-e', '--environment', type=str, help='Environment file path to use for planning')
 @click.option('--verbose', '-v', is_flag=True, help='Show detailed planning information')
-def plan(input_file, output_file, verbose):
+def plan(input_file, output_file, environment, verbose):
     """
     Optimize a program schedule to reduce resource contention.
     
@@ -88,64 +126,13 @@ def plan(input_file, output_file, verbose):
     
     The optimized program is saved to the specified output file.
     """
-    success = plan_program(input_file, output_file, verbose)
+    success = plan_program(input_file, output_file, verbose, environment_file=environment)
     if not success:
         sys.exit(1)
     
     click.echo(f"Optimized program saved to {output_file}")
     click.echo("Run the optimized program with:")
     click.echo(f"  rhylthyme run {output_file}")
-
-# Marimo command
-@cli.command()
-@click.option('--notebook', type=click.Path(exists=True), 
-              default=lambda: os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'examples', 'marimo_example.py'),
-              help='Path to the Marimo notebook file')
-def marimo(notebook):
-    """
-    Launch a Marimo notebook for interactive visualization.
-    
-    This command launches a Marimo notebook that provides an interactive
-    web-based UI for visualizing and controlling program execution.
-    """
-    try:
-        # Check if marimo is installed
-        subprocess.run(["which", "marimo"], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    except subprocess.CalledProcessError:
-        click.echo("Error: Marimo is not installed. Please install it with 'pip install marimo'.")
-        sys.exit(1)
-    
-    # Launch the Marimo notebook
-    click.echo(f"Launching Marimo notebook: {notebook}")
-    subprocess.run(["marimo", "edit", notebook])
-
-# Visualize command
-@cli.command()
-@click.argument('program_file', type=click.Path(exists=True))
-@click.option('-o', '--output', type=str, help='Output HTML file path')
-@click.option('--no-browser', is_flag=True, help="Don't open browser automatically")
-def visualize(program_file, output, no_browser):
-    """
-    Generate a web-based visualization of a program file.
-    
-    This command creates an interactive HTML visualization showing the task dependency
-    structure, timeline, resource usage, and execution flow of a Rhylthyme program.
-    """
-    from .web_visualizer import generate_dag_visualization
-    
-    try:
-        output_file = generate_dag_visualization(
-            program_file, 
-            output, 
-            not no_browser
-        )
-        click.echo(f"Visualization generated: {output_file}")
-    except Exception as e:
-        click.echo(f"Error: {e}", err=True)
-        raise click.Abort()
-
-# Serve command (removed - d3_visualizer functionality deprecated)
-# The web visualization is now generated as static HTML files
 
 # Environments command
 @cli.command()
@@ -159,7 +146,7 @@ def environments(format):
     by programs. Each environment defines resource constraints for different
     settings like restaurants, bakeries, laboratories, etc.
     """
-    loader = get_default_loader()
+    loader = get_environment_loader()
     envs = loader.list_environments()
     
     if not envs:
