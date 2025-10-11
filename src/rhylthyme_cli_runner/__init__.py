@@ -12,4 +12,4 @@ __description__ = "CLI runner for Rhylthyme real-time program schedules"
 
 from .cli import cli, main
 
-__all__ = ['cli', 'main'] 
+__all__ = ["cli", "main"]

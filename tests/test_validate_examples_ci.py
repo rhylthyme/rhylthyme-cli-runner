@@ -13,7 +13,7 @@ import glob
 from pathlib import Path
 
 # Add src to path
-src_path = os.path.join(os.path.dirname(__file__), '..', 'src')
+src_path = os.path.join(os.path.dirname(__file__), "..", "src")
 sys.path.insert(0, src_path)
 
 from rhylthyme_cli_runner.validate_program import validate_program_file_structured
@@ -25,85 +25,96 @@ def test_validate_all_examples_for_ci():
     """Validate all examples for CI - fails only on schema errors."""
     # Find all example files
     current_dir = Path(__file__).parent
-    examples_dir = current_dir / '..' / '..' / 'rhylthyme-examples' / 'programs'
-    schema_file = current_dir / '..' / '..' / 'rhylthyme-spec' / 'src' / 'rhylthyme_spec' / 'schemas' / 'program_schema_0.1.0-alpha.json'
-    
+    examples_dir = current_dir / ".." / ".." / "rhylthyme-examples" / "programs"
+    schema_file = (
+        current_dir
+        / ".."
+        / ".."
+        / "rhylthyme-spec"
+        / "src"
+        / "rhylthyme_spec"
+        / "schemas"
+        / "program_schema_0.1.0-alpha.json"
+    )
+
     if not examples_dir.exists():
         pytest.skip("Examples directory not found")
-    
+
     if not schema_file.exists():
         pytest.skip("Schema file not found")
-    
-    files = list(examples_dir.glob('*.json')) + \
-            list(examples_dir.glob('*.yaml')) + \
-            list(examples_dir.glob('*.yml'))
-    
+
+    files = (
+        list(examples_dir.glob("*.json"))
+        + list(examples_dir.glob("*.yaml"))
+        + list(examples_dir.glob("*.yml"))
+    )
+
     if not files:
         pytest.skip("No example files found")
-    
-    print(f'\nFound {len(files)} example files to validate')
-    print('=' * 60)
-    
+
+    print(f"\nFound {len(files)} example files to validate")
+    print("=" * 60)
+
     schema_errors = []
     logic_errors = []
     valid_count = 0
-    
+
     for filepath in sorted(files):
         filename = filepath.name
-        print(f'Validating {filename}...')
-        
+        print(f"Validating {filename}...")
+
         try:
             result = validate_program_file_structured(str(filepath), str(schema_file))
-            
-            if result['schema_errors']:
-                schema_errors.append((filename, result['schema_errors']))
+
+            if result["schema_errors"]:
+                schema_errors.append((filename, result["schema_errors"]))
                 print(f'  ❌ Schema errors: {len(result["schema_errors"])}')
             else:
-                print(f'  ✅ Schema: OK')
-            
-            if result['logic_errors']:
-                logic_errors.append((filename, result['logic_errors']))
+                print(f"  ✅ Schema: OK")
+
+            if result["logic_errors"]:
+                logic_errors.append((filename, result["logic_errors"]))
                 print(f'  ⚠️  Logic errors: {len(result["logic_errors"])}')
             else:
-                print(f'  ✅ Logic: OK')
-            
-            if not result['schema_errors'] and not result['logic_errors']:
+                print(f"  ✅ Logic: OK")
+
+            if not result["schema_errors"] and not result["logic_errors"]:
                 valid_count += 1
-                
+
         except Exception as e:
-            schema_errors.append((filename, [f'Validation failed: {str(e)}']))
-            print(f'  ❌ Exception: {e}')
-    
-    print('\n' + '=' * 60)
-    print('VALIDATION SUMMARY')
-    print('=' * 60)
-    print(f'Total files: {len(files)}')
-    print(f'Fully valid: {valid_count}')
-    print(f'Files with schema errors: {len(schema_errors)}')
-    print(f'Files with logic errors: {len(logic_errors)}')
-    
+            schema_errors.append((filename, [f"Validation failed: {str(e)}"]))
+            print(f"  ❌ Exception: {e}")
+
+    print("\n" + "=" * 60)
+    print("VALIDATION SUMMARY")
+    print("=" * 60)
+    print(f"Total files: {len(files)}")
+    print(f"Fully valid: {valid_count}")
+    print(f"Files with schema errors: {len(schema_errors)}")
+    print(f"Files with logic errors: {len(logic_errors)}")
+
     if logic_errors:
-        print('\n⚠️  LOGIC ERRORS (WARNINGS):')
-        print('-' * 40)
+        print("\n⚠️  LOGIC ERRORS (WARNINGS):")
+        print("-" * 40)
         for filename, errors in logic_errors:
-            print(f'\n{filename}:')
+            print(f"\n{filename}:")
             for error in errors:
-                print(f'  - {error}')
-    
+                print(f"  - {error}")
+
     # Schema errors cause test failure
     if schema_errors:
-        print('\n❌ SCHEMA ERRORS (FATAL):')
-        print('-' * 40)
+        print("\n❌ SCHEMA ERRORS (FATAL):")
+        print("-" * 40)
         error_msg = "Schema validation failures:\n"
         for filename, errors in schema_errors:
-            error_msg += f'\n{filename}:\n'
+            error_msg += f"\n{filename}:\n"
             for error in errors:
-                error_msg += f'  - {error}\n'
+                error_msg += f"  - {error}\n"
         pytest.fail(error_msg)
     else:
-        print('\n✅ All examples passed schema validation')
+        print("\n✅ All examples passed schema validation")
         if logic_errors:
-            print('⚠️  Some examples have logic errors (warnings only)')
+            print("⚠️  Some examples have logic errors (warnings only)")
 
 
 def main():
@@ -117,5 +128,5 @@ def main():
         sys.exit(1)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

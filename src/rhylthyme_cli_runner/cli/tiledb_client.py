@@ -14,10 +14,10 @@ import json
 
 class TileDBClient:
     """Client for interacting with TileDB Cloud assets."""
-    
+
     def __init__(self, api_key: Optional[str] = None):
         """Initialize the TileDB Cloud client.
-        
+
         Args:
             api_key: TileDB Cloud API key. If None, will use environment variable.
         """
@@ -26,39 +26,34 @@ class TileDBClient:
         else:
             # Will use environment variable TILEDB_REST_TOKEN
             tiledb.cloud.login()
-    
-    def list_assets(self, search: str = "", page: int = 1, limit: int = 20) -> Dict[str, Any]:
+
+    def list_assets(
+        self, search: str = "", page: int = 1, limit: int = 20
+    ) -> Dict[str, Any]:
         """List public assets with optional search criteria.
-        
+
         Args:
             search: Search keywords to filter assets
             page: Page number for pagination
             limit: Number of results per page
-            
+
         Returns:
             Dictionary containing asset list and metadata
         """
         try:
             assets = tiledb.cloud.asset.list_public(
-                search=search,
-                page=page,
-                limit=limit
+                search=search, page=page, limit=limit
             )
-            return {
-                "assets": assets,
-                "page": page,
-                "limit": limit,
-                "search": search
-            }
+            return {"assets": assets, "page": page, "limit": limit, "search": search}
         except Exception as e:
             raise click.ClickException(f"Failed to list assets: {str(e)}")
-    
+
     def get_asset(self, asset_id: str) -> Dict[str, Any]:
         """Get details for a specific asset.
-        
+
         Args:
             asset_id: The asset ID to retrieve
-            
+
         Returns:
             Asset details dictionary
         """
@@ -67,14 +62,14 @@ class TileDBClient:
             return asset
         except Exception as e:
             raise click.ClickException(f"Failed to get asset {asset_id}: {str(e)}")
-    
+
     def download_asset(self, asset_id: str, output_path: str) -> str:
         """Download an asset to a local file.
-        
+
         Args:
             asset_id: The asset ID to download
             output_path: Local path to save the asset
-            
+
         Returns:
             Path to the downloaded file
         """
@@ -95,27 +90,33 @@ def tiledb_group():
 
 
 @tiledb_group.command()
-@click.option('--search', '-s', default="", help='Search keywords')
-@click.option('--page', '-p', default=1, type=int, help='Page number')
-@click.option('--limit', '-l', default=20, type=int, help='Results per page')
-@click.option('--format', '-f', default='table', type=click.Choice(['table', 'json']), help='Output format')
+@click.option("--search", "-s", default="", help="Search keywords")
+@click.option("--page", "-p", default=1, type=int, help="Page number")
+@click.option("--limit", "-l", default=20, type=int, help="Results per page")
+@click.option(
+    "--format",
+    "-f",
+    default="table",
+    type=click.Choice(["table", "json"]),
+    help="Output format",
+)
 def list(search: str, page: int, limit: int, format: str):
     """List TileDB Cloud assets."""
     client = TileDBClient()
     result = client.list_assets(search=search, page=page, limit=limit)
-    
-    if format == 'json':
+
+    if format == "json":
         click.echo(json.dumps(result, indent=2))
     else:
         # Table format
         click.echo(f"TileDB Cloud Assets (Page {page}, Search: '{search}')")
         click.echo("=" * 80)
-        
-        if not result.get('assets'):
+
+        if not result.get("assets"):
             click.echo("No assets found.")
             return
-        
-        for asset in result['assets']:
+
+        for asset in result["assets"]:
             click.echo(f"ID: {asset.get('id', 'N/A')}")
             click.echo(f"Name: {asset.get('name', 'N/A')}")
             click.echo(f"Type: {asset.get('type', 'N/A')}")
@@ -124,14 +125,20 @@ def list(search: str, page: int, limit: int, format: str):
 
 
 @tiledb_group.command()
-@click.argument('asset_id')
-@click.option('--format', '-f', default='table', type=click.Choice(['table', 'json']), help='Output format')
+@click.argument("asset_id")
+@click.option(
+    "--format",
+    "-f",
+    default="table",
+    type=click.Choice(["table", "json"]),
+    help="Output format",
+)
 def show(asset_id: str, format: str):
     """Show details for a specific asset."""
     client = TileDBClient()
     asset = client.get_asset(asset_id)
-    
-    if format == 'json':
+
+    if format == "json":
         click.echo(json.dumps(asset, indent=2))
     else:
         click.echo(f"Asset Details: {asset_id}")
@@ -141,8 +148,8 @@ def show(asset_id: str, format: str):
 
 
 @tiledb_group.command()
-@click.argument('asset_id')
-@click.option('--output', '-o', required=True, help='Output file path')
+@click.argument("asset_id")
+@click.option("--output", "-o", required=True, help="Output file path")
 def download(asset_id: str, output: str):
     """Download an asset to a local file."""
     client = TileDBClient()
@@ -154,16 +161,12 @@ def download(asset_id: str, output: str):
 def example_list_vcf_assets():
     """Example: List VCF assets with pagination."""
     client = TileDBClient()
-    
+
     # List VCF assets on page 2
-    result = client.list_assets(
-        search="vcf",
-        page=2,
-        limit=10
-    )
-    
+    result = client.list_assets(search="vcf", page=2, limit=10)
+
     print(f"Found {len(result['assets'])} VCF assets on page 2")
-    for asset in result['assets']:
+    for asset in result["assets"]:
         print(f"- {asset.get('name', 'Unknown')} ({asset.get('id', 'N/A')})")
-    
-    return result 
+
+    return result
