@@ -17,8 +17,7 @@ from jsonschema import SchemaError, ValidationError, validate
 
 # Import environment loader for environment-based validation
 try:
-    from .environment_loader import (get_default_loader,
-                                     load_resource_constraints)
+    from .environment_loader import get_default_loader, load_resource_constraints
 except ImportError:
     # Fallback if running as standalone script
     def load_resource_constraints(program):
@@ -43,6 +42,86 @@ def load_program_file(file_path: str) -> Dict[str, Any]:
         raise
 
 
+def parse_time_string_to_seconds(time_value) -> int:
+    """
+    Parse a time value (string or int) to seconds.
+
+    Args:
+        time_value: Time string like "5m", "30s", "1h30m" or integer seconds
+
+    Returns:
+        Time in seconds
+    """
+    if not time_value:
+        return 0
+
+    # Handle integer format
+    if isinstance(time_value, int):
+        return time_value
+
+    # Handle string format
+    if not isinstance(time_value, str):
+        return 0
+
+    # Remove whitespace
+    time_str = str(time_value).strip()
+
+    # Handle pure numbers (assume seconds)
+    if time_str.isdigit():
+        return int(time_str)
+
+    total_seconds = 0
+    current_number = ""
+
+    for char in time_str:
+        if char.isdigit():
+            current_number += char
+        elif char in ["h", "m", "s"]:
+            if current_number:
+                value = int(current_number)
+                if char == "h":
+                    total_seconds += value * 3600
+                elif char == "m":
+                    total_seconds += value * 60
+                elif char == "s":
+                    total_seconds += value
+                current_number = ""
+
+    return total_seconds
+
+
+def normalize_time_fields(data: Any) -> Any:
+    """
+    Recursively normalize time format strings to integers in the program data.
+    This converts strings like '30s', '2m', '1h30m' to integer seconds.
+
+    Args:
+        data: Program data (dict, list, or primitive)
+
+    Returns:
+        Normalized data with time strings converted to integers
+    """
+    if isinstance(data, dict):
+        normalized = {}
+        for key, value in data.items():
+            # Check if this is a time-related field
+            if key in ['seconds', 'minSeconds', 'maxSeconds', 'defaultSeconds',
+                      'optimalSeconds', 'offsetSeconds', 'bufferSeconds']:
+                # Convert time string to integer
+                if isinstance(value, str):
+                    normalized[key] = parse_time_string_to_seconds(value)
+                else:
+                    normalized[key] = value
+            else:
+                # Recursively normalize nested structures
+                normalized[key] = normalize_time_fields(value)
+        return normalized
+    elif isinstance(data, list):
+        return [normalize_time_fields(item) for item in data]
+    else:
+        return data
+
+
 def validate_program(
     program: Dict[str, Any], schema: Dict[str, Any]
 ) -> Tuple[bool, List[str]]:
@@ -53,7 +132,9 @@ def validate_program(
         Tuple containing (is_valid, error_messages)
     """
     try:
-        validate(instance=program, schema=schema)
+        # Normalize time fields before validation
+        normalized_program = normalize_time_fields(program)
+        validate(instance=normalized_program, schema=schema)
         return True, []
     except ValidationError as e:
         # Extract the validation error path and message
@@ -269,6 +350,54 @@ def validate_track_step_overlaps(program: Dict[str, Any]) -> List[str]:
     return errors
 
 
+def parse_time_string_to_seconds(time_value) -> int:
+    """
+    Parse a time value (string or int) to seconds.
+
+    Args:
+        time_value: Time string like "5m", "30s", "1h30m" or integer seconds
+
+    Returns:
+        Time in seconds
+    """
+    if not time_value:
+        return 0
+
+    # Handle integer format
+    if isinstance(time_value, int):
+        return time_value
+
+    # Handle string format
+    if not isinstance(time_value, str):
+        return 0
+
+    # Remove whitespace
+    time_str = str(time_value).strip()
+
+    # Handle pure numbers (assume seconds)
+    if time_str.isdigit():
+        return int(time_str)
+
+    total_seconds = 0
+    current_number = ""
+
+    for char in time_str:
+        if char.isdigit():
+            current_number += char
+        elif char in ["h", "m", "s"]:
+            if current_number:
+                value = int(current_number)
+                if char == "h":
+                    total_seconds += value * 3600
+                elif char == "m":
+                    total_seconds += value * 60
+                elif char == "s":
+                    total_seconds += value
+                current_number = ""
+
+    return total_seconds
+
+
 def parse_duration_to_seconds(duration) -> int:
     """
     Parse a duration (string or dict) to seconds.
@@ -285,7 +414,8 @@ def parse_duration_to_seconds(duration) -> int:
     # Handle dict format (e.g., {"type": "fixed", "seconds": 180})
     if isinstance(duration, dict):
         if "seconds" in duration:
-            return int(duration["seconds"])
+            seconds_value = duration["seconds"]
+            return parse_time_string_to_seconds(seconds_value)
         elif "minutes" in duration:
             return int(duration["minutes"]) * 60
         elif "hours" in duration:
@@ -294,34 +424,7 @@ def parse_duration_to_seconds(duration) -> int:
             return 0
 
     # Handle string format
-    if not isinstance(duration, str):
-        return 0
-
-    # Remove whitespace
-    duration_str = duration.strip()
-
-    # Handle pure numbers (assume seconds)
-    if duration_str.isdigit():
-        return int(duration_str)
-
-    total_seconds = 0
-    current_number = ""
-
-    for char in duration_str:
-        if char.isdigit():
-            current_number += char
-        elif char in ["h", "m", "s"]:
-            if current_number:
-                value = int(current_number)
-                if char == "h":
-                    total_seconds += value * 3600
-                elif char == "m":
-                    total_seconds += value * 60
-                elif char == "s":
-                    total_seconds += value
-                current_number = ""
-
-    return total_seconds
+    return parse_time_string_to_seconds(duration)
 
 
 def calculate_step_start_time(
