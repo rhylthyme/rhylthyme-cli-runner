@@ -246,9 +246,9 @@ def perform_additional_validations(
         task_types_in_constraints.add(constraint.get("task"))
 
     # Check for task types used in steps but not defined in constraints
-    # Only report errors if there's no actors property (which would provide default constraints)
-    # and no environment reference (which would provide environment constraints)
-    if strict or ("actors" not in program and "environment" not in program):
+    # Only report errors in strict mode, or when there are actually some resource constraints
+    # defined (which suggests the user is trying to use resource validation)
+    if strict and task_types_in_steps:
         for task_type in task_types_in_steps:
             if task_type not in task_types_in_constraints:
                 errors.append(

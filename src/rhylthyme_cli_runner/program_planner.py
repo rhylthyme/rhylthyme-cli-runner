@@ -362,8 +362,17 @@ class ProgramPlanner:
 
                 # Add resource usage for optimal duration (used for planning)
                 for resource in step.resources:
+                    # Extract resource ID from resource object if it's a dict
+                    resource_id = resource
+                    if isinstance(resource, dict):
+                        resource_id = (
+                            resource.get("resourceId")
+                            or resource.get("type")
+                            or resource.get("id")
+                            or str(resource)
+                        )
                     self.resource_usage.add_usage(
-                        start_time, start_time + step.calculate_duration(), resource
+                        start_time, start_time + step.calculate_duration(), resource_id
                     )
 
                 # Add task usage for optimal duration
@@ -375,11 +384,20 @@ class ProgramPlanner:
 
                 # Also track min and max duration scenarios for bottleneck analysis
                 for resource in step.resources:
+                    # Extract resource ID from resource object if it's a dict
+                    resource_id = resource
+                    if isinstance(resource, dict):
+                        resource_id = (
+                            resource.get("resourceId")
+                            or resource.get("type")
+                            or resource.get("id")
+                            or str(resource)
+                        )
                     self.min_resource_usage.add_usage(
-                        start_time, start_time + step.get_min_duration(), resource
+                        start_time, start_time + step.get_min_duration(), resource_id
                     )
                     self.max_resource_usage.add_usage(
-                        start_time, start_time + step.get_max_duration(), resource
+                        start_time, start_time + step.get_max_duration(), resource_id
                     )
 
                 # Track task usage for min and max scenarios
@@ -743,7 +761,23 @@ class ProgramPlanner:
             track_steps = []
 
             for step in track.get("steps", []):
-                step_resources = set(step.get("resources", []))
+                # Extract resource IDs/types instead of the full resource objects
+                step_resource_ids = []
+                for resource in step.get("resources", []):
+                    if isinstance(resource, dict):
+                        # Extract resource identifier (resourceId, type, or id)
+                        resource_id = (
+                            resource.get("resourceId")
+                            or resource.get("type")
+                            or resource.get("id")
+                        )
+                        if resource_id:
+                            step_resource_ids.append(resource_id)
+                    else:
+                        # Handle string resources directly
+                        step_resource_ids.append(resource)
+
+                step_resources = set(step_resource_ids)
                 track_resources.update(step_resources)
                 track_steps.append(step)
 
@@ -801,7 +835,23 @@ class ProgramPlanner:
             # Find steps that use bottleneck resources and their priorities
             bottleneck_steps = []
             for i, step in enumerate(track.get("steps", [])):
-                step_resources = set(step.get("resources", []))
+                # Extract resource IDs/types instead of the full resource objects
+                step_resource_ids = []
+                for resource in step.get("resources", []):
+                    if isinstance(resource, dict):
+                        # Extract resource identifier (resourceId, type, or id)
+                        resource_id = (
+                            resource.get("resourceId")
+                            or resource.get("type")
+                            or resource.get("id")
+                        )
+                        if resource_id:
+                            step_resource_ids.append(resource_id)
+                    else:
+                        # Handle string resources directly
+                        step_resource_ids.append(resource)
+
+                step_resources = set(step_resource_ids)
                 if step_resources.intersection(bottleneck_resources):
                     priority = step.get("priority", 100)
                     bottleneck_steps.append((i, priority))

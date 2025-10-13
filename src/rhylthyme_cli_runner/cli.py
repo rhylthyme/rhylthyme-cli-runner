@@ -70,7 +70,7 @@ def cli(ctx, environments_dir):
 
 # Validate command
 @cli.command()
-@click.argument("program_file", type=click.Path(exists=True))
+@click.argument("program_files", nargs=-1, required=True, type=click.Path(exists=True))
 @click.option(
     "--schema",
     type=click.Path(exists=True),
@@ -78,6 +78,12 @@ def cli(ctx, environments_dir):
         "rhylthyme_spec", "schemas/program_schema_0.1.0-alpha.json"
     ),
     help="Path to the schema file (default: built-in schema)",
+)
+@click.option(
+    "-e",
+    "--environment",
+    type=str,
+    help="Environment file path to use for validation (validates resource constraints)",
 )
 @click.option(
     "--verbose", "-v", is_flag=True, help="Show detailed validation information"
@@ -95,18 +101,72 @@ def cli(ctx, environments_dir):
     is_flag=True,
     help="Enforce all tasks must be defined in resourceConstraints (strict mode)",
 )
-def validate(program_file, schema, verbose, json_output, strict):
+def validate(program_files, schema, environment, verbose, json_output, strict):
     """
-    Validate a program file against the schema.
+    Validate one or more program files against the schema.
 
-    This command checks if the provided program file (JSON or YAML) conforms to the
+    This command checks if the provided program files (JSON or YAML) conform to the
     Rhylthyme schema and performs additional semantic validations.
 
     Use --json to get machine-readable output for CI or scripting.
     Use --strict to require all tasks used in steps/buffers to be defined in resourceConstraints.
+    Use -e/--environment to validate against specific environment constraints.
     """
-    success = validate_program_file(program_file, schema, verbose, json_output, strict)
-    if not success:
+    # Set up environment for validation if specified
+    if environment:
+        import shutil
+        import tempfile
+        from pathlib import Path
+
+        try:
+            # Validate that environment file exists and is valid JSON/YAML
+            env_file = Path(environment)
+            if not env_file.exists():
+                click.echo(f"Error: Environment file '{environment}' not found.")
+                sys.exit(1)
+
+            # Try to load the environment file to validate it
+            from .validate_program import load_program_file
+
+            try:
+                env_data = load_program_file(environment)
+                # Basic validation that it looks like an environment file
+                if not isinstance(env_data, dict) or "environmentId" not in env_data:
+                    click.echo(
+                        f"Error: '{environment}' does not appear to be a valid environment file."
+                    )
+                    sys.exit(1)
+            except Exception as e:
+                click.echo(f"Error: Invalid environment file '{environment}': {e}")
+                sys.exit(1)
+
+            # Create a temporary directory structure for the environment
+            temp_dir = Path(tempfile.mkdtemp())
+            env_dir = temp_dir / "environments"
+            env_dir.mkdir()
+
+            # Copy the environment file to the temp directory with a standard name
+            shutil.copy2(env_file, env_dir / "temp_environment.json")
+
+            # Set up environment loader to use this directory
+            global _environment_loader
+            _environment_loader = EnvironmentLoader(str(env_dir))
+        except SystemExit:
+            raise  # Re-raise sys.exit calls
+        except Exception as e:
+            click.echo(f"Error setting up environment: {e}")
+            sys.exit(1)
+
+    # Validate all program files
+    all_valid = True
+    for program_file in program_files:
+        success = validate_program_file(
+            program_file, schema, verbose, json_output, strict
+        )
+        if not success:
+            all_valid = False
+
+    if not all_valid:
         sys.exit(1)
 
 
