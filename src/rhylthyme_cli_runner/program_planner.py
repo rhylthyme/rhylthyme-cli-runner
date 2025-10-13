@@ -766,13 +766,13 @@ class ProgramPlanner:
                 # Extract resource IDs/types instead of the full resource objects
                 step_resource_ids = []
                 for resource in step.get("resources", []):
-                    if isinstance(resource, dict):
+                    if isinstance(resource, dict) and resource is not None:
                         # Extract resource identifier (resourceId, type, or id)
-                        resource_id = (
-                            resource.get("resourceId")
-                            or resource.get("type")
-                            or resource.get("id")
-                        )
+                        resource_id = resource.get("resourceId")
+                        if resource_id is None:
+                            resource_id = resource.get("type")
+                        if resource_id is None:
+                            resource_id = resource.get("id")
                         if resource_id:
                             step_resource_ids.append(resource_id)
                     else:
@@ -786,7 +786,9 @@ class ProgramPlanner:
             # Calculate average priority for the track based on its steps
             if track_steps:
                 avg_priority = sum(
-                    step.get("priority", 100) for step in track_steps
+                    step.get("priority", 100)
+                    for step in track_steps
+                    if step is not None
                 ) / len(track_steps)
                 track_priorities[i] = avg_priority
             else:
@@ -840,13 +842,13 @@ class ProgramPlanner:
                 # Extract resource IDs/types instead of the full resource objects
                 step_resource_ids = []
                 for resource in step.get("resources", []):
-                    if isinstance(resource, dict):
+                    if isinstance(resource, dict) and resource is not None:
                         # Extract resource identifier (resourceId, type, or id)
-                        resource_id = (
-                            resource.get("resourceId")
-                            or resource.get("type")
-                            or resource.get("id")
-                        )
+                        resource_id = resource.get("resourceId")
+                        if resource_id is None:
+                            resource_id = resource.get("type")
+                        if resource_id is None:
+                            resource_id = resource.get("id")
                         if resource_id:
                             step_resource_ids.append(resource_id)
                     else:
