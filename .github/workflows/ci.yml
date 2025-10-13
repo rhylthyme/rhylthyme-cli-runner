@@ -86,11 +86,11 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -e .
+        pip install -e ".[dev]"
 
     - name: Validate all examples
       run: |
-        python tests/test_validate_examples_ci.py
+        pytest tests/test_validate_examples_ci.py -v
 
   type-check:
     runs-on: ubuntu-latest
