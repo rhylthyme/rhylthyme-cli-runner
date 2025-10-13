@@ -695,6 +695,9 @@ class ProgramRunner:
         self.program_start_time = None
         self.current_time = 0
         self.status_message = "Program waiting for manual start. Press 's' to start."
+        
+        # Add program_started property for backward compatibility with tests
+        self.program_started = False
 
         self.steps = {}
         self.tracks = {}
@@ -843,6 +846,7 @@ class ProgramRunner:
         self.program_start_time = time.time()
         self.current_time = self.program_start_time
         self.is_running = True
+        self.program_started = True
 
         # If auto_start is False, set the program to wait for manual start
         if not self.auto_start:
@@ -901,6 +905,7 @@ class ProgramRunner:
                 command = self.command_queue.get_nowait()
                 if command == "start_program":
                     self.is_running = True
+                    self.program_started = True
                     # Initialize program start time if not already set
                     if self.program_start_time is None:
                         self.program_start_time = time.time()
@@ -1363,6 +1368,7 @@ class ProgramRunner:
 
         return {
             "id": step.step_id,
+            "step_id": step.step_id,  # Add for backward compatibility
             "name": step.name + debug_info,
             "track": step.track_id,
             "status": step.status.value,
@@ -1753,7 +1759,7 @@ class ProgramRunner:
             offset_seconds = float(start_trigger["offsetSeconds"])
             reference_time = self.program_start_time
             return current_time >= reference_time + offset_seconds
-
+        
         # Program start with offset trigger
         elif trigger_type == "programStartOffset":
             offset_seconds = float(start_trigger["offsetSeconds"])

@@ -80,7 +80,7 @@ def simple_program():
                         "stepId": "step2",
                         "name": "Step 2",
                         "description": "Second step",
-                        "startTrigger": {"type": "stepComplete", "stepId": "step1"},
+                        "startTrigger": {"type": "afterStep", "stepId": "step1"},
                         "duration": {"type": "fixed", "seconds": 3},
                         "preBuffer": {
                             "duration": "3s",
@@ -91,6 +91,14 @@ def simple_program():
                 ],
             }
         ],
+        "resourceConstraints": [
+            {
+                "task": "test-task",
+                "maxConcurrent": 1,
+                "description": "Test task constraint"
+            }
+        ],
+        "actors": 1
     }
 
 
@@ -115,6 +123,7 @@ def kitchen_program():
                         "description": "Cook pasta",
                         "startTrigger": {"type": "programStart"},
                         "duration": {"type": "fixed", "seconds": 10},
+                        "task": "cooking",
                         "preBuffer": {
                             "duration": "5s",
                             "description": "Setup",
@@ -131,6 +140,14 @@ def kitchen_program():
                 ],
             }
         ],
+        "resourceConstraints": [
+            {
+                "task": "cooking",
+                "maxConcurrent": 1,
+                "description": "Cooking task constraint"
+            }
+        ],
+        "actors": 1
     }
 
 
@@ -143,9 +160,18 @@ def kitchen_environment():
         "type": "kitchen",
         "description": "A test kitchen environment",
         "resourceConstraints": [
-            {"task": "cooking", "type": "stove-burner", "capacity": 1},
-            {"task": "prep", "type": "prep-station", "capacity": 1},
+            {
+                "task": "cooking",
+                "maxConcurrent": 1,
+                "description": "Stove burner cooking constraint"
+            },
+            {
+                "task": "prep",
+                "maxConcurrent": 1,
+                "description": "Prep station constraint"
+            },
         ],
+        "actors": 1
     }
 
 
