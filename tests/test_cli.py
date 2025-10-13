@@ -17,7 +17,7 @@ class TestCLIBasics:
     def test_cli_help(self, cli_runner):
         """Test CLI help command."""
         from rhylthyme_cli_runner.cli import cli
-        
+
         result = cli_runner.invoke(cli, ["--help"])
 
         assert result.exit_code == 0
@@ -70,7 +70,7 @@ class TestCLIValidation:
         # The test might fail if schema is not available, check for schema issues
         if "schema" in result.output.lower() and "not found" in result.output.lower():
             pytest.skip("Schema file not available for validation")
-        
+
         if result.exit_code == 0:
             assert "is valid" in result.output
         else:
@@ -89,7 +89,7 @@ class TestCLIValidation:
         # The test might fail if schema is not available, check for schema issues
         if "schema" in result.output.lower() and "not found" in result.output.lower():
             pytest.skip("Schema file not available for validation")
-        
+
         if result.exit_code == 0:
             assert "is valid" in result.output
         else:
@@ -112,7 +112,7 @@ class TestCLIValidation:
         # The test might fail if schema is not available or environment file issues
         if "schema" in result.output.lower() and "not found" in result.output.lower():
             pytest.skip("Schema file not available for validation")
-        
+
         if result.exit_code == 0:
             assert "is valid" in result.output
         elif result.exit_code == 2:

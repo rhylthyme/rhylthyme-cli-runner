@@ -695,7 +695,7 @@ class ProgramRunner:
         self.program_start_time = None
         self.current_time = 0
         self.status_message = "Program waiting for manual start. Press 's' to start."
-        
+
         # Add program_started property for backward compatibility with tests
         self.program_started = False
 
@@ -1759,7 +1759,7 @@ class ProgramRunner:
             offset_seconds = float(start_trigger["offsetSeconds"])
             reference_time = self.program_start_time
             return current_time >= reference_time + offset_seconds
-        
+
         # Program start with offset trigger
         elif trigger_type == "programStartOffset":
             offset_seconds = float(start_trigger["offsetSeconds"])

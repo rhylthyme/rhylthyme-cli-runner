@@ -218,9 +218,10 @@ def test_validation_imports():
 def test_validation_function_with_invalid_file():
     """Test validation function behavior with invalid files."""
     from rhylthyme_cli_runner.validate_program import validate_program_file
-    
+
     try:
         import pkg_resources
+
         schema_file = pkg_resources.resource_filename(
             "rhylthyme_spec", "schemas/program_schema_0.1.0-alpha.json"
         )
@@ -229,7 +230,13 @@ def test_validation_function_with_invalid_file():
 
     # Test with non-existent file - should handle this gracefully
     try:
-        result = validate_program_file("nonexistent_file.json", schema_file, verbose=False, json_output=False, strict=False)
+        result = validate_program_file(
+            "nonexistent_file.json",
+            schema_file,
+            verbose=False,
+            json_output=False,
+            strict=False,
+        )
         assert result is False
     except FileNotFoundError:
         # This is expected behavior for non-existent files
@@ -240,9 +247,10 @@ def test_validation_function_with_invalid_file():
 def test_validation_function_with_invalid_json(temp_dir):
     """Test validation function with invalid JSON."""
     from rhylthyme_cli_runner.validate_program import validate_program_file
-    
+
     try:
         import pkg_resources
+
         schema_file = pkg_resources.resource_filename(
             "rhylthyme_spec", "schemas/program_schema_0.1.0-alpha.json"
         )
@@ -256,7 +264,13 @@ def test_validation_function_with_invalid_json(temp_dir):
 
     # Should handle JSON parsing errors gracefully
     try:
-        result = validate_program_file(invalid_json_file, schema_file, verbose=False, json_output=False, strict=False)
+        result = validate_program_file(
+            invalid_json_file,
+            schema_file,
+            verbose=False,
+            json_output=False,
+            strict=False,
+        )
         assert result is False
     except (ValueError, json.JSONDecodeError):
         # This is expected behavior for invalid JSON files

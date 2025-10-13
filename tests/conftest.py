@@ -95,10 +95,10 @@ def simple_program():
             {
                 "task": "test-task",
                 "maxConcurrent": 1,
-                "description": "Test task constraint"
+                "description": "Test task constraint",
             }
         ],
-        "actors": 1
+        "actors": 1,
     }
 
 
@@ -144,10 +144,10 @@ def kitchen_program():
             {
                 "task": "cooking",
                 "maxConcurrent": 1,
-                "description": "Cooking task constraint"
+                "description": "Cooking task constraint",
             }
         ],
-        "actors": 1
+        "actors": 1,
     }
 
 
@@ -163,15 +163,15 @@ def kitchen_environment():
             {
                 "task": "cooking",
                 "maxConcurrent": 1,
-                "description": "Stove burner cooking constraint"
+                "description": "Stove burner cooking constraint",
             },
             {
                 "task": "prep",
                 "maxConcurrent": 1,
-                "description": "Prep station constraint"
+                "description": "Prep station constraint",
             },
         ],
-        "actors": 1
+        "actors": 1,
     }
 
 

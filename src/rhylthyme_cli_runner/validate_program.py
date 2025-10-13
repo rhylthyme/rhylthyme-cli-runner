@@ -105,8 +105,15 @@ def normalize_time_fields(data: Any) -> Any:
         normalized = {}
         for key, value in data.items():
             # Check if this is a time-related field
-            if key in ['seconds', 'minSeconds', 'maxSeconds', 'defaultSeconds',
-                      'optimalSeconds', 'offsetSeconds', 'bufferSeconds']:
+            if key in [
+                "seconds",
+                "minSeconds",
+                "maxSeconds",
+                "defaultSeconds",
+                "optimalSeconds",
+                "offsetSeconds",
+                "bufferSeconds",
+            ]:
                 # Convert time string to integer
                 if isinstance(value, str):
                     normalized[key] = parse_time_string_to_seconds(value)
