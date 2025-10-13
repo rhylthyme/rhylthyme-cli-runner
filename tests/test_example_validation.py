@@ -12,8 +12,7 @@ from pathlib import Path
 import pytest
 
 # Import the validation function
-from rhylthyme_cli_runner.validate_program import \
-    validate_program_file_structured
+from rhylthyme_cli_runner.validate_program import validate_program_file_structured
 
 
 @pytest.mark.integration
@@ -204,7 +203,9 @@ def test_validation_imports():
     """Test that we can import validation modules successfully."""
     try:
         from rhylthyme_cli_runner.validate_program import (
-            validate_program_file, validate_program_file_structured)
+            validate_program_file,
+            validate_program_file_structured,
+        )
 
         assert callable(validate_program_file_structured)
         assert callable(validate_program_file)
