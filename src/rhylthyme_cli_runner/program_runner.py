@@ -1753,6 +1753,13 @@ class ProgramRunner:
             offset_seconds = float(start_trigger["offsetSeconds"])
             reference_time = self.program_start_time
             return current_time >= reference_time + offset_seconds
+        
+        # Program start with offset trigger
+        elif trigger_type == "programStartOffset":
+            offset_seconds = float(start_trigger["offsetSeconds"])
+            if self.program_start_time is None:
+                return False
+            return current_time >= self.program_start_time + offset_seconds
 
         # After step trigger
         elif trigger_type == "afterStep":
@@ -2452,7 +2459,7 @@ def run_program(
         # Override environment if specified via command line
         program["environment"] = environment
     elif "environmentType" in program and "environment" not in program:
-        # Resolve environment type to a specific environment
+        # Try to resolve environment type to a specific environment
         environment_type = program["environmentType"]
         default_env = loader.get_default_environment_for_type(environment_type)
         if default_env:
@@ -2467,10 +2474,11 @@ def run_program(
                 for env in available_envs:
                     print(f"  - {env['id']}: {env['name']}")
                 print(f"\nUse -e/--environment to specify which environment to use.")
-                sys.exit(1)
+                print(f"Running without environment (unlimited resources)...")
             else:
                 print(f"No environments found for type '{environment_type}'")
-                sys.exit(1)
+                print(f"Running without environment (unlimited resources)...")
+            # Don't exit - allow program to run without environment constraints
 
     # Validate if requested
     if validate:
