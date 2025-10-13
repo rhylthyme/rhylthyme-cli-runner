@@ -538,7 +538,7 @@ if __name__ == "__main__":
     print(f"\nSupported environment types: {len(validator.list_supported_types())}")
     for env_type in sorted(validator.list_supported_types()):
         info = validator.get_environment_type_info(env_type)
-        required = info.get("required_tasks", [])
+        required = info.get("required_tasks", []) if info else []
         print(
             f"  {env_type:20} - Required: {', '.join(required) if required else 'None'}"
         )

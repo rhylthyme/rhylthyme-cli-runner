@@ -17,7 +17,7 @@ import yaml
 class EnvironmentLoader:
     """Handles loading and managing environment catalogs."""
 
-    def __init__(self, environments_dir: str = None):
+    def __init__(self, environments_dir: Optional[str] = None):
         """
         Initialize the environment loader.
 
@@ -28,10 +28,10 @@ class EnvironmentLoader:
         if environments_dir is None:
             # Default to environments directory relative to this file
             module_dir = Path(__file__).parent.parent.parent
-            environments_dir = module_dir / "environments"
-
-        self.environments_dir = Path(environments_dir)
-        self._cache = {}
+            self.environments_dir = module_dir / "environments"
+        else:
+            self.environments_dir = Path(environments_dir)
+        self._cache: Dict[str, Dict[str, Any]] = {}
 
     def load_environment(self, environment_id: str) -> Dict[str, Any]:
         """
@@ -140,7 +140,7 @@ class EnvironmentLoader:
         Returns:
             List of environment summaries with id, name, type, description, and icon
         """
-        environments = []
+        environments: List[Dict[str, str]] = []
 
         if not self.environments_dir.exists():
             return environments

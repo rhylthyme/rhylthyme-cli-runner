@@ -20,8 +20,16 @@ try:
     from .environment_loader import get_default_loader, load_resource_constraints
 except ImportError:
     # Fallback if running as standalone script
-    def load_resource_constraints(program):
-        return program.get("resourceConstraints", [])
+    from typing import TYPE_CHECKING
+
+    if TYPE_CHECKING:
+        from .environment_loader import EnvironmentLoader
+
+    def load_resource_constraints(program_data: Dict[str, Any]) -> List[Dict[str, Any]]:
+        return program_data.get("resourceConstraints", [])
+
+    def get_default_loader() -> "EnvironmentLoader":  # type: ignore
+        return None  # type: ignore
 
 
 def load_program_file(file_path: str) -> Dict[str, Any]:
@@ -42,7 +50,7 @@ def load_program_file(file_path: str) -> Dict[str, Any]:
         raise
 
 
-def parse_time_string_to_seconds(time_value) -> int:
+def parse_time_string_to_seconds(time_value: Any) -> int:
     """
     Parse a time value (string or int) to seconds.
 
@@ -164,7 +172,7 @@ def perform_additional_validations(
     errors = []
 
     # Check for duplicate step IDs
-    step_id_count = {}
+    step_id_count: Dict[str, int] = {}
     step_ids = set()
     referenced_step_ids = set()
 
@@ -357,55 +365,7 @@ def validate_track_step_overlaps(program: Dict[str, Any]) -> List[str]:
     return errors
 
 
-def parse_time_string_to_seconds(time_value) -> int:
-    """
-    Parse a time value (string or int) to seconds.
-
-    Args:
-        time_value: Time string like "5m", "30s", "1h30m" or integer seconds
-
-    Returns:
-        Time in seconds
-    """
-    if not time_value:
-        return 0
-
-    # Handle integer format
-    if isinstance(time_value, int):
-        return time_value
-
-    # Handle string format
-    if not isinstance(time_value, str):
-        return 0
-
-    # Remove whitespace
-    time_str = str(time_value).strip()
-
-    # Handle pure numbers (assume seconds)
-    if time_str.isdigit():
-        return int(time_str)
-
-    total_seconds = 0
-    current_number = ""
-
-    for char in time_str:
-        if char.isdigit():
-            current_number += char
-        elif char in ["h", "m", "s"]:
-            if current_number:
-                value = int(current_number)
-                if char == "h":
-                    total_seconds += value * 3600
-                elif char == "m":
-                    total_seconds += value * 60
-                elif char == "s":
-                    total_seconds += value
-                current_number = ""
-
-    return total_seconds
-
-
-def parse_duration_to_seconds(duration) -> int:
+def parse_duration_to_seconds(duration: Any) -> int:
     """
     Parse a duration (string or dict) to seconds.
 
@@ -485,7 +445,7 @@ def calculate_step_start_time(
                 if referenced_step:
                     break
 
-        if not referenced_step:
+        if not referenced_step or referenced_track_steps is None:
             return 0  # Referenced step not found, assume program start
 
         # Calculate referenced step's timing

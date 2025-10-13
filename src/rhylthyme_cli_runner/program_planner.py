@@ -95,7 +95,7 @@ class ResourceUsage:
         time_points = sorted(self.usage_profile.keys())
 
         # Initialize result
-        result = {}
+        result: Dict[str, List[Tuple[float, float, int]]] = {}
 
         # Initialize current usage counts
         current_usage = {}
@@ -274,7 +274,9 @@ class ProgramPlanner:
     Plan and optimize program schedules.
     """
 
-    def __init__(self, program: dict, verbose: bool = False, environment: dict = None):
+    def __init__(
+        self, program: dict, verbose: bool = False, environment: Optional[dict] = None
+    ):
         self.program = program
         self.verbose = verbose
         self.environment = environment
@@ -305,7 +307,7 @@ class ProgramPlanner:
         Returns:
             Dictionary mapping track IDs to dictionaries mapping step IDs to Step objects
         """
-        steps = {}
+        steps: Dict[str, Dict[str, Step]] = {}
 
         for track in self.program.get("tracks", []):
             track_id = track.get("id", "")
@@ -325,12 +327,12 @@ class ProgramPlanner:
             Dictionary mapping track IDs to dictionaries mapping step IDs to start times
         """
         # Initialize start times
-        start_times = {}
+        start_times: Dict[str, Dict[str, float]] = {}
         for track_id in self.steps:
             start_times[track_id] = {}
 
         # Initialize completed steps
-        completed = set()
+        completed: Set[Tuple[str, str]] = set()
 
         # Process steps until all are scheduled
         while True:
@@ -748,7 +750,7 @@ class ProgramPlanner:
         bottleneck_resources = set(b[0] for b in bottlenecks)
 
         # Group tracks by resource usage
-        resource_to_tracks = {}
+        resource_to_tracks: Dict[str, List[int]] = {}
         for resource in bottleneck_resources:
             resource_to_tracks[resource] = []
 
@@ -949,7 +951,7 @@ def plan_program(
     input_file: str,
     output_file: str,
     verbose: bool = False,
-    environment_file: str = None,
+    environment_file: Optional[str] = None,
 ) -> bool:
     """
     Plan and optimize a program schedule.

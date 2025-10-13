@@ -78,7 +78,9 @@ except ImportError:
     ) -> Tuple[bool, List[str]]:
         return True, []
 
-    def perform_additional_validations(program: Dict[str, Any]) -> List[str]:
+    def perform_additional_validations(
+        program: Dict[str, Any], strict: bool = False
+    ) -> List[str]:
         return []
 
 
@@ -238,10 +240,15 @@ class Step:
 
         # Initialize status
         self.status = StepStatus.PENDING
-        self.start_time = None
-        self.end_time = None
+        self.start_time: Optional[float] = None
+        self.end_time: Optional[float] = None
         self.progress = 0.0
-        self.abort_reason = None
+        self.abort_reason: Optional[str] = None
+
+        # Initialize code execution attributes
+        self.code_result: Optional[Any] = None
+        self.code_executed = False
+        self.code_error: Optional[str] = None
 
     def to_dict(self):
         return {
@@ -359,7 +366,7 @@ class Step:
         completed_steps: Set[str],
         program_start_time: float,
         current_time: float,
-        aborted_steps: Set[str] = None,
+        aborted_steps: Optional[Set[str]] = None,
     ) -> bool:
         """Check if the step is ready to start based on its start trigger(s)."""
         if aborted_steps is None:
@@ -711,55 +718,37 @@ class ProgramRunner:
         self.actor_usage = 0.0  # Track total actor usage for display
 
         self.is_running = False
-        self.program_start_time = None
-        self.current_time = 0
+        self.program_start_time: Optional[float] = None
+        self.current_time: float = 0.0
         self.status_message = "Program waiting for manual start. Press 's' to start."
 
         # Add program_started property for backward compatibility with tests
         self.program_started = False
 
-        self.steps = {}
-        self.tracks = {}
-        self.manual_triggers = {}
-        self.completed_steps = set()
-        self.aborted_steps = set()
-        self.resource_usage = {}
+        self.steps: Dict[str, Step] = {}
+        self.tracks: Dict[str, List[Step]] = {}
+        self.manual_triggers: Dict[str, List[Step]] = {}
+        self.completed_steps: Set[str] = set()
+        self.aborted_steps: Set[str] = set()
+        # self.resource_usage will be initialized below during resource constraints setup
         self.sort_mode = SortMode.DEFAULT
         self.selected_step_index = 0
-        self.running_steps = []  # Initialize running_steps as an empty list
-        self.manually_triggered_steps = (
+        self.running_steps: List[str] = []  # Initialize running_steps as an empty list
+        self.manually_triggered_steps: Set[str] = (
             set()
         )  # Initialize manually_triggered_steps as an empty set
-        self.event_listeners = []  # Add event listeners list
+        self.event_listeners: List[Any] = []  # Add event listeners list
 
-        self.command_queue = queue.Queue()
+        self.command_queue: queue.Queue[str] = queue.Queue()
 
-        # Parse tracks and steps
+        # Initialize tracks - will be populated later during step processing
         tracks = program.get("tracks", [])
         for track_data in tracks:
             track_id = track_data.get("trackId")
             if not track_id:
                 continue
-
-            track_name = track_data.get("name", track_id)
-            self.tracks[track_id] = {"name": track_name, "steps": []}
-
-            steps = track_data.get("steps", [])
-            for step_data in steps:
-                step_id = step_data.get("stepId")
-                if not step_id:
-                    continue
-
-                step_name = step_data.get("name", step_id)
-                step = Step(step_data, track_id)
-                self.steps[step_id] = step
-                self.tracks[track_id]["steps"].append(step_id)
-
-                # Register manual triggers
-                if step.manual_trigger_name:
-                    if step.manual_trigger_name not in self.manual_triggers:
-                        self.manual_triggers[step.manual_trigger_name] = []
-                    self.manual_triggers[step.manual_trigger_name].append(step)
+            # Initialize track as empty list of steps
+            self.tracks[track_id] = []
 
         # Get the actors count (default to 1 if not specified)
         self.actors = max(1, program.get("actors", 1))
@@ -903,8 +892,11 @@ class ProgramRunner:
             return
 
         # Update current time
-        real_elapsed = time.time() - self.program_start_time
-        self.current_time = self.program_start_time + (real_elapsed * self.time_scale)
+        if self.program_start_time is not None:
+            real_elapsed = time.time() - self.program_start_time
+            self.current_time = self.program_start_time + (
+                real_elapsed * self.time_scale
+            )
 
         # Start steps that are ready
         self.start_ready_steps(self.current_time)
@@ -957,7 +949,7 @@ class ProgramRunner:
             if self.is_step_ready_to_start(step, current_time):
                 # Check resource constraints and actor availability for each task type
                 can_start = True
-                required_actors_by_type = (
+                required_actors_by_type: Dict[str, float] = (
                     {}
                 )  # Track how many actors of each type are needed
 
@@ -1108,7 +1100,7 @@ class ProgramRunner:
 
                 # Find which actor type was actually used (choose the one with highest usage)
                 best_actor_type = None
-                best_usage = 0
+                best_usage = 0.0
 
                 for actor_type in qualified_types:
                     if actor_type in self.actor_usage_by_type:
@@ -1229,7 +1221,7 @@ class ProgramRunner:
 
                 # Find which actor type was actually used (choose the one with highest usage)
                 best_actor_type = None
-                best_usage = 0
+                best_usage = 0.0
 
                 for actor_type in qualified_types:
                     if actor_type in self.actor_usage_by_type:
@@ -1698,6 +1690,17 @@ class ProgramRunner:
         # Replace all matches
         return re.sub(pattern, replace_var, code)
 
+    def get_progress_bar(self, progress: float) -> str:
+        """Generate a progress bar string."""
+        if progress == 0.0:
+            return "[----------]"
+        elif progress >= 100.0:
+            return "[##########]"
+        else:
+            filled = int(progress / 10)
+            empty = 10 - filled
+            return f"[{'#' * filled}{'-' * empty}]"
+
     def get_status_color(self, status: StepStatus) -> int:
         """Get the color for a step status."""
         if status == StepStatus.PENDING:
@@ -1730,20 +1733,24 @@ class ProgramRunner:
                     if enum_status.value == status:
                         status = enum_status
                         break
+                else:
+                    # If no match found, return the string as is
+                    return status
             except:
                 # If conversion fails, return the string as is
-                return status
+                return str(status)
 
-        if status == StepStatus.PENDING:
-            return "PENDING"
-        elif status == StepStatus.RUNNING:
-            return "RUNNING"
-        elif status == StepStatus.COMPLETED:
-            return "COMPLETED"
-        elif status == StepStatus.WAITING_FOR_MANUAL:
-            return "WAITING"
-        elif status == StepStatus.ABORTED:
-            return "ABORTED"
+        if isinstance(status, StepStatus):
+            if status == StepStatus.PENDING:
+                return "PENDING"
+            elif status == StepStatus.RUNNING:
+                return "RUNNING"
+            elif status == StepStatus.COMPLETED:
+                return "COMPLETED"
+            elif status == StepStatus.WAITING_FOR_MANUAL:
+                return "WAITING"
+            elif status == StepStatus.ABORTED:
+                return "ABORTED"
         return "UNKNOWN"  # Default for unhandled status values
 
     def is_step_ready_to_start(self, step: Step, current_time: float) -> bool:
@@ -1770,13 +1777,17 @@ class ProgramRunner:
 
         # Absolute time trigger
         elif trigger_type == "absolute":
-            trigger_time = datetime.fromisoformat(start_trigger["time"]).timestamp()
+            trigger_time = datetime.datetime.fromisoformat(
+                start_trigger["time"]
+            ).timestamp()
             return current_time >= trigger_time
 
         # Offset time trigger
         elif trigger_type == "offset":
             offset_seconds = float(start_trigger["offsetSeconds"])
             reference_time = self.program_start_time
+            if reference_time is None:
+                return False
             return current_time >= reference_time + offset_seconds
 
         # Program start with offset trigger
@@ -2453,7 +2464,7 @@ def run_program(
     time_scale: float = 1.0,
     validate: bool = True,
     auto_start: bool = False,
-    environment: str = None,
+    environment: Optional[str] = None,
 ) -> None:
     """
     Run a program file with the interactive UI.
