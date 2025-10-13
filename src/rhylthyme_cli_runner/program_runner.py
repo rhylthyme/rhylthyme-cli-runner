@@ -605,7 +605,11 @@ class ProgramRunner:
     """Class for running a program."""
 
     def __init__(
-        self, program: Dict[str, Any], time_scale: float = 1.0, auto_start: bool = False
+        self,
+        program: Dict[str, Any],
+        time_scale: float = 1.0,
+        auto_start: bool = False,
+        environment: Optional[Dict[str, Any]] = None,
     ):
         """
         Initialize the program runner.
@@ -614,6 +618,7 @@ class ProgramRunner:
             program: The program to run
             time_scale: The time scale factor (1.0 = real-time, 2.0 = 2x speed, etc.)
             auto_start: Whether to start the program automatically
+            environment: Optional environment data to use instead of loading from file
         """
         self.program = program
         self.time_scale = time_scale
@@ -628,7 +633,18 @@ class ProgramRunner:
         self.actor_usage_by_type = {}  # Track usage by actor type
 
         # Load resource constraints (handles both embedded and environment-based)
-        resource_constraints = load_resource_constraints(program)
+        # If environment is provided directly, use it; otherwise load from program
+        if environment is not None:
+            # Merge provided environment resource constraints into the program temporarily
+            temp_program = program.copy()
+            if "resourceConstraints" in environment:
+                temp_program["resourceConstraints"] = (
+                    temp_program.get("resourceConstraints", [])
+                    + environment["resourceConstraints"]
+                )
+            resource_constraints = load_resource_constraints(temp_program)
+        else:
+            resource_constraints = load_resource_constraints(program)
         for constraint in resource_constraints:
             task = constraint.get("task")
             max_concurrent = constraint.get("maxConcurrent", 1)
@@ -645,34 +661,37 @@ class ProgramRunner:
                 self.qualified_actor_types[task] = qualified_types
 
         # Load actor types from environment if available
-        environment_id = program.get("environment")
-        if environment_id:
-            from .environment_loader import EnvironmentLoader
+        environment_data = environment  # Use provided environment first
+        if environment_data is None:
+            environment_id = program.get("environment")
+            if environment_id:
+                from .environment_loader import EnvironmentLoader
 
-            loader = EnvironmentLoader()
-            environment = loader.get_environment(environment_id)
-            if environment:
-                # Handle new actorTypes format
-                if "actorTypes" in environment:
-                    for actor_type_id, actor_info in environment["actorTypes"].items():
-                        self.actor_types[actor_type_id] = {
-                            "name": actor_info.get("name", actor_type_id),
-                            "count": actor_info.get("count", 1),
-                            "description": actor_info.get("description", ""),
-                        }
-                        self.actor_usage_by_type[actor_type_id] = 0.0
-                # Handle legacy actors field for backward compatibility
-                elif "actors" in environment:
-                    self.actor_types["generic"] = {
-                        "name": "Generic Actor",
-                        "count": environment["actors"],
-                        "description": "Generic actor type for backward compatibility",
+                loader = EnvironmentLoader()
+                environment_data = loader.get_environment(environment_id)
+
+        if environment_data:
+            # Handle new actorTypes format
+            if "actorTypes" in environment_data:
+                for actor_type_id, actor_info in environment_data["actorTypes"].items():
+                    self.actor_types[actor_type_id] = {
+                        "name": actor_info.get("name", actor_type_id),
+                        "count": actor_info.get("count", 1),
+                        "description": actor_info.get("description", ""),
                     }
-                    self.actor_usage_by_type["generic"] = 0.0
-                    # Update qualified actor types to use generic if empty
-                    for task in self.qualified_actor_types:
-                        if not self.qualified_actor_types[task]:
-                            self.qualified_actor_types[task] = ["generic"]
+                    self.actor_usage_by_type[actor_type_id] = 0.0
+            # Handle legacy actors field for backward compatibility
+            elif "actors" in environment_data:
+                self.actor_types["generic"] = {
+                    "name": "Generic Actor",
+                    "count": environment_data["actors"],
+                    "description": "Generic actor type for backward compatibility",
+                }
+                self.actor_usage_by_type["generic"] = 0.0
+                # Update qualified actor types to use generic if empty
+                for task in self.qualified_actor_types:
+                    if not self.qualified_actor_types[task]:
+                        self.qualified_actor_types[task] = ["generic"]
         else:
             # Fall back to program-level actors if no environment
             actor_count = program.get("actors", 1)
