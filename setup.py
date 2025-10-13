@@ -3,16 +3,19 @@
 Setup script for Rhylthyme CLI Runner
 """
 
-from setuptools import setup, find_packages
 import os
+
+from setuptools import find_packages, setup
+
 
 # Read the README file
 def read_readme():
-    readme_path = os.path.join(os.path.dirname(__file__), 'README.md')
+    readme_path = os.path.join(os.path.dirname(__file__), "README.md")
     if os.path.exists(readme_path):
-        with open(readme_path, 'r', encoding='utf-8') as f:
+        with open(readme_path, "r", encoding="utf-8") as f:
             return f.read()
     return "Rhylthyme CLI Runner - Command-line interface for running and validating Rhylthyme programs"
+
 
 setup(
     name="rhylthyme-cli-runner",
@@ -39,18 +42,15 @@ setup(
             "pytest-cov>=2.10.0",
             "pytest-mock>=3.0.0",
             "pytest-xdist>=2.0.0",  # Parallel test execution
-            
             # Code quality
             "black>=21.0.0",
             "flake8>=3.8.0",
             "isort>=5.0.0",
-            
             # Type checking
             "mypy>=0.800",
-            
             # Testing utilities
             "responses>=0.12.0",  # Mock HTTP responses
-            "freezegun>=1.0.0",   # Mock datetime
+            "freezegun>=1.0.0",  # Mock datetime
         ],
         "docs": [
             "sphinx>=4.0.0",
@@ -86,4 +86,4 @@ setup(
         "Source": "https://github.com/rhylthyme/rhylthyme-cli-runner",
         "Documentation": "https://github.com/rhylthyme/rhylthyme-cli-runner#readme",
     },
-) 
+)

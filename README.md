@@ -206,4 +206,4 @@ Shows information about a specific environment type.
 
 ## License
 
-Apache License 2.0 
+Apache License 2.0
