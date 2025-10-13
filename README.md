@@ -24,6 +24,44 @@ pip install -e ".[dev]"
 pip install rhylthyme-cli-runner
 ```
 
+## Getting the Examples
+
+The example programs referenced in this documentation are maintained in a separate repository. To use them:
+
+### Option 1: Clone the Examples Repository Alongside
+
+```bash
+# Navigate to the parent directory of rhylthyme-cli-runner
+cd ..
+
+# Clone the examples repository
+git clone https://github.com/rhylthyme/rhylthyme-examples.git
+
+# Run examples using relative paths
+cd rhylthyme-cli-runner
+rhylthyme run ../rhylthyme-examples/programs/breakfast_schedule.json
+```
+
+### Option 2: Clone Examples as a Subdirectory
+
+```bash
+# From within the rhylthyme-cli-runner directory
+git clone https://github.com/rhylthyme/rhylthyme-examples.git examples
+
+# Run examples directly
+rhylthyme run examples/programs/breakfast_schedule.json
+```
+
+### Option 3: Download Individual Examples
+
+```bash
+# Download a specific example file
+curl -O https://raw.githubusercontent.com/rhylthyme/rhylthyme-examples/main/programs/breakfast_schedule.json
+
+# Run the downloaded file
+rhylthyme run breakfast_schedule.json
+```
+
 ## Quick Start
 
 The Rhylthyme CLI provides commands for working with real-time program schedules defined using the Rhylthyme JSON or YAML schema.
@@ -52,19 +90,19 @@ Run a program with an interactive terminal UI for monitoring and controlling exe
 
 ```bash
 # Run a program file
-rhylthyme run examples/breakfast_schedule.json
+rhylthyme run examples/programs/breakfast_schedule.json
 
 # Run with automatic start (no manual trigger needed)
-rhylthyme run examples/breakfast_schedule.json --auto-start
+rhylthyme run examples/programs/breakfast_schedule.json --auto-start
 
 # Run with a different time scale (2x faster)
-rhylthyme run examples/breakfast_schedule.json --time-scale 2.0
+rhylthyme run examples/programs/breakfast_schedule.json --time-scale 2.0
 
 # Run with a specific environment
-rhylthyme run examples/breakfast_schedule.json --environment kitchen
+rhylthyme run examples/programs/breakfast_schedule.json --environment kitchen
 
 # Run without validation (if you're sure the file is valid)
-rhylthyme run examples/breakfast_schedule.json --no-validate
+rhylthyme run examples/programs/breakfast_schedule.json --no-validate
 ```
 
 ### Optimize a Program
@@ -73,10 +111,10 @@ Create an optimized version of a program to reduce resource contention:
 
 ```bash
 # Optimize a program and save to new file
-rhylthyme plan examples/breakfast_schedule.json optimized_breakfast.json
+rhylthyme plan examples/programs/breakfast_schedule.json optimized_breakfast.json
 
 # Optimize with verbose output
-rhylthyme plan examples/breakfast_schedule.json optimized_breakfast.json --verbose
+rhylthyme plan examples/programs/breakfast_schedule.json optimized_breakfast.json --verbose
 ```
 
 ### Work with Environments
