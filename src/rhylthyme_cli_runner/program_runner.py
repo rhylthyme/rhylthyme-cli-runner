@@ -1753,7 +1753,7 @@ class ProgramRunner:
             offset_seconds = float(start_trigger["offsetSeconds"])
             reference_time = self.program_start_time
             return current_time >= reference_time + offset_seconds
-        
+
         # Program start with offset trigger
         elif trigger_type == "programStartOffset":
             offset_seconds = float(start_trigger["offsetSeconds"])
