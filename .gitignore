@@ -1,0 +1,10 @@
+.coverage
+.venv-build/
+DEVELOPMENT.md
+TESTING_STATUS.md
+dist/
+pytest.ini
+pytest_examples.log
+src/rhylthyme_cli_runner.egg-info/
+src/rhylthyme_cli_runner/__pycache__/
+tests/__pycache__/
