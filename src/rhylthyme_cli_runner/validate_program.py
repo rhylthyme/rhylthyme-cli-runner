@@ -17,7 +17,8 @@ from jsonschema import SchemaError, ValidationError, validate
 
 # Import environment loader for environment-based validation
 try:
-    from .environment_loader import get_default_loader, load_resource_constraints
+    from .environment_loader import (get_default_loader,
+                                     load_resource_constraints)
 except ImportError:
     # Fallback if running as standalone script
     def load_resource_constraints(program):

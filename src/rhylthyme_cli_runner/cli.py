@@ -263,7 +263,8 @@ def validate_environments(environments_dir, verbose):
     should have appropriate kitchen tasks and equipment).
     """
     try:
-        from .environment_schemas import EnvironmentValidator, validate_all_environments
+        from .environment_schemas import (EnvironmentValidator,
+                                          validate_all_environments)
     except ImportError:
         click.echo("Error: Environment validation not available. Missing dependencies.")
         sys.exit(1)

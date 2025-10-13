@@ -47,12 +47,11 @@ class DurationType(Enum):
 
 # Try to import the validator to reuse its functions
 try:
-    from .environment_loader import EnvironmentLoader, load_resource_constraints
-    from .validate_program import (
-        load_program_file,
-        perform_additional_validations,
-        validate_program,
-    )
+    from .environment_loader import (EnvironmentLoader,
+                                     load_resource_constraints)
+    from .validate_program import (load_program_file,
+                                   perform_additional_validations,
+                                   validate_program)
 except ImportError:
     # Define our own load_program_file function if the validator is not available
     def load_program_file(file_path: str) -> Dict[str, Any]:
