@@ -238,6 +238,18 @@ class Step:
             self.code_type = step_data["codeBlock"]["type"]
             self.code_block = step_data["codeBlock"]["code"]
 
+        # Extract buffer information
+        pre_buffer = step_data.get("preBuffer", {})
+        post_buffer = step_data.get("postBuffer", {})
+        self.pre_buffer_seconds = 0.0
+        self.post_buffer_seconds = 0.0
+        if pre_buffer:
+            dur = pre_buffer.get("duration", 0)
+            self.pre_buffer_seconds = float(parse_time_string(dur)) if dur else 0.0
+        if post_buffer:
+            dur = post_buffer.get("duration", 0)
+            self.post_buffer_seconds = float(parse_time_string(dur)) if dur else 0.0
+
         # Initialize status
         self.status = StepStatus.PENDING
         self.start_time: Optional[float] = None
@@ -443,8 +455,8 @@ class Step:
 
             # Check if the referenced step is completed and the buffer time has passed
             if ref_step_id in completed_steps:
-                # We need to find the end time of the referenced step
-                return True  # This is simplified; in a real implementation, we'd check the buffer time
+                return True
+            return False
         elif start_trigger_type == "manual":
             return False
         elif start_trigger_type == "onAbort":
@@ -1798,12 +1810,25 @@ class ProgramRunner:
             return current_time >= self.program_start_time + offset_seconds
 
         # After step trigger
-        elif trigger_type == "afterStep":
+        elif trigger_type == "afterStep" or trigger_type == "afterStepWithBuffer":
             ref_step_id = start_trigger["stepId"]
             # Check if the referenced step is completed
             if ref_step_id in self.steps:
                 ref_step = self.steps[ref_step_id]
-                return ref_step.status == StepStatus.COMPLETED
+                if ref_step.status != StepStatus.COMPLETED:
+                    return False
+                # Ensure enough time has passed for predecessor's post-buffer,
+                # this step's pre-buffer, and any explicit buffer
+                if ref_step.end_time is not None:
+                    required_delay = (
+                        ref_step.post_buffer_seconds + step.pre_buffer_seconds
+                    )
+                    if trigger_type == "afterStepWithBuffer":
+                        buffer_value = start_trigger.get("bufferSeconds", 0)
+                        required_delay += parse_time_string(buffer_value)
+                    if required_delay > 0:
+                        return current_time >= ref_step.end_time + required_delay
+                return True
             return False
 
         # Manual trigger
@@ -1973,12 +1998,18 @@ class ProgramRunner:
             else:
                 return None
 
-            # Add buffer if needed
+            # Add predecessor's post-buffer
+            base_time += ref_step.post_buffer_seconds
+
+            # Add explicit buffer if afterStepWithBuffer
             if trigger_type == "afterStepWithBuffer":
                 buffer_seconds = trigger.get("bufferSeconds", 0)
                 if isinstance(buffer_seconds, str):
                     buffer_seconds = parse_time_string(buffer_seconds)
                 base_time += buffer_seconds
+
+            # Add this step's pre-buffer
+            base_time += step.pre_buffer_seconds
 
             return base_time
 
