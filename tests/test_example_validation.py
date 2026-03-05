@@ -65,11 +65,13 @@ class TestExampleValidation:
 
         # Report schema failures (these should cause test failure)
         if schema_failures:
-            failure_msg = "Schema validation failures:\n"
+            failure_msg = "\n❌ SCHEMA ERRORS (FATAL):\n"
+            failure_msg += "-" * 40 + "\n"
             for filename, errors in schema_failures:
                 failure_msg += f"\n{filename}:\n"
                 for error in errors:
                     failure_msg += f"  - {error}\n"
+            print(failure_msg)
             pytest.fail(failure_msg)
 
         # Report logic warnings (these don't fail the test but should be logged)

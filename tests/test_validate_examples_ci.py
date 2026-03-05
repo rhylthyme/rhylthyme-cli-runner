@@ -104,13 +104,13 @@ def test_validate_all_examples_for_ci():
 
     # Schema errors cause test failure
     if schema_errors:
-        print("\n❌ SCHEMA ERRORS (FATAL):")
-        print("-" * 40)
-        error_msg = "Schema validation failures:\n"
+        error_msg = "\n❌ SCHEMA ERRORS (FATAL):\n"
+        error_msg += "-" * 40 + "\n"
         for filename, errors in schema_errors:
             error_msg += f"\n{filename}:\n"
             for error in errors:
                 error_msg += f"  - {error}\n"
+        print(error_msg)
         pytest.fail(error_msg)
     else:
         print("\n✅ All examples passed schema validation")
