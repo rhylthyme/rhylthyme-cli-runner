@@ -296,6 +296,47 @@ def perform_additional_validations(
                 f"Referenced template ID '{ref_id}' does not exist in trackTemplates"
             )
 
+    # Validate negative offsetSeconds: only allowed on afterStep triggers
+    # referencing steps with indefinite duration
+    step_lookup = {}
+    for track in program.get("tracks", []):
+        for step in track.get("steps", []):
+            step_lookup[step.get("stepId")] = step
+
+    for track in program.get("tracks", []):
+        for step in track.get("steps", []):
+            start_trigger = step.get("startTrigger", {})
+            trigger_type = start_trigger.get("type")
+            offset = start_trigger.get("offsetSeconds", 0)
+            if isinstance(offset, str):
+                try:
+                    offset = parse_duration_to_seconds(offset)
+                except Exception:
+                    offset = 0
+            if offset is not None and offset < 0:
+                if trigger_type not in ("afterStep", "afterStepWithBuffer"):
+                    errors.append(
+                        f"Step '{step.get('stepId')}': negative offsetSeconds is only allowed "
+                        f"on afterStep triggers, not '{trigger_type}'"
+                    )
+                else:
+                    ref_step_id = start_trigger.get("stepId")
+                    ref_step = step_lookup.get(ref_step_id)
+                    if ref_step:
+                        ref_duration = ref_step.get("duration", {})
+                        ref_duration_type = (
+                            ref_duration.get("type")
+                            if isinstance(ref_duration, dict)
+                            else None
+                        )
+                        if ref_duration_type != "indefinite":
+                            errors.append(
+                                f"Step '{step.get('stepId')}': negative offsetSeconds "
+                                f"(-{abs(offset)}s) requires referenced step "
+                                f"'{ref_step_id}' to have duration.type='indefinite', "
+                                f"but it has '{ref_duration_type}'"
+                            )
+
     # Check for overlapping steps within the same track
     track_overlap_errors = validate_track_step_overlaps(program)
     errors.extend(track_overlap_errors)
@@ -328,6 +369,7 @@ def validate_track_step_overlaps(program: Dict[str, Any]) -> List[str]:
 
         for step in steps:
             step_id = step.get("stepId")
+
             duration = parse_duration_to_seconds(step.get("duration", "0s"))
 
             # Calculate start time based on trigger
@@ -380,9 +422,16 @@ def parse_duration_to_seconds(duration: Any) -> int:
 
     # Handle dict format (e.g., {"type": "fixed", "seconds": 180})
     if isinstance(duration, dict):
+        duration_type = duration.get("type", "fixed")
+        if duration_type == "indefinite":
+            # Indefinite durations have no fixed time; use placeholder for validation
+            return parse_time_string_to_seconds(duration.get("defaultSeconds", 60))
         if "seconds" in duration:
             seconds_value = duration["seconds"]
             return parse_time_string_to_seconds(seconds_value)
+        elif "defaultSeconds" in duration:
+            # Variable durations use defaultSeconds
+            return parse_time_string_to_seconds(duration["defaultSeconds"])
         elif "minutes" in duration:
             return int(duration["minutes"]) * 60
         elif "hours" in duration:
@@ -456,12 +505,30 @@ def calculate_step_start_time(
             referenced_step.get("duration", "0s")
         )
 
+        # Negative offset: step starts before referenced step ends.
+        # For timeline positioning, place at the referenced step's start time.
+        if offset_seconds < 0:
+            return referenced_start_time
+
         if event == "start":
             base_time = referenced_start_time
         else:  # event == "end"
             base_time = referenced_start_time + referenced_duration
 
         return max(0, base_time + offset_seconds)
+
+    elif trigger_type in ["manual", "previousStepComplete"]:
+        # Manual/previousStepComplete: position after the previous step in the track
+        step_id = step.get("stepId")
+        offset_seconds = start_trigger.get("offsetSeconds", 0)
+        prev_end_time = 0
+        for s in track_steps:
+            if s.get("stepId") == step_id:
+                break
+            s_start = calculate_step_start_time(s, track_steps, program)
+            s_duration = parse_duration_to_seconds(s.get("duration", "0s"))
+            prev_end_time = s_start + s_duration
+        return max(0, prev_end_time + offset_seconds)
 
     else:
         # Unknown trigger type, assume program start

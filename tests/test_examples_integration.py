@@ -118,6 +118,7 @@ class TestExamplesIntegration(unittest.TestCase):
                             "startTrigger": {"type": "manual"},
                             "duration": {
                                 "type": "indefinite",
+                                "defaultSeconds": 60,
                                 "triggerName": "stop-manual-step",
                             },
                             "preBuffer": {

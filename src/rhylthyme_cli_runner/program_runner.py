@@ -134,11 +134,7 @@ class Step:
         self.priority = step_data.get("priority", 100)
         self.expected_end_time = None
         self.manual_trigger_name = None
-
-        # Debug logging for cook-bacon step
-        if self.step_id == "cook-bacon":
-            print(f"DEBUG: cook-bacon step data: {step_data}")
-            print(f"DEBUG: cook-bacon duration: {step_data.get('duration', {})}")
+        self.manual_start_trigger_name = None
 
         # Extract duration information
         self.duration_type = None
@@ -172,14 +168,6 @@ class Step:
                             ),
                         )
                     )
-                    # Debug logging for cook-bacon step
-                    if self.step_id == "cook-bacon":
-                        print(
-                            f"DEBUG: cook-bacon variable duration: type={self.duration_type}, min={self.min_seconds}, max={self.max_seconds}, default={self.default_seconds}"
-                        )
-                        print(
-                            f"DEBUG: cook-bacon triggerName: {duration.get('triggerName')}"
-                        )
                     self.manual_trigger_name = duration.get("triggerName")
                 elif duration_type == "indefinite" or duration_type == "manual":
                     self.duration_type = DurationType.INDEFINITE
@@ -639,6 +627,11 @@ class ProgramRunner:
             auto_start: Whether to start the program automatically
             environment: Optional environment data to use instead of loading from file
         """
+        # Expand replicates (and legacy batch_size) before processing
+        from rhylthyme.expand_replicates import expand_replicates
+
+        program = expand_replicates(program)
+
         self.program = program
         self.time_scale = time_scale
         self.auto_start = auto_start
@@ -786,78 +779,50 @@ class ProgramRunner:
             if task_type not in self.resource_constraints:
                 self.resource_constraints[task_type] = self.actors
                 self.resource_usage[task_type] = 0
+            # Ensure all task types have qualified actor types
+            if task_type not in self.qualified_actor_types:
+                self.qualified_actor_types[task_type] = []
 
-        # Initialize steps
+        # Assign generic actor type to any task types with empty qualified lists
+        if self.actor_types:
+            for task in self.qualified_actor_types:
+                if not self.qualified_actor_types[task]:
+                    self.qualified_actor_types[task] = list(self.actor_types.keys())
+
+        # Initialize steps (replicates/batch_size already expanded)
         for track in program.get("tracks", []):
             track_id = track.get("trackId")
-            batch_size = track.get("batch_size", 1)
-
-            # Get stagger value and parse it if it's a string with units
-            stagger_value = track.get("stagger", track.get("stagger_seconds", 0))
-            stagger_seconds = parse_time_string(stagger_value)
-
             track_steps = []
 
-            # Create multiple instances of steps for tracks with batch_size > 1
-            for batch_index in range(batch_size):
-                batch_suffix = f"_{batch_index + 1}" if batch_size > 1 else ""
+            for step_data in track.get("steps", []):
+                step_id = step_data.get("stepId")
 
-                for step_data in track.get("steps", []):
-                    step_id = step_data.get("stepId") + batch_suffix
-                    step_name = step_data.get("name")
+                step = Step(step_data, track_id)
+                self.steps[step_id] = step
+                track_steps.append(step)
 
-                    # Add batch number to step name if batch_size > 1
-                    if batch_size > 1:
-                        step_name = f"{step_name} #{batch_index + 1}"
+                # Register manual triggers from duration triggerName
+                if step.manual_trigger_name:
+                    if step.manual_trigger_name not in self.manual_triggers:
+                        self.manual_triggers[step.manual_trigger_name] = []
+                    self.manual_triggers[step.manual_trigger_name].append(step)
 
-                    # Create a copy of step_data to avoid modifying the original
-                    step_data_copy = step_data.copy()
-
-                    # Apply stagger to programStart and programStartOffset triggers
-                    if batch_size > 1 and batch_index > 0 and stagger_seconds > 0:
-                        start_trigger = step_data_copy.get("startTrigger", {})
-                        trigger_type = start_trigger.get("type")
-
-                        if trigger_type == "programStart":
-                            # Convert programStart to programStartOffset for staggered batches
-                            step_data_copy["startTrigger"] = {
-                                "type": "programStartOffset",
-                                "offsetSeconds": stagger_seconds * batch_index,
-                            }
-                        elif trigger_type == "programStartOffset":
-                            # Add stagger time to existing offset
-                            current_offset = start_trigger.get("offsetSeconds", 0)
-                            step_data_copy["startTrigger"]["offsetSeconds"] = (
-                                current_offset + (stagger_seconds * batch_index)
-                            )
-
-                    # Update step ID references in start triggers for batched steps
-                    start_trigger = step_data_copy.get("startTrigger", {})
-                    if start_trigger.get("type") == "afterStep" and batch_size > 1:
-                        ref_step_id = start_trigger.get("stepId")
-                        # Only update references to steps in the same track
-                        if any(
-                            s.get("stepId") == ref_step_id
-                            for s in track.get("steps", [])
-                        ):
-                            start_trigger["stepId"] = ref_step_id + batch_suffix
-
-                    step = Step(step_data_copy, track_id, batch_index)
-                    self.steps[step_id] = step
-                    track_steps.append(step)
-
-                    # Register manual triggers
-                    if step.manual_trigger_name:
-                        if batch_size > 1:
-                            # Create unique trigger names for each batch
-                            batch_trigger_name = (
-                                f"{step.manual_trigger_name}{batch_suffix}"
-                            )
-                            step.manual_trigger_name = batch_trigger_name
-
-                        if step.manual_trigger_name not in self.manual_triggers:
-                            self.manual_triggers[step.manual_trigger_name] = []
-                        self.manual_triggers[step.manual_trigger_name].append(step)
+                # Register manual start triggers from startTrigger.triggerName
+                if step.has_manual_trigger():
+                    start_trig = step.start_trigger or {}
+                    start_trigger_name = start_trig.get("triggerName")
+                    if start_trigger_name:
+                        step.manual_start_trigger_name = start_trigger_name
+                        if start_trigger_name not in self.manual_triggers:
+                            self.manual_triggers[start_trigger_name] = []
+                        if step not in self.manual_triggers[start_trigger_name]:
+                            self.manual_triggers[start_trigger_name].append(step)
+                    elif not step.manual_trigger_name:
+                        fallback_name = f"start-{step.step_id}"
+                        step.manual_start_trigger_name = fallback_name
+                        if fallback_name not in self.manual_triggers:
+                            self.manual_triggers[fallback_name] = []
+                        self.manual_triggers[fallback_name].append(step)
 
             self.tracks[track_id] = track_steps
 
@@ -952,8 +917,11 @@ class ProgramRunner:
     def start_ready_steps(self, current_time: float) -> None:
         """Start steps that are ready to start."""
         # Sort steps by priority (lower number = higher priority)
+        # Include WAITING_FOR_MANUAL steps so they can be started after user triggers them
         pending_steps = [
-            step for step in self.steps.values() if step.status == StepStatus.PENDING
+            step
+            for step in self.steps.values()
+            if step.status in (StepStatus.PENDING, StepStatus.WAITING_FOR_MANUAL)
         ]
         pending_steps.sort(key=lambda s: s.priority)
 
@@ -1194,12 +1162,16 @@ class ProgramRunner:
             step.set_waiting_for_manual()
             self.status_message = f"Step {step.name} is now waiting to start."
         elif step.status == StepStatus.RUNNING:
-            if step.can_be_aborted():
-                self.abort_step(step, self.current_time)
-                self.status_message = f"Aborted step: {step.name}"
-            elif step.duration_type == "variable" or step.duration_type == "indefinite":
+            # Check if step has a completable duration trigger first
+            if (
+                step.duration_type == DurationType.VARIABLE
+                or step.duration_type == DurationType.INDEFINITE
+            ):
                 self.complete_step(step, self.current_time)
                 self.status_message = f"Manually completed step: {step.name}"
+            elif step.can_be_aborted():
+                self.abort_step(step, self.current_time)
+                self.status_message = f"Aborted step: {step.name}"
 
     def abort_step(
         self, step: Step, current_time: float, reason: str = "Aborted"
@@ -1403,7 +1375,9 @@ class ProgramRunner:
                 step.task_types[0] if step.task_types else "N/A"
             ),  # Keep for backward compatibility
             "task_types": step.task_types,  # Add all task types
-            "trigger": step.manual_trigger_name or "N/A",
+            "trigger": step.manual_trigger_name
+            or getattr(step, "manual_start_trigger_name", None)
+            or "N/A",
         }
 
     def select_next_step(self) -> None:
@@ -1776,7 +1750,9 @@ class ProgramRunner:
         Returns:
             True if the step is ready to start, False otherwise
         """
-        # Only pending steps can be started
+        # Only pending or waiting-for-manual steps can be started
+        if step.status == StepStatus.WAITING_FOR_MANUAL:
+            return True  # Already triggered by user, ready to start
         if step.status != StepStatus.PENDING:
             return False
 
@@ -1818,7 +1794,7 @@ class ProgramRunner:
                 if ref_step.status != StepStatus.COMPLETED:
                     return False
                 # Ensure enough time has passed for predecessor's post-buffer,
-                # this step's pre-buffer, and any explicit buffer
+                # this step's pre-buffer, any explicit buffer, and offsetSeconds
                 if ref_step.end_time is not None:
                     required_delay = (
                         ref_step.post_buffer_seconds + step.pre_buffer_seconds
@@ -1826,16 +1802,18 @@ class ProgramRunner:
                     if trigger_type == "afterStepWithBuffer":
                         buffer_value = start_trigger.get("bufferSeconds", 0)
                         required_delay += parse_time_string(buffer_value)
+                    # Handle offsetSeconds on afterStep (same as web visualizer)
+                    offset_value = start_trigger.get("offsetSeconds", 0)
+                    if offset_value:
+                        required_delay += parse_time_string(offset_value)
                     if required_delay > 0:
                         return current_time >= ref_step.end_time + required_delay
                 return True
             return False
 
-        # Manual trigger
+        # Manual trigger — step must be set to WAITING_FOR_MANUAL via trigger_manual_step()
         elif trigger_type == "manual":
-            trigger_name = start_trigger.get("triggerName", "")
-            # Check if this step has been manually triggered
-            return step.step_id in self.manually_triggered_steps
+            return False
 
         # Unknown trigger type
         else:
@@ -2007,6 +1985,13 @@ class ProgramRunner:
                 if isinstance(buffer_seconds, str):
                     buffer_seconds = parse_time_string(buffer_seconds)
                 base_time += buffer_seconds
+
+            # Handle offsetSeconds on afterStep (same as web visualizer)
+            offset_seconds = trigger.get("offsetSeconds", 0)
+            if offset_seconds:
+                if isinstance(offset_seconds, str):
+                    offset_seconds = parse_time_string(offset_seconds)
+                base_time += offset_seconds
 
             # Add this step's pre-buffer
             base_time += step.pre_buffer_seconds
@@ -2308,7 +2293,11 @@ def handle_input(stdscr, runner: ProgramRunner) -> bool:
         selected_step = runner.steps[selected_step_id]
 
         # Check if the step has a manual trigger or can be aborted
-        if not selected_step.manual_trigger_name:
+        # Check both duration triggerName and start trigger triggerName
+        trigger_name = selected_step.manual_trigger_name or getattr(
+            selected_step, "manual_start_trigger_name", None
+        )
+        if not trigger_name:
             if selected_step.can_be_aborted():
                 runner.status_message = f"Step '{selected_step.name}' has no manual trigger. Press 'a' to abort or 'T' for menu."
             else:
@@ -2317,15 +2306,17 @@ def handle_input(stdscr, runner: ProgramRunner) -> bool:
                 )
             return True
 
-        # Check if the step can be triggered
+        # Check if the step can be triggered to START
         if (
             selected_step.status == StepStatus.PENDING
             and selected_step.has_manual_trigger()
         ):
-            # Trigger the step to start
-            runner.command_queue.put(
-                f"trigger:{selected_step.manual_trigger_name}:{selected_step_id}"
+            # Use the start trigger name if available, otherwise fall back to duration trigger
+            start_name = (
+                getattr(selected_step, "manual_start_trigger_name", None)
+                or selected_step.manual_trigger_name
             )
+            runner.command_queue.put(f"trigger:{start_name}:{selected_step_id}")
         elif selected_step.status == StepStatus.RUNNING and (
             selected_step.duration_type == "variable"
             or selected_step.duration_type == "indefinite"
@@ -2340,7 +2331,7 @@ def handle_input(stdscr, runner: ProgramRunner) -> bool:
                     runner.status_message = f"Step '{selected_step.name}' hasn't reached minimum duration yet."
                     return True
 
-            # Trigger the step to end
+            # Trigger the step to COMPLETE (use duration trigger name)
             runner.command_queue.put(
                 f"trigger:{selected_step.manual_trigger_name}:{selected_step_id}"
             )

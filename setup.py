@@ -29,6 +29,7 @@ setup(
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     install_requires=[
+        "setuptools",
         "click>=8.0.0",
         "jsonschema>=4.0.0",
         "pyyaml>=6.0",
