@@ -75,7 +75,7 @@ def cli(ctx, environments_dir):
     "--schema",
     type=click.Path(exists=True),
     default=lambda: pkg_resources.resource_filename(
-        "rhylthyme_spec", "schemas/program_schema_0.1.0-alpha.json"
+        "rhylthyme_spec", "schemas/program_schema_0.2.0-alpha.json"
     ),
     help="Path to the schema file (default: built-in schema)",
 )
@@ -177,7 +177,7 @@ def validate(program_files, schema, environment, verbose, json_output, strict):
     "--schema",
     type=click.Path(exists=True),
     default=lambda: pkg_resources.resource_filename(
-        "rhylthyme_spec", "schemas/program_schema_0.1.0-alpha.json"
+        "rhylthyme_spec", "schemas/program_schema_0.2.0-alpha.json"
     ),
     help="Path to the schema file (default: built-in schema)",
 )

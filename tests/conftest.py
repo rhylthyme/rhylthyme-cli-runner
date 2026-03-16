@@ -224,7 +224,7 @@ def schema_file():
         / "src"
         / "rhylthyme_spec"
         / "schemas"
-        / "program_schema_0.1.0-alpha.json"
+        / "program_schema_0.2.0-alpha.json"
     )
     if schema_path.exists():
         return str(schema_path.resolve())

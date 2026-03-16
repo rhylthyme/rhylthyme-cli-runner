@@ -225,7 +225,7 @@ def test_validation_function_with_invalid_file():
         import pkg_resources
 
         schema_file = pkg_resources.resource_filename(
-            "rhylthyme_spec", "schemas/program_schema_0.1.0-alpha.json"
+            "rhylthyme_spec", "schemas/program_schema_0.2.0-alpha.json"
         )
     except (ImportError, FileNotFoundError):
         pytest.skip("Schema file not available")
@@ -254,7 +254,7 @@ def test_validation_function_with_invalid_json(temp_dir):
         import pkg_resources
 
         schema_file = pkg_resources.resource_filename(
-            "rhylthyme_spec", "schemas/program_schema_0.1.0-alpha.json"
+            "rhylthyme_spec", "schemas/program_schema_0.2.0-alpha.json"
         )
     except (ImportError, FileNotFoundError):
         pytest.skip("Schema file not available")

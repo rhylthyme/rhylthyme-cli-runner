@@ -35,7 +35,7 @@ def test_validate_all_examples_for_ci():
         / "src"
         / "rhylthyme_spec"
         / "schemas"
-        / "program_schema_0.1.0-alpha.json"
+        / "program_schema_0.2.0-alpha.json"
     )
 
     if not examples_dir.exists():
