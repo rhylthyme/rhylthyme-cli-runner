@@ -200,7 +200,75 @@ def validate(program_files, schema, environment, verbose, json_output, strict):
     is_flag=True,
     help="Automatically start the program without waiting for manual trigger",
 )
-def run(program_file, schema, environment, time_scale, validate, auto_start):
+@click.option(
+    "--runs-dir",
+    type=click.Path(),
+    default=None,
+    help="Directory for run records (default: $RHYLTHYME_RUNS_DIR or ~/.rhylthyme/runs)",
+)
+@click.option(
+    "--no-record",
+    is_flag=True,
+    help="Do not write a run record (planned vs actual) when the run ends",
+)
+@click.option(
+    "--factor",
+    "factors",
+    multiple=True,
+    metavar="KEY=VALUE",
+    help=(
+        "Answer one of the program's declared variance factors without being "
+        "asked (repeatable); also settable as RHYLTHYME_FACTORS='k=v,k2=v2'"
+    ),
+)
+@click.option(
+    "--no-factor-prompt",
+    is_flag=True,
+    help="Do not ask for declared variance factors before the run starts",
+)
+@click.option(
+    "--history",
+    "history_file",
+    type=click.Path(exists=True),
+    default=None,
+    help=(
+        "Run records to predict durations from (a record, a list of records, "
+        "or a corpus with a 'runs' array) instead of the runs directory"
+    ),
+)
+@click.option(
+    "--no-history",
+    is_flag=True,
+    help=(
+        "Do not read run history: a program with metadata.offsetsUse "
+        "'predicted' falls back to its planned durations"
+    ),
+)
+@click.option(
+    "--predict-context",
+    "predict_context",
+    multiple=True,
+    metavar="KEY=VALUE",
+    help=(
+        "Context to predict for (repeatable); defaults to this run's --factor "
+        "answers, which are what the record stores in context.userTags"
+    ),
+)
+def run(
+    program_file,
+    schema,
+    environment,
+    time_scale,
+    validate,
+    auto_start,
+    runs_dir,
+    no_record,
+    factors,
+    no_factor_prompt,
+    history_file,
+    no_history,
+    predict_context,
+):
     """
     Run a program file with the interactive UI.
 
@@ -210,8 +278,38 @@ def run(program_file, schema, environment, time_scale, validate, auto_start):
 
     Use -e/--environment to specify which environment to use when running the program.
     This overrides any environment specified in the program file.
+
+    On exit (including 'q' and Ctrl-C) a run record of planned vs actual
+    timings is written under --runs-dir; inspect it with `rhylthyme runs`.
+
+    If the program declares metadata.varianceFactors, you are asked for them
+    once before the run starts (Enter skips any of them). Use --factor
+    KEY=VALUE or RHYLTHYME_FACTORS to answer ahead of time, and
+    --no-factor-prompt to skip the questions.
+
+    If the program sets metadata.offsetsUse to "predicted", recorded runs are
+    read at start-up and a negative offset anchored on an indefinite step
+    ("peel the potatoes 45 min before the roast is done") fires from the
+    predicted end of that step instead of its authored defaultSeconds. Use
+    --history FILE to read a specific corpus, --no-history to turn it off,
+    and --predict-context KEY=VALUE to predict for a context other than the
+    factor answers.
     """
-    run_program(program_file, schema, time_scale, validate, auto_start, environment)
+    run_program(
+        program_file,
+        schema,
+        time_scale,
+        validate,
+        auto_start,
+        environment,
+        record=not no_record,
+        runs_dir=runs_dir,
+        factors=factors,
+        factor_prompt=not no_factor_prompt,
+        history_file=history_file,
+        use_history=not no_history,
+        predict_context=predict_context,
+    )
 
 
 # Plan command
@@ -398,6 +496,40 @@ def environment_info(environment_type):
     click.echo(f"Required Tasks: {', '.join(info.get('required_tasks', []))}")
     click.echo(f"Common Tasks: {', '.join(info.get('common_tasks', []))}")
     click.echo(f"Actor Types: {', '.join(info.get('actor_types', []))}")
+
+
+def _register_eval_commands():
+    """Attach `eval-prompts` (implemented in rhylthyme_cli_runner.eval.cli)."""
+    from .eval.cli import register
+
+    register(cli)
+
+
+_register_eval_commands()
+
+
+def _register_runs_commands():
+    """Attach `runs` (implemented in rhylthyme_cli_runner.history.cli)."""
+    from .history.cli import runs
+    from .history.evaluate_cli import register as register_runs_evaluate
+    from .history.report_cli import register as register_runs_report
+
+    register_runs_report(runs)
+    register_runs_evaluate(runs)
+    cli.add_command(runs)
+
+
+_register_runs_commands()
+
+
+def _register_calibrate_command():
+    """Attach `calibrate` (implemented in rhylthyme_cli_runner.history.calibrate_cli)."""
+    from .history.calibrate_cli import register as register_calibrate
+
+    register_calibrate(cli)
+
+
+_register_calibrate_command()
 
 
 def main():

@@ -30,10 +30,10 @@ install-dev:
 
 # Testing
 test:
-	pytest tests -v
+	pytest tests -v -m "not llm"
 
 test-unit:
-	pytest tests -v -m "unit"
+	pytest tests -v -m "unit and not llm"
 
 test-integration:
 	pytest tests -v -m "integration"
@@ -45,7 +45,7 @@ test-examples:
 	pytest tests/test_validate_examples_ci.py -v
 
 test-fast:
-	pytest tests -v -m "unit or cli"
+	pytest tests -v -m "(unit or cli) and not llm"
 
 # Coverage
 coverage:
@@ -101,6 +101,7 @@ test-help:
 	@echo "  integration  - Integration tests (slower, with external dependencies)"
 	@echo "  cli          - CLI interface tests"
 	@echo "  slow         - Slow tests (example validation, etc.)"
+	@echo "  llm          - Real model API calls (excluded from make test; RHYLTHYME_EVAL_LIVE=1)"
 	@echo ""
 	@echo "Example usage:"
 	@echo "  make test-unit          # Run only unit tests"

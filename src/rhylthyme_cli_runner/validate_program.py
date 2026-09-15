@@ -9,11 +9,14 @@ It ensures that programs conform to the specification for real-time schedules.
 import argparse
 import json
 import os
+import re
 import sys
 from typing import Any, Dict, List, Tuple
 
 import yaml
 from jsonschema import SchemaError, ValidationError, validate
+
+from .instance_checks import Finding, validate_instances
 
 # Import environment loader for environment-based validation
 try:
@@ -160,6 +163,39 @@ def validate_program(
         return False, [f"Schema error: {e}"]
 
 
+_LEGACY_CODES = (
+    ("Duplicate step ID", "duplicate_step_id"),
+    ("Referenced step ID", "dangling_step_ref"),
+    ("not defined in resourceConstraints", "task_not_constrained"),
+    ("environment", "environment_not_found"),
+    ("negative offsetSeconds", "negative_offset"),
+    ("Referenced template ID", "dangling_template_ref"),
+    ("overlap by", "track_overlap"),
+)
+
+
+def _legacy_finding(message: str) -> Finding:
+    """Wrap a pre-existing check's message as a coded Finding (string unchanged)."""
+    code = next((c for needle, c in _LEGACY_CODES if needle in message), "logic_error")
+    m = re.search(r"[Ss]tep(?: ID)? '([^']+)'", message)
+    where = f"step:{m.group(1)}" if m else None
+    return Finding.legacy_error(code, message, where)
+
+
+def perform_additional_validations_structured(
+    program: Dict[str, Any], strict: bool = False
+) -> List[Finding]:
+    """
+    All logic checks as structured findings: the pre-existing checks (each
+    rendered by ``str()`` exactly as before) followed by the schema 0.3.0
+    `instances` / `replicates` checks from :mod:`instance_checks`, which
+    include warnings. Pass the UNEXPANDED program for the latter to fire.
+    """
+    findings = [_legacy_finding(msg) for msg in _legacy_logic_errors(program, strict)]
+    findings.extend(validate_instances(program))
+    return findings
+
+
 def perform_additional_validations(
     program: Dict[str, Any], strict: bool = False
 ) -> List[str]:
@@ -167,8 +203,18 @@ def perform_additional_validations(
     Perform additional validations that go beyond basic schema validation.
     If strict is True, always require all tasks used in steps/buffers to be defined in resourceConstraints.
     Returns:
-        List of error messages (empty if all validations pass)
+        List of error messages (empty if all validations pass). Warnings are
+        not included; see :func:`perform_additional_validations_structured`.
     """
+    return [
+        str(f)
+        for f in perform_additional_validations_structured(program, strict)
+        if f.severity == "error"
+    ]
+
+
+def _legacy_logic_errors(program: Dict[str, Any], strict: bool = False) -> List[str]:
+    """The pre-0.3.0 logic checks, as their original message strings."""
     errors = []
 
     # Check for duplicate step IDs
@@ -432,6 +478,10 @@ def parse_duration_to_seconds(duration: Any) -> int:
         elif "defaultSeconds" in duration:
             # Variable durations use defaultSeconds
             return parse_time_string_to_seconds(duration["defaultSeconds"])
+        elif "maxSeconds" in duration:
+            return parse_time_string_to_seconds(duration["maxSeconds"])
+        elif "minSeconds" in duration:
+            return parse_time_string_to_seconds(duration["minSeconds"])
         elif "minutes" in duration:
             return int(duration["minutes"]) * 60
         elif "hours" in duration:
@@ -443,9 +493,20 @@ def parse_duration_to_seconds(duration: Any) -> int:
     return parse_time_string_to_seconds(duration)
 
 
+def _signed_seconds(value) -> float:
+    """Parse an offset/buffer that may be a number or a signed unit string ('-20m')."""
+    if value is None:
+        return 0
+    if isinstance(value, (int, float)):
+        return value
+    text = str(value).strip()
+    sign = -1 if text.startswith("-") else 1
+    return sign * parse_time_string_to_seconds(text.lstrip("+-"))
+
+
 def calculate_step_start_time(
     step: Dict[str, Any], track_steps: List[Dict[str, Any]], program: Dict[str, Any]
-) -> int:
+) -> float:
     """
     Calculate the start time of a step based on its trigger.
 
@@ -460,13 +521,32 @@ def calculate_step_start_time(
     start_trigger = step.get("startTrigger", {})
     trigger_type = start_trigger.get("type", "programStart")
 
-    if trigger_type == "programStart":
-        offset_seconds = start_trigger.get("offsetSeconds", 0)
+    # Compound triggers ({"logic": "all"|"any", "triggers": [...]}): resolve
+    # each sub-trigger for this step and combine, as the root package does.
+    if "logic" in start_trigger and "triggers" in start_trigger:
+        sub_times = [
+            calculate_step_start_time(
+                {"stepId": step.get("stepId"), "startTrigger": sub},
+                track_steps,
+                program,
+            )
+            for sub in start_trigger["triggers"]
+        ]
+        if not sub_times:
+            return 0
+        if start_trigger.get("logic") == "any":
+            return min(sub_times)
+        return max(sub_times)
+
+    if trigger_type in ("programStart", "programStartOffset"):
+        offset_seconds = _signed_seconds(start_trigger.get("offsetSeconds", 0))
         return max(0, offset_seconds)
 
     elif trigger_type in ["afterStep", "afterStepWithBuffer"]:
         referenced_step_id = start_trigger.get("stepId")
-        offset_seconds = start_trigger.get("offsetSeconds", 0)
+        offset_seconds = _signed_seconds(start_trigger.get("offsetSeconds", 0))
+        if trigger_type == "afterStepWithBuffer":
+            offset_seconds += _signed_seconds(start_trigger.get("bufferSeconds", 0))
         event = start_trigger.get("event", "end")  # Default to "end"
 
         if not referenced_step_id:
@@ -508,7 +588,11 @@ def calculate_step_start_time(
         # Negative offset: step starts before referenced step ends.
         # For timeline positioning, place at the referenced step's start time.
         if offset_seconds < 0:
-            return referenced_start_time
+            # Start before the referenced step's planned end, never before its start.
+            return max(
+                referenced_start_time,
+                referenced_start_time + referenced_duration + offset_seconds,
+            )
 
         if event == "start":
             base_time = referenced_start_time
@@ -521,7 +605,7 @@ def calculate_step_start_time(
         # Manual/previousStepComplete: position after the previous step in the track
         step_id = step.get("stepId")
         offset_seconds = start_trigger.get("offsetSeconds", 0)
-        prev_end_time = 0
+        prev_end_time: float = 0
         for s in track_steps:
             if s.get("stepId") == step_id:
                 break
@@ -543,12 +627,22 @@ def validate_program_file_structured(
 ) -> dict:
     """
     Validate a program file and return a structured result for machine-readable output.
-    Returns a dict with is_valid, schema_errors, logic_errors, and summary info.
+    Returns a dict with is_valid, schema_errors, logic_errors, warnings,
+    findings (``{code, message, where, fix, severity}`` per finding; the
+    schema 0.3.0 `instances` codes carry fix hints) and summary info.
     """
     schema = load_program_file(schema_file)
     program = load_program_file(program_file)
     is_valid, schema_errors = validate_program(program, schema)
-    logic_errors = perform_additional_validations(program, strict=strict)
+    # Logic checks run on the unexpanded program, so the schema 0.3.0
+    # `instances` / `replicates` checks see the authored declarations.
+    logic_findings = perform_additional_validations_structured(program, strict=strict)
+    logic_errors = [str(f) for f in logic_findings if f.severity == "error"]
+    findings = [
+        Finding.legacy_error("schema_error", msg, "program").to_dict()
+        for msg in schema_errors
+    ] + [f.to_dict() for f in logic_findings]
+    warnings = [str(f) for f in logic_findings if f.severity == "warning"]
     summary = {
         "programId": program.get("programId"),
         "name": program.get("name"),
@@ -562,6 +656,8 @@ def validate_program_file_structured(
         "is_valid": is_valid and not logic_errors,
         "schema_errors": schema_errors,
         "logic_errors": logic_errors,
+        "warnings": warnings,
+        "findings": findings,
         "summary": summary,
     }
 
@@ -601,6 +697,10 @@ def validate_program_file(
             print("\nAdditional validation errors:")
             for error in result["logic_errors"]:
                 print(f"  - {error}")
+    if result.get("warnings"):
+        print("\nWarnings:")
+        for warning in result["warnings"]:
+            print(f"  - {warning}")
     if verbose:
         print("\nProgram details:")
         for k, v in result["summary"].items():

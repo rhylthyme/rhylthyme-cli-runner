@@ -1,0 +1,659 @@
+{
+  "$comment": "Parity fixture for the shared usable-run filter. Python: rhylthyme_cli_runner.history.usable (tests/test_usable.py). JavaScript: rhylthyme-server/mcp-api/history.js (mcp-api/history.test.js, which reads this file by relative path). Each case carries the expected run verdict, the per-step reason map, and the same map with includeFixed set. schemaValid says whether the record also validates against runs_schema_0.1.0-alpha.json.",
+  "cases": [
+    {
+      "name": "completed wall-clock run at speed 1",
+      "comment": "The only kind of run history can learn from. Every step-level reason appears once.",
+      "record": {
+        "schemaVersion": "0.1.0-alpha",
+        "runId": "2026-02-01T10:00:00Z-0001",
+        "programId": "usable-parity",
+        "programVersion": "sha256:abababababababababababababababababababababababababababababababab",
+        "runtime": {
+          "kind": "cli",
+          "version": "0.1.0a0",
+          "clockMode": "wall",
+          "speed": 1
+        },
+        "environmentId": null,
+        "startedAt": "2026-02-01T10:00:00.000Z",
+        "endedAt": "2026-02-01T12:00:00.000Z",
+        "outcome": "completed",
+        "context": {
+          "serves": "8",
+          "userTags": {
+            "oven": "gas",
+            "turkeyKg": 6.4
+          }
+        },
+        "steps": [
+          {
+            "stepId": "fixed-timer",
+            "instance": 1,
+            "planned": {
+              "start": 0,
+              "end": 600,
+              "durationType": "fixed",
+              "seconds": 600
+            },
+            "actual": {
+              "start": 0,
+              "end": 612
+            },
+            "endedBy": "timer",
+            "pausedSeconds": 0,
+            "triggerFiredAt": 0
+          },
+          {
+            "stepId": "fixed-executor",
+            "instance": 1,
+            "planned": {
+              "start": 600,
+              "end": 900,
+              "durationType": "fixed",
+              "seconds": 300
+            },
+            "actual": {
+              "start": 612,
+              "end": 800
+            },
+            "endedBy": "executor",
+            "pausedSeconds": 0,
+            "waitedOn": [
+              "fixed-timer"
+            ],
+            "triggerFiredAt": 612
+          },
+          {
+            "stepId": "fixed-paused",
+            "instance": 1,
+            "planned": {
+              "start": 900,
+              "end": 1200,
+              "durationType": "fixed",
+              "seconds": 300
+            },
+            "actual": {
+              "start": 900,
+              "end": 1300
+            },
+            "endedBy": "timer",
+            "pausedSeconds": 45,
+            "triggerFiredAt": 900
+          },
+          {
+            "stepId": "var-executor",
+            "instance": 1,
+            "planned": {
+              "start": 0,
+              "end": 1200,
+              "durationType": "variable",
+              "defaultSeconds": 1200
+            },
+            "actual": {
+              "start": 10,
+              "end": 1150
+            },
+            "endedBy": "executor",
+            "pausedSeconds": 0,
+            "triggerFiredAt": 10
+          },
+          {
+            "stepId": "var-timer",
+            "instance": 1,
+            "planned": {
+              "start": 0,
+              "end": 1200,
+              "durationType": "variable",
+              "defaultSeconds": 1200
+            },
+            "actual": {
+              "start": 20,
+              "end": 1220
+            },
+            "endedBy": "timer",
+            "pausedSeconds": 0,
+            "triggerFiredAt": 20
+          },
+          {
+            "stepId": "var-paused",
+            "instance": 1,
+            "planned": {
+              "start": 0,
+              "end": 1200,
+              "durationType": "variable",
+              "defaultSeconds": 1200
+            },
+            "actual": {
+              "start": 30,
+              "end": 1400
+            },
+            "endedBy": "executor",
+            "pausedSeconds": 90,
+            "triggerFiredAt": 30
+          },
+          {
+            "stepId": "indef-executor",
+            "instance": 1,
+            "planned": {
+              "start": 1200,
+              "end": 11100,
+              "durationType": "indefinite",
+              "defaultSeconds": 9900
+            },
+            "actual": {
+              "start": 1200,
+              "end": 12610
+            },
+            "endedBy": "executor",
+            "pausedSeconds": 0,
+            "waitedOn": [
+              "var-executor"
+            ],
+            "triggerFiredAt": 1200
+          },
+          {
+            "stepId": "indef-aborted",
+            "instance": 1,
+            "planned": {
+              "start": 0,
+              "end": 600,
+              "durationType": "indefinite",
+              "defaultSeconds": 600
+            },
+            "actual": {
+              "start": 5,
+              "end": 90
+            },
+            "endedBy": "abort",
+            "pausedSeconds": 0,
+            "triggerFiredAt": 5
+          },
+          {
+            "stepId": "still-running",
+            "instance": 1,
+            "planned": {
+              "start": 0,
+              "end": 600,
+              "durationType": "variable",
+              "defaultSeconds": 600
+            },
+            "actual": {
+              "start": 40
+            },
+            "pausedSeconds": 0,
+            "triggerFiredAt": 40
+          },
+          {
+            "stepId": "never-started",
+            "instance": 1,
+            "planned": {
+              "start": 0,
+              "end": 600,
+              "durationType": "variable",
+              "defaultSeconds": 600
+            }
+          }
+        ]
+      },
+      "expectUsable": true,
+      "expectReason": null,
+      "schemaValid": true,
+      "stepReasons": {
+        "fixed-timer": "fixed-duration",
+        "fixed-executor": "fixed-duration",
+        "fixed-paused": "paused",
+        "var-executor": null,
+        "var-timer": "ended-by-timer",
+        "var-paused": "paused",
+        "indef-executor": null,
+        "indef-aborted": "ended-by-abort",
+        "still-running": "not-ended",
+        "never-started": "no-actual"
+      },
+      "stepReasonsIncludingFixed": {
+        "fixed-timer": null,
+        "fixed-executor": null,
+        "fixed-paused": "paused",
+        "var-executor": null,
+        "var-timer": "ended-by-timer",
+        "var-paused": "paused",
+        "indef-executor": null,
+        "indef-aborted": "ended-by-abort",
+        "still-running": "not-ended",
+        "never-started": "no-actual"
+      },
+      "usableStepIds": [
+        "var-executor",
+        "indef-executor"
+      ],
+      "usableStepIdsIncludingFixed": [
+        "fixed-timer",
+        "fixed-executor",
+        "var-executor",
+        "indef-executor"
+      ]
+    },
+    {
+      "name": "abandoned run",
+      "comment": "Quit or Ctrl-C: the run stopped for a reason that is not about duration.",
+      "record": {
+        "schemaVersion": "0.1.0-alpha",
+        "runId": "2026-02-02T10:00:00Z-0002",
+        "programId": "usable-parity",
+        "programVersion": "sha256:abababababababababababababababababababababababababababababababab",
+        "runtime": {
+          "kind": "cli",
+          "version": "0.1.0a0",
+          "clockMode": "wall",
+          "speed": 1
+        },
+        "environmentId": null,
+        "startedAt": "2026-02-01T10:00:00.000Z",
+        "endedAt": "2026-02-01T12:00:00.000Z",
+        "outcome": "abandoned",
+        "context": {
+          "serves": "8",
+          "userTags": {
+            "oven": "gas",
+            "turkeyKg": 6.4
+          }
+        },
+        "steps": [
+          {
+            "stepId": "var-executor",
+            "instance": 1,
+            "planned": {
+              "start": 0,
+              "end": 600,
+              "durationType": "variable",
+              "defaultSeconds": 600
+            },
+            "actual": {
+              "start": 0,
+              "end": 500
+            },
+            "endedBy": "executor",
+            "pausedSeconds": 0
+          },
+          {
+            "stepId": "never-started",
+            "instance": 1,
+            "planned": {
+              "start": 600,
+              "end": 1200,
+              "durationType": "variable",
+              "defaultSeconds": 600
+            }
+          }
+        ]
+      },
+      "expectUsable": false,
+      "expectReason": "outcome-not-completed",
+      "schemaValid": true,
+      "stepReasons": {
+        "var-executor": "outcome-not-completed",
+        "never-started": "outcome-not-completed"
+      },
+      "stepReasonsIncludingFixed": {
+        "var-executor": "outcome-not-completed",
+        "never-started": "outcome-not-completed"
+      },
+      "usableStepIds": [],
+      "usableStepIdsIncludingFixed": []
+    },
+    {
+      "name": "aborted run",
+      "comment": "outcome aborted is excluded by the same rule as abandoned.",
+      "record": {
+        "schemaVersion": "0.1.0-alpha",
+        "runId": "2026-02-03T10:00:00Z-0003",
+        "programId": "usable-parity",
+        "programVersion": "sha256:abababababababababababababababababababababababababababababababab",
+        "runtime": {
+          "kind": "cli",
+          "version": "0.1.0a0",
+          "clockMode": "wall",
+          "speed": 1
+        },
+        "environmentId": null,
+        "startedAt": "2026-02-01T10:00:00.000Z",
+        "endedAt": "2026-02-01T12:00:00.000Z",
+        "outcome": "aborted",
+        "context": {
+          "serves": "8",
+          "userTags": {
+            "oven": "gas",
+            "turkeyKg": 6.4
+          }
+        },
+        "steps": [
+          {
+            "stepId": "var-executor",
+            "instance": 1,
+            "planned": {
+              "start": 0,
+              "end": 600,
+              "durationType": "variable",
+              "defaultSeconds": 600
+            },
+            "actual": {
+              "start": 0,
+              "end": 500
+            },
+            "endedBy": "executor",
+            "pausedSeconds": 0
+          }
+        ]
+      },
+      "expectUsable": false,
+      "expectReason": "outcome-not-completed",
+      "schemaValid": true,
+      "stepReasons": {
+        "var-executor": "outcome-not-completed"
+      },
+      "stepReasonsIncludingFixed": {
+        "var-executor": "outcome-not-completed"
+      },
+      "usableStepIds": [],
+      "usableStepIdsIncludingFixed": []
+    },
+    {
+      "name": "simulated clock",
+      "comment": "The web player's simulated clock can drift while the tab sleeps.",
+      "record": {
+        "schemaVersion": "0.1.0-alpha",
+        "runId": "2026-02-04T10:00:00Z-0004",
+        "programId": "usable-parity",
+        "programVersion": "sha256:abababababababababababababababababababababababababababababababab",
+        "runtime": {
+          "kind": "cli",
+          "version": "0.1.0a0",
+          "clockMode": "simulated",
+          "speed": 1
+        },
+        "environmentId": null,
+        "startedAt": "2026-02-01T10:00:00.000Z",
+        "endedAt": "2026-02-01T12:00:00.000Z",
+        "outcome": "completed",
+        "context": {
+          "serves": "8",
+          "userTags": {
+            "oven": "gas",
+            "turkeyKg": 6.4
+          }
+        },
+        "steps": [
+          {
+            "stepId": "var-executor",
+            "instance": 1,
+            "planned": {
+              "start": 0,
+              "end": 600,
+              "durationType": "variable",
+              "defaultSeconds": 600
+            },
+            "actual": {
+              "start": 0,
+              "end": 500
+            },
+            "endedBy": "executor",
+            "pausedSeconds": 0
+          }
+        ]
+      },
+      "expectUsable": false,
+      "expectReason": "clock-not-wall",
+      "schemaValid": true,
+      "stepReasons": {
+        "var-executor": "clock-not-wall"
+      },
+      "stepReasonsIncludingFixed": {
+        "var-executor": "clock-not-wall"
+      },
+      "usableStepIds": [],
+      "usableStepIdsIncludingFixed": []
+    },
+    {
+      "name": "time-scaled run",
+      "comment": "A run at speed 10 measures the timer, not the executor.",
+      "record": {
+        "schemaVersion": "0.1.0-alpha",
+        "runId": "2026-02-05T10:00:00Z-0005",
+        "programId": "usable-parity",
+        "programVersion": "sha256:abababababababababababababababababababababababababababababababab",
+        "runtime": {
+          "kind": "cli",
+          "version": "0.1.0a0",
+          "clockMode": "wall",
+          "speed": 10
+        },
+        "environmentId": null,
+        "startedAt": "2026-02-01T10:00:00.000Z",
+        "endedAt": "2026-02-01T12:00:00.000Z",
+        "outcome": "completed",
+        "context": {
+          "serves": "8",
+          "userTags": {
+            "oven": "gas",
+            "turkeyKg": 6.4
+          }
+        },
+        "steps": [
+          {
+            "stepId": "var-executor",
+            "instance": 1,
+            "planned": {
+              "start": 0,
+              "end": 600,
+              "durationType": "variable",
+              "defaultSeconds": 600
+            },
+            "actual": {
+              "start": 0,
+              "end": 60
+            },
+            "endedBy": "executor",
+            "pausedSeconds": 0
+          }
+        ]
+      },
+      "expectUsable": false,
+      "expectReason": "speed-not-1",
+      "schemaValid": true,
+      "stepReasons": {
+        "var-executor": "speed-not-1"
+      },
+      "stepReasonsIncludingFixed": {
+        "var-executor": "speed-not-1"
+      },
+      "usableStepIds": [],
+      "usableStepIdsIncludingFixed": []
+    },
+    {
+      "name": "speed omitted defaults to 1",
+      "comment": "runtime.speed has a schema default of 1; an absent value is real time.",
+      "record": {
+        "schemaVersion": "0.1.0-alpha",
+        "runId": "2026-02-06T10:00:00Z-0006",
+        "programId": "usable-parity",
+        "programVersion": "sha256:abababababababababababababababababababababababababababababababab",
+        "runtime": {
+          "kind": "cli",
+          "version": "0.1.0a0",
+          "clockMode": "wall"
+        },
+        "environmentId": null,
+        "startedAt": "2026-02-01T10:00:00.000Z",
+        "endedAt": "2026-02-01T12:00:00.000Z",
+        "outcome": "completed",
+        "context": {
+          "serves": "8",
+          "userTags": {
+            "oven": "gas",
+            "turkeyKg": 6.4
+          }
+        },
+        "steps": [
+          {
+            "stepId": "var-executor",
+            "instance": 1,
+            "planned": {
+              "start": 0,
+              "end": 600,
+              "durationType": "variable",
+              "defaultSeconds": 600
+            },
+            "actual": {
+              "start": 0,
+              "end": 540
+            },
+            "endedBy": "executor",
+            "pausedSeconds": 0
+          },
+          {
+            "stepId": "fixed-timer",
+            "instance": 1,
+            "planned": {
+              "start": 600,
+              "end": 900,
+              "durationType": "fixed",
+              "seconds": 300
+            },
+            "actual": {
+              "start": 540,
+              "end": 845
+            },
+            "endedBy": "timer",
+            "pausedSeconds": 0
+          }
+        ]
+      },
+      "expectUsable": true,
+      "expectReason": null,
+      "schemaValid": true,
+      "stepReasons": {
+        "var-executor": null,
+        "fixed-timer": "fixed-duration"
+      },
+      "stepReasonsIncludingFixed": {
+        "var-executor": null,
+        "fixed-timer": null
+      },
+      "usableStepIds": [
+        "var-executor"
+      ],
+      "usableStepIdsIncludingFixed": [
+        "var-executor",
+        "fixed-timer"
+      ]
+    },
+    {
+      "name": "ended step with no endedBy",
+      "comment": "Not schema-valid (endedBy is required once actual.end exists) but both readers must agree on it anyway.",
+      "record": {
+        "schemaVersion": "0.1.0-alpha",
+        "runId": "2026-02-07T10:00:00Z-0007",
+        "programId": "usable-parity",
+        "programVersion": "sha256:abababababababababababababababababababababababababababababababab",
+        "runtime": {
+          "kind": "cli",
+          "version": "0.1.0a0",
+          "clockMode": "wall",
+          "speed": 1
+        },
+        "environmentId": null,
+        "startedAt": "2026-02-01T10:00:00.000Z",
+        "endedAt": "2026-02-01T12:00:00.000Z",
+        "outcome": "completed",
+        "context": {
+          "serves": "8",
+          "userTags": {
+            "oven": "gas",
+            "turkeyKg": 6.4
+          }
+        },
+        "steps": [
+          {
+            "stepId": "var-unknown",
+            "instance": 1,
+            "planned": {
+              "start": 0,
+              "end": 600,
+              "durationType": "variable",
+              "defaultSeconds": 600
+            },
+            "actual": {
+              "start": 0,
+              "end": 500
+            },
+            "pausedSeconds": 0
+          },
+          {
+            "stepId": "fixed-unknown",
+            "instance": 1,
+            "planned": {
+              "start": 600,
+              "end": 900,
+              "durationType": "fixed",
+              "seconds": 300
+            },
+            "actual": {
+              "start": 500,
+              "end": 810
+            },
+            "pausedSeconds": 0
+          }
+        ]
+      },
+      "expectUsable": true,
+      "expectReason": null,
+      "schemaValid": false,
+      "stepReasons": {
+        "var-unknown": "ended-by-none",
+        "fixed-unknown": "fixed-duration"
+      },
+      "stepReasonsIncludingFixed": {
+        "var-unknown": "ended-by-none",
+        "fixed-unknown": "ended-by-none"
+      },
+      "usableStepIds": [],
+      "usableStepIdsIncludingFixed": []
+    },
+    {
+      "name": "completed run with no steps",
+      "comment": "Degenerate but valid: the run is usable and contributes nothing.",
+      "record": {
+        "schemaVersion": "0.1.0-alpha",
+        "runId": "2026-02-08T10:00:00Z-0008",
+        "programId": "usable-parity",
+        "programVersion": "sha256:abababababababababababababababababababababababababababababababab",
+        "runtime": {
+          "kind": "cli",
+          "version": "0.1.0a0",
+          "clockMode": "wall",
+          "speed": 1
+        },
+        "environmentId": null,
+        "startedAt": "2026-02-01T10:00:00.000Z",
+        "endedAt": "2026-02-01T12:00:00.000Z",
+        "outcome": "completed",
+        "context": {
+          "serves": "8",
+          "userTags": {
+            "oven": "gas",
+            "turkeyKg": 6.4
+          }
+        },
+        "steps": []
+      },
+      "expectUsable": true,
+      "expectReason": null,
+      "schemaValid": true,
+      "stepReasons": {},
+      "stepReasonsIncludingFixed": {},
+      "usableStepIds": [],
+      "usableStepIdsIncludingFixed": []
+    }
+  ]
+}

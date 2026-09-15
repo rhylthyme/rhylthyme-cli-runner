@@ -5,13 +5,25 @@ on:
     branches: [ main, develop ]
   pull_request:
     branches: [ main, develop ]
+  workflow_dispatch:
+    inputs:
+      run_eval:
+        description: "Run the eval-prompts gold-set job (spends API credit)"
+        type: boolean
+        default: true
+  # Sent by rhylthyme-server when mcp-api/prompts.js changes, and by
+  # rhylthyme-examples when gold/** changes: both live in other
+  # repositories, so a path filter here cannot see them.
+  repository_dispatch:
+    types: [ prompts-changed, gold-changed ]
 
 jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.8, 3.9, '3.10', '3.11']
+        # Matches python_requires>=3.12 in setup.py/pyproject.
+        python-version: ['3.12', '3.13']
 
     steps:
     - uses: actions/checkout@v4
@@ -81,7 +93,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.10'
+        python-version: '3.12'
 
     - name: Install dependencies
       run: |
@@ -91,6 +103,159 @@ jobs:
     - name: Validate all examples
       run: |
         python tests/test_validate_examples_ci.py
+
+  # Does this push/PR touch anything the prompt evaluation measures?
+  # GitHub has no per-job `paths:` filter, so the decision is made here
+  # and consumed by `eval-prompts` through `needs`.
+  eval-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      run: ${{ steps.decide.outputs.run }}
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Decide whether the eval job should run
+      id: decide
+      env:
+        EVENT: ${{ github.event_name }}
+        DISPATCH_INPUT: ${{ github.event.inputs.run_eval }}
+        BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+      run: |
+        set -euo pipefail
+        if [ "$EVENT" = "repository_dispatch" ]; then
+          echo "run=true" >> "$GITHUB_OUTPUT"; echo "triggered by repository_dispatch"; exit 0
+        fi
+        if [ "$EVENT" = "workflow_dispatch" ]; then
+          if [ "$DISPATCH_INPUT" = "false" ]; then
+            echo "run=false" >> "$GITHUB_OUTPUT"; echo "manual run opted out"; exit 0
+          fi
+          echo "run=true" >> "$GITHUB_OUTPUT"; echo "manual run"; exit 0
+        fi
+        # A new branch has an all-zero "before" sha and no diff to take.
+        if [ -z "${BASE_SHA:-}" ] || [ "$BASE_SHA" = "0000000000000000000000000000000000000000" ]; then
+          echo "run=true" >> "$GITHUB_OUTPUT"; echo "no base sha; running to be safe"; exit 0
+        fi
+        CHANGED=$(git diff --name-only "$BASE_SHA" "$HEAD_SHA" || true)
+        echo "$CHANGED"
+        # eval/** holds the committed numbers and the response cache;
+        # four_turn.py is the byte mirror of rhylthyme-server's
+        # mcp-api/prompts.js, and baseline.py the frozen pre-Phase-3 prompt.
+        if echo "$CHANGED" | grep -Eq '^(eval/|src/rhylthyme_cli_runner/eval/|\.github/workflows/ci\.yml$)'; then
+          echo "run=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "run=false" >> "$GITHUB_OUTPUT"
+        fi
+
+  eval-prompts:
+    name: eval-prompts (gold set, pinned model)
+    runs-on: ubuntu-latest
+    needs: eval-changes
+    # Fork PRs cannot read secrets; skip rather than fail. Everything else
+    # runs when eval-changes says the prompt surface moved.
+    if: >-
+      needs.eval-changes.outputs.run == 'true' &&
+      (github.event.pull_request.head.repo.full_name == github.repository ||
+       github.event_name != 'pull_request')
+
+    steps:
+    - name: Checkout rhylthyme-cli-runner
+      uses: actions/checkout@v4
+      with:
+        path: rhylthyme-cli-runner
+
+    - name: Checkout rhylthyme-spec
+      uses: actions/checkout@v4
+      with:
+        repository: rhylthyme/rhylthyme-spec
+        path: rhylthyme-spec
+
+    - name: Checkout rhylthyme-examples
+      uses: actions/checkout@v4
+      with:
+        repository: rhylthyme/rhylthyme-examples
+        path: rhylthyme-examples
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    # The end-to-end component runs the JavaScript validator when node is
+    # present; without it those checks are skipped and the numbers would
+    # not be comparable with the committed ones.
+    - name: Set up Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install setuptools
+        pip install -e ./rhylthyme-spec
+        pip install -e ./rhylthyme-cli-runner
+        pip install anthropic
+
+    - name: Read the pinned model
+      id: pin
+      working-directory: rhylthyme-cli-runner
+      run: |
+        set -euo pipefail
+        MODEL=$(python -c "import json;print(json.load(open('eval/four-turn.json'))['model'])")
+        echo "The pin and the numbers live together in eval/four-turn.json: $MODEL"
+        echo "model=$MODEL" >> "$GITHUB_OUTPUT"
+
+    - name: Check the API key is configured
+      id: key
+      env:
+        ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      run: |
+        if [ -z "${ANTHROPIC_API_KEY:-}" ]; then
+          echo "::warning::ANTHROPIC_API_KEY is not set for this repository; skipping the live eval run."
+          echo "present=false" >> "$GITHUB_OUTPUT"
+        else
+          echo "present=true" >> "$GITHUB_OUTPUT"
+        fi
+
+    - name: Run the four-turn pattern on the gold set
+      if: steps.key.outputs.present == 'true'
+      working-directory: rhylthyme-cli-runner
+      env:
+        ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      run: |
+        set -euo pipefail
+        python -m rhylthyme_cli_runner.cli eval-prompts \
+          --gold ../rhylthyme-examples/gold \
+          --model "${{ steps.pin.outputs.model }}" \
+          --patterns four-turn \
+          --concurrency 3 \
+          --max-fix-iterations 2 \
+          --cache-dir eval/cache \
+          --out eval-results
+
+    - name: Compare against the committed four-turn numbers
+      if: steps.key.outputs.present == 'true'
+      working-directory: rhylthyme-cli-runner
+      run: |
+        set -euo pipefail
+        python -m rhylthyme_cli_runner.cli eval-prompts compare \
+          --baseline eval/four-turn.json \
+          --results eval-results/results.json \
+          --rel-f1-drop 5 \
+          --e2e-drop 0
+
+    - name: Upload the results table
+      if: always() && steps.key.outputs.present == 'true'
+      uses: actions/upload-artifact@v4
+      with:
+        name: eval-prompts-results
+        path: |
+          rhylthyme-cli-runner/eval-results/results.md
+          rhylthyme-cli-runner/eval-results/results.json
+        if-no-files-found: warn
 
   type-check:
     runs-on: ubuntu-latest
@@ -102,7 +267,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.10'
+        python-version: '3.12'
 
     - name: Install dependencies
       run: |

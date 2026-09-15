@@ -21,10 +21,27 @@ import sys
 import threading
 import time
 from enum import Enum
-from typing import Any, Dict, List, Optional, Set, Tuple, Union
+from typing import Any, Dict, List, Optional, Sequence, Set, Tuple, Union
 
 import yaml  # Add import for YAML support
 from colorama import Fore, Style
+
+# Instance naming produced by the replicate expander: "Bake tray (2 of 3)".
+# The runner splits it back apart so that grouped rows can show the base name
+# once ("Bake tray ×3") and per-instance rows a canonical "[2 of 3]" label.
+INSTANCE_NAME_RE = re.compile(r"^(?P<base>.*?)\s*\((?P<index>\d+) of (?P<count>\d+)\)$")
+
+
+def split_instance_name(name: Optional[str]):
+    """Split ``"Bake tray (2 of 3)"`` into ``("Bake tray", 2, 3)``.
+
+    Names without the expander's instance suffix come back unchanged with
+    ``None`` for the index and count.
+    """
+    match = INSTANCE_NAME_RE.match(name or "")
+    if not match:
+        return name, None, None
+    return match.group("base"), int(match.group("index")), int(match.group("count"))
 
 
 # Define sort modes for the display
@@ -37,8 +54,13 @@ class SortMode(Enum):
 
 
 # Define duration types
-class DurationType(Enum):
-    """Enum representing the duration type of a step."""
+class DurationType(str, Enum):
+    """
+    Enum representing the duration type of a step.
+
+    A ``str`` enum so that ``DurationType.FIXED == "fixed"`` holds: the step
+    logic compares against both the members and their string values.
+    """
 
     FIXED = "fixed"  # Fixed duration
     VARIABLE = "variable"  # Variable duration with min/max
@@ -82,6 +104,22 @@ except ImportError:
         program: Dict[str, Any], strict: bool = False
     ) -> List[str]:
         return []
+
+
+try:
+    # Offsets and buffers may be signed unit strings ("-45m"); parse_time_string
+    # below drops the sign, so trigger arithmetic uses the validator's parser.
+    from .validate_program import _signed_seconds
+except ImportError:  # pragma: no cover - validator not importable
+
+    def _signed_seconds(value: Any) -> float:
+        if value is None:
+            return 0.0
+        if isinstance(value, (int, float)):
+            return float(value)
+        text = str(value).strip()
+        sign = -1.0 if text.startswith("-") else 1.0
+        return sign * parse_time_string(text.lstrip("+-"))
 
 
 class StepStatus(Enum):
@@ -130,6 +168,13 @@ class Step:
         self.name = step_data["name"]
         self.description = step_data.get("description", "")
         self.track_id = track_id
+        # Replicate-instance identity, stamped by expand_replicates(). The
+        # name suffix is a fallback for programs expanded by older tooling.
+        base_name, name_index, name_count = split_instance_name(self.name)
+        self.instance_of = step_data.get("instanceOf")
+        self.instance_index = step_data.get("instanceIndex", name_index)
+        self.base_name = base_name if self.instance_of else self.name
+        self.instance_count_hint = name_count
         self.batch_index = batch_index
         self.priority = step_data.get("priority", 100)
         self.expected_end_time = None
@@ -244,6 +289,9 @@ class Step:
         self.end_time: Optional[float] = None
         self.progress = 0.0
         self.abort_reason: Optional[str] = None
+        # Program-clock time at which the start trigger was first satisfied
+        # (may precede start_time when resources or actors were busy)
+        self.trigger_fired_time: Optional[float] = None
 
         # Initialize code execution attributes
         self.code_result: Optional[Any] = None
@@ -744,6 +792,30 @@ class ProgramRunner:
         )  # Initialize manually_triggered_steps as an empty set
         self.event_listeners: List[Any] = []  # Add event listeners list
 
+        # --- predicted offsets (metadata.offsetsUse, program schema 0.3.0-alpha)
+        #
+        # A negative offset ("peel the potatoes 45 min before the roast is
+        # done") is resolved against the anchor's PROJECTED end, because the
+        # runner cannot see a future end. The projection is normally the
+        # author's own number (defaultSeconds for a variable or indefinite
+        # step, the duration of a fixed one). With
+        # ``metadata.offsetsUse: "predicted"`` the projection of an indefinite
+        # anchor may instead come from run history — see
+        # ``set_predictions`` and ``anchor_projected_seconds``.
+        metadata = program.get("metadata")
+        self.offsets_use = "planned"
+        if isinstance(metadata, dict) and metadata.get("offsetsUse") == "predicted":
+            self.offsets_use = "predicted"
+        # {anchor stepId: seconds} actually used to project an anchor's end,
+        # and {gated stepId: seconds} for the record.
+        self.predictions: Dict[str, Dict[str, Any]] = {}
+        self.predicted_anchor_seconds: Dict[str, float] = {}
+
+        # Pause state: while paused the program clock does not advance
+        self.is_paused = False
+        self._pause_started_wall: Optional[float] = None
+        self.paused_wall_seconds = 0.0
+
         self.command_queue: queue.Queue[str] = queue.Queue()
 
         # Initialize tracks - will be populated later during step processing
@@ -826,6 +898,29 @@ class ProgramRunner:
 
             self.tracks[track_id] = track_steps
 
+        # ---- replicate instance grouping -------------------------------
+        # Instances of one replicated step (``instanceOf``) collapse into a
+        # single row in the step list; sub-tracks created for instances
+        # (``parentTrackId``) display under their parent track's name.
+        self.track_parents: Dict[str, Optional[str]] = {}
+        for track_data in program.get("tracks", []):
+            tid = track_data.get("trackId")
+            if tid:
+                self.track_parents[tid] = track_data.get("parentTrackId")
+        self.instance_groups: Dict[str, List[Step]] = {}
+        for step in self.steps.values():
+            if step.instance_of:
+                self.instance_groups.setdefault(step.instance_of, []).append(step)
+        for members in self.instance_groups.values():
+            members.sort(key=lambda s: (s.instance_index or 0, s.step_id))
+        self.instance_counts: Dict[str, int] = {
+            key: len(members) for key, members in self.instance_groups.items()
+        }
+        # Grouped rows are on by default and start collapsed; 'g' toggles the
+        # selected group (and turns grouping off entirely on a plain row).
+        self.group_instances = True
+        self.expanded_groups: Set[str] = set()
+
     def start(self) -> None:
         """Start the program execution."""
         self.program_start_time = time.time()
@@ -837,6 +932,11 @@ class ProgramRunner:
         if not self.auto_start:
             self.status_message = (
                 "Program waiting for manual start. Press 's' to start."
+            )
+            # The clock is running from here (is_running stays True)
+            self.emit_event(
+                "program_started",
+                {"time": self.program_start_time, "wall_time": time.time()},
             )
             return
 
@@ -859,6 +959,12 @@ class ProgramRunner:
             )
             self.is_running = False
 
+        if self.is_running:
+            self.emit_event(
+                "program_started",
+                {"time": self.program_start_time, "wall_time": time.time()},
+            )
+
     def update(self) -> None:
         """Update the program state."""
         # Always process commands first, even if not running
@@ -868,12 +974,20 @@ class ProgramRunner:
         if not self.is_running:
             return
 
-        # Update current time
+        # Update current time (wall time minus any time spent paused)
         if self.program_start_time is not None:
-            real_elapsed = time.time() - self.program_start_time
+            now = time.time()
+            paused = self.paused_wall_seconds
+            if self.is_paused and self._pause_started_wall is not None:
+                paused += now - self._pause_started_wall
+            real_elapsed = now - self.program_start_time - paused
             self.current_time = self.program_start_time + (
                 real_elapsed * self.time_scale
             )
+
+        # While paused the clock is frozen: no automatic transitions
+        if self.is_paused:
+            return
 
         # Start steps that are ready
         self.start_ready_steps(self.current_time)
@@ -892,13 +1006,24 @@ class ProgramRunner:
             try:
                 command = self.command_queue.get_nowait()
                 if command == "start_program":
+                    was_running = self.is_running
                     self.is_running = True
                     self.program_started = True
-                    # Initialize program start time if not already set
-                    if self.program_start_time is None:
+                    # Initialize program start time if not already set; if the
+                    # program was waiting for 's' and nothing has run yet,
+                    # re-anchor the clock so waiting time is not counted
+                    nothing_ran = not self.running_steps and not self.completed_steps
+                    if self.program_start_time is None or (
+                        not was_running and nothing_ran
+                    ):
                         self.program_start_time = time.time()
                         self.current_time = self.program_start_time
                     self.status_message = "Program started manually."
+                    if not was_running:
+                        self.emit_event(
+                            "program_started",
+                            {"time": self.program_start_time, "wall_time": time.time()},
+                        )
                 elif command.startswith("trigger:"):
                     parts = command.split(":", 2)
                     if len(parts) == 3:
@@ -914,6 +1039,43 @@ class ProgramRunner:
             except queue.Empty:
                 break
 
+    def toggle_pause(self) -> bool:
+        """
+        Pause or resume the program clock. Returns the new paused state.
+
+        While paused, current_time stops advancing, no steps start or
+        complete automatically, and the paused wall-clock time is excluded
+        from the program clock once resumed.
+        """
+        if self.program_start_time is None or not self.program_started:
+            self.status_message = "Nothing to pause: the program has not started."
+            return self.is_paused
+        now = time.time()
+        if self.is_paused:
+            paused_for = 0.0
+            if self._pause_started_wall is not None:
+                paused_for = now - self._pause_started_wall
+                self.paused_wall_seconds += paused_for
+            self._pause_started_wall = None
+            self.is_paused = False
+            self.status_message = f"Resumed after {paused_for:.1f}s paused."
+            self.emit_event(
+                "program_resumed",
+                {
+                    "time": self.current_time,
+                    "wall_time": now,
+                    "paused_seconds": paused_for,
+                },
+            )
+        else:
+            self._pause_started_wall = now
+            self.is_paused = True
+            self.status_message = "PAUSED - press 'p' to resume."
+            self.emit_event(
+                "program_paused", {"time": self.current_time, "wall_time": now}
+            )
+        return self.is_paused
+
     def start_ready_steps(self, current_time: float) -> None:
         """Start steps that are ready to start."""
         # Sort steps by priority (lower number = higher priority)
@@ -927,6 +1089,8 @@ class ProgramRunner:
 
         for step in pending_steps:
             if self.is_step_ready_to_start(step, current_time):
+                if step.trigger_fired_time is None:
+                    step.trigger_fired_time = current_time
                 # Check resource constraints and actor availability for each task type
                 can_start = True
                 required_actors_by_type: Dict[str, float] = (
@@ -1040,25 +1204,52 @@ class ProgramRunner:
 
                     # Emit event
                     self.emit_event(
-                        "step_started", {"step_id": step.step_id, "time": current_time}
+                        "step_started",
+                        {
+                            "step_id": step.step_id,
+                            "time": current_time,
+                            "trigger_fired_at": step.trigger_fired_time,
+                        },
                     )
 
     def complete_finished_steps(self) -> None:
-        """Complete steps that are finished."""
+        """
+        Complete steps whose timer has expired.
+
+        Fixed steps end when their duration elapses; variable steps are forced
+        to end at maxSeconds (between minSeconds and maxSeconds only the
+        executor ends them); indefinite steps never end on their own.
+        """
         for step in self.steps.values():
-            if step.is_ready_to_complete(self.current_time):
-                self.complete_step(step, self.current_time)
-            # Aggressive completion: if remaining time displays as "< 0.1s", force complete
-            elif step.status == StepStatus.RUNNING:
+            if step.status != StepStatus.RUNNING:
+                continue
+            if step.duration_type == DurationType.FIXED:
+                if step.is_ready_to_complete(self.current_time):
+                    self.complete_step(step, self.current_time, ended_by="timer")
+                    continue
+                # Aggressive completion: if remaining time displays as "< 0.1s", force complete
                 remaining = step.get_remaining_time(self.current_time)
                 if remaining is not None and remaining < 0.1:
                     logging.info(
                         f"Force completing step {step.step_id} with {remaining:.3f}s remaining (< 0.1s threshold)"
                     )
-                    self.complete_step(step, self.current_time)
+                    self.complete_step(step, self.current_time, ended_by="timer")
+            elif step.duration_type == DurationType.VARIABLE:
+                if step.must_complete(self.current_time):
+                    self.complete_step(step, self.current_time, ended_by="timer")
 
-    def complete_step(self, step: Step, current_time: float) -> None:
-        """Complete a step."""
+    def complete_step(
+        self, step: Step, current_time: float, ended_by: str = "executor"
+    ) -> None:
+        """
+        Complete a step.
+
+        Args:
+            step: The step to complete
+            current_time: The current time
+            ended_by: "timer" when the planned duration expired, "executor"
+                when a person ended it (manual trigger, 'c' key, direct call)
+        """
         step.status = StepStatus.COMPLETED
         step.end_time = current_time
         step.progress = 1.0
@@ -1113,7 +1304,8 @@ class ProgramRunner:
 
         # Emit event
         self.emit_event(
-            "step_completed", {"step_id": step.step_id, "time": current_time}
+            "step_completed",
+            {"step_id": step.step_id, "time": current_time, "ended_by": ended_by},
         )
 
     def trigger_manual_step(
@@ -1128,8 +1320,13 @@ class ProgramRunner:
         """
         if trigger_name == "start_program":
             self.is_running = True
+            self.program_started = True
             self.program_start_time = self.current_time
             self.status_message = "Program started."
+            self.emit_event(
+                "program_started",
+                {"time": self.program_start_time, "wall_time": time.time()},
+            )
             return
 
         if trigger_name not in self.manual_triggers:
@@ -1260,7 +1457,7 @@ class ProgramRunner:
                 "track_id": Track ID (if applicable)
             }
         """
-        available_triggers = []
+        available_triggers: List[Dict[str, Any]] = []
 
         # Check for program start trigger
         if (
@@ -1278,11 +1475,15 @@ class ProgramRunner:
                     available_triggers.append(
                         {
                             "id": f"start:{trigger_name}:{step.step_id}",
-                            "name": f"Start: {step.name}",
+                            "name": f"Start: {self.instance_step_name(step)}",
                             "type": "start",
                             "step_id": step.step_id,
-                            "step_name": step.name,
+                            "step_name": self.instance_step_name(step),
                             "track_id": step.track_id,
+                            "instance_of": step.instance_of,
+                            "instance_index": step.instance_index,
+                            "instance_count": self.instance_count(step),
+                            "instance_label": self.instance_label(step),
                         }
                     )
                 elif step.status == StepStatus.RUNNING and (
@@ -1298,11 +1499,15 @@ class ProgramRunner:
                     available_triggers.append(
                         {
                             "id": f"end:{trigger_name}:{step.step_id}",
-                            "name": f"End: {step.name}",
+                            "name": f"End: {self.instance_step_name(step)}",
                             "type": "end",
                             "step_id": step.step_id,
-                            "step_name": step.name,
+                            "step_name": self.instance_step_name(step),
                             "track_id": step.track_id,
+                            "instance_of": step.instance_of,
+                            "instance_index": step.instance_index,
+                            "instance_count": self.instance_count(step),
+                            "instance_label": self.instance_label(step),
                         }
                     )
 
@@ -1319,12 +1524,16 @@ class ProgramRunner:
                 available_triggers.append(
                     {
                         "id": f"abort:{step_id}",
-                        "name": f"Abort: {step.name}",
+                        "name": f"Abort: {self.instance_step_name(step)}",
                         "type": "abort",
                         "step_id": step_id,
-                        "step_name": step.name,
+                        "step_name": self.instance_step_name(step),
                         "track_id": track_id,
                         "track_name": track_name,
+                        "instance_of": step.instance_of,
+                        "instance_index": step.instance_index,
+                        "instance_count": self.instance_count(step),
+                        "instance_label": self.instance_label(step),
                     }
                 )
 
@@ -1351,6 +1560,31 @@ class ProgramRunner:
         else:
             return f"{int(seconds)}s"
 
+    # ------------------------------------------------------------------
+    # Replicate instances
+    # ------------------------------------------------------------------
+    def instance_count(self, step: Step) -> Optional[int]:
+        """How many instances the replicated step ``step`` belongs to has."""
+        if not step.instance_of:
+            return None
+        return self.instance_counts.get(step.instance_of) or step.instance_count_hint
+
+    def instance_label(self, step: Step) -> str:
+        """``"[2 of 3]"`` for a replicate instance, ``""`` for a plain step."""
+        count = self.instance_count(step)
+        if not step.instance_of or not step.instance_index or not count:
+            return ""
+        return f"[{step.instance_index} of {count}]"
+
+    def instance_step_name(self, step: Step) -> str:
+        """Step name with a canonical instance label, e.g. ``Bake tray [2 of 3]``."""
+        label = self.instance_label(step)
+        return f"{step.base_name} {label}" if label else step.name
+
+    def display_track_id(self, step: Step) -> str:
+        """Track to show for a step: instance sub-tracks show their parent."""
+        return self.track_parents.get(step.track_id) or step.track_id
+
     def get_step_display_info(self, step: Step) -> Dict[str, Any]:
         """Get display information for a step."""
         progress = step.get_progress(self.current_time)
@@ -1361,11 +1595,22 @@ class ProgramRunner:
         if hasattr(step, "_debug_elapsed") and step.status == StepStatus.RUNNING:
             debug_info = f" [DBG: e={step._debug_elapsed:.1f}s d={step._debug_duration:.1f}s p={step._debug_progress:.1f}%]"
 
+        instance_count = self.instance_count(step)
         return {
             "id": step.step_id,
             "step_id": step.step_id,  # Add for backward compatibility
-            "name": step.name + debug_info,
+            "id_display": step.step_id,
+            "row_type": "step",
+            "name": self.instance_step_name(step) + debug_info,
+            "base_name": step.base_name,
             "track": step.track_id,
+            "track_display": self.display_track_id(step),
+            "instance_of": step.instance_of,
+            "instance_index": step.instance_index,
+            "instance_count": instance_count,
+            "instance_label": self.instance_label(step),
+            "group_id": f"group:{step.instance_of}" if step.instance_of else None,
+            "depth": 0,
             "status": step.status.value,
             "progress": progress,
             "remaining": (
@@ -1380,51 +1625,187 @@ class ProgramRunner:
             or "N/A",
         }
 
-    def select_next_step(self) -> None:
-        """Select the next step in the list."""
+    def _group_row(
+        self, instance_of: str, members: List[Dict[str, Any]], expanded: bool
+    ) -> Dict[str, Any]:
+        """Build the single collapsed row that stands for a set of instances."""
+        count = len(members)
+        statuses = [member["status"] for member in members]
+        done = statuses.count("COMPLETED")
+        running = statuses.count("RUNNING")
+        aborted = statuses.count("ABORTED")
+        waiting = statuses.count("WAITING_FOR_MANUAL")
+        pending = count - done - running - aborted - waiting
+
+        if running:
+            status = "RUNNING"
+        elif waiting:
+            status = "WAITING_FOR_MANUAL"
+        elif done + aborted == count:
+            status = "ABORTED" if done == 0 and aborted else "COMPLETED"
+        else:
+            status = "PENDING"
+
+        # Aggregate progress: finished instances count as 100 %, indefinite
+        # instances (progress -1) as 0 so the bar never runs backwards.
+        progress = sum(max(0.0, member["progress"]) for member in members) / count
+        running_members = [m for m in members if m["status"] == "RUNNING"]
+        remaining = running_members[0]["remaining"] if running_members else "N/A"
+        base_name = members[0].get("base_name") or instance_of
+
+        return {
+            "id": f"group:{instance_of}",
+            "step_id": None,
+            "id_display": f"{instance_of} ×{count}",
+            "row_type": "group",
+            "name": f"{base_name} ×{count}",
+            "base_name": base_name,
+            "track": members[0]["track"],
+            "track_display": members[0].get("track_display", members[0]["track"]),
+            "instance_of": instance_of,
+            "instance_index": None,
+            "instance_count": count,
+            "instance_label": "",
+            "group_id": f"group:{instance_of}",
+            "depth": 0,
+            "status": status,
+            "progress": progress,
+            "remaining": remaining,
+            "task_type": members[0]["task_type"],
+            "task_types": members[0]["task_types"],
+            "trigger": "N/A",
+            "done": done,
+            "running": running,
+            "pending": pending,
+            "aborted": aborted,
+            "waiting": waiting,
+            "summary": f"{done} done / {running} running / {pending} pending",
+            "expanded": expanded,
+            "members": [member["id"] for member in members],
+        }
+
+    def group_display_rows(
+        self,
+        steps_info: List[Dict[str, Any]],
+        expanded: Optional[Set[str]] = None,
+    ) -> List[Dict[str, Any]]:
+        """Collapse instances of one replicated step into a single group row.
+
+        Pure: it only rewrites the list it is handed. A program with no
+        replicate instances (or grouping switched off) comes back unchanged,
+        so the step list of an ordinary program is exactly what it was.
+        """
+        if expanded is None:
+            expanded = self.expanded_groups
+        if not self.group_instances:
+            return list(steps_info)
+
+        members_by_group: Dict[str, List[Dict[str, Any]]] = {}
+        for info in steps_info:
+            group = info.get("instance_of")
+            if group:
+                members_by_group.setdefault(group, []).append(info)
+        # A "group" of one is just a step; leave it alone.
+        members_by_group = {
+            group: members
+            for group, members in members_by_group.items()
+            if len(members) > 1
+        }
+        if not members_by_group:
+            return list(steps_info)
+
+        rows: List[Dict[str, Any]] = []
+        emitted: Set[str] = set()
+        for info in steps_info:
+            group = info.get("instance_of")
+            if group not in members_by_group:
+                rows.append(info)
+                continue
+            is_expanded = group in expanded
+            if group not in emitted:
+                emitted.add(group)
+                rows.append(
+                    self._group_row(group, members_by_group[group], is_expanded)
+                )
+            if is_expanded:
+                member = dict(info)
+                member["depth"] = 1
+                rows.append(member)
+        return rows
+
+    def get_display_rows(self) -> List[Dict[str, Any]]:
+        """The visible step-list rows: sorted, then grouped by instance."""
         steps_info = [self.get_step_display_info(step) for step in self.steps.values()]
-        sorted_steps = self.sort_steps(steps_info)
-        if sorted_steps:
-            self.selected_step_index = (self.selected_step_index + 1) % len(
-                sorted_steps
-            )
+        return self.group_display_rows(self.sort_steps(steps_info))
+
+    def select_next_step(self) -> None:
+        """Select the next row in the list."""
+        rows = self.get_display_rows()
+        if rows:
+            self.selected_step_index = (self.selected_step_index + 1) % len(rows)
             self.status_message = (
-                f"Selected step: {sorted_steps[self.selected_step_index]['name']}"
+                f"Selected step: {rows[self.selected_step_index]['name']}"
             )
 
     def select_previous_step(self) -> None:
-        """Select the previous step in the list."""
-        steps_info = [self.get_step_display_info(step) for step in self.steps.values()]
-        sorted_steps = self.sort_steps(steps_info)
-        if sorted_steps:
-            self.selected_step_index = (self.selected_step_index - 1) % len(
-                sorted_steps
-            )
+        """Select the previous row in the list."""
+        rows = self.get_display_rows()
+        if rows:
+            self.selected_step_index = (self.selected_step_index - 1) % len(rows)
             self.status_message = (
-                f"Selected step: {sorted_steps[self.selected_step_index]['name']}"
+                f"Selected step: {rows[self.selected_step_index]['name']}"
             )
+
+    def get_selected_row(self) -> Optional[Dict[str, Any]]:
+        """The currently selected row (a step row or a collapsed group row)."""
+        rows = self.get_display_rows()
+        if not rows:
+            return None
+        if self.selected_step_index >= len(rows):
+            self.selected_step_index = 0
+        return rows[self.selected_step_index]
 
     def get_selected_step_id(self) -> Optional[str]:
-        """Get the ID of the currently selected step."""
-        steps_info = [self.get_step_display_info(step) for step in self.steps.values()]
-        sorted_steps = self.sort_steps(steps_info)
-        if not sorted_steps:
+        """Get the ID of the currently selected step (None on a group row)."""
+        row = self.get_selected_row()
+        if not row:
             return None
-        if self.selected_step_index >= len(sorted_steps):
-            self.selected_step_index = 0
-        return sorted_steps[self.selected_step_index]["id"]
+        return row.get("step_id")
+
+    def toggle_group(self, instance_of: Optional[str] = None) -> Optional[str]:
+        """Expand or collapse an instance group. Returns the group toggled."""
+        if instance_of is None:
+            row = self.get_selected_row()
+            instance_of = row.get("instance_of") if row else None
+        if not instance_of or instance_of not in self.instance_counts:
+            self.status_message = "No instance group on this row."
+            return None
+        count = self.instance_counts[instance_of]
+        if instance_of in self.expanded_groups:
+            self.expanded_groups.discard(instance_of)
+            self.status_message = f"Collapsed {instance_of} ×{count}."
+        else:
+            self.expanded_groups.add(instance_of)
+            self.status_message = f"Expanded {instance_of} ×{count}."
+        # Keep the selection on the group row after the row count changes.
+        rows = self.get_display_rows()
+        for index, row in enumerate(rows):
+            if row.get("row_type") == "group" and row.get("instance_of") == instance_of:
+                self.selected_step_index = index
+                break
+        return instance_of
 
     def get_all_steps_display_info(self) -> List[Dict[str, Any]]:
-        """Get display information for all steps."""
-        steps_info = [self.get_step_display_info(step) for step in self.steps.values()]
-        sorted_steps = self.sort_steps(steps_info)
+        """Get display information for all rows of the step list."""
+        rows = self.get_display_rows()
+        if rows and self.selected_step_index >= len(rows):
+            self.selected_step_index = 0
 
         # Add selection indicator
-        selected_id = self.get_selected_step_id()
-        for step_info in sorted_steps:
-            step_info["selected"] = step_info["id"] == selected_id
+        for index, row in enumerate(rows):
+            row["selected"] = index == self.selected_step_index
 
-        return sorted_steps
+        return rows
 
     def get_resource_usage_display(self) -> List[Dict[str, Any]]:
         """Get display information for resource usage."""
@@ -1756,7 +2137,108 @@ class ProgramRunner:
         if step.status != StepStatus.PENDING:
             return False
 
-        start_trigger = step.start_trigger
+        # Compound trigger ({"logic": "all"|"any", "triggers": [...]})
+        if step.start_trigger is None:
+            if step.start_triggers:
+                results = [
+                    self._is_trigger_satisfied(step, trigger, current_time)
+                    for trigger in step.start_triggers
+                ]
+                if step.start_trigger_logic == "any":
+                    return any(results)
+                return all(results)
+            return False
+
+        return self._is_trigger_satisfied(step, step.start_trigger, current_time)
+
+    # ------------------------------------------------- predicted offsets
+    def set_predictions(self, predictions: Optional[Dict[str, Any]]) -> None:
+        """
+        Supply history-based duration predictions for this run.
+
+        ``predictions`` is what
+        ``rhylthyme_cli_runner.history.predict.predict_durations`` returns:
+        ``{authored stepId: {seconds, low, high, basis, n, ...}}``. They are
+        used for one thing only — projecting the end of an *indefinite* anchor
+        of a negative offset — and only when the program asks for it with
+        ``metadata.offsetsUse: "predicted"``.
+        """
+        self.predictions = predictions or {}
+
+    def _eligible_prediction(self, authored_id: str, step: Step) -> Optional[float]:
+        """
+        The predicted seconds usable as ``step``'s projected duration, or None.
+
+        The conditions are PRD §7's: the program opted in, the step is
+        indefinite, a prediction exists (``basis`` other than ``none`` with a
+        number on it) and the prediction is *sharper than the guess* — its
+        80 % interval is narrower than the author's ``defaultSeconds``. A wide
+        interval is history saying it does not know, and the author's number
+        is then no worse.
+        """
+        if self.offsets_use != "predicted":
+            return None
+        if step.duration_type != DurationType.INDEFINITE:
+            return None
+        prediction = self.predictions.get(authored_id)
+        if not isinstance(prediction, dict):
+            return None
+        if prediction.get("basis") in (None, "none"):
+            return None
+        seconds = prediction.get("seconds")
+        low, high = prediction.get("low"), prediction.get("high")
+        planned = step.default_seconds
+        if seconds is None or planned is None or not planned:
+            return None
+        try:
+            seconds = float(seconds)
+        except (TypeError, ValueError):
+            return None
+        if seconds <= 0:
+            return None
+        if low is None or high is None:
+            return None
+        try:
+            width = float(high) - float(low)
+        except (TypeError, ValueError):
+            return None
+        if not width < float(planned):
+            return None
+        return seconds
+
+    def anchor_projected_seconds(self, ref_step: Step, gated_step: Step) -> float:
+        """
+        How long ``ref_step`` is expected to take, for projecting its end.
+
+        The author's number by default (a fixed step's duration, otherwise
+        ``defaultSeconds``); the predicted duration when the program set
+        ``metadata.offsetsUse: "predicted"`` and the prediction qualifies. The
+        prediction actually used is remembered against ``gated_step`` so the
+        run record can say which number the trigger fired from.
+        """
+        authored_id = ref_step.instance_of or ref_step.step_id
+        predicted = self._eligible_prediction(str(authored_id), ref_step)
+        if predicted is not None:
+            self.predicted_anchor_seconds[gated_step.step_id] = predicted
+            return predicted
+        if ref_step.duration_type == DurationType.FIXED:
+            return float(ref_step.duration_seconds or 0.0)
+        if ref_step.default_seconds is not None:
+            return float(ref_step.default_seconds)
+        if ref_step.duration_seconds is not None:
+            return float(ref_step.duration_seconds)
+        return 0.0
+
+    def _is_trigger_satisfied(
+        self, step: Step, start_trigger: Dict[str, Any], current_time: float
+    ) -> bool:
+        """
+        Evaluate one (non-compound) start trigger of ``step``.
+
+        This, not ``Step._evaluate_single_trigger``, is the trigger resolver
+        the run loop uses; the ``Step`` method sees only the set of completed
+        step ids and cannot resolve an anchor's start or projected end.
+        """
         trigger_type = start_trigger.get("type")
 
         # Program start trigger
@@ -1788,28 +2270,53 @@ class ProgramRunner:
         # After step trigger
         elif trigger_type == "afterStep" or trigger_type == "afterStepWithBuffer":
             ref_step_id = start_trigger["stepId"]
-            # Check if the referenced step is completed
-            if ref_step_id in self.steps:
-                ref_step = self.steps[ref_step_id]
-                if ref_step.status != StepStatus.COMPLETED:
+            if ref_step_id not in self.steps:
+                return False
+            ref_step = self.steps[ref_step_id]
+
+            # Buffers are always required, whichever anchor the trigger uses.
+            required_delay = ref_step.post_buffer_seconds + step.pre_buffer_seconds
+            if trigger_type == "afterStepWithBuffer":
+                required_delay += _signed_seconds(start_trigger.get("bufferSeconds", 0))
+            offset_seconds = _signed_seconds(start_trigger.get("offsetSeconds", 0))
+
+            # event: "start" anchors on the referenced step's START, as the
+            # timing engine does (computeStepTimings: `trig.event === 'start'
+            # ? ref.start : ref.end`). The step need only have begun.
+            if start_trigger.get("event") == "start":
+                if ref_step.start_time is None or ref_step.status == StepStatus.PENDING:
                     return False
-                # Ensure enough time has passed for predecessor's post-buffer,
-                # this step's pre-buffer, any explicit buffer, and offsetSeconds
+                return current_time >= ref_step.start_time + max(
+                    0.0, offset_seconds + required_delay
+                )
+
+            # A negative offset fires BEFORE the anchor ends, so it cannot
+            # wait for the anchor to complete. It is resolved against the
+            # anchor's projected end — actual start plus the duration the
+            # anchor is expected to take — which is what the timing engine
+            # computes for an unfinished step (`start + defaultSeconds`).
+            # Should the anchor end before that instant the projection was
+            # wrong and the trigger fires immediately, never later than the
+            # engine would have placed it.
+            if offset_seconds < 0:
+                if ref_step.start_time is None:
+                    return False
+                projected = self.anchor_projected_seconds(ref_step, step)
+                target = ref_step.start_time + projected + offset_seconds
+                target += required_delay
+                target = max(target, ref_step.start_time)
                 if ref_step.end_time is not None:
-                    required_delay = (
-                        ref_step.post_buffer_seconds + step.pre_buffer_seconds
-                    )
-                    if trigger_type == "afterStepWithBuffer":
-                        buffer_value = start_trigger.get("bufferSeconds", 0)
-                        required_delay += parse_time_string(buffer_value)
-                    # Handle offsetSeconds on afterStep (same as web visualizer)
-                    offset_value = start_trigger.get("offsetSeconds", 0)
-                    if offset_value:
-                        required_delay += parse_time_string(offset_value)
-                    if required_delay > 0:
-                        return current_time >= ref_step.end_time + required_delay
-                return True
-            return False
+                    target = min(target, ref_step.end_time)
+                return current_time >= target
+
+            # The ordinary case: the anchor has to finish first.
+            if ref_step.status != StepStatus.COMPLETED:
+                return False
+            if ref_step.end_time is not None:
+                required_delay += offset_seconds
+                if required_delay > 0:
+                    return current_time >= ref_step.end_time + required_delay
+            return True
 
         # Manual trigger — step must be set to WAITING_FOR_MANUAL via trigger_manual_step()
         elif trigger_type == "manual":
@@ -2041,7 +2548,13 @@ def draw_ui(stdscr, runner: ProgramRunner) -> None:
     safe_addstr(0, (width - len(header)) // 2, header, curses.A_BOLD)
 
     # Draw status
-    status = f" Status: {'Running' if runner.is_running else 'Stopped'} | Time Scale: {runner.time_scale}x | Actors: {runner.actors_available} "
+    if runner.is_paused:
+        state = "PAUSED"
+    elif runner.is_running:
+        state = "Running"
+    else:
+        state = "Stopped"
+    status = f" Status: {state} | Time Scale: {runner.time_scale}x | Actors: {runner.actors_available} "
     safe_addstr(1, (width - len(status)) // 2, status)
 
     # Draw actor usage
@@ -2124,9 +2637,21 @@ def draw_ui(stdscr, runner: ProgramRunner) -> None:
         if step_info.get("selected", False):
             safe_addstr(row_y, 0, ">", curses.A_BOLD)
 
-        safe_addstr(row_y, 2, step_info["id"][:15], attr)
-        safe_addstr(row_y, 20, step_info["name"][:18], attr)
-        safe_addstr(row_y, 40, step_info["track"][:13], attr)
+        # Instance groups: one row per replicated step, expandable with 'g'.
+        is_group = step_info.get("row_type") == "group"
+        if is_group:
+            attr = attr | curses.A_BOLD
+            marker = "\u25be " if step_info.get("expanded") else "\u25b8 "
+            name_cell = marker + step_info["name"]
+        else:
+            indent = "  " * step_info.get("depth", 0)
+            name_cell = indent + step_info["name"]
+
+        safe_addstr(row_y, 2, step_info.get("id_display", step_info["id"])[:17], attr)
+        safe_addstr(row_y, 20, name_cell[:19], attr)
+        safe_addstr(
+            row_y, 40, step_info.get("track_display", step_info["track"])[:13], attr
+        )
         safe_addstr(row_y, 55, status_display[:8], attr)
 
         # Draw progress bar for running steps
@@ -2146,7 +2671,11 @@ def draw_ui(stdscr, runner: ProgramRunner) -> None:
         else:
             safe_addstr(row_y, 65, "N/A", attr)
 
-        safe_addstr(row_y, 80, step_info["remaining"], attr)
+        if is_group:
+            summary = step_info.get("summary", "")
+            safe_addstr(row_y, 80, summary[: max(0, width - 82)], attr)
+        else:
+            safe_addstr(row_y, 80, step_info["remaining"], attr)
 
     # Draw resource usage (left column in bottom section)
     resource_y = height - 12  # Move up to make room for actor types
@@ -2257,7 +2786,7 @@ def draw_ui(stdscr, runner: ProgramRunner) -> None:
         safe_addstr(status_y, 2, runner.status_message[: width - 4])
 
     # Draw help
-    help_text = " q: Quit | s: Start | ↑↓: Select | t: Trigger | a: Abort | c: Complete | T: Menu | +/-: Speed | o: Sort "
+    help_text = " q: Quit | s: Start | p: Pause | ↑↓: Select | g: Group | t: Trigger | a: Abort | c: Complete | T: Menu | +/-: Speed | o: Sort "
     # Ensure help text fits on screen
     if len(help_text) > width - 2:
         help_text = help_text[: width - 5] + "..."
@@ -2277,14 +2806,25 @@ def handle_input(stdscr, runner: ProgramRunner) -> bool:
         return False
     elif key == "s" and not runner.is_running:
         runner.command_queue.put("start_program")
+    elif key == "p":
+        runner.toggle_pause()
     elif key == "KEY_UP" or key == "k":
         # Select previous step
         runner.select_previous_step()
     elif key == "KEY_DOWN" or key == "j":
         # Select next step
         runner.select_next_step()
+    elif key == "g" or key == "\n" or key == "KEY_ENTER":
+        # Expand or collapse the selected replicate-instance group
+        runner.toggle_group()
+        return True
     elif key == "t":
         # Get the selected step
+        selected_row = runner.get_selected_row()
+        if selected_row and selected_row.get("row_type") == "group":
+            runner.toggle_group(selected_row.get("instance_of"))
+            runner.status_message += " Select an instance to trigger it."
+            return True
         selected_step_id = runner.get_selected_step_id()
         if not selected_step_id or selected_step_id not in runner.steps:
             runner.status_message = "No step selected."
@@ -2480,6 +3020,128 @@ def main_loop(stdscr, runner: ProgramRunner) -> None:
         time.sleep(0.05)
 
 
+def _load_history_records(
+    history_file: Optional[str],
+    runs_dir: Optional[str],
+    program_id: Optional[str],
+) -> List[Dict[str, Any]]:
+    """
+    Run records to predict from: one file if given, else the runs directory.
+
+    A ``--history`` file may hold a single record, a bare list of records, or
+    an object with a ``runs`` array (the shape of the synthetic corpora in
+    ``tests/fixtures/history``), so a corpus can be pointed at directly.
+    """
+    if history_file:
+        try:
+            with open(history_file, "r", encoding="utf-8") as handle:
+                payload = json.load(handle)
+        except (OSError, ValueError) as exc:
+            print(f"Could not read history from {history_file}: {exc}")
+            return []
+        if isinstance(payload, dict) and isinstance(payload.get("runs"), list):
+            return [r for r in payload["runs"] if isinstance(r, dict)]
+        if isinstance(payload, list):
+            return [r for r in payload if isinstance(r, dict)]
+        if isinstance(payload, dict) and payload.get("steps") is not None:
+            return [payload]
+        return []
+    from .history.store import list_runs
+
+    return list_runs(runs_dir, program_id)
+
+
+def _wants_predicted_offsets(program: Dict[str, Any]) -> bool:
+    """Does ``program`` ask for predicted negative offsets (metadata.offsetsUse)?"""
+    metadata = program.get("metadata")
+    return isinstance(metadata, dict) and metadata.get("offsetsUse") == "predicted"
+
+
+def _parse_key_values(pairs: Optional[Sequence[str]]) -> Dict[str, Any]:
+    """``["turkeyKg=7", "oven=gas"]`` -> ``{"turkeyKg": "7", "oven": "gas"}``."""
+    out: Dict[str, Any] = {}
+    for pair in pairs or []:
+        text = str(pair)
+        if "=" not in text:
+            continue
+        key, value = text.split("=", 1)
+        key = key.strip()
+        if key:
+            out[key] = value.strip()
+    return out
+
+
+def prepare_predictions(
+    program: Dict[str, Any],
+    source_program: Optional[Dict[str, Any]] = None,
+    *,
+    runs_dir: Optional[str] = None,
+    history_file: Optional[str] = None,
+    use_history: bool = True,
+    user_tags: Optional[Dict[str, Any]] = None,
+    predict_context: Optional[Sequence[str]] = None,
+    echo_fn=print,
+) -> Dict[str, Dict[str, Any]]:
+    """
+    Predict this program's step durations from run history, for the offsets.
+
+    Returns ``{}`` unless the program asks for it with
+    ``metadata.offsetsUse: "predicted"`` and history exists. The context
+    predicted for is the answers to the declared variance factors (the same
+    ``--factor`` answers the record stores in ``context.userTags``),
+    overridden by ``--predict-context KEY=VALUE``.
+
+    Executor-controlled steps are excluded by passing the inferentiality
+    verdicts, so a step whose length the person decides gets no prediction at
+    all rather than a confident median of other people's choices.
+    """
+    if not _wants_predicted_offsets(program):
+        return {}
+    if not use_history:
+        echo_fn(
+            "offsetsUse is 'predicted' but --no-history was given: "
+            "negative offsets will use the planned durations."
+        )
+        return {}
+
+    from .history.hash import program_version
+    from .history.predict import predict_durations
+    from .history.report import build_report
+
+    program_id = program.get("programId")
+    records = _load_history_records(history_file, runs_dir, program_id)
+    if not records:
+        echo_fn(
+            "offsetsUse is 'predicted' but no runs are recorded for "
+            f"'{program_id}': negative offsets will use the planned durations."
+        )
+        return {}
+
+    context = dict(user_tags or {})
+    context.update(_parse_key_values(predict_context))
+    hashed = source_program if source_program is not None else program
+    report = build_report(records, program)
+    predictions = predict_durations(
+        program,
+        records,
+        environment_id=program.get("environment"),
+        user_tags=context,
+        program_version=program_version(hashed),
+        verdicts=report,
+    )
+    usable = {
+        step_id: p
+        for step_id, p in predictions.items()
+        if p.get("basis") not in (None, "none") and p.get("seconds") is not None
+    }
+    echo_fn(
+        f"Predicted durations from {len(records)} recorded run(s): "
+        f"{len(usable)} of {len(predictions)} steps have a prediction "
+        "(used only for negative offsets on indefinite steps)."
+    )
+    return predictions
+
+
 def run_program(
     program_file: str,
     schema_file: str = "program_schema.json",
@@ -2487,7 +3149,14 @@ def run_program(
     validate: bool = True,
     auto_start: bool = False,
     environment: Optional[str] = None,
-) -> None:
+    record: bool = True,
+    runs_dir: Optional[str] = None,
+    factors: Optional[Sequence[str]] = None,
+    factor_prompt: bool = True,
+    history_file: Optional[str] = None,
+    use_history: bool = True,
+    predict_context: Optional[Sequence[str]] = None,
+) -> Optional[str]:
     """
     Run a program file with the interactive UI.
 
@@ -2498,9 +3167,38 @@ def run_program(
         validate: Whether to validate the program before running
         auto_start: Whether to automatically start the program
         environment: Environment ID to use (overrides program environment setting)
+        record: Write a run record (planned vs actual) when the run ends
+        runs_dir: Directory for run records (default: $RHYLTHYME_RUNS_DIR or
+            ~/.rhylthyme/runs)
+        factors: Pre-supplied answers to the program's declared variance
+            factors, as ``key=value`` strings (``--factor``); they override
+            ``RHYLTHYME_FACTORS`` and suppress the prompt for those keys
+        factor_prompt: Ask on the plain terminal, before the TUI starts, for
+            any declared variance factor that has no pre-supplied answer
+        history_file: Run records to predict durations from instead of the
+            runs directory (``--history``)
+        use_history: Load history at all (``--no-history`` turns it off);
+            only matters for a program with ``metadata.offsetsUse:
+            "predicted"``
+        predict_context: ``key=value`` context to predict for
+            (``--predict-context``), defaulting to the factor answers
+
+    Returns:
+        Path of the written run record, or None if none was written.
     """
     # Load the program
     program = load_program_file(program_file)
+
+    # Keep the program exactly as authored, for the run record's
+    # programVersion and for the identical-context prediction lookup.
+    source_program = None
+    if record or _wants_predicted_offsets(program):
+        try:
+            from .history.hash import load_program_for_hash
+
+            source_program = load_program_for_hash(program_file)
+        except Exception:
+            source_program = json.loads(json.dumps(program))
 
     # Handle environment resolution using the CLI's environment loader
     try:
@@ -2565,14 +3263,59 @@ def run_program(
             print(f"Error validating program: {e}")
             sys.exit(1)
 
+    # Pre-flight: ask for the program's declared variance factors on the plain
+    # terminal, before curses takes the screen. Skipped entirely when the
+    # program declares none, or when recording is off.
+    predicted_offsets = _wants_predicted_offsets(program)
+    user_tags = {}
+    if record or predicted_offsets:
+        from .history.factors import collect_factors
+
+        user_tags = collect_factors(program, factor_args=factors, prompt=factor_prompt)
+
     # Create the program runner
     runner = ProgramRunner(program, time_scale=time_scale, auto_start=auto_start)
 
-    # Run the program with curses UI
+    # Predicted offsets: history is read once, before the clock starts, and the
+    # predictions are frozen for the whole run.
+    if predicted_offsets:
+        runner.set_predictions(
+            prepare_predictions(
+                program,
+                source_program,
+                runs_dir=runs_dir,
+                history_file=history_file,
+                use_history=use_history,
+                user_tags=user_tags,
+                predict_context=predict_context,
+            )
+        )
+
+    # Attach the run recorder (writes planned vs actual on exit)
+    recorder = None
+    if record:
+        from .history.recorder import RunRecorder
+
+        recorder = RunRecorder(
+            runner, source_program=source_program, runs_dir=runs_dir
+        ).attach()
+        if user_tags:
+            recorder.context["userTags"].update(user_tags)
+
+    # Run the program with curses UI; the record is written however we exit
+    outcome = None
+    written = None
     try:
         curses.wrapper(lambda stdscr: main_loop(stdscr, runner))
     except KeyboardInterrupt:
         print("Program execution interrupted.")
+        outcome = "abandoned"
+    finally:
+        if recorder is not None:
+            written = recorder.finalize(outcome=outcome)
+            if written:
+                print(f"Run record written to {written}")
+    return str(written) if written else None
 
 
 def main():

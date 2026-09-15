@@ -28,6 +28,10 @@ setup(
     url="https://github.com/rhylthyme/rhylthyme-cli-runner",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
+    package_data={
+        # Prompt copies used by `eval-prompts --patterns baseline`.
+        "rhylthyme_cli_runner.eval.patterns": ["*.md"],
+    },
     install_requires=[
         "setuptools",
         "click>=8.0.0",

@@ -1,0 +1,2535 @@
+{
+ "$comment": "Parity fixture for the history-based duration lookup. Python: rhylthyme_server.rhylthyme.predict / rhylthyme_cli_runner.history.predict (tests/test_predict.py). JavaScript: predictDurations in rhylthyme-server/mcp-api/history.js (mcp-api/history.test.js, which reads this file by relative path). Each case carries the program (inline, or \"thanksgiving\" for rhylthyme-server/static/examples/thanksgiving_one_oven.json), the records (inline, or recordsFixture naming a sibling file), the prediction context in the JavaScript option spelling, and the full expected result keyed by stepId. expectApprox states what the generating law says, independently of either implementation.",
+ "tolerance": 1e-06,
+ "cases": [
+  {
+   "name": "identical context",
+   "comment": "Five runs of the same version, environment and factor answers: the median is the prediction and P10/P90 the interval, no model needed.",
+   "program": {
+    "schemaVersion": "0.2.0-alpha",
+    "programId": "predict-parity",
+    "name": "Prediction parity",
+    "actors": 2,
+    "tracks": [
+     {
+      "trackId": "t",
+      "name": "T",
+      "steps": [
+       {
+        "stepId": "boil",
+        "name": "Boil",
+        "task": "stove",
+        "duration": {
+         "type": "variable",
+         "minSeconds": 600,
+         "maxSeconds": 1800,
+         "defaultSeconds": 1200
+        },
+        "startTrigger": {
+         "type": "programStart"
+        }
+       }
+      ]
+     }
+    ],
+    "resourceConstraints": [
+     {
+      "task": "stove",
+      "maxConcurrent": 1
+     }
+    ],
+    "metadata": {
+     "serves": "8",
+     "varianceFactors": [
+      {
+       "key": "batchKg",
+       "label": "Batch (kg)",
+       "type": "number"
+      },
+      {
+       "key": "oven",
+       "label": "Oven",
+       "type": "enum",
+       "values": [
+        "gas",
+        "electric",
+        "convection"
+       ]
+      }
+     ]
+    }
+   },
+   "records": [
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-01T10:00:00Z-1000",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-01T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "gas"
+      }
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 1100
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-02T10:00:00Z-1001",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-02T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "gas"
+      }
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 1150
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-03T10:00:00Z-1002",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-03T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "gas"
+      }
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 1200
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-04T10:00:00Z-1003",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-04T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "gas"
+      }
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 1250
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-05T10:00:00Z-1004",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-05T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "gas"
+      }
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 1400
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    }
+   ],
+   "context": {
+    "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+    "environmentId": "kitchen-a",
+    "userTags": {
+     "batchKg": 4,
+     "oven": "gas"
+    }
+   },
+   "expect": {
+    "boil": {
+     "seconds": 1200.0,
+     "low": 1120.0,
+     "high": 1340.0,
+     "basis": "identical",
+     "n": 5,
+     "source": "all",
+     "method": "median"
+    }
+   }
+  },
+  {
+   "name": "the caller's own identical runs win",
+   "comment": "Three of this cook's runs and four of everyone else's, all in the identical context. PRD open question 3: this cook's kitchen is the more relevant distribution, so source is \"user\" and n is 3.",
+   "program": {
+    "schemaVersion": "0.2.0-alpha",
+    "programId": "predict-parity",
+    "name": "Prediction parity",
+    "actors": 2,
+    "tracks": [
+     {
+      "trackId": "t",
+      "name": "T",
+      "steps": [
+       {
+        "stepId": "boil",
+        "name": "Boil",
+        "task": "stove",
+        "duration": {
+         "type": "variable",
+         "minSeconds": 600,
+         "maxSeconds": 1800,
+         "defaultSeconds": 1200
+        },
+        "startTrigger": {
+         "type": "programStart"
+        }
+       }
+      ]
+     }
+    ],
+    "resourceConstraints": [
+     {
+      "task": "stove",
+      "maxConcurrent": 1
+     }
+    ],
+    "metadata": {
+     "serves": "8",
+     "varianceFactors": [
+      {
+       "key": "batchKg",
+       "label": "Batch (kg)",
+       "type": "number"
+      },
+      {
+       "key": "oven",
+       "label": "Oven",
+       "type": "enum",
+       "values": [
+        "gas",
+        "electric",
+        "convection"
+       ]
+      }
+     ]
+    }
+   },
+   "records": [
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-01T10:00:00Z-1000",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-01T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "gas"
+      },
+      "userId": "me"
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 900
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-02T10:00:00Z-1001",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-02T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "gas"
+      },
+      "userId": "me"
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 960
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-03T10:00:00Z-1002",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-03T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "gas"
+      },
+      "userId": "me"
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 1020
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-04T10:00:00Z-1003",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-04T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "gas"
+      },
+      "userId": "someone-3"
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 1800
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-05T10:00:00Z-1004",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-05T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "gas"
+      },
+      "userId": "someone-4"
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 1900
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-06T10:00:00Z-1005",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-06T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "gas"
+      },
+      "userId": "someone-5"
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 2000
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-07T10:00:00Z-1006",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-07T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "gas"
+      },
+      "userId": "someone-6"
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 2100
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    }
+   ],
+   "context": {
+    "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+    "environmentId": "kitchen-a",
+    "userTags": {
+     "batchKg": 4,
+     "oven": "gas"
+    },
+    "userId": "me"
+   },
+   "expect": {
+    "boil": {
+     "seconds": 960.0,
+     "low": 912.0,
+     "high": 1008.0,
+     "basis": "identical",
+     "n": 3,
+     "source": "user",
+     "method": "median"
+    }
+   }
+  },
+  {
+   "name": "without a userId the same history pools every cook",
+   "comment": "The same records, asked without a userId: source \"all\", n 7.",
+   "program": {
+    "schemaVersion": "0.2.0-alpha",
+    "programId": "predict-parity",
+    "name": "Prediction parity",
+    "actors": 2,
+    "tracks": [
+     {
+      "trackId": "t",
+      "name": "T",
+      "steps": [
+       {
+        "stepId": "boil",
+        "name": "Boil",
+        "task": "stove",
+        "duration": {
+         "type": "variable",
+         "minSeconds": 600,
+         "maxSeconds": 1800,
+         "defaultSeconds": 1200
+        },
+        "startTrigger": {
+         "type": "programStart"
+        }
+       }
+      ]
+     }
+    ],
+    "resourceConstraints": [
+     {
+      "task": "stove",
+      "maxConcurrent": 1
+     }
+    ],
+    "metadata": {
+     "serves": "8",
+     "varianceFactors": [
+      {
+       "key": "batchKg",
+       "label": "Batch (kg)",
+       "type": "number"
+      },
+      {
+       "key": "oven",
+       "label": "Oven",
+       "type": "enum",
+       "values": [
+        "gas",
+        "electric",
+        "convection"
+       ]
+      }
+     ]
+    }
+   },
+   "records": [
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-01T10:00:00Z-1000",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-01T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "gas"
+      },
+      "userId": "me"
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 900
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-02T10:00:00Z-1001",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-02T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "gas"
+      },
+      "userId": "me"
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 960
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-03T10:00:00Z-1002",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-03T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "gas"
+      },
+      "userId": "me"
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 1020
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-04T10:00:00Z-1003",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-04T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "gas"
+      },
+      "userId": "someone-3"
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 1800
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-05T10:00:00Z-1004",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-05T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "gas"
+      },
+      "userId": "someone-4"
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 1900
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-06T10:00:00Z-1005",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-06T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "gas"
+      },
+      "userId": "someone-5"
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 2000
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-07T10:00:00Z-1006",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-07T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "gas"
+      },
+      "userId": "someone-6"
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 2100
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    }
+   ],
+   "context": {
+    "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+    "environmentId": "kitchen-a",
+    "userTags": {
+     "batchKg": 4,
+     "oven": "gas"
+    }
+   },
+   "expect": {
+    "boil": {
+     "seconds": 1800.0,
+     "low": 936.0,
+     "high": 2040.0,
+     "basis": "identical",
+     "n": 7,
+     "source": "all",
+     "method": "median"
+    }
+   }
+  },
+  {
+   "name": "small n falls back to the median",
+   "comment": "Four measurements, none in the identical context (a different batch weight each time) and fewer than minModel: basis stays \"model\" but the method is the median and no factor is claimed.",
+   "program": {
+    "schemaVersion": "0.2.0-alpha",
+    "programId": "predict-parity",
+    "name": "Prediction parity",
+    "actors": 2,
+    "tracks": [
+     {
+      "trackId": "t",
+      "name": "T",
+      "steps": [
+       {
+        "stepId": "boil",
+        "name": "Boil",
+        "task": "stove",
+        "duration": {
+         "type": "variable",
+         "minSeconds": 600,
+         "maxSeconds": 1800,
+         "defaultSeconds": 1200
+        },
+        "startTrigger": {
+         "type": "programStart"
+        }
+       }
+      ]
+     }
+    ],
+    "resourceConstraints": [
+     {
+      "task": "stove",
+      "maxConcurrent": 1
+     }
+    ],
+    "metadata": {
+     "serves": "8",
+     "varianceFactors": [
+      {
+       "key": "batchKg",
+       "label": "Batch (kg)",
+       "type": "number"
+      },
+      {
+       "key": "oven",
+       "label": "Oven",
+       "type": "enum",
+       "values": [
+        "gas",
+        "electric",
+        "convection"
+       ]
+      }
+     ]
+    }
+   },
+   "records": [
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-01T10:00:00Z-1000",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-01T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 3,
+       "oven": "gas"
+      }
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 1000
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-02T10:00:00Z-1001",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-02T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "gas"
+      }
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 1100
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-03T10:00:00Z-1002",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-03T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 5,
+       "oven": "gas"
+      }
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 1200
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-04T10:00:00Z-1003",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-04T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 6,
+       "oven": "gas"
+      }
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 1300
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    }
+   ],
+   "context": {
+    "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+    "environmentId": "kitchen-a",
+    "userTags": {
+     "batchKg": 9,
+     "oven": "gas"
+    }
+   },
+   "expect": {
+    "boil": {
+     "seconds": 1150.0,
+     "low": 1030.0,
+     "high": 1270.0,
+     "basis": "model",
+     "n": 4,
+     "source": "all",
+     "method": "median",
+     "factors": []
+    }
+   }
+  },
+  {
+   "name": "enum factors enter the model one-hot",
+   "comment": "Twelve runs where only the oven type matters (gas 1200 s, electric 1800 s, convection 900 s, +/- a little). batchKg is constant and so correlates with nothing; the surviving factors are one-hot oven columns and the prediction for a gas oven is 1200 s give or take the drift.",
+   "program": {
+    "schemaVersion": "0.2.0-alpha",
+    "programId": "predict-parity",
+    "name": "Prediction parity",
+    "actors": 2,
+    "tracks": [
+     {
+      "trackId": "t",
+      "name": "T",
+      "steps": [
+       {
+        "stepId": "boil",
+        "name": "Boil",
+        "task": "stove",
+        "duration": {
+         "type": "variable",
+         "minSeconds": 600,
+         "maxSeconds": 1800,
+         "defaultSeconds": 1200
+        },
+        "startTrigger": {
+         "type": "programStart"
+        }
+       }
+      ]
+     }
+    ],
+    "resourceConstraints": [
+     {
+      "task": "stove",
+      "maxConcurrent": 1
+     }
+    ],
+    "metadata": {
+     "serves": "8",
+     "varianceFactors": [
+      {
+       "key": "batchKg",
+       "label": "Batch (kg)",
+       "type": "number"
+      },
+      {
+       "key": "oven",
+       "label": "Oven",
+       "type": "enum",
+       "values": [
+        "gas",
+        "electric",
+        "convection"
+       ]
+      }
+     ]
+    }
+   },
+   "records": [
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-01T10:00:00Z-1000",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-01T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "gas"
+      }
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 1180
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-02T10:00:00Z-1001",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-02T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "electric"
+      }
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 1800
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-03T10:00:00Z-1002",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-03T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "convection"
+      }
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 920
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-04T10:00:00Z-1003",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-04T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "gas"
+      }
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 1210
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-05T10:00:00Z-1004",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-05T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "electric"
+      }
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 1780
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-06T10:00:00Z-1005",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-06T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "convection"
+      }
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 900
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-07T10:00:00Z-1006",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-07T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "gas"
+      }
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 1220
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-08T10:00:00Z-1007",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-08T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "electric"
+      }
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 1810
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-09T10:00:00Z-1008",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-09T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "convection"
+      }
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 880
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-10T10:00:00Z-1009",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-10T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "gas"
+      }
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 1200
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-11T10:00:00Z-100a",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-11T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "electric"
+      }
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 1820
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-12T10:00:00Z-100b",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-12T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "convection"
+      }
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 910
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    }
+   ],
+   "context": {
+    "programVersion": "sha256:efefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefef",
+    "environmentId": "kitchen-a",
+    "userTags": {
+     "batchKg": 4,
+     "oven": "gas"
+    }
+   },
+   "expectApprox": {
+    "boil": {
+     "seconds": 1200,
+     "tolerance": 60
+    }
+   },
+   "expect": {
+    "boil": {
+     "seconds": 1202.5,
+     "low": 1180.0,
+     "high": 1220.0,
+     "basis": "model",
+     "n": 12,
+     "source": "all",
+     "method": "ols",
+     "factors": [
+      {
+       "key": "oven=convection",
+       "coef": -300.0
+      },
+      {
+       "key": "oven=electric",
+       "coef": 600.0
+      }
+     ]
+    }
+   }
+  },
+  {
+   "name": "an executor-controlled step is never predicted",
+   "comment": "The inferentiality report's verdict overrides the history: the measurements exist (n is reported) but the person, not the process, decides how long the step takes.",
+   "program": {
+    "schemaVersion": "0.2.0-alpha",
+    "programId": "predict-parity",
+    "name": "Prediction parity",
+    "actors": 2,
+    "tracks": [
+     {
+      "trackId": "t",
+      "name": "T",
+      "steps": [
+       {
+        "stepId": "boil",
+        "name": "Boil",
+        "task": "stove",
+        "duration": {
+         "type": "variable",
+         "minSeconds": 600,
+         "maxSeconds": 1800,
+         "defaultSeconds": 1200
+        },
+        "startTrigger": {
+         "type": "programStart"
+        }
+       }
+      ]
+     }
+    ],
+    "resourceConstraints": [
+     {
+      "task": "stove",
+      "maxConcurrent": 1
+     }
+    ],
+    "metadata": {
+     "serves": "8",
+     "varianceFactors": [
+      {
+       "key": "batchKg",
+       "label": "Batch (kg)",
+       "type": "number"
+      },
+      {
+       "key": "oven",
+       "label": "Oven",
+       "type": "enum",
+       "values": [
+        "gas",
+        "electric",
+        "convection"
+       ]
+      }
+     ]
+    }
+   },
+   "records": [
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-01T10:00:00Z-1000",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-01T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "gas"
+      }
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 1100
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-02T10:00:00Z-1001",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-02T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "gas"
+      }
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 1150
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-03T10:00:00Z-1002",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-03T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "gas"
+      }
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 1200
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-04T10:00:00Z-1003",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-04T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "gas"
+      }
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 1250
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-05T10:00:00Z-1004",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-05T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {
+       "batchKg": 4,
+       "oven": "gas"
+      }
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 1400
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    }
+   ],
+   "context": {
+    "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+    "environmentId": "kitchen-a",
+    "userTags": {
+     "batchKg": 4,
+     "oven": "gas"
+    },
+    "verdicts": {
+     "boil": "executor-controlled"
+    }
+   },
+   "expect": {
+    "boil": {
+     "seconds": null,
+     "low": null,
+     "high": null,
+     "basis": "none",
+     "n": 5,
+     "source": "all",
+     "reason": "executor-controlled"
+    }
+   }
+  },
+  {
+   "name": "no history",
+   "comment": "Runs of another program, an abandoned run and a time-scaled run: nothing usable, so no step gets an entry at all.",
+   "program": {
+    "schemaVersion": "0.2.0-alpha",
+    "programId": "predict-parity",
+    "name": "Prediction parity",
+    "actors": 2,
+    "tracks": [
+     {
+      "trackId": "t",
+      "name": "T",
+      "steps": [
+       {
+        "stepId": "boil",
+        "name": "Boil",
+        "task": "stove",
+        "duration": {
+         "type": "variable",
+         "minSeconds": 600,
+         "maxSeconds": 1800,
+         "defaultSeconds": 1200
+        },
+        "startTrigger": {
+         "type": "programStart"
+        }
+       }
+      ]
+     }
+    ],
+    "resourceConstraints": [
+     {
+      "task": "stove",
+      "maxConcurrent": 1
+     }
+    ],
+    "metadata": {
+     "serves": "8",
+     "varianceFactors": [
+      {
+       "key": "batchKg",
+       "label": "Batch (kg)",
+       "type": "number"
+      },
+      {
+       "key": "oven",
+       "label": "Oven",
+       "type": "enum",
+       "values": [
+        "gas",
+        "electric",
+        "convection"
+       ]
+      }
+     ]
+    }
+   },
+   "records": [
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-01T10:00:00Z-1000",
+     "programId": "something-else",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-01T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {}
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 1200
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-02T10:00:00Z-1001",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-02T10:00:00Z",
+     "outcome": "abandoned",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {}
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 1200
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-03T10:00:00Z-1002",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "wall",
+      "speed": 10
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-03T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {}
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 1200
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    },
+    {
+     "schemaVersion": "0.1.0-alpha",
+     "runId": "2026-03-04T10:00:00Z-1003",
+     "programId": "predict-parity",
+     "programVersion": "sha256:cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+     "runtime": {
+      "kind": "cli",
+      "version": "0.1.0a0",
+      "clockMode": "simulated",
+      "speed": 1
+     },
+     "environmentId": "kitchen-a",
+     "startedAt": "2026-03-04T10:00:00Z",
+     "outcome": "completed",
+     "context": {
+      "serves": "8",
+      "actors": 2,
+      "userTags": {}
+     },
+     "steps": [
+      {
+       "stepId": "boil",
+       "instance": 1,
+       "planned": {
+        "start": 0,
+        "end": 1200,
+        "durationType": "variable",
+        "defaultSeconds": 1200
+       },
+       "actual": {
+        "start": 0,
+        "end": 1200
+       },
+       "endedBy": "executor",
+       "pausedSeconds": 0,
+       "triggerFiredAt": 0
+      }
+     ]
+    }
+   ],
+   "context": {
+    "environmentId": "kitchen-a",
+    "userTags": {
+     "batchKg": 4
+    }
+   },
+   "expectEmpty": true,
+   "expect": {}
+  },
+  {
+   "name": "model fitted on the Thanksgiving corpus",
+   "comment": "Twenty synthetic runs whose turkey-roast obeys 600 + 90 * turkeyKg seconds. Asked for a 7 kg turkey in an electric oven \u2014 a combination the history has never seen \u2014 nothing is identical, so the lookup falls through to the model, keeps turkeyKg, drops the two one-hot oven columns (they correlate with nothing) and lands within 5% of the law's 1230 s. potatoes-boil obeys no law at all, so no factor survives and it comes back as the median of its measurements.",
+   "program": "thanksgiving",
+   "recordsFixture": "thanksgiving-synth-runs.json",
+   "context": {
+    "programVersion": "sha256:935c4ca9d910785332979c8807f6bb5ef247baf4bdb990a2f607b43b4b1293ec",
+    "environmentId": "home-kitchen",
+    "userTags": {
+     "turkeyKg": 7,
+     "oven": "electric"
+    }
+   },
+   "expectApprox": {
+    "turkey-roast": {
+     "seconds": 1230,
+     "tolerancePct": 5
+    }
+   },
+   "expect": {
+    "turkey-roast": {
+     "seconds": 1230.577,
+     "low": 1134.873,
+     "high": 1304.177,
+     "basis": "model",
+     "n": 20,
+     "source": "all",
+     "method": "ols",
+     "factors": [
+      {
+       "key": "turkeyKg",
+       "coef": 86.861
+      }
+     ]
+    },
+    "potatoes-boil": {
+     "seconds": 1186.696,
+     "low": 1059.317,
+     "high": 1328.445,
+     "basis": "model",
+     "n": 20,
+     "source": "all",
+     "method": "median",
+     "factors": []
+    }
+   }
+  },
+  {
+   "name": "identical beats the model on the same corpus",
+   "comment": "The same twenty runs asked for 7 kg in a gas oven: three runs match that context exactly, which is minIdentical, so the median of those three answers and the model is never fitted.",
+   "program": "thanksgiving",
+   "recordsFixture": "thanksgiving-synth-runs.json",
+   "context": {
+    "programVersion": "sha256:935c4ca9d910785332979c8807f6bb5ef247baf4bdb990a2f607b43b4b1293ec",
+    "environmentId": "home-kitchen",
+    "userTags": {
+     "turkeyKg": 7,
+     "oven": "gas"
+    }
+   },
+   "expect": {
+    "turkey-roast": {
+     "seconds": 1251.864,
+     "low": 1231.517,
+     "high": 1258.584,
+     "basis": "identical",
+     "n": 3,
+     "source": "all",
+     "method": "median"
+    },
+    "potatoes-boil": {
+     "seconds": 1324.158,
+     "low": 1110.962,
+     "high": 1501.687,
+     "basis": "identical",
+     "n": 3,
+     "source": "all",
+     "method": "median"
+    }
+   }
+  },
+  {
+   "name": "this cook's own identical runs on the same corpus",
+   "comment": "All three runs in that identical context happen to be cook-1's own, so asking as cook-1 reports the same numbers with source \"user\": this kitchen's distribution, not 20 kitchens'.",
+   "program": "thanksgiving",
+   "recordsFixture": "thanksgiving-synth-runs.json",
+   "context": {
+    "programVersion": "sha256:935c4ca9d910785332979c8807f6bb5ef247baf4bdb990a2f607b43b4b1293ec",
+    "environmentId": "home-kitchen",
+    "userTags": {
+     "turkeyKg": 7,
+     "oven": "gas"
+    },
+    "userId": "cook-1"
+   },
+   "expect": {
+    "turkey-roast": {
+     "seconds": 1251.864,
+     "low": 1231.517,
+     "high": 1258.584,
+     "basis": "identical",
+     "n": 3,
+     "source": "user",
+     "method": "median"
+    },
+    "potatoes-boil": {
+     "seconds": 1324.158,
+     "low": 1110.962,
+     "high": 1501.687,
+     "basis": "identical",
+     "n": 3,
+     "source": "user",
+     "method": "median"
+    }
+   }
+  }
+ ]
+}
