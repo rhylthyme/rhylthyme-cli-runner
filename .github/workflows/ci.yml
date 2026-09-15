@@ -132,7 +132,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -e ../rhylthyme-spec
-        pip install -e .
+        pip install -e ".[dev]"
 
     - name: Validate all examples
       run: |
