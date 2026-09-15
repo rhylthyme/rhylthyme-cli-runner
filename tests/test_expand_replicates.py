@@ -20,6 +20,10 @@ pytestmark = pytest.mark.unit
 MONOREPO_ROOT = Path(__file__).resolve().parents[2]
 COOKIES = MONOREPO_ROOT / "rhylthyme-examples" / "programs" / "cookies_three_trays.json"
 
+requires_examples = pytest.mark.skipif(
+    not COOKIES.exists(), reason="rhylthyme-examples checkout not found"
+)
+
 
 def fixed(step_id, seconds, trigger, **extra):
     step = {
@@ -526,6 +530,7 @@ def test_expand_is_pure_and_0_2_0_programs_expand_as_before():
     assert tracks_by_id(e)["t--x-r2"]["parentTrackId"] == "t"
 
 
+@requires_examples
 def test_cookie_example_expands_to_expected_shape_and_timings():
     from rhylthyme_cli_runner.validate_program import (
         calculate_step_start_time,
@@ -831,6 +836,7 @@ def test_a_tagged_gate_is_never_re_expanded():
     assert json.dumps(once).count('"_synthetic": "inFlight"') == 2
 
 
+@requires_examples
 def test_cookie_example_resolves_to_the_prd_schedule_with_max_in_flight():
     p = json.loads(COOKIES.read_text())
     assert p["tracks"][0]["steps"][1]["replicates"]["maxInFlight"] == 2
@@ -840,6 +846,7 @@ def test_cookie_example_resolves_to_the_prd_schedule_with_max_in_flight():
     assert timings_of(expand_replicates(p)) == p["metadata"]["expectedTimings"]
 
 
+@requires_examples
 @pytest.mark.parametrize("name", ["pcr_twelve_samples", "airport_landings_taxi_gate"])
 def test_in_flight_examples_resolve_to_their_hand_computed_schedules(name):
     p = json.loads((EXAMPLES / f"{name}.json").read_text())

@@ -32,6 +32,10 @@ SCHEMA_030 = (
 )
 COOKIES = MONOREPO_ROOT / "rhylthyme-examples" / "programs" / "cookies_three_trays.json"
 
+requires_examples = pytest.mark.skipif(
+    not COOKIES.exists(), reason="rhylthyme-examples checkout not found"
+)
+
 
 def fixed(step_id, seconds, trigger, **extra):
     step = {
@@ -96,6 +100,7 @@ def test_legacy_finding_renders_bare_message():
 # --------------------------------------------------------------------------
 
 
+@requires_examples
 def test_clean_program_and_expanded_program_yield_nothing():
     assert (
         validate_instances(program(track("t", fixed("a", 1, {"type": "programStart"}))))
@@ -316,6 +321,7 @@ def test_strict_mode_still_reports_unconstrained_tasks():
 # --------------------------------------------------------------------------
 
 
+@requires_examples
 def test_structured_file_result_shape(tmp_path):
     with open(COOKIES) as fh:
         cookies = json.load(fh)

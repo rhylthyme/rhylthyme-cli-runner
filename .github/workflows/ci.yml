@@ -25,11 +25,28 @@ jobs:
         # Matches python_requires>=3.12 in setup.py/pyproject.
         python-version: ['3.12', '3.13']
 
+    # The suites read sibling checkouts the way the monorepo lays them out:
+    # tests/../../rhylthyme-examples and the spec package from source (the
+    # PyPI release still imports pkg_resources, gone on Python 3.12+).
+    defaults:
+      run:
+        working-directory: rhylthyme-cli-runner
+
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout rhylthyme-cli-runner
+      uses: actions/checkout@v4
       with:
-        # Checkout with submodules if needed
-        submodules: recursive
+        path: rhylthyme-cli-runner
+    - name: Checkout rhylthyme-spec
+      uses: actions/checkout@v4
+      with:
+        repository: rhylthyme/rhylthyme-spec
+        path: rhylthyme-spec
+    - name: Checkout rhylthyme-examples
+      uses: actions/checkout@v4
+      with:
+        repository: rhylthyme/rhylthyme-examples
+        path: rhylthyme-examples
 
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v4
@@ -39,6 +56,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
+        pip install -e ../rhylthyme-spec
         pip install -e ".[dev]"
         pip install "black==24.1.1" "isort==5.13.2"
 
@@ -76,7 +94,7 @@ jobs:
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
       with:
-        file: ./coverage.xml
+        file: ./rhylthyme-cli-runner/coverage.xml
         flags: unittests
         name: codecov-umbrella
         fail_ci_if_error: false
@@ -85,11 +103,25 @@ jobs:
     runs-on: ubuntu-latest
     needs: test
     if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
+    defaults:
+      run:
+        working-directory: rhylthyme-cli-runner
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout rhylthyme-cli-runner
+      uses: actions/checkout@v4
       with:
-        submodules: recursive
+        path: rhylthyme-cli-runner
+    - name: Checkout rhylthyme-spec
+      uses: actions/checkout@v4
+      with:
+        repository: rhylthyme/rhylthyme-spec
+        path: rhylthyme-spec
+    - name: Checkout rhylthyme-examples
+      uses: actions/checkout@v4
+      with:
+        repository: rhylthyme/rhylthyme-examples
+        path: rhylthyme-examples
 
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -99,6 +131,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
+        pip install -e ../rhylthyme-spec
         pip install -e .
 
     - name: Validate all examples
@@ -261,9 +294,20 @@ jobs:
   type-check:
     runs-on: ubuntu-latest
     continue-on-error: true  # Don't fail CI if type checking fails
+    defaults:
+      run:
+        working-directory: rhylthyme-cli-runner
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout rhylthyme-cli-runner
+      uses: actions/checkout@v4
+      with:
+        path: rhylthyme-cli-runner
+    - name: Checkout rhylthyme-spec
+      uses: actions/checkout@v4
+      with:
+        repository: rhylthyme/rhylthyme-spec
+        path: rhylthyme-spec
 
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -273,6 +317,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
+        pip install -e ../rhylthyme-spec
         pip install -e .
         pip install mypy
 
