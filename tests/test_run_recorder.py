@@ -463,8 +463,8 @@ class TestRunProgramWritesRecord:
 
 @pytest.mark.unit
 def test_freeze_planned_matches_reference_resolver(history_program):
-    from rhylthyme.expand_replicates import expand_replicates
-    from rhylthyme.validate_program import calculate_step_start_time
+    from rhylthyme_cli_runner.expand_replicates import expand_replicates
+    from rhylthyme_cli_runner.validate_program import calculate_step_start_time
 
     expanded = expand_replicates(history_program)
     planned = freeze_planned(expanded)

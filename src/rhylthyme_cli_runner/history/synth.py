@@ -58,7 +58,7 @@ def lognormal_factor(rng: random.Random, cv: float) -> float:
 
 def _expand(program: Dict[str, Any]) -> Dict[str, Any]:
     try:
-        from rhylthyme.expand_replicates import expand_replicates
+        from rhylthyme_cli_runner.expand_replicates import expand_replicates
 
         return expand_replicates(copy.deepcopy(program))
     except Exception:  # pragma: no cover - expander is optional

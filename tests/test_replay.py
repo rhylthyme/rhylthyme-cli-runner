@@ -75,7 +75,7 @@ def record():
 
 @pytest.fixture
 def expanded_steps(program):
-    from rhylthyme.expand_replicates import expand_replicates
+    from rhylthyme_cli_runner.expand_replicates import expand_replicates
 
     return {
         step["stepId"]: step

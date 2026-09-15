@@ -71,7 +71,7 @@ def freeze_planned(program: Dict[str, Any]) -> Dict[str, Dict[str, Any]]:
     ``end``, ``durationType`` and whichever of ``seconds``, ``minSeconds``,
     ``maxSeconds``, ``defaultSeconds`` the author supplied, all in seconds.
     """
-    from rhylthyme.validate_program import (
+    from rhylthyme_cli_runner.validate_program import (
         calculate_step_start_time,
         parse_duration_to_seconds,
     )

@@ -104,7 +104,7 @@ def test_clean_program_and_expanded_program_yield_nothing():
     with open(COOKIES) as fh:
         cookies = json.load(fh)
     assert validate_instances(cookies) == []
-    from rhylthyme.expand_replicates import expand_replicates
+    from rhylthyme_cli_runner.expand_replicates import expand_replicates
 
     assert validate_instances(expand_replicates(cookies)) == []
 

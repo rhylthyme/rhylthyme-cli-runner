@@ -676,7 +676,7 @@ class ProgramRunner:
             environment: Optional environment data to use instead of loading from file
         """
         # Expand replicates (and legacy batch_size) before processing
-        from rhylthyme.expand_replicates import expand_replicates
+        from rhylthyme_cli_runner.expand_replicates import expand_replicates
 
         program = expand_replicates(program)
 
