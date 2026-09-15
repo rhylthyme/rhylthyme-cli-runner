@@ -12,7 +12,6 @@ import sys
 from pathlib import Path
 
 import click
-import pkg_resources
 
 from .environment_loader import EnvironmentLoader
 from .program_planner import plan_program
@@ -45,6 +44,13 @@ def get_environment_loader(environments_dir=None):
 
 
 # Set up the main CLI group
+def _default_schema_path():
+    """Built-in program schema shipped with rhylthyme-spec."""
+    from rhylthyme_spec import get_program_schema_path
+
+    return get_program_schema_path()
+
+
 @click.group()
 @click.option(
     "--environments-dir",
@@ -74,9 +80,7 @@ def cli(ctx, environments_dir):
 @click.option(
     "--schema",
     type=click.Path(exists=True),
-    default=lambda: pkg_resources.resource_filename(
-        "rhylthyme_spec", "schemas/program_schema_0.2.0-alpha.json"
-    ),
+    default=lambda: _default_schema_path(),
     help="Path to the schema file (default: built-in schema)",
 )
 @click.option(
@@ -176,9 +180,7 @@ def validate(program_files, schema, environment, verbose, json_output, strict):
 @click.option(
     "--schema",
     type=click.Path(exists=True),
-    default=lambda: pkg_resources.resource_filename(
-        "rhylthyme_spec", "schemas/program_schema_0.2.0-alpha.json"
-    ),
+    default=lambda: _default_schema_path(),
     help="Path to the schema file (default: built-in schema)",
 )
 @click.option(

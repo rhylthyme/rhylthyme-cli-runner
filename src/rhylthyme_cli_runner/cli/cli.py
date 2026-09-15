@@ -48,10 +48,10 @@ def validate(input_file, type):
         with open(input_file) as f:
             data = json.load(f)
         # Load schema from rhylthyme-spec package
-        import pkg_resources
+        from importlib import resources
 
-        schema_path = pkg_resources.resource_filename(
-            "rhylthyme_spec", "schemas/program_schema.json"
+        schema_path = str(
+            resources.files("rhylthyme_spec") / "schemas" / "program_schema.json"
         )
         with open(schema_path) as sf:
             schema = json.load(sf)
