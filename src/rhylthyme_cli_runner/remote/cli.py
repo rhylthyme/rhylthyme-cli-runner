@@ -277,6 +277,113 @@ def generate(
         ctx.invoke(run_command, program_file=path)
 
 
+_MARKS = {"pass": "✓", "warn": "!", "fail": "✗", "skip": "-"}
+_COLORS = {"pass": "green", "warn": "yellow", "fail": "red", "skip": "bright_black"}
+
+
+@click.command("mcp-test")
+@click.option(
+    "--url",
+    help="MCP server to test (default: $RHYLTHYME_MCP_URL or https://mcp.rhylthyme.com/mcp).",
+)
+@click.option(
+    "-e",
+    "--env",
+    "endpoints",
+    multiple=True,
+    type=click.Choice(ENVIRONMENTS),
+    help="Endpoint(s) to test; repeatable. Default: all five.",
+)
+@click.option(
+    "-k",
+    "only",
+    multiple=True,
+    help="Run only these checks (e.g. -k tools -k catalog); repeatable.",
+)
+@click.option(
+    "--publish",
+    is_flag=True,
+    help="Also publish a test timeline per endpoint and fetch its page and PNG.",
+)
+@click.option(
+    "--generate",
+    "generate_too",
+    is_flag=True,
+    help="Also run the model-backed import_text once (needs `rhylthyme login`; costs a few model calls).",
+)
+@click.option("--strict", is_flag=True, help="Exit non-zero on warnings too.")
+@click.option("--json", "json_output", is_flag=True, help="Print the report as JSON.")
+@click.option("--list", "list_checks", is_flag=True, help="List the checks and exit.")
+def mcp_test(
+    url, endpoints, only, publish, generate_too, strict, json_output, list_checks
+):
+    """Smoke-test a Rhylthyme MCP server: protocol, tools, resources, prompts.
+
+    \b
+    The default run is read-only and free. Examples:
+      rhylthyme mcp-test                       # all five hosted endpoints
+      rhylthyme mcp-test -e lab --publish      # one endpoint, plus a real share
+      rhylthyme mcp-test --url http://localhost:3000/mcp -e generic
+      rhylthyme mcp-test --json --strict       # for cron / CI
+
+    Exits 1 if any check fails.
+    """
+    from . import checks
+
+    if list_checks:
+        for name, fn in checks.CHECKS:
+            doc = (fn.__doc__ or "").strip().splitlines()
+            click.echo(f"{name:14} {doc[0] if doc else ''}")
+        return
+    known = {name for name, _ in checks.CHECKS}
+    unknown = [k for k in only if k not in known]
+    if unknown:
+        _fail(
+            f"Unknown check(s): {', '.join(unknown)}. See `rhylthyme mcp-test --list`."
+        )
+
+    token = None
+    if generate_too:
+        try:
+            token = auth.access_token()
+        except auth.AuthError as e:
+            _fail(str(e))
+
+    from .mcp_client import base_url
+
+    current = {"endpoint": None}
+
+    def show(result):
+        if json_output:
+            return
+        if result.endpoint != current["endpoint"]:
+            current["endpoint"] = result.endpoint
+            click.echo(f"\n{checks.endpoint_for(result.endpoint, opts.base_url)}")
+        mark = click.style(_MARKS[result.status], fg=_COLORS[result.status], bold=True)
+        click.echo(f"  {mark} {result.name:14} {result.ms:>6} ms  {result.detail}")
+
+    opts = checks.SuiteOptions(
+        base_url=(url or base_url()).rstrip("/"),
+        endpoints=list(endpoints) or list(checks.ENDPOINTS),
+        publish=publish,
+        generate=generate_too,
+        token=token,
+        on_result=show,
+    )
+    report = checks.run_suite(opts, only=only or None)
+
+    if json_output:
+        click.echo(json.dumps(report.to_dict(), indent=2))
+    else:
+        c = report.to_dict()["counts"]
+        click.echo(
+            f"\n{c['pass']} passed, {c['warn']} warning(s), {c['fail']} failed, {c['skip']} skipped"
+        )
+    if not report.ok or (strict and report.count("warn")):
+        ctx = click.get_current_context()
+        ctx.exit(1)
+
+
 def register(cli_group: click.Group) -> None:
-    for command in (login, logout, whoami, generate):
+    for command in (login, logout, whoami, generate, mcp_test):
         cli_group.add_command(command)

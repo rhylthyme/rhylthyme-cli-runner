@@ -16,7 +16,7 @@ import re
 import urllib.error
 import urllib.request
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Tuple
 
 from .. import __version__ as _pkg_version
 
@@ -42,6 +42,7 @@ class ToolError(McpError):
 class ToolResult:
     content: List[Dict[str, Any]]
     structured: Optional[Dict[str, Any]] = None
+    is_error: bool = False
 
     @property
     def text(self) -> str:
@@ -103,33 +104,59 @@ def extract_program(text: str) -> Optional[Dict[str, Any]]:
 class McpClient:
     url: str = field(default_factory=base_url)
     timeout: float = 180.0
+    user_agent: str = f"rhylthyme-cli/{_pkg_version}"
     _ids: Any = field(default_factory=lambda: itertools.count(1), repr=False)
     _initialized: bool = field(default=False, repr=False)
 
-    def _post(
-        self, payload: Dict[str, Any], timeout: Optional[float] = None
-    ) -> Optional[Dict[str, Any]]:
+    def send_raw(
+        self,
+        payload: Dict[str, Any],
+        *,
+        accept: str = "application/json, text/event-stream",
+        timeout: Optional[float] = None,
+    ) -> Tuple[int, str, str]:
+        """POST one JSON-RPC message; return (status, content type, body).
+
+        HTTP error statuses are returned, not raised, so callers that test
+        the server (``mcp-test``) can assert on them.
+        """
+        headers = {
+            "Content-Type": "application/json",
+            "MCP-Protocol-Version": PROTOCOL_VERSION,
+            "User-Agent": self.user_agent,
+        }
+        if accept:
+            headers["Accept"] = accept
         req = urllib.request.Request(
             self.url,
             data=json.dumps(payload).encode("utf-8"),
             method="POST",
-            headers={
-                "Content-Type": "application/json",
-                "Accept": "application/json, text/event-stream",
-                "MCP-Protocol-Version": PROTOCOL_VERSION,
-                "User-Agent": f"rhylthyme-cli/{_pkg_version}",
-            },
+            headers=headers,
         )
         try:
             with urllib.request.urlopen(req, timeout=timeout or self.timeout) as resp:
-                body = resp.read().decode("utf-8")
+                return (
+                    resp.status,
+                    resp.headers.get("Content-Type", ""),
+                    resp.read().decode("utf-8"),
+                )
         except urllib.error.HTTPError as e:
-            detail = e.read().decode("utf-8", "replace")[:300]
-            raise McpError(f"MCP server returned HTTP {e.code}: {detail}") from e
+            return (
+                e.code,
+                e.headers.get("Content-Type", ""),
+                e.read().decode("utf-8", "replace"),
+            )
         except urllib.error.URLError as e:
             raise McpError(f"Could not reach {self.url}: {e.reason}") from e
         except TimeoutError as e:
             raise McpError(f"Timed out waiting for {self.url}") from e
+
+    def _post(
+        self, payload: Dict[str, Any], timeout: Optional[float] = None
+    ) -> Optional[Dict[str, Any]]:
+        status, _ctype, body = self.send_raw(payload, timeout=timeout)
+        if status >= 400:
+            raise McpError(f"MCP server returned HTTP {status}: {body[:300]}")
         if "id" not in payload:  # notification
             return None
         msg = parse_rpc_body(body)
@@ -137,6 +164,24 @@ class McpClient:
             err = msg["error"] or {}
             raise McpError(f"MCP error {err.get('code')}: {err.get('message')}")
         return msg.get("result") or {}
+
+    def request(
+        self,
+        method: str,
+        params: Optional[Dict[str, Any]] = None,
+        timeout: Optional[float] = None,
+    ) -> Dict[str, Any]:
+        """Any JSON-RPC request (tools/list, resources/read, prompts/get, ...)."""
+        if not self._initialized and method != "initialize":
+            self.initialize()
+        payload: Dict[str, Any] = {
+            "jsonrpc": "2.0",
+            "id": next(self._ids),
+            "method": method,
+        }
+        if params is not None:
+            payload["params"] = params
+        return self._post(payload, timeout=timeout) or {}
 
     def initialize(self) -> Dict[str, Any]:
         result = self._post(
@@ -159,7 +204,11 @@ class McpClient:
         return result or {}
 
     def call_tool(
-        self, name: str, arguments: Dict[str, Any], timeout: Optional[float] = None
+        self,
+        name: str,
+        arguments: Dict[str, Any],
+        timeout: Optional[float] = None,
+        raise_on_error: bool = True,
     ) -> ToolResult:
         if not self._initialized:
             self.initialize()
@@ -179,6 +228,7 @@ class McpClient:
             content=result.get("content") or [],
             structured=result.get("structuredContent"),
         )
-        if result.get("isError"):
+        tr.is_error = bool(result.get("isError"))
+        if tr.is_error and raise_on_error:
             raise ToolError(name, tr.text or "tool reported an error")
         return tr

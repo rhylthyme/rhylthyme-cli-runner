@@ -245,6 +245,39 @@ Environment: `RHYLTHYME_TOKEN` (access token, overrides the stored session),
 `RHYLTHYME_MCP_URL` (default `https://mcp.rhylthyme.com/mcp`),
 `RHYLTHYME_SITE_URL` (default `https://www.rhylthyme.com`).
 
+### `rhylthyme mcp-test`
+
+Smoke-tests a Rhylthyme MCP server and exits 1 if any check fails. By
+default it runs the read-only checks against all five hosted endpoints
+(`/mcp`, `/kitchen/mcp`, `/lab/mcp`, `/events/mcp`, `/gym/mcp`):
+
+| Check | What it proves |
+|---|---|
+| `initialize` | server name, protocol version, tools/resources/prompts capabilities, instructions |
+| `tools` | core tools and the endpoint's one-shot tools are listed, each with a description and schema |
+| `validate-good` / `validate-bad` | a valid program passes (including a `type: "compound"` trigger); a dangling step reference is rejected with a fix hint |
+| `analyze` | makespan, critical path and wall-clock itinerary for a known program |
+| `resources` / `prompts` | schema and guides are readable, a bundled example validates, `plan_schedule` substitutes its arguments |
+| `json-accept` | clients that do not accept SSE (`*/*`, `application/json`) get JSON, not 406 |
+| `bad-requests` | unknown method gives -32601, unknown tool gives an error, never a 5xx |
+| `login-gate` | account tools refuse without a token and point at `login` |
+| `catalog` | public search returns entries that load with a URL (empty catalog = warning) |
+| `publish` (`--publish`) | `visualize_schedule` returns a URL on the right site; the page and PNG load |
+| `generate` (`--generate`) | the model-backed `import_text` returns a program that validates (needs `login`) |
+
+```bash
+rhylthyme mcp-test                         # everything read-only
+rhylthyme mcp-test -e lab --publish        # one endpoint, plus a real share
+rhylthyme mcp-test -k catalog -k tools     # only some checks
+rhylthyme mcp-test --url http://localhost:3000/mcp -e generic
+rhylthyme mcp-test --json --strict         # cron / CI: warnings fail too
+```
+
+Requests carry `mcp-test` in the User-Agent so the hosted server logs the
+errors these checks provoke without alerting anyone. The same suite is
+importable (`rhylthyme_cli_runner.remote.checks.run_suite`), and
+`RHYLTHYME_MCP_LIVE=1 pytest tests/test_mcp_checks.py` runs it live.
+
 ### `rhylthyme login` / `logout` / `whoami`
 
 `login` opens the rhylthyme.com sign-in page and receives the session on a
