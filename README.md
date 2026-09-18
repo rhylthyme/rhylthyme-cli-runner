@@ -1,6 +1,13 @@
 # Rhylthyme CLI Runner
 
-Command-line interface for validating and running Rhylthyme real-time program schedules.
+Command-line interface for validating and running Rhylthyme real-time program schedules,
+and for turning a plain-language request into one through the hosted Rhylthyme MCP server.
+
+```bash
+pip install rhylthyme-cli-runner
+rhylthyme login
+rhylthyme generate "roast chicken, potatoes and green beans for 6" -e kitchen --by 19:00 --with "one oven"
+```
 
 ## Installation
 
@@ -65,6 +72,31 @@ rhylthyme run breakfast_schedule.json
 ## Quick Start
 
 The Rhylthyme CLI provides commands for working with real-time program schedules defined using the Rhylthyme JSON or YAML schema.
+
+### Generate a Program from Plain Language
+
+`generate` sends your request to the hosted MCP server at
+`mcp.rhylthyme.com`, which builds a validated multi-track program and
+publishes it as a live timeline. Sign in once first; the session is kept
+in `~/.config/rhylthyme/credentials.json` and renews itself.
+
+```bash
+rhylthyme login     # opens rhylthyme.com in your browser
+
+# Prints the Gantt chart, the itinerary and the live-timeline URL
+rhylthyme generate "roast chicken, potatoes and green beans for 6" \
+    -e kitchen --by 19:00 --with "one oven, four burners, one cook"
+
+# From a file, save the program, then run it here in the terminal
+rhylthyme generate -e lab -f western_blot.txt -o blot.json --run
+
+# From stdin, print only the URL
+pbpaste | rhylthyme generate -e events --by "doors at 18:30" -q
+```
+
+The server runs several model turns per request (20–60 s, capped per day).
+Headless machines can set `RHYLTHYME_TOKEN` to an access token from
+<https://www.rhylthyme.com/mcp/auth> instead of running `login`.
 
 ### Validate a Program
 
@@ -190,6 +222,35 @@ When running a program, the interactive UI provides these controls:
 - **s**: Sort by different criteria
 
 ## Command Reference
+
+### `rhylthyme generate [REQUEST...]`
+
+Turns a natural-language request into a program and a live timeline using
+the hosted MCP server's `import_text` and `visualize_schedule` tools.
+Requires `rhylthyme login` (or `RHYLTHYME_TOKEN`).
+
+**Options:**
+- `-e, --env`: `generic` (default), `kitchen`, `lab`, `events` or `gym`
+- `--by TEXT`: when everything must be finished, e.g. `19:00`
+- `--with TEXT`: equipment and people limits, e.g. `one oven, two cooks`
+- `-f, --file PATH`: read the request or source text from a file (`-` for stdin)
+- `-o, --output PATH`: save the program JSON
+- `--run`: run the program in the terminal UI afterwards
+- `--open`: open the live timeline in a browser
+- `--no-publish`: build the program only
+- `--json`: print `{url, program, ...}` as JSON
+- `-q, --quiet`: print only the URL
+
+Environment: `RHYLTHYME_TOKEN` (access token, overrides the stored session),
+`RHYLTHYME_MCP_URL` (default `https://mcp.rhylthyme.com/mcp`),
+`RHYLTHYME_SITE_URL` (default `https://www.rhylthyme.com`).
+
+### `rhylthyme login` / `logout` / `whoami`
+
+`login` opens the rhylthyme.com sign-in page and receives the session on a
+one-shot listener bound to `127.0.0.1`; `--token TOKEN` stores a pasted
+access token instead and `--no-browser` only prints the URL. `whoami`
+shows the stored account and expiry; `logout` deletes the stored session.
 
 ### `rhylthyme validate`
 

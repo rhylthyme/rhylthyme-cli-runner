@@ -534,6 +534,16 @@ def _register_calibrate_command():
 _register_calibrate_command()
 
 
+def _register_remote_commands():
+    """Attach `login`, `logout`, `whoami`, `generate` (rhylthyme_cli_runner.remote.cli)."""
+    from .remote.cli import register as register_remote
+
+    register_remote(cli)
+
+
+_register_remote_commands()
+
+
 def main():
     """Entry point for the CLI."""
     cli()
