@@ -394,3 +394,25 @@ def test_login_via_browser_accepts_matching_state_only(config_home, monkeypatch)
     assert creds["access_token"] == "acc" and creds["refresh_token"] == "ref"
     assert creds["expires_at"] == 1900000000 and creds["email"] == "a@b.c"
     assert auth.load_credentials()["supabase_anon_key"] == "anon"
+
+
+def test_generate_run_hands_the_saved_program_to_run(
+    fake_mcp, config_home, tmp_path, monkeypatch
+):
+    import sys
+
+    # The package re-exports the `cli` group under the module's name.
+    cli_module = sys.modules["rhylthyme_cli_runner.cli"]
+
+    seen = {}
+    monkeypatch.setattr(
+        cli_module.run, "callback", lambda **kwargs: seen.update(kwargs)
+    )
+    monkeypatch.setenv("RHYLTHYME_TOKEN", "tok")
+    monkeypatch.chdir(tmp_path)
+    result = CliRunner().invoke(cli, ["generate", "dinner", "--no-publish", "--run"])
+    assert result.exit_code == 0, result.output
+    saved = tmp_path / "roast_dinner.json"
+    assert seen["program_file"] == str(saved)
+    assert json.loads(saved.read_text())["programId"] == "dinner"
+    assert seen["time_scale"] == 1.0  # run's own defaults are filled in
