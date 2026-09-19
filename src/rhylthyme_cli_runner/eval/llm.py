@@ -16,7 +16,12 @@ Plus a small price table so runs can log an estimated cost.
 
 from __future__ import annotations
 
+import json
+import os
 import threading
+import time
+import urllib.error
+import urllib.request
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Mapping, Optional, Protocol, Sequence, Union
 
@@ -38,7 +43,25 @@ PRICES_PER_MTOK: Dict[str, tuple] = {
     "claude-sonnet-5": (2.00, 10.00),
     "claude-sonnet-4-6": (3.00, 15.00),
     "claude-haiku-4-5": (1.00, 5.00),
+    # DeepSeek, from api-docs.deepseek.com/quick_start/pricing on 2026-09-19.
+    # PEAK rates (off-peak is half), so a budget computed from these is an
+    # upper bound. Cache-miss input price: the harness does not rely on
+    # provider-side prompt caching.
+    "deepseek-flash": (0.30, 1.20),
+    "deepseek-v4-pro": (1.32, 3.96),
 }
+
+
+def _env_price() -> Optional[tuple]:
+    """RHYLTHYME_EVAL_PRICE_IN / _OUT (USD per million tokens) price a model
+    the table does not know, e.g. one reached through an aggregator."""
+    try:
+        return (
+            float(os.environ["RHYLTHYME_EVAL_PRICE_IN"]),
+            float(os.environ["RHYLTHYME_EVAL_PRICE_OUT"]),
+        )
+    except (KeyError, ValueError):
+        return None
 
 
 def price_for(model: str) -> Optional[tuple]:
@@ -49,7 +72,7 @@ def price_for(model: str) -> Optional[tuple]:
     for key in PRICES_PER_MTOK:
         if model.startswith(key) and (best is None or len(key) > len(best)):
             best = key
-    return PRICES_PER_MTOK[best] if best else None
+    return PRICES_PER_MTOK[best] if best else _env_price()
 
 
 def estimate_cost(model: str, input_tokens: int, output_tokens: int) -> Optional[float]:
@@ -165,6 +188,120 @@ class AnthropicClient:
         )
 
 
+# Providers that speak the OpenAI chat-completions format. A model id picks
+# its provider by prefix; an id with a slash ("deepseek/deepseek-flash") goes
+# to OpenRouter, which fronts most of them under one key. RHYLTHYME_EVAL_BASE_URL
+# and RHYLTHYME_EVAL_API_KEY override both, for any other compatible endpoint
+# (a local vLLM or Ollama server included).
+OPENAI_COMPAT_PROVIDERS = [
+    ("deepseek-", "https://api.deepseek.com", "DEEPSEEK_API_KEY"),
+    (
+        "qwen",
+        "https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
+        "DASHSCOPE_API_KEY",
+    ),
+    ("kimi-", "https://api.moonshot.ai/v1", "MOONSHOT_API_KEY"),
+    ("moonshot-", "https://api.moonshot.ai/v1", "MOONSHOT_API_KEY"),
+    ("glm-", "https://api.z.ai/api/paas/v4", "ZAI_API_KEY"),
+]
+OPENROUTER = ("https://openrouter.ai/api/v1", "OPENROUTER_API_KEY")
+
+
+def provider_for(model: str) -> Optional[tuple]:
+    """``(base_url, api_key_env)`` for an OpenAI-compatible model, else None."""
+    if os.environ.get("RHYLTHYME_EVAL_BASE_URL"):
+        return (
+            os.environ["RHYLTHYME_EVAL_BASE_URL"].rstrip("/"),
+            "RHYLTHYME_EVAL_API_KEY",
+        )
+    if model.startswith("claude-"):
+        return None
+    if "/" in model:
+        return OPENROUTER
+    for prefix, base_url, key_env in OPENAI_COMPAT_PROVIDERS:
+        if model.startswith(prefix):
+            return (base_url, key_env)
+    return None
+
+
+class OpenAICompatClient:
+    """Chat-completions client for OpenAI-compatible endpoints. Standard
+    library only. Retries on 429/5xx; never on a timeout, because a request
+    that timed out here may still have been billed there."""
+
+    RETRY_STATUS = (429, 500, 502, 503, 529)
+
+    def __init__(
+        self,
+        base_url: str,
+        api_key: Optional[str],
+        *,
+        timeout: float = 900.0,
+        retries: int = 3,
+    ):
+        self.base_url = base_url.rstrip("/")
+        self.api_key = api_key
+        self.timeout = timeout
+        self.retries = retries
+
+    def complete(
+        self,
+        messages: Sequence[Message],
+        *,
+        system: Optional[str] = None,
+        model: str,
+        max_tokens: int,
+    ) -> Completion:
+        chat: List[Dict[str, Any]] = (
+            [{"role": "system", "content": system}] if system else []
+        )
+        chat += [{"role": m["role"], "content": m["content"]} for m in messages]
+        body = json.dumps(
+            {
+                "model": model,
+                "messages": chat,
+                "max_tokens": max_tokens,
+                "stream": False,
+            }
+        ).encode("utf-8")
+        headers = {"Content-Type": "application/json"}
+        if self.api_key:
+            headers["Authorization"] = f"Bearer {self.api_key}"
+        for attempt in range(self.retries + 1):
+            req = urllib.request.Request(
+                f"{self.base_url}/chat/completions",
+                data=body,
+                headers=headers,
+                method="POST",
+            )
+            try:
+                with urllib.request.urlopen(req, timeout=self.timeout) as resp:
+                    data = json.loads(resp.read().decode("utf-8"))
+                break
+            except urllib.error.HTTPError as exc:
+                detail = exc.read().decode("utf-8", "replace")[:300]
+                if exc.code in self.RETRY_STATUS and attempt < self.retries:
+                    time.sleep(2.0 * (attempt + 1))
+                    continue
+                raise RuntimeError(
+                    f"{self.base_url} returned HTTP {exc.code}: {detail}"
+                ) from exc
+        choice = (data.get("choices") or [{}])[0]
+        usage = data.get("usage") or {}
+        finish = choice.get("finish_reason")
+        return Completion(
+            text=str((choice.get("message") or {}).get("content") or ""),
+            input_tokens=int(usage.get("prompt_tokens") or 0),
+            # Reasoning tokens are billed as output and are inside this count.
+            output_tokens=int(usage.get("completion_tokens") or 0),
+            model=str(data.get("model") or model),
+            stop_reason={"stop": "end_turn", "length": "max_tokens"}.get(
+                finish, finish
+            ),
+            raw=data,
+        )
+
+
 CannedResponse = Union[str, Completion]
 
 
@@ -252,8 +389,20 @@ class FakeClient:
         )
 
 
-def make_client(fake_responses: Optional[Any] = None) -> Client:
-    """Build the client the CLI uses: a fake when canned responses are given."""
+def make_client(
+    fake_responses: Optional[Any] = None, model: Optional[str] = None
+) -> Client:
+    """Build the client the CLI uses: a fake when canned responses are given,
+    otherwise the provider the model id belongs to (Anthropic by default)."""
     if fake_responses is not None:
         return FakeClient(fake_responses)
-    return AnthropicClient()
+    provider = provider_for(model or "")
+    if provider is None:
+        return AnthropicClient()
+    base_url, key_env = provider
+    api_key = os.environ.get(key_env)
+    if not api_key and "localhost" not in base_url and "127.0.0.1" not in base_url:
+        raise RuntimeError(
+            f"Model {model!r} is served by {base_url}; set {key_env} to use it."
+        )
+    return OpenAICompatClient(base_url, api_key)

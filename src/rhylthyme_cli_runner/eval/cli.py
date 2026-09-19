@@ -321,7 +321,10 @@ def _live(
     if fake_client_path:
         with open(fake_client_path, "r", encoding="utf-8") as handle:
             fake_responses = json.load(handle)
-    client = make_client(fake_responses)
+    try:
+        client = make_client(fake_responses, model=model)
+    except RuntimeError as exc:
+        raise click.UsageError(str(exc))
 
     gold_set = _load_gold(gold_dir)
     out_root = Path(out_dir)

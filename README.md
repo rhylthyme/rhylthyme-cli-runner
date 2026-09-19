@@ -587,6 +587,42 @@ make test-unit                 # excludes llm
 RHYLTHYME_EVAL_LIVE=1 pytest -m llm      # one real call, opt in
 ```
 
+
+### Other models and a spending cap
+
+`--model` also accepts models served through an OpenAI-compatible API. The
+provider is picked from the model id and the key is read from the
+environment:
+
+| Model id | Provider | Key |
+|---|---|---|
+| `claude-*` | Anthropic | `ANTHROPIC_API_KEY` |
+| `deepseek-*` (e.g. `deepseek-flash`, `deepseek-v4-pro`) | api.deepseek.com | `DEEPSEEK_API_KEY` |
+| `qwen*` | Alibaba DashScope (international) | `DASHSCOPE_API_KEY` |
+| `kimi-*`, `moonshot-*` | Moonshot | `MOONSHOT_API_KEY` |
+| `glm-*` | Z.ai | `ZAI_API_KEY` |
+| anything with a slash, e.g. `deepseek/deepseek-flash` | OpenRouter | `OPENROUTER_API_KEY` |
+| any id, with `RHYLTHYME_EVAL_BASE_URL` set | that endpoint (vLLM, Ollama, ...) | `RHYLTHYME_EVAL_API_KEY`, optional for localhost |
+
+Costs come from the price table in `eval/llm.py` (DeepSeek at its peak
+rates, so estimates are upper bounds). For a model the table does not know,
+set `RHYLTHYME_EVAL_PRICE_IN` and `RHYLTHYME_EVAL_PRICE_OUT` in USD per
+million tokens.
+
+`eval/run_model_comparison.py` runs a model under a hard budget. It runs one
+gold program at a time, both prompts per program, records each program's
+cost in `eval/models/spend-ledger.json`, and stops before the next program
+could cross `--cap`. The ledger is cumulative across models and
+invocations, and the script refuses a model with no known price (it would
+be recorded as $0 and the cap would never trip).
+
+```bash
+export DEEPSEEK_API_KEY=...
+python eval/run_model_comparison.py --model deepseek-flash --cap 6.70 --dry-run
+python eval/run_model_comparison.py --model deepseek-flash --cap 6.70
+python eval/compare_models.py        # like-for-like table across every model run so far
+```
+
 ## Development
 
 1. Clone the repository

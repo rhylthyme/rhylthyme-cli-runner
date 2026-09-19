@@ -87,6 +87,14 @@ def main() -> None:
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
 
+    sys.path.insert(0, str(HERE.parent / "src"))
+    from rhylthyme_cli_runner.eval.llm import price_for
+
+    if price_for(args.model) is None:
+        sys.exit(
+            f"No price known for {args.model}: every run would be recorded as $0 and the cap would never trip.\n"
+            "Add it to PRICES_PER_MTOK in eval/llm.py, or set RHYLTHYME_EVAL_PRICE_IN and RHYLTHYME_EVAL_PRICE_OUT (USD per million tokens)."
+        )
     args.out.mkdir(parents=True, exist_ok=True)
     ledger = load_ledger(args.ledger)
     slugs = gold_slugs()
