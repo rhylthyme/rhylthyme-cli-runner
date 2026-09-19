@@ -24,6 +24,7 @@ costs nothing, to produce one consolidated results.json per cell.
 from __future__ import annotations
 
 import argparse
+import re
 import json
 import subprocess
 import sys
@@ -81,6 +82,24 @@ def deepseek_balance() -> float | None:
         if info.get("currency") == "USD":
             return float(info["total_balance"])
     return None
+
+
+INFRA = re.compile(
+    r"returned HTTP (429|5\d\d)|did not answer within|Connection|timed out|Rate limit|IncompleteRead|RemoteDisconnected",
+    re.I,
+)
+
+
+def infra_error(results_file: Path) -> bool:
+    """True when a program failed because the provider did (rate limit, 5xx,
+    stall), not because of what the model wrote. Those are retried, never
+    scored: they say nothing about the model."""
+    try:
+        data = json.loads(results_file.read_text())
+        program = data.get("results", data)["programs"][0]
+    except Exception:  # noqa: BLE001
+        return True
+    return bool(program.get("error")) and bool(INFRA.search(str(program["error"])))
 
 
 def run_cli(args: list[str]) -> subprocess.CompletedProcess:
@@ -163,7 +182,13 @@ def main() -> None:
     model_dir = args.model.replace("/", "__")
     ledger = load_ledger(args.ledger)
     slugs = gold_slugs()
-    done = {(e["model"], e["pattern"], e["slug"]) for e in ledger["entries"]}
+    # A ledger entry whose program failed for infrastructure reasons is not
+    # done: the money is counted, the program is run again.
+    done = set()
+    for e in ledger["entries"]:
+        rf = args.out / e["model"].replace("/", "__") / e["pattern"] / "per-program" / e["slug"] / "results.json"
+        if not infra_error(rf):
+            done.add((e["model"], e["pattern"], e["slug"]))
     print(
         f"ledger: ${spent(ledger):.2f} spent of ${args.cap:.2f} cap; {len(slugs)} gold programs"
     )
@@ -262,6 +287,8 @@ def main() -> None:
                 "calls": totals.get("calls"),
                 "seconds": round(time.time() - started, 1),
             }
+            if infra_error(results_file):
+                entry["infra_error"] = True  # spent money is counted; the program is retried
             with lock:
                 ledger["entries"].append(entry)
                 args.ledger.write_text(json.dumps(ledger, indent=1) + "\n")
@@ -314,40 +341,29 @@ def main() -> None:
 
     if args.dry_run:
         return
-    # Consolidate each cell from its cache: no model calls, no cost.
-    for pattern in [p.strip() for p in args.patterns.split(",") if p.strip()]:
+    # Consolidate each cell by merging its per-program results (no model
+    # calls). Programs that only ever failed for infrastructure reasons are
+    # left out rather than scored as model failures.
+    for pattern in patterns:
         cell = args.out / model_dir / pattern
-        ran = [
-            e["slug"]
-            for e in ledger["entries"]
-            if e["model"] == args.model and e["pattern"] == pattern
-        ]
-        if not ran:
+        programs, skipped, meta = [], [], None
+        for rf in sorted((cell / "per-program").glob("*/results.json")):
+            if infra_error(rf):
+                skipped.append(rf.parent.name)
+                continue
+            data = json.loads(rf.read_text())
+            data = data.get("results", data)
+            meta = meta or data.get("meta")
+            programs += data["programs"]
+        if not programs:
             continue
-        done_proc = run_cli(
-            [
-                "--gold",
-                str(GOLD),
-                "--model",
-                args.model,
-                "--patterns",
-                pattern,
-                "--only",
-                ",".join(ran),
-                "--from-cache",
-                "--cache-dir",
-                str(cell / "cache"),
-                "--out",
-                str(cell),
-                "--format",
-                "json",
-                *(["--max-tokens", str(args.max_tokens)] if args.max_tokens else []),
-            ]
-        )
-        ok = (cell / "results.json").exists()
-        print(
-            f"consolidated {args.model}/{pattern}: {len(ran)} programs {'ok' if ok else 'FAILED ' + done_proc.stderr.strip()[-300:]}"
-        )
+        merged = {
+            "meta": dict(meta or {}, merged_from="per-program", programs=len(programs), infra_skipped=skipped),
+            "programs": programs,
+        }
+        (cell / "results.json").write_text(json.dumps(merged, indent=1) + "\n")
+        note = f" (infra failures left out: {', '.join(skipped)})" if skipped else ""
+        print(f"consolidated {args.model}/{pattern}: {len(programs)} programs{note}")
     print(f"final: ${spent(ledger):.2f} of ${args.cap:.2f}")
 
 
