@@ -1,0 +1,245 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "erg-session-two-ergs-four-rowers",
+  "name": "Erg Session — Four Rowers, Two Ergs",
+  "description": "Two ergs in the bay used by pairs. A/B warm up first, C/D come in on the next hand-off. Three 4-minute pieces alternate through the machine hand-offs; then one rower at a time does a coached technique drill. Cooldown on the floor and coach debrief.",
+  "environmentType": "gym",
+  "actors": 5,
+  "tracks": [
+    {
+      "trackId": "coach",
+      "name": "Coach",
+      "steps": [
+        {
+          "stepId": "coach-brief",
+          "name": "Brief the crew on the boards",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "coach-call-splits",
+          "name": "Call splits from the first piece — watch the catch, not the monitor",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "coach-brief"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "cd-warmup"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "coach-run-drills",
+          "name": "Run the technique drills straight through",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 720
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "coach-call-splits"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "cd-pieces",
+                "instances": "all"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "pair-ab",
+      "name": "Pair A/B — both ergs",
+      "steps": [
+        {
+          "stepId": "ab-warmup",
+          "name": "Warm up: 10 min, rate 18, light pressure, half slide to full slide",
+          "task": "ergPair",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "coach-brief"
+          }
+        },
+        {
+          "stepId": "ab-pieces",
+          "name": "Three pieces: 4 min each, rate 26-28, target split; second/third are held for machine hand-off",
+          "task": "ergPair",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "replicates": {
+            "count": 3,
+            "mode": "serial",
+            "maxInFlight": 1
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "ab-warmup"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "cd-warmup"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "pair-cd",
+      "name": "Pair C/D — both ergs",
+      "steps": [
+        {
+          "stepId": "cd-warmup",
+          "name": "Warm up: 10 min, rate 18, light pressure, half slide to full slide",
+          "task": "ergPair",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "ab-warmup"
+          }
+        },
+        {
+          "stepId": "cd-pieces",
+          "name": "Three pieces: 4 min each, rate 26-28, target split; each starts straight off the matching A/B piece",
+          "task": "ergPair",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "ab-pieces",
+            "instances": "each"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "drills",
+      "name": "Coached technique drill — A then B then C then D",
+      "steps": [
+        {
+          "stepId": "coached-drill",
+          "name": "3 min each: pause at the finish, pause at half slide, then build",
+          "task": "coachedDrill",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "replicates": {
+            "count": 4,
+            "mode": "serial"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "coach-run-drills",
+            "event": "start"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "crew",
+      "name": "Crew floor and debrief",
+      "steps": [
+        {
+          "stepId": "cooldown",
+          "name": "Cooldown on the floor together: legs up the wall, hips, lats, then tea",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "replicates": {
+            "count": 4,
+            "mode": "parallel"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "coached-drill",
+            "instances": "all"
+          }
+        },
+        {
+          "stepId": "debrief",
+          "name": "Coach debrief: what the splits said and what Saturday looks like",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "coach-run-drills"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "cooldown",
+                "instances": "all"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "ergPair",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "coach",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "coachedDrill",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "floor",
+      "maxConcurrent": 4
+    }
+  ]
+}

@@ -1,0 +1,319 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "wedding-reception-ashgrove-barn",
+  "name": "Wedding Reception Run  Sheet — Ashgrove Barn",
+  "environmentType": "event",
+  "tracks": [
+    {
+      "trackId": "room",
+      "name": "Room Setup",
+      "steps": [
+        {
+          "stepId": "flip_room",
+          "name": "Flip to reception seating",
+          "task": "room_setup",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "dress_tables",
+          "name": "Dress tables",
+          "task": "room_setup",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "flip_room"
+          }
+        },
+        {
+          "stepId": "seat_guests",
+          "name": "Seat guests",
+          "task": "room_setup",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "dress_tables"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "foyer",
+      "name": "Foyer Activities",
+      "steps": [
+        {
+          "stepId": "open_bar",
+          "name": "Open bar",
+          "task": "bar",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "pass_canapes",
+          "name": "Pass canapés",
+          "task": "server",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 2400,
+            "maxSeconds": 3600,
+            "defaultSeconds": 3000
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "open_bar",
+            "offsetSeconds": 1200
+          }
+        },
+        {
+          "stepId": "call_to_dinner",
+          "name": "Call to dinner",
+          "task": "server",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "pass_canapes"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "kitchen",
+      "name": "Kitchen Activities",
+      "steps": [
+        {
+          "stepId": "plate_starters",
+          "name": "Plate starters",
+          "task": "kitchen_pass",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "seat_guests",
+            "offsetSeconds": 900
+          }
+        },
+        {
+          "stepId": "plate_mains",
+          "name": "Plate mains",
+          "task": "kitchen_pass",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "plate_starters",
+            "offsetSeconds": 300
+          }
+        },
+        {
+          "stepId": "plate_dessert",
+          "name": "Plate dessert",
+          "task": "kitchen_pass",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cut_cake"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "floor",
+      "name": "Floor Activities",
+      "steps": [
+        {
+          "stepId": "serve_starters",
+          "name": "Serve starters",
+          "task": "server",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "plate_starters"
+          }
+        },
+        {
+          "stepId": "clear_starters",
+          "name": "Clear starters",
+          "task": "server",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "serve_starters",
+            "offsetSeconds": 1200
+          }
+        },
+        {
+          "stepId": "serve_mains",
+          "name": "Serve mains",
+          "task": "server",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "clear_starters"
+          }
+        },
+        {
+          "stepId": "clear_mains",
+          "name": "Clear mains",
+          "task": "server",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "serve_mains",
+            "offsetSeconds": 2400
+          }
+        },
+        {
+          "stepId": "serve_dessert",
+          "name": "Serve dessert",
+          "task": "server",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "plate_dessert"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "programme",
+      "name": "Programme Activities",
+      "steps": [
+        {
+          "stepId": "welcome_toast",
+          "name": "Welcome toast",
+          "task": "microphone",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "seat_guests"
+          }
+        },
+        {
+          "stepId": "first_dance",
+          "name": "First dance",
+          "task": "microphone",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "clear_mains"
+          }
+        },
+        {
+          "stepId": "speeches",
+          "name": "Speeches",
+          "task": "microphone",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 900,
+            "maxSeconds": 1500,
+            "defaultSeconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "first_dance"
+          }
+        },
+        {
+          "stepId": "cut_cake",
+          "name": "Cut the cake",
+          "task": "microphone",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "speeches"
+          }
+        },
+        {
+          "stepId": "dancing",
+          "name": "Dancing",
+          "task": "dance_floor",
+          "duration": {
+            "type": "indefinite",
+            "defaultSeconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "serve_dessert",
+            "offsetSeconds": 600
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "kitchen_pass",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "bar",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "microphone",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "server",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "room_setup",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "dance_floor",
+      "maxConcurrent": 1
+    }
+  ]
+}

@@ -1,0 +1,371 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "qwen/qwen3.8-flash",
+    "pattern": "four-turn",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/four-turn/cache",
+    "limit": null,
+    "only": [
+      "kitchen-thanksgiving-one-oven"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 64000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 4,
+      "input_tokens": 30768,
+      "output_tokens": 79048,
+      "cost_usd": 0.041767759999999994,
+      "fix_iterations": 0
+    },
+    "generated_at": "2026-09-19T20:42:41+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 0.8888888888888888,
+    "steps_recall": 1.0,
+    "steps_f1": 0.9411764705882353,
+    "durations_accuracy": 0.7916666666666666,
+    "resources_precision": 0.6,
+    "resources_recall": 1.0,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.5128205128205128,
+    "relationships_recall": 0.7142857142857143,
+    "relationships_f1": 0.5970149253731343,
+    "structure_rand_index": 0.9057971014492754,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.1
+  },
+  "programs": [
+    {
+      "slug": "kitchen-thanksgiving-one-oven",
+      "headline": {
+        "steps_precision": 0.8888888888888888,
+        "steps_recall": 1.0,
+        "steps_f1": 0.9411764705882353,
+        "durations_accuracy": 0.7916666666666666,
+        "resources_precision": 0.6,
+        "resources_recall": 1.0,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.5128205128205128,
+        "relationships_recall": 0.7142857142857143,
+        "relationships_f1": 0.5970149253731343,
+        "structure_rand_index": 0.9057971014492754,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.1
+      },
+      "steps": {
+        "precision": 0.8888888888888888,
+        "recall": 1.0,
+        "f1": 0.9411764705882353,
+        "tp": 24,
+        "n_gold": 24,
+        "n_pred": 27
+      },
+      "durations": {
+        "accuracy": 0.7916666666666666,
+        "correct": 19,
+        "total": 24
+      },
+      "resources": {
+        "precision": 0.6,
+        "recall": 1.0,
+        "f1": 0.7499999999999999,
+        "tp": 3,
+        "n_gold": 3,
+        "n_pred": 5
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.5128205128205128,
+        "recall": 0.7142857142857143,
+        "f1": 0.5970149253731343,
+        "tp": 20,
+        "n_gold": 28,
+        "n_pred": 39
+      },
+      "structure": {
+        "rand_index": 0.9057971014492754,
+        "agreements": 250,
+        "pairs": 276,
+        "n_steps": 24
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 18480.0,
+        "pred_makespan": 20700.0,
+        "makespan_ok": false,
+        "gold_critical_path": [
+          "temper-turkey",
+          "season-turkey",
+          "roast-turkey",
+          "bake-stuffing",
+          "bake-casserole",
+          "warm-rolls",
+          "serve"
+        ],
+        "pred_critical_path": [
+          "remove-turkey-from-refrigerator",
+          "season-turkey",
+          "roast-turkey",
+          "peel-and-quarter-potatoes",
+          "boil-potatoes",
+          "drain-and-mash-potatoes",
+          "hold-potatoes"
+        ],
+        "js_critical_path": [
+          "remove-turkey-from-refrigerator",
+          "season-turkey",
+          "roast-turkey",
+          "peel-and-quarter-potatoes",
+          "boil-potatoes",
+          "drain-and-mash-potatoes",
+          "hold-potatoes"
+        ],
+        "js_makespan": 20700,
+        "critical_overlap": 0.42857142857142855,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.1,
+      "unsupported_steps": [
+        "recover-oven-to-375",
+        "boil-water-for-blanching",
+        "slice-mushrooms-for-sauce"
+      ],
+      "matching": [
+        {
+          "gold": "preheat-oven",
+          "predicted": "preheat-oven-to-325",
+          "by": "span"
+        },
+        {
+          "gold": "temper-turkey",
+          "predicted": "remove-turkey-from-refrigerator",
+          "by": "span"
+        },
+        {
+          "gold": "season-turkey",
+          "predicted": "season-turkey",
+          "by": "span"
+        },
+        {
+          "gold": "roast-turkey",
+          "predicted": "roast-turkey",
+          "by": "span"
+        },
+        {
+          "gold": "rest-turkey",
+          "predicted": "rest-turkey",
+          "by": "span"
+        },
+        {
+          "gold": "carve-turkey",
+          "predicted": "carve-turkey",
+          "by": "span"
+        },
+        {
+          "gold": "make-roux",
+          "predicted": "transfer-pan-drippings",
+          "by": "span"
+        },
+        {
+          "gold": "simmer-gravy",
+          "predicted": "simmer-gravy",
+          "by": "span"
+        },
+        {
+          "gold": "hold-gravy",
+          "predicted": "keep-gravy-warm",
+          "by": "span"
+        },
+        {
+          "gold": "cube-bread",
+          "predicted": "cube-and-spread-stuffing-bread",
+          "by": "span"
+        },
+        {
+          "gold": "cook-vegetables",
+          "predicted": "cook-stuffing-aromatics",
+          "by": "span"
+        },
+        {
+          "gold": "assemble-stuffing",
+          "predicted": "assemble-stuffing",
+          "by": "span"
+        },
+        {
+          "gold": "bake-stuffing",
+          "predicted": "bake-stuffing",
+          "by": "span"
+        },
+        {
+          "gold": "blanch-beans",
+          "predicted": "blanch-green-beans",
+          "by": "span"
+        },
+        {
+          "gold": "cook-mushrooms",
+          "predicted": "cook-mushrooms-for-sauce",
+          "by": "span"
+        },
+        {
+          "gold": "simmer-sauce",
+          "predicted": "simmer-mushroom-sauce",
+          "by": "span"
+        },
+        {
+          "gold": "assemble-casserole",
+          "predicted": "assemble-green-bean-casserole",
+          "by": "span"
+        },
+        {
+          "gold": "bake-casserole",
+          "predicted": "bake-green-bean-casserole",
+          "by": "span"
+        },
+        {
+          "gold": "peel-potatoes",
+          "predicted": "peel-and-quarter-potatoes",
+          "by": "span"
+        },
+        {
+          "gold": "boil-potatoes",
+          "predicted": "boil-potatoes",
+          "by": "span"
+        },
+        {
+          "gold": "mash-potatoes",
+          "predicted": "drain-and-mash-potatoes",
+          "by": "span"
+        },
+        {
+          "gold": "hold-potatoes",
+          "predicted": "hold-potatoes",
+          "by": "span"
+        },
+        {
+          "gold": "warm-rolls",
+          "predicted": "warm-dinner-rolls",
+          "by": "span"
+        },
+        {
+          "gold": "serve",
+          "predicted": "carry-everything-to-table",
+          "by": "span"
+        },
+        {
+          "gold": null,
+          "predicted": "recover-oven-to-375",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "cook-gravy-roux",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "trim-green-beans",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "boil-water-for-blanching",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "drain-green-beans",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "slice-mushrooms-for-sauce",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "qwen/qwen3.8-flash",
+        "pattern": "four-turn",
+        "calls": 4,
+        "input_tokens": 30768,
+        "output_tokens": 79048,
+        "cost_usd": 0.041767759999999994,
+        "cache_keys": [
+          "28904ceec8d2087ac581839ddc65022a55daabbbdf4493a5c381d49841c51aa3",
+          "89c12dd1c6f0b82b504b60ec5758781dc01f8615c4b09b6d5f38efff7ed0d884",
+          "30dcb671020ce2df38b223f74acbdb7978481fecb587f7b331920ffd83ff1323",
+          "aa10205d7aae5b4e7b5d44e0170c7c4b7482c3579e74a7e160648ef4c0077b7d"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/four-turn/per-program/kitchen-thanksgiving-one-oven/responses/kitchen-thanksgiving-one-oven.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/four-turn/per-program/kitchen-thanksgiving-one-oven/predicted/kitchen-thanksgiving-one-oven.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 29,
+        "unsupported_step_ids": [
+          "boil-water-for-blanching",
+          "slice-mushrooms-for-sauce"
+        ],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Thanksgiving for Eight with One Oven for 8 people",
+            "finish_at": "18:00",
+            "constraints": "one oven, four burners, two cooks, all dishes finish together",
+            "vertical": "kitchen",
+            "turn": "T1",
+            "kind": "recipe",
+            "constraintsLine": "Resource limits: one oven, four burners, two cooks, all dishes finish together.",
+            "deadlineLine": "Everything must be finished by 18:00.",
+            "source": "Source text (read all of it):\n<<<\nThanksgiving for Eight with One Oven\n\nWe eat at six o'clock sharp. There is one oven and four burners, and two of you in the kitchen, so the oven schedule decides everything else. The turkey owns the oven for most of the afternoon; the sides go in while it rests, one after another.\n\nThe turkey (14 pounds)\nTake the turkey out of the refrigerator 40 minutes before you season it so it is not fridge-cold. Heat the oven to 325\u00b0F; give it 20 minutes to come up. Pat the bird dry, rub it all over with softened butter, salt and pepper, and tuck halved onions and thyme into the cavity; this takes about twenty minutes. Roast the turkey for 3 hours, until a thermometer in the thigh reads 165\u00b0F. Move the turkey to a carving board and let it rest, loosely tented with foil, for 40 minutes before carving. Carving takes about 15 minutes.\n\nGravy\nAs soon as the turkey comes out, pour the pan drippings into a saucepan, whisk in flour and cook for 3 minutes, then whisk in stock and simmer the gravy for 10 minutes until it coats a spoon. Keep it warm over the lowest flame until dinner.\n\nStuffing\nCut a loaf of day-old bread into cubes and spread them on a sheet pan; you can do this first thing. Twenty minutes before the turkey is due out, melt butter in a skillet and cook diced onion and celery for 10 minutes until soft. Toss the bread with the vegetables, sage and two cups of stock and turn it into a buttered dish; 10 minutes. Bake the stuffing at 375\u00b0F for 35 minutes the moment the turkey is out; the oven will already be hot.\n\nGreen bean casserole\nAbout ten minutes after the turkey comes out, trim two pounds of green beans and blanch them for 4 minutes in salted boiling water, then drain. Make the mushroom sauce: cook sliced mushrooms in butter for 8 minutes, add cream and simmer for 5 minutes. Combine the beans and sauce in a baking dish and scatter fried onions on top; 5 minutes. Bake the casserole for 20 minutes as soon as the stuffing comes out.\n\nMashed potatoes\nWhen the turkey comes out, peel and quarter four pounds of potatoes, about 15 minutes, cover with cold salted water and boil for 20 minutes until a knife slides in easily. Drain, then mash with warm cream and a stick of butter; give it 10 minutes. Hold the potatoes covered on the back burner until everything else is ready.\n\nDinner rolls\nThe rolls only need warming: slide them into the oven for 8 minutes right after the casserole comes out.\n\nServe\nCarry everything to the table together.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Thanksgiving for Eight with One Oven for 8 people",
+            "finish_at": "18:00",
+            "constraints": "one oven, four burners, two cooks, all dishes finish together",
+            "vertical": "kitchen",
+            "turn": "T2",
+            "kind": "recipe"
+          },
+          "T3 extraction": {
+            "goal": "Thanksgiving for Eight with One Oven for 8 people",
+            "finish_at": "18:00",
+            "constraints": "one oven, four burners, two cooks, all dishes finish together",
+            "vertical": "kitchen",
+            "turn": "T3",
+            "kind": "recipe",
+            "environment": "a kitchen where you have: one oven, four burners, two cooks, all dishes finish together",
+            "deadline": "18:00",
+            "source": "Source text (read all of it):\n<<<\nThanksgiving for Eight with One Oven\n\nWe eat at six o'clock sharp. There is one oven and four burners, and two of you in the kitchen, so the oven schedule decides everything else. The turkey owns the oven for most of the afternoon; the sides go in while it rests, one after another.\n\nThe turkey (14 pounds)\nTake the turkey out of the refrigerator 40 minutes before you season it so it is not fridge-cold. Heat the oven to 325\u00b0F; give it 20 minutes to come up. Pat the bird dry, rub it all over with softened butter, salt and pepper, and tuck halved onions and thyme into the cavity; this takes about twenty minutes. Roast the turkey for 3 hours, until a thermometer in the thigh reads 165\u00b0F. Move the turkey to a carving board and let it rest, loosely tented with foil, for 40 minutes before carving. Carving takes about 15 minutes.\n\nGravy\nAs soon as the turkey comes out, pour the pan drippings into a saucepan, whisk in flour and cook for 3 minutes, then whisk in stock and simmer the gravy for 10 minutes until it coats a spoon. Keep it warm over the lowest flame until dinner.\n\nStuffing\nCut a loaf of day-old bread into cubes and spread them on a sheet pan; you can do this first thing. Twenty minutes before the turkey is due out, melt butter in a skillet and cook diced onion and celery for 10 minutes until soft. Toss the bread with the vegetables, sage and two cups of stock and turn it into a buttered dish; 10 minutes. Bake the stuffing at 375\u00b0F for 35 minutes the moment the turkey is out; the oven will already be hot.\n\nGreen bean casserole\nAbout ten minutes after the turkey comes out, trim two pounds of green beans and blanch them for 4 minutes in salted boiling water, then drain. Make the mushroom sauce: cook sliced mushrooms in butter for 8 minutes, add cream and simmer for 5 minutes. Combine the beans and sauce in a baking dish and scatter fried onions on top; 5 minutes. Bake the casserole for 20 minutes as soon as the stuffing comes out.\n\nMashed potatoes\nWhen the turkey comes out, peel and quarter four pounds of potatoes, about 15 minutes, cover with cold salted water and boil for 20 minutes until a knife slides in easily. Drain, then mash with warm cream and a stick of butter; give it 10 minutes. Hold the potatoes covered on the back burner until everything else is ready.\n\nDinner rolls\nThe rolls only need warming: slide them into the oven for 8 minutes right after the casserole comes out.\n\nServe\nCarry everything to the table together.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Thanksgiving for Eight with One Oven for 8 people",
+            "finish_at": "18:00",
+            "constraints": "one oven, four burners, two cooks, all dishes finish together",
+            "vertical": "kitchen",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or cook_recipe",
+            "finishAtArg": " with finishAt=\"18:00\""
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

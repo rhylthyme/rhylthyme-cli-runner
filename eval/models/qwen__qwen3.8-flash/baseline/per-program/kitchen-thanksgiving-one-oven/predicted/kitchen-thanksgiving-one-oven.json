@@ -1,0 +1,579 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "thanksgiving-for-eight-one-oven",
+  "name": "Thanksgiving for Eight with One Oven",
+  "description": "Thanksgiving dinner for eight people, finished together at 18:00, with one oven, four burners, and two cooks.",
+  "environmentType": "kitchen",
+  "actors": 2,
+  "tracks": [
+    {
+      "trackId": "oven-line",
+      "name": "Oven line",
+      "steps": [
+        {
+          "stepId": "preheat_oven",
+          "name": "Preheat oven to 325°F",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "roast_turkey",
+          "name": "Roast turkey at 325°F",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 10800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "preheat_oven",
+            "offsetSeconds": 2400
+          }
+        },
+        {
+          "stepId": "bake_stuffing",
+          "name": "Bake stuffing at 375°F",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2100
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "roast_turkey"
+          }
+        },
+        {
+          "stepId": "bake_casserole",
+          "name": "Bake green bean casserole",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bake_stuffing"
+          }
+        },
+        {
+          "stepId": "warm_rolls",
+          "name": "Warm dinner rolls",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bake_casserole"
+          }
+        },
+        {
+          "stepId": "hold_rolls",
+          "name": "Hold rolls",
+          "task": "counter",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warm_rolls"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "turkey-line",
+      "name": "Turkey line",
+      "steps": [
+        {
+          "stepId": "remove_turkey",
+          "name": "Take turkey out of refrigerator",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "chill_turkey",
+          "name": "Let turkey stand 35 more minutes",
+          "task": "counter",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2100
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "remove_turkey"
+          }
+        },
+        {
+          "stepId": "season_turkey",
+          "name": "Pat dry, butter, salt, pepper, and add onion and thyme",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "chill_turkey"
+          }
+        },
+        {
+          "stepId": "rest_turkey",
+          "name": "Rest turkey, loosely tented with foil",
+          "task": "counter",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2400
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "season_turkey",
+            "offsetSeconds": 10800
+          }
+        },
+        {
+          "stepId": "carve_turkey",
+          "name": "Carve turkey",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest_turkey"
+          }
+        },
+        {
+          "stepId": "hold_carved_turkey",
+          "name": "Hold carved turkey until serve",
+          "task": "counter",
+          "duration": {
+            "type": "fixed",
+            "seconds": 780
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "carve_turkey"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "gravy-line",
+      "name": "Gravy line",
+      "steps": [
+        {
+          "stepId": "gravy_roux",
+          "name": "Pour drippings into saucepan, whisk in flour, and cook",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 14400
+          }
+        },
+        {
+          "stepId": "gravy_simmer",
+          "name": "Whisk in stock and simmer gravy",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "gravy_roux"
+          }
+        },
+        {
+          "stepId": "hold_gravy",
+          "name": "Keep gravy warm over lowest flame",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "gravy_simmer"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "stuffing-line",
+      "name": "Stuffing line",
+      "steps": [
+        {
+          "stepId": "cut_bread",
+          "name": "Cut bread into cubes and spread on sheet pan",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "saute_stuffing_veg",
+          "name": "Melt butter and cook onion and celery",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cut_bread",
+            "offsetSeconds": 12600
+          }
+        },
+        {
+          "stepId": "toss_stuffing",
+          "name": "Toss bread with vegetables, sage, and stock; transfer to dish",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "saute_stuffing_veg"
+          }
+        },
+        {
+          "stepId": "hold_stuffing",
+          "name": "Hold baked stuffing until serve",
+          "task": "counter",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1980
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "toss_stuffing",
+            "offsetSeconds": 2100
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "green-bean-line",
+      "name": "Green bean line",
+      "steps": [
+        {
+          "stepId": "trim_beans",
+          "name": "Trim green beans",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 15000
+          }
+        },
+        {
+          "stepId": "blanch_beans",
+          "name": "Blanch beans in salted boiling water",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "trim_beans"
+          }
+        },
+        {
+          "stepId": "hold_blanced_beans",
+          "name": "Drain and hold blanced beans",
+          "task": "counter",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2940
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "blanch_beans"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "mushroom-sauce-line",
+      "name": "Mushroom sauce line",
+      "steps": [
+        {
+          "stepId": "saute_mushrooms",
+          "name": "Cook sliced mushrooms in butter",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 15000
+          }
+        },
+        {
+          "stepId": "simmer_mushroom_sauce",
+          "name": "Add cream and simmer mushroom sauce",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "saute_mushrooms"
+          }
+        },
+        {
+          "stepId": "hold_mushroom_sauce",
+          "name": "Hold mushroom sauce",
+          "task": "counter",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "simmer_mushroom_sauce"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "casserole-assembly-line",
+      "name": "Casserole assembly line",
+      "steps": [
+        {
+          "stepId": "combine_casserole",
+          "name": "Combine beans and mushroom sauce; scatter fried onions",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 16200
+          }
+        },
+        {
+          "stepId": "hold_casserole",
+          "name": "Hold baked casserole until serve",
+          "task": "counter",
+          "duration": {
+            "type": "fixed",
+            "seconds": 780
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "combine_casserole",
+            "offsetSeconds": 1200
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "potato-line",
+      "name": "Mashed potato line",
+      "steps": [
+        {
+          "stepId": "peel_potatoes",
+          "name": "Peel and quarter potatoes",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 14400
+          }
+        },
+        {
+          "stepId": "boil_potatoes",
+          "name": "Boil potatoes until tender",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "peel_potatoes"
+          }
+        },
+        {
+          "stepId": "mash_potatoes",
+          "name": "Drain and mash with warm cream and butter",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "boil_potatoes"
+          }
+        },
+        {
+          "stepId": "hold_potatoes",
+          "name": "Hold potatoes covered on back burner",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1380
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "mash_potatoes"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "serving-line",
+      "name": "Serving line",
+      "steps": [
+        {
+          "stepId": "carry_to_table",
+          "name": "Carry everything to the table together",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 18180
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "oven",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "burner",
+      "maxConcurrent": 4
+    },
+    {
+      "task": "cook",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "counter",
+      "maxConcurrent": 8
+    }
+  ],
+  "metadata": {
+    "serves": "8",
+    "ingredients": [
+      {
+        "name": "turkey",
+        "measure": "14 pounds"
+      },
+      {
+        "name": "unsalted butter",
+        "measure": "as needed"
+      },
+      {
+        "name": "salt and pepper",
+        "measure": "to taste"
+      },
+      {
+        "name": "onions",
+        "measure": "halved"
+      },
+      {
+        "name": "fresh thyme",
+        "measure": "a few sprigs"
+      },
+      {
+        "name": "pan drippings",
+        "measure": "from turkey"
+      },
+      {
+        "name": "all-purpose flour",
+        "measure": "as needed"
+      },
+      {
+        "name": "stock",
+        "measure": "as needed"
+      },
+      {
+        "name": "day-old bread",
+        "measure": "1 loaf"
+      },
+      {
+        "name": "celery",
+        "measure": "1 bunch"
+      },
+      {
+        "name": "sage",
+        "measure": "a few leaves"
+      },
+      {
+        "name": "green beans",
+        "measure": "2 pounds"
+      },
+      {
+        "name": "mushrooms",
+        "measure": "1 pound"
+      },
+      {
+        "name": "cream",
+        "measure": "as needed"
+      },
+      {
+        "name": "fried onions",
+        "measure": "as needed"
+      },
+      {
+        "name": "potatoes",
+        "measure": "4 pounds"
+      },
+      {
+        "name": "butter",
+        "measure": "1 stick"
+      },
+      {
+        "name": "dinner rolls",
+        "measure": "8 rolls"
+      }
+    ],
+    "sourceUrl": "",
+    "attribution": "Thanksgiving for Eight with One Oven"
+  }
+}

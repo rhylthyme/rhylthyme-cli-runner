@@ -1,0 +1,359 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "qwen/qwen3.8-flash",
+    "pattern": "four-turn",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/four-turn/cache",
+    "limit": null,
+    "only": [
+      "fitness-partner-upper-body-supersets"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 64000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 5,
+      "input_tokens": 39847,
+      "output_tokens": 108631,
+      "cost_usd": 0.05703362,
+      "fix_iterations": 1
+    },
+    "generated_at": "2026-09-19T19:39:39+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.4642857142857143,
+    "steps_f1": 0.6341463414634146,
+    "durations_accuracy": 1.0,
+    "resources_precision": 0.4,
+    "resources_recall": 0.4,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.5333333333333333,
+    "relationships_recall": 0.21052631578947367,
+    "relationships_f1": 0.3018867924528302,
+    "structure_rand_index": 0.46153846153846156,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.0
+  },
+  "programs": [
+    {
+      "slug": "fitness-partner-upper-body-supersets",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.4642857142857143,
+        "steps_f1": 0.6341463414634146,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.4,
+        "resources_recall": 0.4,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.5333333333333333,
+        "relationships_recall": 0.21052631578947367,
+        "relationships_f1": 0.3018867924528302,
+        "structure_rand_index": 0.46153846153846156,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.0
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.4642857142857143,
+        "f1": 0.6341463414634146,
+        "tp": 13,
+        "n_gold": 28,
+        "n_pred": 13
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 13,
+        "total": 13
+      },
+      "resources": {
+        "precision": 0.4,
+        "recall": 0.4,
+        "f1": 0.4000000000000001,
+        "tp": 2,
+        "n_gold": 5,
+        "n_pred": 5
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.5333333333333333,
+        "recall": 0.21052631578947367,
+        "f1": 0.3018867924528302,
+        "tp": 8,
+        "n_gold": 38,
+        "n_pred": 15
+      },
+      "structure": {
+        "rand_index": 0.46153846153846156,
+        "agreements": 36,
+        "pairs": 78,
+        "n_steps": 13
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": false,
+        "js_errors": [
+          "Track \"Dumbbells - Partner A overhead press (1 of 2)\": \"Partner B overhead press after swap (1 of 2)\" (ends 910s) overlaps \"Partner A pull-ups after swap (1 of 2)\" (starts 865s) by 45s.",
+          "Track \"Dumbbells - Partner A overhead press (2 of 2)\": \"Partner B overhead press after swap (2 of 2)\" (ends 910s) overlaps \"Partner A pull-ups after swap (2 of 2)\" (starts 865s) by 45s."
+        ],
+        "gold_makespan": 1405.0,
+        "pred_makespan": 1160.0,
+        "makespan_ok": false,
+        "gold_critical_path": [
+          "a-warmup-row",
+          "a-mobility",
+          "a-bench-1",
+          "a-row-1",
+          "a-rest-a1",
+          "a-bench-2",
+          "a-row-2",
+          "a-rest-a2",
+          "a-press-1",
+          "b-press-1",
+          "b-rest-b1",
+          "b-pullups-2",
+          "b-press-2",
+          "a-cooldown"
+        ],
+        "pred_critical_path": [
+          "warmup-row",
+          "warmup-arms",
+          "dumbbell-row-b",
+          "dumbbell-row-a",
+          "superset-a-rest",
+          "overhead-press-a",
+          "overhead-press-b",
+          "superset-b-rest",
+          "cool-down-stretch"
+        ],
+        "js_critical_path": null,
+        "js_makespan": null,
+        "critical_overlap": 0.5,
+        "critical_ok": true,
+        "passed": false
+      },
+      "unsupported_rate": 0.0,
+      "unsupported_steps": [],
+      "matching": [
+        {
+          "gold": "a-warmup-row",
+          "predicted": "warmup-row",
+          "by": "span"
+        },
+        {
+          "gold": "a-mobility",
+          "predicted": "warmup-arms",
+          "by": "span"
+        },
+        {
+          "gold": "a-bench-1",
+          "predicted": "bench-press-a",
+          "by": "span"
+        },
+        {
+          "gold": "a-row-1",
+          "predicted": "dumbbell-row-a",
+          "by": "span"
+        },
+        {
+          "gold": "a-rest-a1",
+          "predicted": "superset-a-rest",
+          "by": "span"
+        },
+        {
+          "gold": "a-press-1",
+          "predicted": "overhead-press-a",
+          "by": "span"
+        },
+        {
+          "gold": "a-pullups-1",
+          "predicted": "pull-ups-a",
+          "by": "span"
+        },
+        {
+          "gold": "a-rest-b1",
+          "predicted": "superset-b-rest",
+          "by": "span"
+        },
+        {
+          "gold": "a-cooldown",
+          "predicted": "cool-down-stretch",
+          "by": "span"
+        },
+        {
+          "gold": "b-row-1",
+          "predicted": "dumbbell-row-b",
+          "by": "span"
+        },
+        {
+          "gold": "b-bench-1",
+          "predicted": "bench-press-b",
+          "by": "span"
+        },
+        {
+          "gold": "b-pullups-1",
+          "predicted": "pull-ups-b",
+          "by": "span"
+        },
+        {
+          "gold": "b-press-1",
+          "predicted": "overhead-press-b",
+          "by": "span"
+        },
+        {
+          "gold": "a-bench-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-row-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-rest-a2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-press-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-pullups-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-warmup-row",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-mobility",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rest-a1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-row-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-bench-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rest-a2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rest-b1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-pullups-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-press-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-cooldown",
+          "predicted": null,
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "qwen/qwen3.8-flash",
+        "pattern": "four-turn",
+        "calls": 5,
+        "input_tokens": 39847,
+        "output_tokens": 108631,
+        "cost_usd": 0.05703362,
+        "cache_keys": [
+          "5fa2fa0ed57ca4c9e4d7636981a3bc7223b04f3a67ab528c9c5fffe250b4bf29",
+          "7f0c16516af468514ecfda68aeacd0fc38ed6446e242e8a8f81fadeb80b6116a",
+          "87d774041eb1d88dc2dde67ca72a0f0c19323753e7c3a0da6655d0cc851e4e11",
+          "22d2228021d585a31d102ddd02f0fd7efd6d4a991d47736aac2e009ce9e4b9d7",
+          "44fe8772c5f49e14939439b6766fe56a0257d3f740841538012d85882ea46dfa"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/four-turn/per-program/fitness-partner-upper-body-supersets/responses/fitness-partner-upper-body-supersets.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/four-turn/per-program/fitness-partner-upper-body-supersets/predicted/fitness-partner-upper-body-supersets.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 13,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Partner Upper-Body Superset Session for 2 lifters",
+            "finish_at": null,
+            "constraints": "one bench and barbell, one pair of dumbbells, one pull-up bar, two ergs, about 25 minutes",
+            "vertical": "gym",
+            "turn": "T1",
+            "kind": "workout",
+            "constraintsLine": "Resource limits: one bench and barbell, one pair of dumbbells, one pull-up bar, two ergs, about 25 minutes.",
+            "deadlineLine": "No finishing time was given; finish as early as the work allows.",
+            "source": "Source text (read all of it):\n<<<\nPartner Upper-Body Superset Session\n\nTwo lifters, one flat bench with a barbell, one pair of dumbbells, one pull-up bar and two rowing ergs. The whole session should take about 25 minutes. You work as a pair: while Partner A is on the first exercise of a superset, Partner B is on the second, and then you swap; nobody waits for equipment if you keep the order.\n\nWarm-up\nBoth partners start together with 5 minutes of easy rowing on the ergs, followed by 3 minutes of arm circles and band pull-aparts.\n\nSuperset A: bench press and dumbbell row (2 rounds)\nPartner A loads the bar and does a set of 8 bench presses, which takes about 40 seconds. Partner B starts on the dumbbell row at the same time, 8 per side, also about 40 seconds. Then swap: A goes to the rows once B has finished with the dumbbells, and B takes the bench as soon as A racks the bar. After both exercises, rest 90 seconds before the next round. Do 2 rounds, resting after each.\n\nSuperset B: overhead press and pull-ups (2 rounds)\nMove straight on after the last rest. Partner A does 8 strict overhead presses with the dumbbells, about 45 seconds, while Partner B does a set of pull-ups, 6 to 10 reps, about 30 seconds. Swap when both are done: A moves to the pull-up bar, and B takes the dumbbells when A sets them down. Rest 2 minutes between rounds; there is no rest after the second round.\n\nCool-down\nFinish together with 5 minutes of stretching: doorway chest stretch, lat stretch on the pull-up bar, and slow shoulder rolls.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Partner Upper-Body Superset Session for 2 lifters",
+            "finish_at": null,
+            "constraints": "one bench and barbell, one pair of dumbbells, one pull-up bar, two ergs, about 25 minutes",
+            "vertical": "gym",
+            "turn": "T2",
+            "kind": "workout"
+          },
+          "T3 extraction": {
+            "goal": "Partner Upper-Body Superset Session for 2 lifters",
+            "finish_at": null,
+            "constraints": "one bench and barbell, one pair of dumbbells, one pull-up bar, two ergs, about 25 minutes",
+            "vertical": "gym",
+            "turn": "T3",
+            "kind": "workout",
+            "environment": "a gym where you have: one bench and barbell, one pair of dumbbells, one pull-up bar, two ergs, about 25 minutes",
+            "deadline": "the earliest time the work allows",
+            "source": "Source text (read all of it):\n<<<\nPartner Upper-Body Superset Session\n\nTwo lifters, one flat bench with a barbell, one pair of dumbbells, one pull-up bar and two rowing ergs. The whole session should take about 25 minutes. You work as a pair: while Partner A is on the first exercise of a superset, Partner B is on the second, and then you swap; nobody waits for equipment if you keep the order.\n\nWarm-up\nBoth partners start together with 5 minutes of easy rowing on the ergs, followed by 3 minutes of arm circles and band pull-aparts.\n\nSuperset A: bench press and dumbbell row (2 rounds)\nPartner A loads the bar and does a set of 8 bench presses, which takes about 40 seconds. Partner B starts on the dumbbell row at the same time, 8 per side, also about 40 seconds. Then swap: A goes to the rows once B has finished with the dumbbells, and B takes the bench as soon as A racks the bar. After both exercises, rest 90 seconds before the next round. Do 2 rounds, resting after each.\n\nSuperset B: overhead press and pull-ups (2 rounds)\nMove straight on after the last rest. Partner A does 8 strict overhead presses with the dumbbells, about 45 seconds, while Partner B does a set of pull-ups, 6 to 10 reps, about 30 seconds. Swap when both are done: A moves to the pull-up bar, and B takes the dumbbells when A sets them down. Rest 2 minutes between rounds; there is no rest after the second round.\n\nCool-down\nFinish together with 5 minutes of stretching: doorway chest stretch, lat stretch on the pull-up bar, and slow shoulder rolls.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Partner Upper-Body Superset Session for 2 lifters",
+            "finish_at": null,
+            "constraints": "one bench and barbell, one pair of dumbbells, one pull-up bar, two ergs, about 25 minutes",
+            "vertical": "gym",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or start_workout",
+            "finishAtArg": ""
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

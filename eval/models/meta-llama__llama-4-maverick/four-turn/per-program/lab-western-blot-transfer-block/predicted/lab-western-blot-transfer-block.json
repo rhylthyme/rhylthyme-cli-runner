@@ -1,0 +1,568 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "western-blot-sds-page",
+  "name": "Western Blot: SDS-PAGE, Wet Transfer and Overnight Primary",
+  "environmentType": "laboratory",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "sample-prep",
+      "name": "Sample Preparation",
+      "steps": [
+        {
+          "stepId": "thaw-lysates",
+          "name": "Thaw lysates on ice and normalize",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Thaw the lysates on ice and normalise them to 2 mg/mL; 15 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "denature-samples",
+          "name": "Denature samples in heat block",
+          "task": "heat block",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "thaw-lysates"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Add 4× Laemmli buffer and denature at 95 °C for 5 minutes in the heat block.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "spin-tubes",
+          "name": "Spin tubes in microcentrifuge",
+          "task": "microcentrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "denature-samples"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Spin the tubes for 2 minutes in the microcentrifuge to collect condensate.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "gel-prep-and-run",
+      "name": "Gel Preparation and Running",
+      "steps": [
+        {
+          "stepId": "assemble-gel-tank",
+          "name": "Assemble gel tank",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "spin-tubes"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Assemble the tank, seat the precast gel and fill with running buffer; 10 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "load-gel",
+          "name": "Load gel",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "assemble-gel-tank"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Load 20 µg per lane and 5 µL of protein ladder; 10 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "run-gel",
+          "name": "Run gel",
+          "task": "gel tank",
+          "duration": {
+            "type": "fixed",
+            "seconds": 4500
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "load-gel"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Run at 120 V for 75 minutes, until the dye front reaches the foot of the gel.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "transfer-prep-and-blot",
+      "name": "Transfer Preparation and Blot",
+      "steps": [
+        {
+          "stepId": "chill-transfer-buffer",
+          "name": "Chill transfer buffer in cold room",
+          "task": "cold room",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 3600
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Put a litre of transfer buffer in the cold room an hour before you need it.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "prepare-pvdf-membrane",
+          "name": "Prepare PVDF membrane",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "chill-transfer-buffer"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "wet a PVDF membrane in methanol for 30 seconds and equilibrate it in transfer buffer; 5 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "soak-fibre-pads",
+          "name": "Soak fibre pads and filter paper",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prepare-pvdf-membrane"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Soak the fibre pads and filter paper in cold transfer buffer; 10 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "build-transfer-sandwich",
+          "name": "Build transfer sandwich",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "soak-fibre-pads"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "prise the gel out of the cassette and build the transfer sandwich with no bubbles; 10 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "transfer-proteins",
+          "name": "Transfer proteins",
+          "task": "wet transfer tank",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "build-transfer-sandwich"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Transfer at 100 V for 60 minutes with an ice pack in the tank.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "stain-membrane",
+          "name": "Stain membrane with Ponceau S",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "transfer-proteins"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Stain the membrane with Ponceau S, photograph it and rinse it off; 10 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "block-membrane",
+          "name": "Block membrane",
+          "task": "orbital rocker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "stain-membrane"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Block in 5 % milk on the rocker for 1 hour at room temperature.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "probe-primary",
+          "name": "Probe with primary antibody",
+          "task": "cold room",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 43200,
+            "maxSeconds": 64800,
+            "defaultSeconds": 54000
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "block-membrane"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Probe with primary antibody overnight in the cold room; 12 to 18 hours.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "wash-membrane-1",
+          "name": "Wash membrane (first time)",
+          "task": "orbital rocker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "probe-primary"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Wash three times for 10 minutes each on the rocker.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "wash-membrane-2",
+          "name": "Wash membrane (second time)",
+          "task": "orbital rocker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-membrane-1"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Wash three times for 10 minutes each on the rocker.",
+              "occurrence": 2
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "wash-membrane-3",
+          "name": "Wash membrane (third time)",
+          "task": "orbital rocker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-membrane-2"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Wash three times for 10 minutes each on the rocker.",
+              "occurrence": 3
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "probe-secondary",
+          "name": "Probe with secondary antibody",
+          "task": "orbital rocker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-membrane-3"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Probe with HRP-conjugated secondary on the rocker for 1 hour.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "wash-membrane-again-1",
+          "name": "Wash membrane again (first time)",
+          "task": "orbital rocker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "probe-secondary"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Wash three times for 10 minutes each on the rocker.",
+              "occurrence": 4
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "wash-membrane-again-2",
+          "name": "Wash membrane again (second time)",
+          "task": "orbital rocker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-membrane-again-1"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Wash three times for 10 minutes each on the rocker.",
+              "occurrence": 5
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "wash-membrane-again-3",
+          "name": "Wash membrane again (third time)",
+          "task": "orbital rocker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-membrane-again-2"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Wash three times for 10 minutes each on the rocker.",
+              "occurrence": 6
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "detection",
+      "name": "Detection",
+      "steps": [
+        {
+          "stepId": "mix-ECL-substrate",
+          "name": "Mix ECL substrate",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "probe-secondary"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "mix the ECL substrate; 5 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "apply-ECL-substrate",
+          "name": "Apply ECL substrate",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "mix-ECL-substrate"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Drain the membrane, apply the substrate and let it work for 5 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "image-blot",
+          "name": "Image blot",
+          "task": "chemiluminescence imager",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "apply-ECL-substrate"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Image the blot; 10 minutes of exposures.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "quantify-bands",
+          "name": "Quantify bands",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "image-blot"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Quantify the bands against the loading control; 15 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "prep",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "heat block",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "microcentrifuge",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "gel tank",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "cold room",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "wet transfer tank",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "orbital rocker",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "chemiluminescence imager",
+      "maxConcurrent": 1
+    }
+  ]
+}

@@ -1,0 +1,386 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "sheet-pan-chicken-potatoes-broccoli",
+  "name": "Sheet-Pan Chicken with Potatoes and Broccoli",
+  "description": "Sheet-pan chicken thighs with potatoes and broccoli, pan sauce, and salad for four. Finish as early as one cook and the available equipment allow.",
+  "environmentType": "kitchen",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "main-oven-and-serve",
+      "name": "Oven and serving",
+      "steps": [
+        {
+          "stepId": "heat-oven",
+          "name": "Heat the oven to 425°F",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Heat the oven to 425°F; 15 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "roast-potatoes",
+          "name": "Roast the potatoes on their own",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "heat-oven"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Slide the potatoes in and roast them for 15 minutes on their own.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "roast-chicken-pan",
+          "name": "Roast the chicken pan with the potatoes",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "roast-potatoes"
+          },
+          "metadata": {
+            "sourceSpan": null,
+            "inferred": true
+          }
+        },
+        {
+          "stepId": "rotate-add-broccoli",
+          "name": "Rotate the pans and add the broccoli",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "roast-chicken-pan"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Twenty minutes after the chicken goes in, pull both pans out, rotate them, tip the broccoli onto the potato pan and put everything back; 4 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "final-roast",
+          "name": "Roast everything until done",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rotate-add-broccoli"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Roast for a final 15 minutes, until the thighs read 175°F and the broccoli is charred at the edges.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "rest-chicken",
+          "name": "Rest the chicken on a board",
+          "task": "counter",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "final-roast"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Rest the chicken on a board for 8 minutes before slicing.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "slice-plate",
+          "name": "Slice the thighs and plate everything",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 360
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "rest-chicken"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "dress-salad"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "finish-pan-sauce"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Slice the thighs and plate everything; 6 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "potato-prep",
+      "name": "Potato preparation",
+      "steps": [
+        {
+          "stepId": "toss-potatoes",
+          "name": "Toss the halved potatoes with oil and salt",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "While it heats, toss the halved potatoes with oil and salt on the first sheet pan; 8 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "chicken-prep",
+      "name": "Chicken preparation",
+      "steps": [
+        {
+          "stepId": "prep-chicken",
+          "name": "Prepare the chicken thighs on the second pan",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "toss-potatoes"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Pat the chicken thighs dry, rub them with the spice mix and lay them on the second pan; 10 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "pan-sauce",
+      "name": "Pan sauce",
+      "steps": [
+        {
+          "stepId": "reduce-pan-sauce",
+          "name": "Reduce the pan sauce",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 360
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rotate-add-broccoli"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Once the pans are out, tip the pan juices into a small pan, add stock and mustard and reduce for 6 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "finish-pan-sauce",
+          "name": "Whisk in the cold butter off the heat",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "reduce-pan-sauce"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Whisk in cold butter off the heat; 2 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "hold-pan-sauce",
+          "name": "Keep the sauce off the flame until plating",
+          "task": "counter",
+          "duration": {
+            "type": "indefinite",
+            "defaultSeconds": 960
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "finish-pan-sauce"
+          },
+          "metadata": {
+            "sourceSpan": null,
+            "inferred": true
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "salad",
+      "name": "Salad",
+      "steps": [
+        {
+          "stepId": "wash-dry-leaves",
+          "name": "Wash and dry the leaves",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 360
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "roast-chicken-pan",
+            "event": "start"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Wash and dry the leaves; 6 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "shake-vinaigrette",
+          "name": "Shake the vinaigrette together in a jar",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-dry-leaves"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Shake the vinaigrette together in a jar; 3 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "dress-salad",
+          "name": "Dress the salad",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "shake-vinaigrette"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "rest-chicken",
+                "event": "start",
+                "offsetSeconds": 300
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Dress the salad only when the chicken has been resting five minutes; 2 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "oven",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "burner",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "sheet-pan",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "prep",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "counter",
+      "maxConcurrent": 2
+    }
+  ],
+  "metadata": {
+    "serves": "4",
+    "sourceUrl": "",
+    "attribution": ""
+  }
+}

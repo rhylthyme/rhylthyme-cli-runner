@@ -1,0 +1,195 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "meta-llama/llama-4-maverick",
+    "pattern": "four-turn",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/four-turn/cache",
+    "limit": null,
+    "only": [
+      "fitness-partner-upper-body-supersets"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 6,
+      "input_tokens": 48000,
+      "output_tokens": 8795,
+      "cost_usd": 0.01475834,
+      "fix_iterations": 2
+    },
+    "generated_at": "2026-09-19T19:35:52+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 0.0,
+    "steps_recall": 0.0,
+    "steps_f1": 0.0,
+    "durations_accuracy": 0.0,
+    "resources_precision": 0.0,
+    "resources_recall": 0.0,
+    "actors_accuracy": 0.0,
+    "relationships_precision": 0.0,
+    "relationships_recall": 0.0,
+    "relationships_f1": 0.0,
+    "structure_rand_index": 0.0,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.0
+  },
+  "programs": [
+    {
+      "slug": "fitness-partner-upper-body-supersets",
+      "headline": {
+        "steps_precision": 0.0,
+        "steps_recall": 0.0,
+        "steps_f1": 0.0,
+        "durations_accuracy": 0.0,
+        "resources_precision": 0.0,
+        "resources_recall": 0.0,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.0,
+        "relationships_recall": 0.0,
+        "relationships_f1": 0.0,
+        "structure_rand_index": 0.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.0
+      },
+      "steps": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 28,
+        "n_pred": 0
+      },
+      "durations": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 28
+      },
+      "resources": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 5,
+        "n_pred": 0
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 38,
+        "n_pred": 0
+      },
+      "structure": {
+        "rand_index": 0.0,
+        "agreements": 0,
+        "pairs": 0,
+        "n_steps": 0
+      },
+      "end_to_end": {
+        "python_valid": false,
+        "python_errors": [],
+        "js_status": "skipped",
+        "js_valid": null,
+        "js_errors": [],
+        "gold_makespan": 0.0,
+        "pred_makespan": 0.0,
+        "makespan_ok": false,
+        "gold_critical_path": [],
+        "pred_critical_path": [],
+        "js_critical_path": null,
+        "js_makespan": null,
+        "critical_overlap": 0.0,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.0,
+      "unsupported_steps": [],
+      "matching": [],
+      "extras": {
+        "model": "meta-llama/llama-4-maverick",
+        "pattern": "four-turn",
+        "calls": 6,
+        "input_tokens": 48000,
+        "output_tokens": 8795,
+        "cost_usd": 0.01475834,
+        "cache_keys": [
+          "06aafbba5a4b579133181ed9ccfa5aa1d4d420d22358a3d57c5b242374537e3b",
+          "bf1d26ef974e00cb45727838dd1bc3cea5eb25b8daf32224a3828beabe670d08",
+          "9f02d5b572c888ca5f3dba58dccebef7ab6efeb91d6d87e8fe53fc4a9ff7b0f9",
+          "289b7d8c03a4b2ad5a8e1aee089829d9f00c98265f241517b883bb0351747c84",
+          "9f9149653e49226a515ef7922e5f2ecf2aec2b9d408cd6f7956f4519b6e289a0",
+          "31c6bf1dc9b137cd4223978166c561c47f70ac549d14f486970a7aeed823e8ac"
+        ],
+        "fix_iterations": 2,
+        "validation_errors": [
+          "Track 'Partner A': Steps 'Overhead presses with dumbbells' and 'Pull-ups' overlap by 15 seconds. Step 'Overhead presses with dumbbells' ends at 695s, but step 'Pull-ups' starts at 680s."
+        ],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/four-turn/per-program/fitness-partner-upper-body-supersets/responses/fitness-partner-upper-body-supersets.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/four-turn/per-program/fitness-partner-upper-body-supersets/predicted/fitness-partner-upper-body-supersets.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 9,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Partner Upper-Body Superset Session for 2 lifters",
+            "finish_at": null,
+            "constraints": "one bench and barbell, one pair of dumbbells, one pull-up bar, two ergs, about 25 minutes",
+            "vertical": "gym",
+            "turn": "T1",
+            "kind": "workout",
+            "constraintsLine": "Resource limits: one bench and barbell, one pair of dumbbells, one pull-up bar, two ergs, about 25 minutes.",
+            "deadlineLine": "No finishing time was given; finish as early as the work allows.",
+            "source": "Source text (read all of it):\n<<<\nPartner Upper-Body Superset Session\n\nTwo lifters, one flat bench with a barbell, one pair of dumbbells, one pull-up bar and two rowing ergs. The whole session should take about 25 minutes. You work as a pair: while Partner A is on the first exercise of a superset, Partner B is on the second, and then you swap; nobody waits for equipment if you keep the order.\n\nWarm-up\nBoth partners start together with 5 minutes of easy rowing on the ergs, followed by 3 minutes of arm circles and band pull-aparts.\n\nSuperset A: bench press and dumbbell row (2 rounds)\nPartner A loads the bar and does a set of 8 bench presses, which takes about 40 seconds. Partner B starts on the dumbbell row at the same time, 8 per side, also about 40 seconds. Then swap: A goes to the rows once B has finished with the dumbbells, and B takes the bench as soon as A racks the bar. After both exercises, rest 90 seconds before the next round. Do 2 rounds, resting after each.\n\nSuperset B: overhead press and pull-ups (2 rounds)\nMove straight on after the last rest. Partner A does 8 strict overhead presses with the dumbbells, about 45 seconds, while Partner B does a set of pull-ups, 6 to 10 reps, about 30 seconds. Swap when both are done: A moves to the pull-up bar, and B takes the dumbbells when A sets them down. Rest 2 minutes between rounds; there is no rest after the second round.\n\nCool-down\nFinish together with 5 minutes of stretching: doorway chest stretch, lat stretch on the pull-up bar, and slow shoulder rolls.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Partner Upper-Body Superset Session for 2 lifters",
+            "finish_at": null,
+            "constraints": "one bench and barbell, one pair of dumbbells, one pull-up bar, two ergs, about 25 minutes",
+            "vertical": "gym",
+            "turn": "T2",
+            "kind": "workout"
+          },
+          "T3 extraction": {
+            "goal": "Partner Upper-Body Superset Session for 2 lifters",
+            "finish_at": null,
+            "constraints": "one bench and barbell, one pair of dumbbells, one pull-up bar, two ergs, about 25 minutes",
+            "vertical": "gym",
+            "turn": "T3",
+            "kind": "workout",
+            "environment": "a gym where you have: one bench and barbell, one pair of dumbbells, one pull-up bar, two ergs, about 25 minutes",
+            "deadline": "the earliest time the work allows",
+            "source": "Source text (read all of it):\n<<<\nPartner Upper-Body Superset Session\n\nTwo lifters, one flat bench with a barbell, one pair of dumbbells, one pull-up bar and two rowing ergs. The whole session should take about 25 minutes. You work as a pair: while Partner A is on the first exercise of a superset, Partner B is on the second, and then you swap; nobody waits for equipment if you keep the order.\n\nWarm-up\nBoth partners start together with 5 minutes of easy rowing on the ergs, followed by 3 minutes of arm circles and band pull-aparts.\n\nSuperset A: bench press and dumbbell row (2 rounds)\nPartner A loads the bar and does a set of 8 bench presses, which takes about 40 seconds. Partner B starts on the dumbbell row at the same time, 8 per side, also about 40 seconds. Then swap: A goes to the rows once B has finished with the dumbbells, and B takes the bench as soon as A racks the bar. After both exercises, rest 90 seconds before the next round. Do 2 rounds, resting after each.\n\nSuperset B: overhead press and pull-ups (2 rounds)\nMove straight on after the last rest. Partner A does 8 strict overhead presses with the dumbbells, about 45 seconds, while Partner B does a set of pull-ups, 6 to 10 reps, about 30 seconds. Swap when both are done: A moves to the pull-up bar, and B takes the dumbbells when A sets them down. Rest 2 minutes between rounds; there is no rest after the second round.\n\nCool-down\nFinish together with 5 minutes of stretching: doorway chest stretch, lat stretch on the pull-up bar, and slow shoulder rolls.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Partner Upper-Body Superset Session for 2 lifters",
+            "finish_at": null,
+            "constraints": "one bench and barbell, one pair of dumbbells, one pull-up bar, two ergs, about 25 minutes",
+            "vertical": "gym",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or start_workout",
+            "finishAtArg": ""
+          }
+        }
+      },
+      "error": "program failed validation after 2 fix iteration(s): Track 'Partner A': Steps 'Overhead presses with dumbbells' and 'Pull-ups' overlap by 15 seconds. Step 'Overhead presses with dumbbells' ends at 695s, but step 'Pull-ups' starts at 680s."
+    }
+  ],
+  "missing": [
+    "fitness-partner-upper-body-supersets"
+  ]
+}

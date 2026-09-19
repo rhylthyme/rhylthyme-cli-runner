@@ -1,0 +1,1080 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "plasmid-miniprep-digest-gel-check",
+  "name": "Plasmid Miniprep, Restriction Digest and Gel Check",
+  "description": "One 5 mL culture miniprep, one EcoRI/HindIII double digest, and one agarose gel check for a single operator.",
+  "environmentType": "laboratory",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "operator",
+      "name": "Operator hands-on work",
+      "steps": [
+        {
+          "stepId": "transfer-culture",
+          "name": "Transfer culture to tube",
+          "task": "operator",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 30,
+            "maxSeconds": 120,
+            "defaultSeconds": 60
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "transfer 5 mL of the overnight culture to a 15 mL tube",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "weigh-agarose",
+          "name": "Weigh agarose into TAE",
+          "task": "operator",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 60,
+            "maxSeconds": 300,
+            "defaultSeconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "transfer-culture"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "weigh 0.5 g of agarose into 50 mL of 1× TAE",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "discard-supernatant",
+          "name": "Discard supernatant",
+          "task": "operator",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 10,
+            "maxSeconds": 60,
+            "defaultSeconds": 20
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "weigh-agarose"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "pellet-culture"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Discard the supernatant",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "resuspend-pellet",
+          "name": "Resuspend pellet with RNase buffer by vortexing",
+          "task": "operator",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 60,
+            "maxSeconds": 300,
+            "defaultSeconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "discard-supernatant"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Resuspend the pellet in 250 µL of Resuspension Buffer (with RNase A) by vortexing; about 2 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "add-lysis-buffer",
+          "name": "Add lysis buffer and invert gently",
+          "task": "operator",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 30,
+            "maxSeconds": 120,
+            "defaultSeconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "resuspend-pellet"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Add 250 µL of Lysis Buffer, invert gently 6 times",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "add-dna-stain",
+          "name": "Add DNA stain to molten agarose",
+          "task": "operator",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 15,
+            "maxSeconds": 60,
+            "defaultSeconds": 20
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "add-lysis-buffer"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "cool-agarose-flask"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "add 5 µL of DNA stain",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "add-neutralization-buffer",
+          "name": "Add neutralization buffer and invert",
+          "task": "operator",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 30,
+            "maxSeconds": 120,
+            "defaultSeconds": 60
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "add-dna-stain"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "incubate-lysis"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Add 350 µL of Neutralization Buffer, invert 6 times",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "load-lysate-column",
+          "name": "Load cleared lysate onto spin column",
+          "task": "operator",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 30,
+            "maxSeconds": 120,
+            "defaultSeconds": 60
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "add-neutralization-buffer"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "clear-lysate"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Load the cleared lysate onto a spin column",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "discard-bind-flowthrough",
+          "name": "Discard flow-through from binding spin",
+          "task": "operator",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 10,
+            "maxSeconds": 60,
+            "defaultSeconds": 20
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "load-lysate-column"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "spin-bind-lysate"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Discard the flow-through",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "add-wash-buffer",
+          "name": "Add wash buffer to column",
+          "task": "operator",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 30,
+            "maxSeconds": 120,
+            "defaultSeconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "discard-bind-flowthrough"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Wash the column with 700 µL of Wash Buffer",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "discard-wash-flowthrough",
+          "name": "Discard wash flow-through",
+          "task": "operator",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 10,
+            "maxSeconds": 60,
+            "defaultSeconds": 20
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "add-wash-buffer"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "spin-wash-column"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "discard the flow-through",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "transfer-column-add-elution",
+          "name": "Transfer column and add elution buffer",
+          "task": "operator",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 60,
+            "maxSeconds": 180,
+            "defaultSeconds": 90
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "discard-wash-flowthrough"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "dry-column-membrane"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Transfer the column to a clean tube, add 50 µL of Elution Buffer",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "measure-concentration",
+          "name": "Measure plasmid concentration",
+          "task": "spectrophotometer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "transfer-column-add-elution"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "spin-elute-plasmid"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Measure the concentration on the spectrophotometer; 3 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "set-up-digest",
+          "name": "Set up double digest",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "measure-concentration"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "In a 0.2 mL tube combine 500 ng of plasmid, 2 µL of 10× buffer, 0.5 µL each of EcoRI and HindIII, and water to 20 µL; 5 minutes of pipetting",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "prepare-ladder-loading-dye",
+          "name": "Thaw ladder and mix loading dye",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "set-up-digest"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "incubate-digest-37",
+                "event": "start",
+                "offsetSeconds": 600
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "thaw the 1 kb ladder and mix 4 µL of 6× loading dye into a fresh tube for each lane; 5 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "move-digest-to-65",
+          "name": "Move digest tube to 65 °C block",
+          "task": "operator",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 10,
+            "maxSeconds": 60,
+            "defaultSeconds": 20
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "prepare-ladder-loading-dye"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "incubate-digest-37"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "preheat-65-block"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": null,
+            "inferred": true
+          }
+        },
+        {
+          "stepId": "add-loading-dye-digest",
+          "name": "Add loading dye to digest",
+          "task": "operator",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 15,
+            "maxSeconds": 60,
+            "defaultSeconds": 30
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "move-digest-to-65"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "heat-inactivate-digest-65"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Add loading dye to the digest",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "spin-down-digest-tube",
+          "name": "Spin down digest tube",
+          "task": "microcentrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 30
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "add-loading-dye-digest"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "briefly spin down the tube in the microcentrifuge for 30 seconds",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "microcentrifuge",
+      "name": "Microcentrifuge spins",
+      "steps": [
+        {
+          "stepId": "pellet-culture",
+          "name": "Centrifuge culture to pellet cells",
+          "task": "microcentrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "transfer-culture"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "centrifuge at 4,000 × g for 10 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "clear-lysate",
+          "name": "Centrifuge neutralized lysate",
+          "task": "microcentrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "pellet-culture"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "add-neutralization-buffer"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "centrifuge at maximum speed for 10 minutes in the microcentrifuge",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "spin-bind-lysate",
+          "name": "Spin cleared lysate through column",
+          "task": "microcentrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "clear-lysate"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "load-lysate-column"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "spin for 1 minute",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "spin-wash-column",
+          "name": "Spin wash buffer through column",
+          "task": "microcentrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "spin-bind-lysate"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "add-wash-buffer"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "spin for 1 minute",
+              "occurrence": 2
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "dry-column-membrane",
+          "name": "Dry spin empty column",
+          "task": "microcentrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "spin-wash-column"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "discard-wash-flowthrough"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "spin the empty column for 2 minutes to dry the membrane",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "spin-elute-plasmid",
+          "name": "Spin to elute plasmid",
+          "task": "microcentrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "dry-column-membrane"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "elution-wait"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "spin for 1 minute",
+              "occurrence": 3
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "gel",
+      "name": "Gel cast, set, load, run, and image",
+      "steps": [
+        {
+          "stepId": "microwave-agarose",
+          "name": "Microwave agarose solution",
+          "task": "microwave",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "weigh-agarose"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "microwave for 2 minutes, swirling once, until fully dissolved",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "cool-agarose-flask",
+          "name": "Cool agarose flask on bench",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "microwave-agarose"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Cool the flask on the bench for 10 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "pour-gel",
+          "name": "Pour agarose gel into casting tray",
+          "task": "gel_rig",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "cool-agarose-flask"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "add-dna-stain"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "pour the gel into the casting tray with the comb in place; 2 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "set-gel",
+          "name": "Let gel set at room temperature",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "pour-gel"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Let the gel set for 30 minutes at room temperature",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "remove-comb-place-gel",
+          "name": "Remove comb and place gel in rig",
+          "task": "gel_rig",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "set-gel"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "remove the comb and place the gel in the rig under 1× TAE; 2 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "load-digest-and-ladder",
+          "name": "Load digest and ladder into gel wells",
+          "task": "gel_rig",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "remove-comb-place-gel"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "spin-down-digest-tube"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "prepare-ladder-loading-dye"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "load 10 µL per well alongside 5 µL of ladder; 5 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "run-gel",
+          "name": "Run agarose gel",
+          "task": "gel_rig",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "load-digest-and-ladder"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Run the gel at 100 V for 45 minutes, until the dye front is two-thirds down the gel",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "image-gel",
+          "name": "Image gel and record bands",
+          "task": "transilluminator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "run-gel"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Image the gel on the transilluminator and record band sizes; 5 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "lysis-wait",
+      "name": "Lysis room-temperature wait",
+      "steps": [
+        {
+          "stepId": "incubate-lysis",
+          "name": "Incubate lysis at room temperature",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "add-lysis-buffer"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "incubate at room temperature for 5 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "elution-wait",
+      "name": "Elution wait before spin",
+      "steps": [
+        {
+          "stepId": "elution-wait",
+          "name": "Wait before elution spin",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "transfer-column-add-elution"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "wait 1 minute",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "heat-block-37",
+      "name": "37 °C heat block",
+      "steps": [
+        {
+          "stepId": "preheat-37-block",
+          "name": "Preheat 37 °C heat block",
+          "task": "heat_block_37",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 300,
+            "maxSeconds": 1200,
+            "defaultSeconds": 600
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": null,
+            "inferred": true
+          }
+        },
+        {
+          "stepId": "incubate-digest-37",
+          "name": "Incubate digest at 37 °C",
+          "task": "heat_block_37",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "preheat-37-block"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "set-up-digest"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Incubate at 37 °C for 60 minutes in the heat block",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "heat-block-65",
+      "name": "65 °C heat block",
+      "steps": [
+        {
+          "stepId": "preheat-65-block",
+          "name": "Preheat 65 °C heat block",
+          "task": "heat_block_65",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 300,
+            "maxSeconds": 1200,
+            "defaultSeconds": 600
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": null,
+            "inferred": true
+          }
+        },
+        {
+          "stepId": "heat-inactivate-digest-65",
+          "name": "Heat-inactivate enzymes at 65 °C",
+          "task": "heat_block_65",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "preheat-65-block"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "move-digest-to-65"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Heat-inactivate the enzymes at 65 °C for 20 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "operator",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "microcentrifuge",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "heat_block_37",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "heat_block_65",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "gel_rig",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "bench",
+      "maxConcurrent": 5
+    },
+    {
+      "task": "microwave",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "spectrophotometer",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "transilluminator",
+      "maxConcurrent": 1
+    }
+  ]
+}

@@ -1,0 +1,370 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "thursday-am-three-lane-swim",
+  "name": "Practice Plan — Thursday AM, Three Lanes",
+  "description": "Refined scheduling question: Which activities require a shared lane, blocks, or coach; which must wait for every lane or every block turn; and is anything required to cool, rest, recover, or be ready at the same moment before the next activity can begin? The text requires the warm-up and kick set before the main sets, all main sets before sprinting, sequential use of the single starting-block set, cooldown after the final sprint, and debrief after cooldown. No additional inferred cooling, recovery, or readiness step is specified.",
+  "environmentType": "gym",
+  "actors": 13,
+  "tracks": [
+    {
+      "trackId": "shared-lanes",
+      "name": "Shared lane activities",
+      "steps": [
+        {
+          "stepId": "warmup",
+          "name": "Swim the warm-up",
+          "task": "lanes",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "All three lanes start together: 20 minutes, 800 easy, mixed stroke, breathing every five on the last hundred.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "kick-set",
+          "name": "Complete the kick set",
+          "task": "lanes",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "whiteboard-talk"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "20 minutes of kick, boards for lanes 1 and 2, vertical kick for lane 3, once the whiteboard talk is over.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "cooldown",
+          "name": "Swim the cooldown",
+          "task": "lanes",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "lane-3-sprint-set"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "All three lanes cool down together once the last sprint is in: 10 minutes, 300 easy backstroke and breaststroke.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "coach-deck",
+      "name": "Coach deck duties",
+      "steps": [
+        {
+          "stepId": "brief-squad",
+          "name": "Brief the squad on the pool deck",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Brief the squad on the pool deck: what the morning is, who is in which lane, 5 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "watch-warmup",
+          "name": "Watch the warm-up and make corrections",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "brief-squad"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Watch the warm-up from the deck and fix anything ugly; 15 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "whiteboard-talk",
+          "name": "Walk the main set on the whiteboard",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warmup"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Call the lanes to the wall when the warm-up is done and walk the main set on the whiteboard; 5 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "time-sprints",
+          "name": "Time the sprints from the deck",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "whiteboard-talk"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "lane-1-sprint-set",
+                "event": "start"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Time the sprints from the deck: 30 minutes, stopwatch and the wall clock.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "debrief",
+          "name": "Debrief on the deck",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cooldown"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "10 minutes on the deck at the end: splits, what to fix, Saturday's meet.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "lane-1",
+      "name": "Lane 1 — sprint group",
+      "steps": [
+        {
+          "stepId": "lane-1-main-set",
+          "name": "Lane 1 main set",
+          "task": "lanes",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 1800,
+            "maxSeconds": 3000,
+            "defaultSeconds": 2400
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "kick-set"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Lane 1: 30 to 50 minutes, 40 minutes is the plan.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "lane-1-sprint-set",
+          "name": "Lane 1 sprint set",
+          "task": "starting-blocks",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "lane-1-main-set"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "lane-2-main-set"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "lane-3-main-set"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Lane 1 goes first, off the blocks, dive starts, 25s flat out.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "lane-2",
+      "name": "Lane 2 — middle-distance group",
+      "steps": [
+        {
+          "stepId": "lane-2-main-set",
+          "name": "Lane 2 main set",
+          "task": "lanes",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 1800,
+            "maxSeconds": 3000,
+            "defaultSeconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "kick-set"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Lane 2: 30 to 50 minutes, 45 minutes is the plan.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "lane-2-sprint-set",
+          "name": "Lane 2 sprint set",
+          "task": "starting-blocks",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "lane-1-sprint-set"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Lane 2 goes second, same thing, on the lane 1 group's last dive.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "lane-3",
+      "name": "Lane 3 — distance group",
+      "steps": [
+        {
+          "stepId": "lane-3-main-set",
+          "name": "Lane 3 main set",
+          "task": "lanes",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 1800,
+            "maxSeconds": 3000,
+            "defaultSeconds": 3000
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "kick-set"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Lane 3: 30 to 50 minutes, 50 minutes is the plan.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "lane-3-sprint-set",
+          "name": "Lane 3 sprint set",
+          "task": "starting-blocks",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "lane-2-sprint-set"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Lane 3 goes third and gets the extra rest it will need.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "lanes",
+      "maxConcurrent": 3
+    },
+    {
+      "task": "starting-blocks",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "coach",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "serves": "12 swimmers in one squad across 3 lanes",
+    "deadline": "150 minutes of pool time",
+    "plannedMakespanSeconds": 8700,
+    "plannedSlackSeconds": 300,
+    "source": "Practice Plan — Thursday AM, three lanes"
+  }
+}

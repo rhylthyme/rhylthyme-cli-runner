@@ -1,0 +1,382 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "room-2b-session-chairs-sheet",
+  "name": "Session Chair's Sheet — Room 2B",
+  "description": "Thursday morning run-of-show for one room, three speakers, AV setup, catering, and strike. Planned to finish at the 10:30 coffee break.",
+  "environmentType": "event",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "session",
+      "name": "Chair and session",
+      "steps": [
+        {
+          "stepId": "open-room",
+          "name": "Open room: housekeeping and fire exits",
+          "task": "chair",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "load-first-deck"
+          }
+        },
+        {
+          "stepId": "first-talk",
+          "name": "Call speaker one and run first talk",
+          "task": "lectern",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "open-room"
+          }
+        },
+        {
+          "stepId": "first-questions",
+          "name": "Questions after first talk",
+          "task": "chair",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 300,
+            "maxSeconds": 600,
+            "defaultSeconds": 420
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "first-talk"
+          }
+        },
+        {
+          "stepId": "changeover-second",
+          "name": "Changeover to second speaker",
+          "task": "lapel-pack",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "first-questions"
+          }
+        },
+        {
+          "stepId": "second-talk",
+          "name": "Call speaker two and run second talk",
+          "task": "lectern",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "changeover-second"
+          }
+        },
+        {
+          "stepId": "second-questions",
+          "name": "Questions after second talk",
+          "task": "chair",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 300,
+            "maxSeconds": 600,
+            "defaultSeconds": 420
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "second-talk"
+          }
+        },
+        {
+          "stepId": "changeover-third",
+          "name": "Changeover to third speaker after foyer is cleared",
+          "task": "lapel-pack",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "second-questions"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "clear-foyer"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "third-talk",
+          "name": "Call speaker three and run third talk",
+          "task": "lectern",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "changeover-third"
+          }
+        },
+        {
+          "stepId": "third-questions",
+          "name": "Questions after third talk",
+          "task": "chair",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 300,
+            "maxSeconds": 900,
+            "defaultSeconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "third-talk"
+          }
+        },
+        {
+          "stepId": "close-session",
+          "name": "Close the session",
+          "task": "chair",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "third-questions"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "av",
+      "name": "AV desk and decks",
+      "steps": [
+        {
+          "stepId": "line-check",
+          "name": "Line check: laptop, HDMI, house sound, record feed",
+          "task": "av-desk",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "projector-test",
+          "name": "Test projector: resolution, keystone, cue slide",
+          "task": "projector",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "line-check"
+          }
+        },
+        {
+          "stepId": "lapel-check",
+          "name": "Check lapel pack: battery, gain, back-row walk",
+          "task": "lapel-pack",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "projector-test"
+          }
+        },
+        {
+          "stepId": "load-first-deck",
+          "name": "Load first deck and leave it on cue slide",
+          "task": "projector",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "lapel-check"
+          }
+        },
+        {
+          "stepId": "load-second-deck",
+          "name": "Load second deck",
+          "task": "projector",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "load-first-deck"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "first-questions"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "load-third-deck",
+          "name": "Load third deck while coffee goes out",
+          "task": "projector",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "load-second-deck"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "second-questions"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "coffee-out",
+                "event": "start"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "strike-av",
+          "name": "Strike AV desk: coil cables and turn off record feed",
+          "task": "av-desk",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "load-third-deck"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "close-session"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "catering",
+      "name": "Coffee service",
+      "steps": [
+        {
+          "stepId": "set-coffee-station",
+          "name": "Set coffee station in service corridor",
+          "task": "foyer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 5400
+          }
+        },
+        {
+          "stepId": "coffee-out",
+          "name": "Send coffee to foyer",
+          "task": "foyer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "set-coffee-station"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "second-questions"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "clear-foyer",
+          "name": "Clear foyer",
+          "task": "foyer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "coffee-out"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "projector",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "lapel-pack",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "av-desk",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "lectern",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "foyer",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "chair",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "room": "Room 2B",
+    "day": "Thursday morning",
+    "plannedFinish": "10:30",
+    "plannedProgramStart": "06:21",
+    "sourceUrl": "",
+    "attribution": "Session Chair's Sheet — Room 2B, Thursday morning"
+  }
+}

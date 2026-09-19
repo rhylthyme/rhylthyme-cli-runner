@@ -1,0 +1,389 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "qwen/qwen3.8-flash",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/baseline/cache",
+    "limit": null,
+    "only": [
+      "kitchen-griddle-breakfast-for-six"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 64000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 1,
+      "input_tokens": 4448,
+      "output_tokens": 44869,
+      "cost_usd": 0.02175563,
+      "fix_iterations": 0
+    },
+    "generated_at": "2026-09-19T19:53:20+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.10526315789473684,
+    "steps_f1": 0.1904761904761905,
+    "durations_accuracy": 1.0,
+    "resources_precision": 0.42857142857142855,
+    "resources_recall": 0.5,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.0,
+    "relationships_recall": 0.0,
+    "relationships_f1": 0.0,
+    "structure_rand_index": 1.0,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.9047619047619048
+  },
+  "programs": [
+    {
+      "slug": "kitchen-griddle-breakfast-for-six",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.10526315789473684,
+        "steps_f1": 0.1904761904761905,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.42857142857142855,
+        "resources_recall": 0.5,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.0,
+        "relationships_recall": 0.0,
+        "relationships_f1": 0.0,
+        "structure_rand_index": 1.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.9047619047619048
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.10526315789473684,
+        "f1": 0.1904761904761905,
+        "tp": 2,
+        "n_gold": 19,
+        "n_pred": 2
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 2,
+        "total": 2
+      },
+      "resources": {
+        "precision": 0.42857142857142855,
+        "recall": 0.5,
+        "f1": 0.4615384615384615,
+        "tp": 3,
+        "n_gold": 6,
+        "n_pred": 7
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 23,
+        "n_pred": 2
+      },
+      "structure": {
+        "rand_index": 1.0,
+        "agreements": 1,
+        "pairs": 1,
+        "n_steps": 2
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 3840.0,
+        "pred_makespan": 4260.0,
+        "makespan_ok": false,
+        "gold_critical_path": [
+          "mix-batter",
+          "rest-batter",
+          "pancakes-pass-1",
+          "pancakes-pass-2",
+          "pancakes-pass-3",
+          "drop-griddle-heat",
+          "scramble-eggs",
+          "serve-breakfast"
+        ],
+        "pred_critical_path": [
+          "whiskBatter",
+          "heatGriddle",
+          "bacon",
+          "grindBeans",
+          "brewCoffee",
+          "keepCoffeeWarm",
+          "callAndCarry"
+        ],
+        "js_critical_path": [
+          "whiskBatter",
+          "heatGriddle",
+          "bacon",
+          "moveBaconToOven",
+          "scrapeWipe",
+          "pancakePasses-r1",
+          "pancakePasses-r2",
+          "pancakePasses-r3",
+          "slidePancakeToOven-r3",
+          "dropGriddleTemp",
+          "scrambleEggs",
+          "callAndCarry"
+        ],
+        "js_makespan": 4260,
+        "critical_overlap": 0.0,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.9047619047619048,
+      "unsupported_steps": [
+        "whiskBatter",
+        "standBatter",
+        "setTable",
+        "placePlates",
+        "warmPlatesAndFood",
+        "heatGriddle",
+        "bacon",
+        "moveBaconToOven",
+        "pancakePasses",
+        "slidePancakeToOven",
+        "dropGriddleTemp",
+        "scrambleEggs",
+        "toastBatches",
+        "butterToast",
+        "restToastOnBench",
+        "grindBeans",
+        "brewCoffee",
+        "keepCoffeeWarm",
+        "callAndCarry"
+      ],
+      "matching": [
+        {
+          "gold": "crack-eggs",
+          "predicted": "crackEggs",
+          "by": "name"
+        },
+        {
+          "gold": "scrape-griddle",
+          "predicted": "scrapeWipe",
+          "by": "name"
+        },
+        {
+          "gold": "mix-batter",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "rest-batter",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "set-table",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "warm-plates",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "heat-griddle",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cook-bacon",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "pancakes-pass-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "pancakes-pass-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "pancakes-pass-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "drop-griddle-heat",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "scramble-eggs",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "toast-batch-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "toast-batch-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "butter-toast",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "grind-beans",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "brew-coffee",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "serve-breakfast",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "whiskBatter",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "standBatter",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "setTable",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "placePlates",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "warmPlatesAndFood",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "heatGriddle",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "bacon",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "moveBaconToOven",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "pancakePasses",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "slidePancakeToOven",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "dropGriddleTemp",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "scrambleEggs",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "toastBatches",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "butterToast",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "restToastOnBench",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "grindBeans",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "brewCoffee",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "keepCoffeeWarm",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "callAndCarry",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "qwen/qwen3.8-flash",
+        "pattern": "baseline",
+        "calls": 1,
+        "input_tokens": 4448,
+        "output_tokens": 44869,
+        "cost_usd": 0.02175563,
+        "cache_keys": [
+          "e1542e5b2124db17ebacae49e647abf93a5c70751bed646d2852d7ec6c3cddc5"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/baseline/per-program/kitchen-griddle-breakfast-for-six/responses/kitchen-griddle-breakfast-for-six.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/baseline/per-program/kitchen-griddle-breakfast-for-six/predicted/kitchen-griddle-breakfast-for-six.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Breakfast for Six on One Griddle for 6 people, following the source text below",
+            "finish_at": "09:00",
+            "constraints": "one griddle, one two-slice toaster, one coffee maker, one oven on its lowest setting, one cook",
+            "vertical": "kitchen"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

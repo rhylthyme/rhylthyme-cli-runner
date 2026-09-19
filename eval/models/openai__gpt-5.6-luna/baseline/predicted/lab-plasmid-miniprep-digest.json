@@ -1,0 +1,461 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "plasmid-miniprep-restriction-digest-gel-check",
+  "name": "Plasmid Miniprep, Restriction Digest and Gel Check",
+  "description": "Spin-column miniprep of one 5 mL E. coli culture, diagnostic EcoRI/HindIII double digest, and agarose gel analysis.",
+  "environmentType": "laboratory",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "miniprep",
+      "name": "Plasmid miniprep",
+      "steps": [
+        {
+          "stepId": "transfer-and-start-culture-pellet",
+          "name": "Transfer 5 mL culture and start centrifuge",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "culture-pellet",
+          "name": "Centrifuge culture at 4000 × g",
+          "task": "centrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "transfer-and-start-culture-pellet"
+          }
+        },
+        {
+          "stepId": "discard-culture-supernatant",
+          "name": "Discard culture supernatant",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "culture-pellet"
+          }
+        },
+        {
+          "stepId": "resuspend-pellet",
+          "name": "Resuspend pellet in 250 µL resuspension buffer with RNase A",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "discard-culture-supernatant"
+          }
+        },
+        {
+          "stepId": "lyse-cells",
+          "name": "Add lysis buffer, invert six times, and incubate",
+          "task": "room-temp-hold",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "resuspend-pellet"
+          }
+        },
+        {
+          "stepId": "neutralize-lysate",
+          "name": "Add neutralization buffer and invert six times",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "lyse-cells"
+          }
+        },
+        {
+          "stepId": "clarify-lysate",
+          "name": "Centrifuge neutralized lysate at maximum speed",
+          "task": "microcentrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "neutralize-lysate"
+          }
+        },
+        {
+          "stepId": "load-spin-column",
+          "name": "Load cleared lysate onto spin column and spin",
+          "task": "microcentrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "clarify-lysate"
+          }
+        },
+        {
+          "stepId": "wash-spin-column",
+          "name": "Wash column and spin",
+          "task": "microcentrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "load-spin-column"
+          }
+        },
+        {
+          "stepId": "dry-spin-column",
+          "name": "Spin empty column to dry membrane",
+          "task": "microcentrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-spin-column"
+          }
+        },
+        {
+          "stepId": "elute-plasmid",
+          "name": "Add 50 µL elution buffer, wait, and spin",
+          "task": "microcentrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "dry-spin-column"
+          }
+        },
+        {
+          "stepId": "measure-plasmid",
+          "name": "Measure plasmid concentration",
+          "task": "spectrophotometer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "elute-plasmid"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "gel-preparation",
+      "name": "Agarose gel preparation",
+      "steps": [
+        {
+          "stepId": "weigh-agarose",
+          "name": "Weigh 0.5 g agarose into 50 mL 1× TAE",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "microwave-agarose",
+          "name": "Microwave agarose solution, swirling once",
+          "task": "microwave",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "weigh-agarose"
+          }
+        },
+        {
+          "stepId": "cool-agarose",
+          "name": "Cool dissolved agarose on bench",
+          "task": "room-temp-hold",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "microwave-agarose"
+          }
+        },
+        {
+          "stepId": "stain-and-pour-gel",
+          "name": "Add DNA stain and pour gel with comb in place",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cool-agarose"
+          }
+        },
+        {
+          "stepId": "set-agarose-gel",
+          "name": "Allow agarose gel to set",
+          "task": "room-temp-hold",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "stain-and-pour-gel"
+          }
+        },
+        {
+          "stepId": "place-gel-in-rig",
+          "name": "Remove comb and place gel in rig under 1× TAE",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "set-agarose-gel"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "digest",
+      "name": "Restriction digest",
+      "steps": [
+        {
+          "stepId": "prepare-digest",
+          "name": "Prepare 20 µL EcoRI/HindIII double digest",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "measure-plasmid"
+          }
+        },
+        {
+          "stepId": "digest-at-37",
+          "name": "Incubate digest at 37 °C",
+          "task": "heat37",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prepare-digest"
+          }
+        },
+        {
+          "stepId": "heat-inactivate-digest",
+          "name": "Heat-inactivate restriction enzymes at 65 °C",
+          "task": "heat65",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "digest-at-37"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "ladder-preparation",
+      "name": "DNA ladder preparation",
+      "steps": [
+        {
+          "stepId": "prepare-ladder",
+          "name": "Thaw 1 kb ladder and prepare loading dye aliquot",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "digest-at-37",
+            "event": "start",
+            "offsetSeconds": 600
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "gel-loading-and-analysis",
+      "name": "Gel loading, electrophoresis, and imaging",
+      "steps": [
+        {
+          "stepId": "prepare-gel-loading",
+          "name": "Add loading dye to digest and prepare for loading",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "heat-inactivate-digest"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "prepare-ladder"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "place-gel-in-rig"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "spin-digest-tube",
+          "name": "Briefly spin digest tube",
+          "task": "microcentrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 30
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prepare-gel-loading"
+          }
+        },
+        {
+          "stepId": "load-digest-and-ladder",
+          "name": "Load 10 µL digest and 5 µL ladder into gel wells",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "spin-digest-tube"
+          }
+        },
+        {
+          "stepId": "run-agarose-gel",
+          "name": "Run gel at 100 V",
+          "task": "gel-rig",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "load-digest-and-ladder"
+          }
+        },
+        {
+          "stepId": "image-gel",
+          "name": "Image gel and record band sizes",
+          "task": "transilluminator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "run-agarose-gel"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "operator",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "centrifuge",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "microcentrifuge",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "heat37",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "heat65",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "gel-rig",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "microwave",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "spectrophotometer",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "transilluminator",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "room-temp-hold",
+      "maxConcurrent": 10
+    }
+  ],
+  "metadata": {
+    "sourceUrl": "",
+    "attribution": "User-provided source text",
+    "samples": "One 5 mL overnight E. coli culture carrying a pUC-based plasmid",
+    "digest": "EcoRI/HindIII diagnostic double digest",
+    "gel": "0.5 g agarose in 50 mL 1× TAE with DNA stain",
+    "equipmentLimits": {
+      "microcentrifuge": 1,
+      "heat37": 1,
+      "heat65": 1,
+      "gelRig": 1,
+      "operator": 1
+    }
+  }
+}

@@ -1,0 +1,291 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "sandwich-elisa-two-plates-one-washer",
+  "name": "Sandwich ELISA on Two Plates, One Washer",
+  "description": "Two 96-well plates processed through a sandwich ELISA with plate 2 staggered 30 minutes after plate 1. Resource constraints model one washer, one 37 °C incubator holding two plates, one reader, and one operator.",
+  "environmentType": "laboratory",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "plates",
+      "name": "Two-plate ELISA workflow",
+      "steps": [
+        {
+          "stepId": "coat-plates",
+          "name": "Coat plate with capture antibody, seal",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "replicates": {
+            "count": 2,
+            "mode": "stagger",
+            "delay": 1800
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "overnight-coat",
+          "name": "Overnight coating at 4 °C",
+          "task": "cold-room",
+          "duration": {
+            "type": "fixed",
+            "seconds": 54000
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "coat-plates",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "wash-capture",
+          "name": "Wash plate four times after coating",
+          "task": "plate-washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "overnight-coat",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "block",
+          "name": "Block with assay diluent at 37 °C",
+          "task": "incubator-37c",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-capture",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "wash-block",
+          "name": "Wash plate four times after blocking",
+          "task": "plate-washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "block",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "add-standards-samples",
+          "name": "Add standards and diluted samples",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-block",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "incubate-standards-samples",
+          "name": "Incubate standards and samples at 37 °C",
+          "task": "incubator-37c",
+          "duration": {
+            "type": "fixed",
+            "seconds": 7200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "add-standards-samples",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "wash-after-samples",
+          "name": "Wash plate four times after sample incubation",
+          "task": "plate-washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "incubate-standards-samples",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "add-detection-antibody",
+          "name": "Add biotinylated detection antibody",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-after-samples",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "incubate-detection-antibody",
+          "name": "Incubate detection antibody at 37 °C",
+          "task": "incubator-37c",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "add-detection-antibody",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "wash-after-detection",
+          "name": "Final wash before substrate",
+          "task": "plate-washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "incubate-detection-antibody",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "develop-and-stop",
+          "name": "Add TMB, develop in the dark for exactly 15 minutes, stop",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-after-detection",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "read-absorbance",
+          "name": "Read absorbance at 450 nm with 570 nm reference",
+          "task": "plate-reader",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "develop-and-stop",
+            "instances": "each"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "reagents",
+      "name": "Day 2 reagent preparation",
+      "steps": [
+        {
+          "stepId": "make-standard-curve",
+          "name": "Prepare seven-point standard curve in assay diluent",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 54000
+          }
+        },
+        {
+          "stepId": "dilute-samples-map",
+          "name": "Dilute samples 1:4 and lay out plate map",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "make-standard-curve"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "operator",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "cold-room",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "plate-washer",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "incubator-37c",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "plate-reader",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "ingredients": [
+      {
+        "name": "Capture antibody in carbonate buffer",
+        "measure": "100 µL per well"
+      },
+      {
+        "name": "Assay diluent for blocking",
+        "measure": "200 µL per well"
+      },
+      {
+        "name": "Wash buffer",
+        "measure": "300 µL per wash, four washes per wash step"
+      },
+      {
+        "name": "Standards and diluted samples",
+        "measure": "100 µL per well"
+      },
+      {
+        "name": "Biotinylated detection antibody",
+        "measure": "100 µL per well"
+      },
+      {
+        "name": "TMB substrate",
+        "measure": "100 µL per well"
+      },
+      {
+        "name": "2 N sulfuric acid",
+        "measure": "50 µL per well"
+      }
+    ],
+    "plates": "2 x 96-well plates",
+    "stagger": "Plate 2 starts 30 minutes after plate 1",
+    "sourceUrl": "",
+    "attribution": "Built from the supplied Sandwich ELISA on Two Plates, One Washer protocol."
+  }
+}

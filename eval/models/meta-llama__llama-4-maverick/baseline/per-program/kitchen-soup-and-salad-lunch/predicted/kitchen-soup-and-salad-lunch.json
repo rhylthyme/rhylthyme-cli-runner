@@ -1,0 +1,220 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "weekday-lentil-soup-and-salad",
+  "name": "Weekday Lentil Soup and Salad for Four",
+  "environmentType": "kitchen",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "soup",
+      "name": "Soup",
+      "steps": [
+        {
+          "stepId": "dice-veggies",
+          "name": "Dice onion, carrot, and celery",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "sweat-veggies",
+          "name": "Sweat veggies in oil",
+          "task": "stove",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "dice-veggies"
+          }
+        },
+        {
+          "stepId": "add-lentils-and-stock",
+          "name": "Add lentils, tomato paste, and stock",
+          "task": "stove",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "sweat-veggies"
+          }
+        },
+        {
+          "stepId": "simmer-lentils",
+          "name": "Simmer lentils",
+          "task": "stove",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 1500,
+            "maxSeconds": 2400,
+            "defaultSeconds": 2000
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "add-lentils-and-stock"
+          }
+        },
+        {
+          "stepId": "blitz-soup",
+          "name": "Blitz a third of the soup",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "simmer-lentils"
+          }
+        },
+        {
+          "stepId": "season-soup",
+          "name": "Season the soup",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "blitz-soup"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "salad",
+      "name": "Salad",
+      "steps": [
+        {
+          "stepId": "prepare-salad",
+          "name": "Wash and spin leaves, shave fennel and radishes",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 720
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "simmer-lentils"
+          }
+        },
+        {
+          "stepId": "dress-salad",
+          "name": "Dress and toss the salad",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prepare-salad"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "bread",
+      "name": "Bread",
+      "steps": [
+        {
+          "stepId": "cut-bread",
+          "name": "Cut the loaf into thick slices",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "simmer-lentils"
+          }
+        },
+        {
+          "stepId": "warm-bread",
+          "name": "Warm bread in toaster oven",
+          "task": "toaster-oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cut-bread"
+          }
+        },
+        {
+          "stepId": "wrap-bread",
+          "name": "Wrap warm bread in a cloth",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warm-bread"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "table",
+      "name": "Table",
+      "steps": [
+        {
+          "stepId": "lay-table",
+          "name": "Lay four places",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wrap-bread"
+          }
+        },
+        {
+          "stepId": "serve",
+          "name": "Carry pot and bowl through",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "lay-table"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "prep",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "stove",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "toaster-oven",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "serves": "4"
+  }
+}

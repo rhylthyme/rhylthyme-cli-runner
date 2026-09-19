@@ -1,0 +1,646 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "partner-upper-body-superset-session",
+  "name": "Partner Upper-Body Superset Session",
+  "description": "Approximately 24 minutes for two lifters using one bench and barbell, one pair of dumbbells, one pull-up bar, and two rowing ergs.",
+  "environmentType": "gym",
+  "actors": 2,
+  "tracks": [
+    {
+      "trackId": "partner-a",
+      "name": "Partner A",
+      "steps": [
+        {
+          "stepId": "a_warmup_row",
+          "name": "Easy row",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "a_warmup_mobility",
+          "name": "Arm circles and band pull-aparts",
+          "task": "mobility",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "a_warmup_row"
+          }
+        },
+        {
+          "stepId": "a_bench_r1",
+          "name": "Bench press — round 1",
+          "task": "bench_barbell",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "a_warmup_mobility"
+          }
+        },
+        {
+          "stepId": "a_row_r1",
+          "name": "Dumbbell row — round 1",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "a_bench_r1"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "b_row_r1"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "a_rest_r1",
+          "name": "Rest after superset A — round 1",
+          "task": "rest",
+          "duration": {
+            "type": "fixed",
+            "seconds": 90
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "a_row_r1"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "b_bench_r1"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "a_bench_r2",
+          "name": "Bench press — round 2",
+          "task": "bench_barbell",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "a_rest_r1"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "b_rest_r1"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "a_row_r2",
+          "name": "Dumbbell row — round 2",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "a_bench_r2"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "b_row_r2"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "a_rest_r2",
+          "name": "Rest after superset A — round 2",
+          "task": "rest",
+          "duration": {
+            "type": "fixed",
+            "seconds": 90
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "a_row_r2"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "b_bench_r2"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "a_press_r1",
+          "name": "Strict dumbbell overhead press — round 1",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 45
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "a_rest_r2"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "b_rest_r2"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "a_pullup_r1",
+          "name": "Pull-ups — round 1",
+          "task": "pullup_bar",
+          "duration": {
+            "type": "fixed",
+            "seconds": 30
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "a_press_r1"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "b_pullup_r1"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "a_rest_b_r1",
+          "name": "Rest after superset B — round 1",
+          "task": "rest",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "a_pullup_r1"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "b_press_r1"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "a_press_r2",
+          "name": "Strict dumbbell overhead press — round 2",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 45
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "a_rest_b_r1"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "b_rest_b_r1"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "a_pullup_r2",
+          "name": "Pull-ups — round 2",
+          "task": "pullup_bar",
+          "duration": {
+            "type": "fixed",
+            "seconds": 30
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "a_press_r2"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "b_pullup_r2"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "a_cooldown",
+          "name": "Stretching and slow shoulder rolls",
+          "task": "stretch",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "a_pullup_r2"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "b_press_r2"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "partner-b",
+      "name": "Partner B",
+      "steps": [
+        {
+          "stepId": "b_warmup_row",
+          "name": "Easy row",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "b_warmup_mobility",
+          "name": "Arm circles and band pull-aparts",
+          "task": "mobility",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "b_warmup_row"
+          }
+        },
+        {
+          "stepId": "b_row_r1",
+          "name": "Dumbbell row — round 1",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "b_warmup_mobility"
+          }
+        },
+        {
+          "stepId": "b_bench_r1",
+          "name": "Bench press — round 1",
+          "task": "bench_barbell",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "b_row_r1"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "a_bench_r1"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "b_rest_r1",
+          "name": "Rest after superset A — round 1",
+          "task": "rest",
+          "duration": {
+            "type": "fixed",
+            "seconds": 90
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "b_bench_r1"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "a_row_r1"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "b_row_r2",
+          "name": "Dumbbell row — round 2",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "b_rest_r1"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "a_rest_r1"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "b_bench_r2",
+          "name": "Bench press — round 2",
+          "task": "bench_barbell",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "b_row_r2"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "a_bench_r2"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "b_rest_r2",
+          "name": "Rest after superset A — round 2",
+          "task": "rest",
+          "duration": {
+            "type": "fixed",
+            "seconds": 90
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "b_bench_r2"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "a_row_r2"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "b_pullup_r1",
+          "name": "Pull-ups — round 1",
+          "task": "pullup_bar",
+          "duration": {
+            "type": "fixed",
+            "seconds": 30
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "b_rest_r2"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "a_rest_r2"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "b_press_r1",
+          "name": "Strict dumbbell overhead press — round 1",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 45
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "b_pullup_r1"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "a_press_r1"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "b_rest_b_r1",
+          "name": "Rest after superset B — round 1",
+          "task": "rest",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "b_press_r1"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "a_pullup_r1"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "b_pullup_r2",
+          "name": "Pull-ups — round 2",
+          "task": "pullup_bar",
+          "duration": {
+            "type": "fixed",
+            "seconds": 30
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "b_rest_b_r1"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "a_rest_b_r1"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "b_press_r2",
+          "name": "Strict dumbbell overhead press — round 2",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 45
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "b_pullup_r2"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "a_press_r2"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "b_cooldown",
+          "name": "Stretching and slow shoulder rolls",
+          "task": "stretch",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "b_press_r2"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "a_pullup_r2"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "erg",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "mobility",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "bench_barbell",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "dumbbells",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "pullup_bar",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "rest",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "stretch",
+      "maxConcurrent": 2
+    }
+  ],
+  "metadata": {
+    "sourceUrl": "",
+    "attribution": "User-provided source text",
+    "serves": "2 lifters",
+    "estimatedDuration": "23m40s",
+    "equipment": [
+      "2 rowing ergs",
+      "1 flat bench and barbell",
+      "1 pair of dumbbells",
+      "1 pull-up bar"
+    ]
+  }
+}

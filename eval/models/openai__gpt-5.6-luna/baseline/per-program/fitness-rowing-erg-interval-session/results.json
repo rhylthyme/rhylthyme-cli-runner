@@ -1,0 +1,356 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "openai/gpt-5.6-luna",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/openai__gpt-5.6-luna/baseline/cache",
+    "limit": null,
+    "only": [
+      "fitness-rowing-erg-interval-session"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 64000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 2,
+      "input_tokens": 9881,
+      "output_tokens": 5378,
+      "cost_usd": 0.0084298,
+      "fix_iterations": 1
+    },
+    "generated_at": "2026-09-19T19:23:49+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.10714285714285714,
+    "steps_f1": 0.19354838709677416,
+    "durations_accuracy": 1.0,
+    "resources_precision": 0.5,
+    "resources_recall": 0.6666666666666666,
+    "actors_accuracy": 0.0,
+    "relationships_precision": 0.5,
+    "relationships_recall": 0.06896551724137931,
+    "relationships_f1": 0.1212121212121212,
+    "structure_rand_index": 0.3333333333333333,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.6666666666666666
+  },
+  "programs": [
+    {
+      "slug": "fitness-rowing-erg-interval-session",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.10714285714285714,
+        "steps_f1": 0.19354838709677416,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.5,
+        "resources_recall": 0.6666666666666666,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.5,
+        "relationships_recall": 0.06896551724137931,
+        "relationships_f1": 0.1212121212121212,
+        "structure_rand_index": 0.3333333333333333,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.6666666666666666
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.10714285714285714,
+        "f1": 0.19354838709677416,
+        "tp": 3,
+        "n_gold": 28,
+        "n_pred": 3
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 3,
+        "total": 3
+      },
+      "resources": {
+        "precision": 0.5,
+        "recall": 0.6666666666666666,
+        "f1": 0.5714285714285715,
+        "tp": 2,
+        "n_gold": 3,
+        "n_pred": 4
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.5,
+        "recall": 0.06896551724137931,
+        "f1": 0.1212121212121212,
+        "tp": 2,
+        "n_gold": 29,
+        "n_pred": 4
+      },
+      "structure": {
+        "rand_index": 0.3333333333333333,
+        "agreements": 1,
+        "pairs": 3,
+        "n_steps": 3
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 4560.0,
+        "pred_makespan": 4080.0,
+        "makespan_ok": false,
+        "gold_critical_path": [
+          "d-warmup",
+          "a-piece-1",
+          "a-piece-2",
+          "a-piece-3",
+          "c-piece-3",
+          "a-drill",
+          "b-drill",
+          "c-drill",
+          "d-drill",
+          "a-cooldown",
+          "debrief"
+        ],
+        "pred_critical_path": [
+          "cd-warmup",
+          "ab-pieces",
+          "coach-splits",
+          "technique-drill",
+          "cooldown",
+          "debrief"
+        ],
+        "js_critical_path": [
+          "cd-warmup",
+          "ab-pieces-r3",
+          "cd-pieces-r3",
+          "technique-drill-r1",
+          "technique-drill-r2",
+          "technique-drill-r3",
+          "technique-drill-r4",
+          "cooldown",
+          "debrief"
+        ],
+        "js_makespan": 5100,
+        "critical_overlap": 0.2727272727272727,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.6666666666666666,
+      "unsupported_steps": [
+        "ab-warmup",
+        "ab-pieces",
+        "cd-warmup",
+        "cd-pieces",
+        "coach-briefing",
+        "coach-splits"
+      ],
+      "matching": [
+        {
+          "gold": "a-drill",
+          "predicted": "technique-drill",
+          "by": "name"
+        },
+        {
+          "gold": "a-cooldown",
+          "predicted": "cooldown",
+          "by": "name"
+        },
+        {
+          "gold": "debrief",
+          "predicted": "debrief",
+          "by": "name"
+        },
+        {
+          "gold": "a-warmup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-piece-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-piece-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-piece-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-warmup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-piece-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-piece-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-piece-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-drill",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-cooldown",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-warmup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-piece-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-piece-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-piece-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-drill",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-cooldown",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "d-warmup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "d-piece-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "d-piece-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "d-piece-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "d-drill",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "d-cooldown",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "brief-crew",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "call-splits",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "run-drills",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "ab-warmup",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "ab-pieces",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "cd-warmup",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "cd-pieces",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "coach-briefing",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "coach-splits",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "openai/gpt-5.6-luna",
+        "pattern": "baseline",
+        "calls": 2,
+        "input_tokens": 9881,
+        "output_tokens": 5378,
+        "cost_usd": 0.0084298,
+        "cache_keys": [
+          "c7f893ff974646403e539df301746ec65b0032cfe7313c8f1a176a1a9bc34bc3",
+          "ea073bdb71a5c5c2c74836e2df8f690716f3823f0e4dd6d16c01465a67b7589a"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/openai__gpt-5.6-luna/baseline/per-program/fitness-rowing-erg-interval-session/responses/fitness-rowing-erg-interval-session.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/openai__gpt-5.6-luna/baseline/per-program/fitness-rowing-erg-interval-session/predicted/fitness-rowing-erg-interval-session.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Erg Session \u2014 four rowers, two machines for 4 rowers, 2 ergs, 3 pieces, following the source text below",
+            "finish_at": null,
+            "constraints": "two ergs, four rowers, one coach, one rower on the coached drill at a time",
+            "vertical": "gym"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

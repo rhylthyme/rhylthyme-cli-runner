@@ -1,0 +1,395 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "meta-llama/llama-4-maverick",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/baseline/cache",
+    "limit": null,
+    "only": [
+      "fitness-rowing-erg-interval-session"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 2,
+      "input_tokens": 10428,
+      "output_tokens": 3503,
+      "cost_usd": 0.0042444200000000005,
+      "fix_iterations": 1
+    },
+    "generated_at": "2026-09-19T19:36:28+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.21428571428571427,
+    "steps_f1": 0.35294117647058826,
+    "durations_accuracy": 0.8333333333333334,
+    "resources_precision": 0.3333333333333333,
+    "resources_recall": 0.3333333333333333,
+    "actors_accuracy": 0.0,
+    "relationships_precision": 0.3333333333333333,
+    "relationships_recall": 0.06896551724137931,
+    "relationships_f1": 0.1142857142857143,
+    "structure_rand_index": 0.9333333333333333,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.6470588235294118
+  },
+  "programs": [
+    {
+      "slug": "fitness-rowing-erg-interval-session",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.21428571428571427,
+        "steps_f1": 0.35294117647058826,
+        "durations_accuracy": 0.8333333333333334,
+        "resources_precision": 0.3333333333333333,
+        "resources_recall": 0.3333333333333333,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.3333333333333333,
+        "relationships_recall": 0.06896551724137931,
+        "relationships_f1": 0.1142857142857143,
+        "structure_rand_index": 0.9333333333333333,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.6470588235294118
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.21428571428571427,
+        "f1": 0.35294117647058826,
+        "tp": 6,
+        "n_gold": 28,
+        "n_pred": 6
+      },
+      "durations": {
+        "accuracy": 0.8333333333333334,
+        "correct": 5,
+        "total": 6
+      },
+      "resources": {
+        "precision": 0.3333333333333333,
+        "recall": 0.3333333333333333,
+        "f1": 0.3333333333333333,
+        "tp": 1,
+        "n_gold": 3,
+        "n_pred": 3
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.3333333333333333,
+        "recall": 0.06896551724137931,
+        "f1": 0.1142857142857143,
+        "tp": 2,
+        "n_gold": 29,
+        "n_pred": 6
+      },
+      "structure": {
+        "rand_index": 0.9333333333333333,
+        "agreements": 14,
+        "pairs": 15,
+        "n_steps": 6
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 4560.0,
+        "pred_makespan": 5160.0,
+        "makespan_ok": false,
+        "gold_critical_path": [
+          "d-warmup",
+          "a-piece-1",
+          "a-piece-2",
+          "a-piece-3",
+          "c-piece-3",
+          "a-drill",
+          "b-drill",
+          "c-drill",
+          "d-drill",
+          "a-cooldown",
+          "debrief"
+        ],
+        "pred_critical_path": [
+          "warm-up-ab",
+          "warm-up-cd",
+          "piece1-ab",
+          "piece2-ab",
+          "piece3-ab",
+          "piece3-cd",
+          "drill-a",
+          "drill-b",
+          "drill-c",
+          "drill-d",
+          "cooldown",
+          "debrief"
+        ],
+        "js_critical_path": [
+          "warm-up-ab-r1",
+          "warm-up-cd-r1",
+          "piece1-ab-r1",
+          "piece2-ab-r1",
+          "piece3-ab-r1",
+          "piece3-cd-r1",
+          "drill-a",
+          "drill-b",
+          "drill-c",
+          "drill-d",
+          "cooldown",
+          "debrief"
+        ],
+        "js_makespan": 4080,
+        "critical_overlap": 0.2727272727272727,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.6470588235294118,
+      "unsupported_steps": [
+        "warm-up-ab",
+        "piece1-ab",
+        "piece2-ab",
+        "piece3-ab",
+        "warm-up-cd",
+        "piece1-cd",
+        "piece2-cd",
+        "piece3-cd",
+        "drill-c",
+        "drill-b",
+        "drill-d"
+      ],
+      "matching": [
+        {
+          "gold": "a-drill",
+          "predicted": "drill-a",
+          "by": "name"
+        },
+        {
+          "gold": "a-cooldown",
+          "predicted": "cooldown",
+          "by": "name"
+        },
+        {
+          "gold": "brief-crew",
+          "predicted": "briefing",
+          "by": "name"
+        },
+        {
+          "gold": "call-splits",
+          "predicted": "call-splits",
+          "by": "name"
+        },
+        {
+          "gold": "run-drills",
+          "predicted": "drills",
+          "by": "name"
+        },
+        {
+          "gold": "debrief",
+          "predicted": "debrief",
+          "by": "name"
+        },
+        {
+          "gold": "a-warmup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-piece-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-piece-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-piece-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-warmup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-piece-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-piece-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-piece-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-drill",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-cooldown",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-warmup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-piece-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-piece-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-piece-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-drill",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-cooldown",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "d-warmup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "d-piece-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "d-piece-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "d-piece-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "d-drill",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "d-cooldown",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "warm-up-ab",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "piece1-ab",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "piece2-ab",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "piece3-ab",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "warm-up-cd",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "piece1-cd",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "piece2-cd",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "piece3-cd",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "drill-c",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "drill-b",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "drill-d",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "meta-llama/llama-4-maverick",
+        "pattern": "baseline",
+        "calls": 2,
+        "input_tokens": 10428,
+        "output_tokens": 3503,
+        "cost_usd": 0.0042444200000000005,
+        "cache_keys": [
+          "75c512b95a0dbfcc3bb222fd793ea449ab124b36cacc9dd22f0c32eaff24bdfb",
+          "8b8868d72545321a2ddbf6aa3b6358376f7cb784c8790fab829060fe4adc4946"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/baseline/per-program/fitness-rowing-erg-interval-session/responses/fitness-rowing-erg-interval-session.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/baseline/per-program/fitness-rowing-erg-interval-session/predicted/fitness-rowing-erg-interval-session.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Erg Session \u2014 four rowers, two machines for 4 rowers, 2 ergs, 3 pieces, following the source text below",
+            "finish_at": null,
+            "constraints": "two ergs, four rowers, one coach, one rower on the coached drill at a time",
+            "vertical": "gym"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

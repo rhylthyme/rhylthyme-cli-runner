@@ -1,0 +1,296 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "country-loaf-two-boules",
+  "name": "Country Loaf: Two Boules, One Dutch Oven",
+  "environmentType": "kitchen",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "levain",
+      "name": "Levain Preparation",
+      "steps": [
+        {
+          "stepId": "mix-levain",
+          "name": "Mix Levain",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "levain-resting",
+          "name": "Levain Resting",
+          "task": "room-temperature",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 14400,
+            "maxSeconds": 21600,
+            "defaultSeconds": 18000
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "mix-levain"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "dough",
+      "name": "Dough Preparation",
+      "steps": [
+        {
+          "stepId": "weigh-ingredients",
+          "name": "Weigh Ingredients",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 0
+          }
+        },
+        {
+          "stepId": "mix-flour-water",
+          "name": "Mix Flour and Water",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "weigh-ingredients",
+            "offsetSeconds": 1800
+          }
+        },
+        {
+          "stepId": "autolyse",
+          "name": "Autolyse",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "mix-flour-water"
+          }
+        },
+        {
+          "stepId": "mix-dough",
+          "name": "Mix Dough with Levain and Salt",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "levain-resting"
+          }
+        },
+        {
+          "stepId": "bulk-ferment",
+          "name": "Bulk Ferment",
+          "task": "bowl",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 10800,
+            "maxSeconds": 18000,
+            "defaultSeconds": 14400
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "mix-dough"
+          }
+        },
+        {
+          "stepId": "fold-1",
+          "name": "First Fold",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bulk-ferment",
+            "offsetSeconds": 1800
+          }
+        },
+        {
+          "stepId": "fold-2",
+          "name": "Second Fold",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "fold-1",
+            "offsetSeconds": 1800
+          }
+        },
+        {
+          "stepId": "fold-3",
+          "name": "Third Fold",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "fold-2",
+            "offsetSeconds": 1800
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "shape-and-bake",
+      "name": "Shape and Bake",
+      "steps": [
+        {
+          "stepId": "divide-shape",
+          "name": "Divide and Shape Dough",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "fold-3"
+          }
+        },
+        {
+          "stepId": "rest",
+          "name": "Rest Shaped Dough",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1500
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "divide-shape"
+          }
+        },
+        {
+          "stepId": "shape-final",
+          "name": "Final Shape and Refrigerate",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest"
+          }
+        },
+        {
+          "stepId": "refrigerate",
+          "name": "Refrigerate",
+          "task": "refrigerator",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 36000,
+            "maxSeconds": 50400,
+            "defaultSeconds": 43200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "shape-final"
+          }
+        },
+        {
+          "stepId": "preheat-dutch-oven",
+          "name": "Preheat Dutch Oven",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "refrigerate"
+          }
+        },
+        {
+          "stepId": "bake-loaves",
+          "name": "Bake Loaves",
+          "task": "dutch-oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2460
+          },
+          "replicates": {
+            "count": 2,
+            "mode": "serial"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "preheat-dutch-oven"
+          }
+        },
+        {
+          "stepId": "cool-loaves",
+          "name": "Cool Loaves",
+          "task": "rack",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bake-loaves",
+            "instances": "each"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "baker",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "oven",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "dutch-oven",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "refrigerator",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "bench",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "bowl",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "room-temperature",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "rack",
+      "maxConcurrent": 2
+    }
+  ]
+}

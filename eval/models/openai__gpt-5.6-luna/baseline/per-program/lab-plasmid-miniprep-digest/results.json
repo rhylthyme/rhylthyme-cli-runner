@@ -1,0 +1,433 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "openai/gpt-5.6-luna",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/openai__gpt-5.6-luna/baseline/cache",
+    "limit": null,
+    "only": [
+      "lab-plasmid-miniprep-digest"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 64000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 1,
+      "input_tokens": 4566,
+      "output_tokens": 4865,
+      "cost_usd": 0.0067512,
+      "fix_iterations": 0
+    },
+    "generated_at": "2026-09-19T19:26:32+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.36363636363636365,
+    "steps_f1": 0.5333333333333333,
+    "durations_accuracy": 1.0,
+    "resources_precision": 0.6,
+    "resources_recall": 0.6666666666666666,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.375,
+    "relationships_recall": 0.125,
+    "relationships_f1": 0.1875,
+    "structure_rand_index": 0.8928571428571429,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.7037037037037037
+  },
+  "programs": [
+    {
+      "slug": "lab-plasmid-miniprep-digest",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.36363636363636365,
+        "steps_f1": 0.5333333333333333,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.6,
+        "resources_recall": 0.6666666666666666,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.375,
+        "relationships_recall": 0.125,
+        "relationships_f1": 0.1875,
+        "structure_rand_index": 0.8928571428571429,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.7037037037037037
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.36363636363636365,
+        "f1": 0.5333333333333333,
+        "tp": 8,
+        "n_gold": 22,
+        "n_pred": 8
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 8,
+        "total": 8
+      },
+      "resources": {
+        "precision": 0.6,
+        "recall": 0.6666666666666666,
+        "f1": 0.631578947368421,
+        "tp": 6,
+        "n_gold": 9,
+        "n_pred": 10
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.375,
+        "recall": 0.125,
+        "f1": 0.1875,
+        "tp": 3,
+        "n_gold": 24,
+        "n_pred": 8
+      },
+      "structure": {
+        "rand_index": 0.8928571428571429,
+        "agreements": 25,
+        "pairs": 28,
+        "n_steps": 8
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 10860.0,
+        "pred_makespan": 10890.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "pellet-culture",
+          "resuspend-pellet",
+          "lyse-cells",
+          "neutralize-and-spin",
+          "bind-column",
+          "wash-column",
+          "dry-column",
+          "elute-dna",
+          "quantify-dna",
+          "warm-heat-block",
+          "setup-digest",
+          "incubate-digest",
+          "heat-inactivate",
+          "load-gel",
+          "run-gel",
+          "image-gel"
+        ],
+        "pred_critical_path": [
+          "transfer-and-start-culture-pellet",
+          "culture-pellet",
+          "discard-culture-supernatant",
+          "resuspend-pellet",
+          "lyse-cells",
+          "neutralize-lysate",
+          "clarify-lysate",
+          "load-spin-column",
+          "wash-spin-column",
+          "dry-spin-column",
+          "elute-plasmid",
+          "measure-plasmid",
+          "prepare-digest",
+          "digest-at-37",
+          "heat-inactivate-digest",
+          "prepare-gel-loading",
+          "spin-digest-tube",
+          "load-digest-and-ladder",
+          "run-agarose-gel",
+          "image-gel"
+        ],
+        "js_critical_path": [
+          "transfer-and-start-culture-pellet",
+          "culture-pellet",
+          "discard-culture-supernatant",
+          "resuspend-pellet",
+          "lyse-cells",
+          "neutralize-lysate",
+          "clarify-lysate",
+          "load-spin-column",
+          "wash-spin-column",
+          "dry-spin-column",
+          "elute-plasmid",
+          "measure-plasmid",
+          "prepare-digest",
+          "digest-at-37",
+          "heat-inactivate-digest",
+          "prepare-gel-loading",
+          "spin-digest-tube",
+          "load-digest-and-ladder",
+          "run-agarose-gel",
+          "image-gel"
+        ],
+        "js_makespan": 10890,
+        "critical_overlap": 0.375,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.7037037037037037,
+      "unsupported_steps": [
+        "transfer-and-start-culture-pellet",
+        "culture-pellet",
+        "discard-culture-supernatant",
+        "neutralize-lysate",
+        "clarify-lysate",
+        "load-spin-column",
+        "wash-spin-column",
+        "dry-spin-column",
+        "measure-plasmid",
+        "weigh-agarose",
+        "microwave-agarose",
+        "stain-and-pour-gel",
+        "set-agarose-gel",
+        "place-gel-in-rig",
+        "prepare-digest",
+        "heat-inactivate-digest",
+        "prepare-gel-loading",
+        "spin-digest-tube",
+        "load-digest-and-ladder"
+      ],
+      "matching": [
+        {
+          "gold": "resuspend-pellet",
+          "predicted": "resuspend-pellet",
+          "by": "name"
+        },
+        {
+          "gold": "lyse-cells",
+          "predicted": "lyse-cells",
+          "by": "name"
+        },
+        {
+          "gold": "elute-dna",
+          "predicted": "elute-plasmid",
+          "by": "name"
+        },
+        {
+          "gold": "cool-agarose",
+          "predicted": "cool-agarose",
+          "by": "name"
+        },
+        {
+          "gold": "prepare-ladder",
+          "predicted": "prepare-ladder",
+          "by": "name"
+        },
+        {
+          "gold": "incubate-digest",
+          "predicted": "digest-at-37",
+          "by": "name"
+        },
+        {
+          "gold": "run-gel",
+          "predicted": "run-agarose-gel",
+          "by": "name"
+        },
+        {
+          "gold": "image-gel",
+          "predicted": "image-gel",
+          "by": "name"
+        },
+        {
+          "gold": "pellet-culture",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "neutralize-and-spin",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "bind-column",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "wash-column",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "dry-column",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "quantify-dna",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "melt-agarose",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "pour-gel",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "set-gel",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "place-gel",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "warm-heat-block",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "setup-digest",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "heat-inactivate",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "load-gel",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "transfer-and-start-culture-pellet",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "culture-pellet",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "discard-culture-supernatant",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "neutralize-lysate",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "clarify-lysate",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "load-spin-column",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "wash-spin-column",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "dry-spin-column",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "measure-plasmid",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "weigh-agarose",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "microwave-agarose",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "stain-and-pour-gel",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "set-agarose-gel",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "place-gel-in-rig",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "prepare-digest",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "heat-inactivate-digest",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "prepare-gel-loading",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "spin-digest-tube",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "load-digest-and-ladder",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "openai/gpt-5.6-luna",
+        "pattern": "baseline",
+        "calls": 1,
+        "input_tokens": 4566,
+        "output_tokens": 4865,
+        "cost_usd": 0.0067512,
+        "cache_keys": [
+          "0cc9555d08a98e13c41d4bce0c53ff1caf30780a6aae5d7cb098cbbe588beb79"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/openai__gpt-5.6-luna/baseline/per-program/lab-plasmid-miniprep-digest/responses/lab-plasmid-miniprep-digest.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/openai__gpt-5.6-luna/baseline/per-program/lab-plasmid-miniprep-digest/predicted/lab-plasmid-miniprep-digest.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Plasmid Miniprep, Restriction Digest and Gel Check for one 5 mL culture, one digest, following the source text below",
+            "finish_at": null,
+            "constraints": "one microcentrifuge, one 37 \u00b0C heat block, one 65 \u00b0C heat block, one gel rig, one operator",
+            "vertical": "lab"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

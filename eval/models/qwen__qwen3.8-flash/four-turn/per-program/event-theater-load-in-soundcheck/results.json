@@ -1,0 +1,319 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "qwen/qwen3.8-flash",
+    "pattern": "four-turn",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/four-turn/cache",
+    "limit": null,
+    "only": [
+      "event-theater-load-in-soundcheck"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 64000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 4,
+      "input_tokens": 28692,
+      "output_tokens": 59252,
+      "cost_usd": 0.03215224,
+      "fix_iterations": 0
+    },
+    "generated_at": "2026-09-19T19:54:23+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.95,
+    "steps_f1": 0.9743589743589743,
+    "durations_accuracy": 1.0,
+    "resources_precision": 0.7142857142857143,
+    "resources_recall": 0.7142857142857143,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.6666666666666666,
+    "relationships_recall": 0.8181818181818182,
+    "relationships_f1": 0.7346938775510203,
+    "structure_rand_index": 0.9590643274853801,
+    "end_to_end_pass": 1.0,
+    "unsupported_rate": 0.0
+  },
+  "programs": [
+    {
+      "slug": "event-theater-load-in-soundcheck",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.95,
+        "steps_f1": 0.9743589743589743,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.7142857142857143,
+        "resources_recall": 0.7142857142857143,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.6666666666666666,
+        "relationships_recall": 0.8181818181818182,
+        "relationships_f1": 0.7346938775510203,
+        "structure_rand_index": 0.9590643274853801,
+        "end_to_end_pass": 1.0,
+        "unsupported_rate": 0.0
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.95,
+        "f1": 0.9743589743589743,
+        "tp": 19,
+        "n_gold": 20,
+        "n_pred": 19
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 19,
+        "total": 19
+      },
+      "resources": {
+        "precision": 0.7142857142857143,
+        "recall": 0.7142857142857143,
+        "f1": 0.7142857142857143,
+        "tp": 5,
+        "n_gold": 7,
+        "n_pred": 7
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.6666666666666666,
+        "recall": 0.8181818181818182,
+        "f1": 0.7346938775510203,
+        "tp": 18,
+        "n_gold": 22,
+        "n_pred": 27
+      },
+      "structure": {
+        "rand_index": 0.9590643274853801,
+        "agreements": 164,
+        "pairs": 171,
+        "n_steps": 19
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 28200.0,
+        "pred_makespan": 26400.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "lx-truck-in",
+          "backline-truck-in",
+          "set-monitor-world",
+          "ring-out-wedges",
+          "soundcheck",
+          "band-dinner",
+          "clean-house",
+          "doors",
+          "show",
+          "strike-lx"
+        ],
+        "pred_critical_path": [
+          "lighting-truck-in",
+          "backline-truck-in",
+          "set-monitor-world",
+          "ring-out-wedges",
+          "soundcheck",
+          "band-dinner",
+          "show",
+          "backline-out"
+        ],
+        "js_critical_path": [
+          "lighting-truck-in",
+          "backline-truck-in",
+          "set-monitor-world",
+          "ring-out-wedges",
+          "soundcheck",
+          "band-dinner",
+          "show",
+          "backline-out"
+        ],
+        "js_makespan": 26400,
+        "critical_overlap": 0.7,
+        "critical_ok": true,
+        "passed": true
+      },
+      "unsupported_rate": 0.0,
+      "unsupported_steps": [],
+      "matching": [
+        {
+          "gold": "lx-truck-in",
+          "predicted": "lighting-truck-in",
+          "by": "span"
+        },
+        {
+          "gold": "backline-truck-in",
+          "predicted": "backline-truck-in",
+          "by": "span"
+        },
+        {
+          "gold": "clear-dock",
+          "predicted": "clear-dock",
+          "by": "span"
+        },
+        {
+          "gold": "rig-lx",
+          "predicted": "rig-bars",
+          "by": "span"
+        },
+        {
+          "gold": "lx-focus",
+          "predicted": "focus-lighting",
+          "by": "span"
+        },
+        {
+          "gold": "lx-cue-build",
+          "predicted": "build-cues",
+          "by": "span"
+        },
+        {
+          "gold": "strike-lx",
+          "predicted": "strike-rig",
+          "by": "span"
+        },
+        {
+          "gold": "fly-pa",
+          "predicted": "fly-pa",
+          "by": "span"
+        },
+        {
+          "gold": "ring-out-house",
+          "predicted": "ring-out-house",
+          "by": "span"
+        },
+        {
+          "gold": "set-monitor-world",
+          "predicted": "set-monitor-world",
+          "by": "span"
+        },
+        {
+          "gold": "ring-out-wedges",
+          "predicted": "ring-out-wedges",
+          "by": "span"
+        },
+        {
+          "gold": "backline-up",
+          "predicted": "backline-up",
+          "by": "span"
+        },
+        {
+          "gold": "soundcheck",
+          "predicted": "soundcheck",
+          "by": "span"
+        },
+        {
+          "gold": "band-dinner",
+          "predicted": "band-dinner",
+          "by": "span"
+        },
+        {
+          "gold": "show",
+          "predicted": "show",
+          "by": "span"
+        },
+        {
+          "gold": "backline-out",
+          "predicted": "backline-out",
+          "by": "span"
+        },
+        {
+          "gold": "set-front-of-house",
+          "predicted": "set-front-of-house",
+          "by": "span"
+        },
+        {
+          "gold": "clean-house",
+          "predicted": "clean-house",
+          "by": "span"
+        },
+        {
+          "gold": "doors",
+          "predicted": "doors-walk-up",
+          "by": "span"
+        },
+        {
+          "gold": "stage-sweep",
+          "predicted": null,
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "qwen/qwen3.8-flash",
+        "pattern": "four-turn",
+        "calls": 4,
+        "input_tokens": 28692,
+        "output_tokens": 59252,
+        "cost_usd": 0.03215224,
+        "cache_keys": [
+          "3cea216267db72fa1c7e34934e6e1ad54b3449d38003f021f068b2bb7b6d0697",
+          "8fc50706668249774c5f6ddc3c1a87ad7122f70f847d6766e261909f6369a8a8",
+          "1d2f03dc6985e34033a4815eceab43df46f3edd87735c32bda88e57ab8aed2ed",
+          "c4c865e37534e58b35a61b955490c3913e0603aa7e5f34cacfbef28896279587"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/four-turn/per-program/event-theater-load-in-soundcheck/responses/event-theater-load-in-soundcheck.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/four-turn/per-program/event-theater-load-in-soundcheck/predicted/event-theater-load-in-soundcheck.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 19,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Load-In Schedule \u2014 The Lyric for one-nighter, touring band, house crew of eight",
+            "finish_at": "doors",
+            "constraints": "one loading dock, one stage, one lighting desk, one PA, one monitor world, one green room",
+            "vertical": "events",
+            "turn": "T1",
+            "kind": "run-of-show",
+            "constraintsLine": "Resource limits: one loading dock, one stage, one lighting desk, one PA, one monitor world, one green room.",
+            "deadlineLine": "Everything must be finished by doors.",
+            "source": "Source text (read all of it):\n<<<\nLoad-In Schedule \u2014 The Lyric, one-nighter\n\nOne loading dock, one stage, one lighting desk, one PA, one monitor world. Crew call is 8am and that is where this schedule starts. The dock takes one truck at a time, so the lighting truck empties before the backline truck pulls in, and nothing goes up on stage while the dock is still moving through it.\n\nDock\nLighting truck in: bars, fixtures, cable, 60 minutes.\nBackline truck in the moment the lighting truck is empty: 45 minutes.\nClear the dock and get the empties out; 15 minutes.\n\nLighting\nRig the bars as soon as the lighting truck is off the dock: 45 minutes on stage.\nFocus from the desk once the rig is up: 60 minutes.\nBuild the cues after focus: 30 minutes if the plot is clean, up to 90 if it is not.\nStrike the rig when the show is down: 60 minutes.\n\nPA\nFly the PA as soon as the lighting truck is off the dock: 75 minutes.\nRing out the house: 20 minutes.\n\nMonitors\nSet monitor world once the backline truck is off the dock: 45 minutes.\nRing out the wedges: 20 minutes.\n\nBand\nBackline up as soon as the dock is clear of the second truck: 45 minutes on stage.\nSoundcheck when the house and the wedges are both rung out: 60 minutes, drums first.\nBand dinner after soundcheck: 60 minutes in the green room.\n\nHouse\nSet front of house from two hours in: 60 minutes, merch, bars, ushers.\nClean the house after the band go to dinner; 30 minutes.\nDoors when the house manager calls them; 30 minutes of walk-up.\nShow on stage once the house is in, and it runs as long as it runs.\nBackline out fifteen minutes after the show is down: 45 minutes on the dock.\n\nNotes\nThe dock is the first bottleneck and the stage is the second. Focus and cue-build both want the desk, so they are strictly sequential. Soundcheck is the only step in the day that waits on two separate departments at once.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Load-In Schedule \u2014 The Lyric for one-nighter, touring band, house crew of eight",
+            "finish_at": "doors",
+            "constraints": "one loading dock, one stage, one lighting desk, one PA, one monitor world, one green room",
+            "vertical": "events",
+            "turn": "T2",
+            "kind": "run-of-show"
+          },
+          "T3 extraction": {
+            "goal": "Load-In Schedule \u2014 The Lyric for one-nighter, touring band, house crew of eight",
+            "finish_at": "doors",
+            "constraints": "one loading dock, one stage, one lighting desk, one PA, one monitor world, one green room",
+            "vertical": "events",
+            "turn": "T3",
+            "kind": "run-of-show",
+            "environment": "a venue where you have: one loading dock, one stage, one lighting desk, one PA, one monitor world, one green room",
+            "deadline": "doors",
+            "source": "Source text (read all of it):\n<<<\nLoad-In Schedule \u2014 The Lyric, one-nighter\n\nOne loading dock, one stage, one lighting desk, one PA, one monitor world. Crew call is 8am and that is where this schedule starts. The dock takes one truck at a time, so the lighting truck empties before the backline truck pulls in, and nothing goes up on stage while the dock is still moving through it.\n\nDock\nLighting truck in: bars, fixtures, cable, 60 minutes.\nBackline truck in the moment the lighting truck is empty: 45 minutes.\nClear the dock and get the empties out; 15 minutes.\n\nLighting\nRig the bars as soon as the lighting truck is off the dock: 45 minutes on stage.\nFocus from the desk once the rig is up: 60 minutes.\nBuild the cues after focus: 30 minutes if the plot is clean, up to 90 if it is not.\nStrike the rig when the show is down: 60 minutes.\n\nPA\nFly the PA as soon as the lighting truck is off the dock: 75 minutes.\nRing out the house: 20 minutes.\n\nMonitors\nSet monitor world once the backline truck is off the dock: 45 minutes.\nRing out the wedges: 20 minutes.\n\nBand\nBackline up as soon as the dock is clear of the second truck: 45 minutes on stage.\nSoundcheck when the house and the wedges are both rung out: 60 minutes, drums first.\nBand dinner after soundcheck: 60 minutes in the green room.\n\nHouse\nSet front of house from two hours in: 60 minutes, merch, bars, ushers.\nClean the house after the band go to dinner; 30 minutes.\nDoors when the house manager calls them; 30 minutes of walk-up.\nShow on stage once the house is in, and it runs as long as it runs.\nBackline out fifteen minutes after the show is down: 45 minutes on the dock.\n\nNotes\nThe dock is the first bottleneck and the stage is the second. Focus and cue-build both want the desk, so they are strictly sequential. Soundcheck is the only step in the day that waits on two separate departments at once.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Load-In Schedule \u2014 The Lyric for one-nighter, touring band, house crew of eight",
+            "finish_at": "doors",
+            "constraints": "one loading dock, one stage, one lighting desk, one PA, one monitor world, one green room",
+            "vertical": "events",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or plan_event",
+            "finishAtArg": " with finishAt=\"doors\""
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

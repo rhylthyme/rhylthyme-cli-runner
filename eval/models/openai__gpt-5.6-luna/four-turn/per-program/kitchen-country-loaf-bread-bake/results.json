@@ -1,0 +1,361 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "openai/gpt-5.6-luna",
+    "pattern": "four-turn",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/openai__gpt-5.6-luna/four-turn/cache",
+    "limit": null,
+    "only": [
+      "kitchen-country-loaf-bread-bake"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 64000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 4,
+      "input_tokens": 27040,
+      "output_tokens": 11145,
+      "cost_usd": 0.018782,
+      "fix_iterations": 0
+    },
+    "generated_at": "2026-09-19T19:18:55+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 1.0,
+    "steps_f1": 1.0,
+    "durations_accuracy": 0.9166666666666666,
+    "resources_precision": 0.6666666666666666,
+    "resources_recall": 1.0,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.92,
+    "relationships_recall": 0.8846153846153846,
+    "relationships_f1": 0.9019607843137256,
+    "structure_rand_index": 0.8260869565217391,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.0
+  },
+  "programs": [
+    {
+      "slug": "kitchen-country-loaf-bread-bake",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 1.0,
+        "steps_f1": 1.0,
+        "durations_accuracy": 0.9166666666666666,
+        "resources_precision": 0.6666666666666666,
+        "resources_recall": 1.0,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.92,
+        "relationships_recall": 0.8846153846153846,
+        "relationships_f1": 0.9019607843137256,
+        "structure_rand_index": 0.8260869565217391,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.0
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 24,
+        "n_gold": 24,
+        "n_pred": 24
+      },
+      "durations": {
+        "accuracy": 0.9166666666666666,
+        "correct": 22,
+        "total": 24
+      },
+      "resources": {
+        "precision": 0.6666666666666666,
+        "recall": 1.0,
+        "f1": 0.8,
+        "tp": 4,
+        "n_gold": 4,
+        "n_pred": 6
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.92,
+        "recall": 0.8846153846153846,
+        "f1": 0.9019607843137256,
+        "tp": 23,
+        "n_gold": 26,
+        "n_pred": 25
+      },
+      "structure": {
+        "rand_index": 0.8260869565217391,
+        "agreements": 228,
+        "pairs": 276,
+        "n_steps": 24
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 88560.0,
+        "pred_makespan": 74160.0,
+        "makespan_ok": false,
+        "gold_critical_path": [
+          "mix-levain",
+          "ripen-levain",
+          "mix-dough",
+          "bulk-ferment",
+          "divide-preshape",
+          "bench-rest",
+          "shape-boules",
+          "retard",
+          "score-load-first",
+          "bake-first-covered",
+          "bake-first-uncovered",
+          "reheat-dutch-oven",
+          "score-load-second",
+          "bake-second-covered",
+          "bake-second-uncovered",
+          "cool-second"
+        ],
+        "pred_critical_path": [
+          "mix-levain",
+          "ripen-levain",
+          "mix-levain-into-dough",
+          "bulk-ferment",
+          "divide-and-preshape",
+          "rest-rounds",
+          "shape-boules",
+          "retard-boules",
+          "load-first-loaf",
+          "bake-first-covered",
+          "bake-first-uncovered",
+          "reheat-dutch-oven",
+          "load-second-loaf",
+          "bake-second-covered",
+          "bake-second-uncovered",
+          "cool-second-loaf"
+        ],
+        "js_critical_path": [
+          "mix-levain",
+          "ripen-levain",
+          "mix-levain-into-dough",
+          "bulk-ferment",
+          "divide-and-preshape",
+          "rest-rounds",
+          "shape-boules",
+          "retard-boules",
+          "load-first-loaf",
+          "bake-first-covered",
+          "bake-first-uncovered",
+          "reheat-dutch-oven",
+          "load-second-loaf",
+          "bake-second-covered",
+          "bake-second-uncovered",
+          "cool-second-loaf"
+        ],
+        "js_makespan": 74160,
+        "critical_overlap": 1.0,
+        "critical_ok": true,
+        "passed": false
+      },
+      "unsupported_rate": 0.0,
+      "unsupported_steps": [],
+      "matching": [
+        {
+          "gold": "mix-levain",
+          "predicted": "mix-levain",
+          "by": "span"
+        },
+        {
+          "gold": "ripen-levain",
+          "predicted": "ripen-levain",
+          "by": "span"
+        },
+        {
+          "gold": "weigh-ingredients",
+          "predicted": "weigh-ingredients",
+          "by": "span"
+        },
+        {
+          "gold": "mix-flour-water",
+          "predicted": "mix-autolyse-dough",
+          "by": "span"
+        },
+        {
+          "gold": "autolyse",
+          "predicted": "autolyse-dough",
+          "by": "span"
+        },
+        {
+          "gold": "mix-dough",
+          "predicted": "mix-levain-into-dough",
+          "by": "span"
+        },
+        {
+          "gold": "bulk-ferment",
+          "predicted": "bulk-ferment",
+          "by": "span"
+        },
+        {
+          "gold": "divide-preshape",
+          "predicted": "divide-and-preshape",
+          "by": "span"
+        },
+        {
+          "gold": "bench-rest",
+          "predicted": "rest-rounds",
+          "by": "span"
+        },
+        {
+          "gold": "shape-boules",
+          "predicted": "shape-boules",
+          "by": "span"
+        },
+        {
+          "gold": "retard",
+          "predicted": "retard-boules",
+          "by": "span"
+        },
+        {
+          "gold": "fold-1",
+          "predicted": "fold-dough-first",
+          "by": "span"
+        },
+        {
+          "gold": "fold-2",
+          "predicted": "fold-dough-second",
+          "by": "span"
+        },
+        {
+          "gold": "fold-3",
+          "predicted": "fold-dough-third",
+          "by": "span"
+        },
+        {
+          "gold": "heat-dutch-oven",
+          "predicted": "preheat-oven",
+          "by": "span"
+        },
+        {
+          "gold": "score-load-first",
+          "predicted": "load-first-loaf",
+          "by": "span"
+        },
+        {
+          "gold": "bake-first-covered",
+          "predicted": "bake-first-covered",
+          "by": "span"
+        },
+        {
+          "gold": "bake-first-uncovered",
+          "predicted": "bake-first-uncovered",
+          "by": "span"
+        },
+        {
+          "gold": "reheat-dutch-oven",
+          "predicted": "reheat-dutch-oven",
+          "by": "span"
+        },
+        {
+          "gold": "score-load-second",
+          "predicted": "load-second-loaf",
+          "by": "span"
+        },
+        {
+          "gold": "bake-second-covered",
+          "predicted": "bake-second-covered",
+          "by": "span"
+        },
+        {
+          "gold": "bake-second-uncovered",
+          "predicted": "bake-second-uncovered",
+          "by": "span"
+        },
+        {
+          "gold": "cool-second",
+          "predicted": "cool-second-loaf",
+          "by": "span"
+        },
+        {
+          "gold": "cool-first",
+          "predicted": "cool-first-loaf",
+          "by": "span"
+        }
+      ],
+      "extras": {
+        "model": "openai/gpt-5.6-luna",
+        "pattern": "four-turn",
+        "calls": 4,
+        "input_tokens": 27040,
+        "output_tokens": 11145,
+        "cost_usd": 0.018782,
+        "cache_keys": [
+          "d3d031008286d822858b6fb0b852ce1a37107bda7088e941c57240c13d66885a",
+          "0912f648969f3924bac56401d7543c209fcf1acc1f87ee824bcb750d39702934",
+          "90171f43d048c5de02b0498d85cb597933dd48d46c43b9da82f80363687e0dd3",
+          "ffadfd11f7465a789ba0419a529519fa1c416980e2f64c1bb718a52bb9ab34d4"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/openai__gpt-5.6-luna/four-turn/per-program/kitchen-country-loaf-bread-bake/responses/kitchen-country-loaf-bread-bake.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/openai__gpt-5.6-luna/four-turn/per-program/kitchen-country-loaf-bread-bake/predicted/kitchen-country-loaf-bread-bake.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 24,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Country Loaf: Two Boules, One Dutch Oven for one batch, two 900 g boules",
+            "finish_at": null,
+            "constraints": "one oven, one dutch oven, one refrigerator, one baker, the two loaves bake one after the other",
+            "vertical": "kitchen",
+            "turn": "T1",
+            "kind": "recipe",
+            "constraintsLine": "Resource limits: one oven, one dutch oven, one refrigerator, one baker, the two loaves bake one after the other.",
+            "deadlineLine": "No finishing time was given; finish as early as the work allows.",
+            "source": "Source text (read all of it):\n<<<\nCountry Loaf: Two Boules, One Dutch Oven\n\nOne batch of dough, two loaves, and a single dutch oven that has to bake them one after the other. One oven, one baker, one refrigerator. Times count from eight in the morning; the loaves come out of the fridge the next day.\n\nLevain\nMix 50 g of ripe starter with 100 g of flour and 100 g of water in a jar; 5 minutes. Leave the jar at room temperature until it domes and smells sweet, 4 to 6 hours.\n\nDough\nWeigh the flour, water and salt for the whole bake first thing; 10 minutes. At half past eight, whisk 900 g of flour into 680 g of water; 5 minutes. Let it autolyse for 1 hour. When the levain is ripe, squeeze it into the autolysed dough with 20 g of salt and work it by hand for 10 minutes. Bulk ferment at 24\u00b0C until the dough has risen by half, 3 to 5 hours. Fold the dough in the bowl half an hour after mixing, again half an hour later, and a third time after another half hour; each fold takes 2 minutes.\n\nDivide and shape\nTip the dough out, cut it in two and preshape each piece into a loose round; 10 minutes. Let the rounds rest on the bench for 25 minutes. Shape both boules tightly and settle them into floured bannetons; 10 minutes. Retard them in the refrigerator, 10 to 14 hours.\n\nBake\nThree quarters of an hour before the dough comes out, put the dutch oven in the oven and heat both to 250\u00b0C. Score the first loaf and lower it in; 3 minutes. Bake the first loaf covered for 20 minutes, then uncover it and bake for another 20 minutes until the crust is dark. Cool it on a rack for at least an hour before cutting. Re-heat the empty dutch oven for 10 minutes. Score the second loaf and lower it in; 3 minutes. Bake the second loaf covered for 20 minutes, then uncover it for a final 20 minutes. Cool the second loaf on the rack beside the first.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Country Loaf: Two Boules, One Dutch Oven for one batch, two 900 g boules",
+            "finish_at": null,
+            "constraints": "one oven, one dutch oven, one refrigerator, one baker, the two loaves bake one after the other",
+            "vertical": "kitchen",
+            "turn": "T2",
+            "kind": "recipe"
+          },
+          "T3 extraction": {
+            "goal": "Country Loaf: Two Boules, One Dutch Oven for one batch, two 900 g boules",
+            "finish_at": null,
+            "constraints": "one oven, one dutch oven, one refrigerator, one baker, the two loaves bake one after the other",
+            "vertical": "kitchen",
+            "turn": "T3",
+            "kind": "recipe",
+            "environment": "a kitchen where you have: one oven, one dutch oven, one refrigerator, one baker, the two loaves bake one after the other",
+            "deadline": "the earliest time the work allows",
+            "source": "Source text (read all of it):\n<<<\nCountry Loaf: Two Boules, One Dutch Oven\n\nOne batch of dough, two loaves, and a single dutch oven that has to bake them one after the other. One oven, one baker, one refrigerator. Times count from eight in the morning; the loaves come out of the fridge the next day.\n\nLevain\nMix 50 g of ripe starter with 100 g of flour and 100 g of water in a jar; 5 minutes. Leave the jar at room temperature until it domes and smells sweet, 4 to 6 hours.\n\nDough\nWeigh the flour, water and salt for the whole bake first thing; 10 minutes. At half past eight, whisk 900 g of flour into 680 g of water; 5 minutes. Let it autolyse for 1 hour. When the levain is ripe, squeeze it into the autolysed dough with 20 g of salt and work it by hand for 10 minutes. Bulk ferment at 24\u00b0C until the dough has risen by half, 3 to 5 hours. Fold the dough in the bowl half an hour after mixing, again half an hour later, and a third time after another half hour; each fold takes 2 minutes.\n\nDivide and shape\nTip the dough out, cut it in two and preshape each piece into a loose round; 10 minutes. Let the rounds rest on the bench for 25 minutes. Shape both boules tightly and settle them into floured bannetons; 10 minutes. Retard them in the refrigerator, 10 to 14 hours.\n\nBake\nThree quarters of an hour before the dough comes out, put the dutch oven in the oven and heat both to 250\u00b0C. Score the first loaf and lower it in; 3 minutes. Bake the first loaf covered for 20 minutes, then uncover it and bake for another 20 minutes until the crust is dark. Cool it on a rack for at least an hour before cutting. Re-heat the empty dutch oven for 10 minutes. Score the second loaf and lower it in; 3 minutes. Bake the second loaf covered for 20 minutes, then uncover it for a final 20 minutes. Cool the second loaf on the rack beside the first.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Country Loaf: Two Boules, One Dutch Oven for one batch, two 900 g boules",
+            "finish_at": null,
+            "constraints": "one oven, one dutch oven, one refrigerator, one baker, the two loaves bake one after the other",
+            "vertical": "kitchen",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or cook_recipe",
+            "finishAtArg": ""
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

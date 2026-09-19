@@ -1,0 +1,309 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "openai/gpt-5.6-luna",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/openai__gpt-5.6-luna/baseline/cache",
+    "limit": null,
+    "only": [
+      "fitness-swim-practice-lane-assignments"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 64000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 2,
+      "input_tokens": 10551,
+      "output_tokens": 6170,
+      "cost_usd": 0.0095142,
+      "fix_iterations": 1
+    },
+    "generated_at": "2026-09-19T19:25:17+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.35,
+    "steps_f1": 0.5185185185185185,
+    "durations_accuracy": 0.5714285714285714,
+    "resources_precision": 0.0,
+    "resources_recall": 0.0,
+    "actors_accuracy": 0.0,
+    "relationships_precision": 0.2,
+    "relationships_recall": 0.09090909090909091,
+    "relationships_f1": 0.12500000000000003,
+    "structure_rand_index": 1.0,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.4166666666666667
+  },
+  "programs": [
+    {
+      "slug": "fitness-swim-practice-lane-assignments",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.35,
+        "steps_f1": 0.5185185185185185,
+        "durations_accuracy": 0.5714285714285714,
+        "resources_precision": 0.0,
+        "resources_recall": 0.0,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.2,
+        "relationships_recall": 0.09090909090909091,
+        "relationships_f1": 0.12500000000000003,
+        "structure_rand_index": 1.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.4166666666666667
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.35,
+        "f1": 0.5185185185185185,
+        "tp": 7,
+        "n_gold": 20,
+        "n_pred": 7
+      },
+      "durations": {
+        "accuracy": 0.5714285714285714,
+        "correct": 4,
+        "total": 7
+      },
+      "resources": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 4,
+        "n_pred": 3
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.2,
+        "recall": 0.09090909090909091,
+        "f1": 0.12500000000000003,
+        "tp": 2,
+        "n_gold": 22,
+        "n_pred": 10
+      },
+      "structure": {
+        "rand_index": 1.0,
+        "agreements": 21,
+        "pairs": 21,
+        "n_steps": 7
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 8700.0,
+        "pred_makespan": 8400.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "brief-squad",
+          "watch-warmup",
+          "whiteboard-talk",
+          "kick-3",
+          "main-3",
+          "sprint-1",
+          "sprint-2",
+          "sprint-3",
+          "cool-1",
+          "debrief"
+        ],
+        "pred_critical_path": [
+          "warmup",
+          "whiteboard-main-set",
+          "kick-set",
+          "main-lane-3",
+          "time-sprints",
+          "debrief"
+        ],
+        "js_critical_path": [
+          "warmup-r1",
+          "whiteboard-main-set",
+          "kick-set-r1",
+          "main-lane-3",
+          "sprint-set-r1",
+          "sprint-set-r2",
+          "sprint-set-r3",
+          "cooldown-r1",
+          "debrief"
+        ],
+        "js_makespan": 9000,
+        "critical_overlap": 0.2,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.4166666666666667,
+      "unsupported_steps": [
+        "whiteboard-main-set",
+        "warmup",
+        "kick-set",
+        "sprint-set",
+        "cooldown"
+      ],
+      "matching": [
+        {
+          "gold": "main-1",
+          "predicted": "main-lane-1",
+          "by": "name"
+        },
+        {
+          "gold": "main-2",
+          "predicted": "main-lane-2",
+          "by": "name"
+        },
+        {
+          "gold": "main-3",
+          "predicted": "main-lane-3",
+          "by": "name"
+        },
+        {
+          "gold": "brief-squad",
+          "predicted": "brief-squad",
+          "by": "name"
+        },
+        {
+          "gold": "watch-warmup",
+          "predicted": "watch-warmup",
+          "by": "name"
+        },
+        {
+          "gold": "time-sprints",
+          "predicted": "time-sprints",
+          "by": "name"
+        },
+        {
+          "gold": "debrief",
+          "predicted": "debrief",
+          "by": "name"
+        },
+        {
+          "gold": "warmup-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "kick-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "sprint-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cool-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "warmup-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "kick-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "sprint-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cool-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "warmup-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "kick-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "sprint-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cool-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "whiteboard-talk",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "whiteboard-main-set",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "warmup",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "kick-set",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "sprint-set",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "cooldown",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "openai/gpt-5.6-luna",
+        "pattern": "baseline",
+        "calls": 2,
+        "input_tokens": 10551,
+        "output_tokens": 6170,
+        "cost_usd": 0.0095142,
+        "cache_keys": [
+          "0620b166e260c21b686541c6b917c3eef4d9c8ecdce74313a9b77778813e79a1",
+          "eba66c58069afe4ef2a3bd3a7b011b1b491de022acc5e22db694dc00f9b8a8e4"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/openai__gpt-5.6-luna/baseline/per-program/fitness-swim-practice-lane-assignments/responses/fitness-swim-practice-lane-assignments.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/openai__gpt-5.6-luna/baseline/per-program/fitness-swim-practice-lane-assignments/predicted/fitness-swim-practice-lane-assignments.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Practice Plan \u2014 Thursday AM, three lanes for one squad of twelve, three lanes, one coach, following the source text below",
+            "finish_at": "150 minutes of pool time",
+            "constraints": "three lanes, one set of starting blocks, one coach on deck, two and a half hours of pool time",
+            "vertical": "gym"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

@@ -1,0 +1,415 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "backyard-barbecue-smoker-grill",
+  "name": "Backyard Barbecue: Smoker and Grill",
+  "description": "Coordinate a smoked pork shoulder, sausages, corn, beans, slaw and buns for about twelve people using one offset smoker, one kettle grill, one side burner, one cooler and two cooks.",
+  "environmentType": "kitchen",
+  "actors": 2,
+  "tracks": [
+    {
+      "trackId": "pork-smoking",
+      "name": "Pork shoulder and smoker",
+      "steps": [
+        {
+          "stepId": "light-smoker",
+          "name": "Light smoker and bring it to 250°F",
+          "task": "offset-smoker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "smoke-shoulder-unwrapped",
+          "name": "Smoke shoulder unwrapped until bark is dark and set",
+          "task": "offset-smoker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 21600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "light-smoker"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "trim-and-rub-shoulder"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "wrap-shoulder",
+          "name": "Wrap shoulder tightly in butcher paper",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "smoke-shoulder-unwrapped"
+          }
+        },
+        {
+          "stepId": "smoke-shoulder-wrapped",
+          "name": "Smoke wrapped shoulder until probe-tender",
+          "task": "offset-smoker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 10800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wrap-shoulder"
+          }
+        },
+        {
+          "stepId": "hold-shoulder",
+          "name": "Hold wrapped shoulder in cooler",
+          "task": "cooler",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "smoke-shoulder-wrapped"
+          }
+        },
+        {
+          "stepId": "pull-pork",
+          "name": "Pull pork by hand",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "hold-shoulder"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "pork-prep",
+      "name": "Pork preparation",
+      "steps": [
+        {
+          "stepId": "trim-and-rub-shoulder",
+          "name": "Trim shoulder and apply salt, pepper and paprika",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1500
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "beans",
+      "name": "Beans",
+      "steps": [
+        {
+          "stepId": "fry-bacon-onion",
+          "name": "Fry bacon and onion",
+          "task": "side-burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 720
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "hold-shoulder",
+            "event": "start"
+          }
+        },
+        {
+          "stepId": "add-beans",
+          "name": "Add beans, molasses and pork drippings",
+          "task": "side-burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "fry-bacon-onion"
+          }
+        },
+        {
+          "stepId": "simmer-beans",
+          "name": "Simmer beans on the lowest flame until serving",
+          "task": "side-burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 6000
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "add-beans"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "slaw",
+      "name": "Slaw",
+      "steps": [
+        {
+          "stepId": "shred-slaw-vegetables",
+          "name": "Shred cabbage and carrot",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "hold-shoulder",
+            "event": "start"
+          }
+        },
+        {
+          "stepId": "whisk-slaw-dressing",
+          "name": "Whisk buttermilk dressing",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "shred-slaw-vegetables"
+          }
+        },
+        {
+          "stepId": "dress-slaw",
+          "name": "Dress slaw",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "whisk-slaw-dressing"
+          }
+        },
+        {
+          "stepId": "chill-slaw",
+          "name": "Refrigerate slaw so the cabbage softens",
+          "task": "refrigerator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "dress-slaw"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "grill",
+      "name": "Kettle grill",
+      "steps": [
+        {
+          "stepId": "light-kettle",
+          "name": "Light kettle and establish a clean bed of coals",
+          "task": "kettle-grill",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1500
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 37500
+          }
+        },
+        {
+          "stepId": "grill-sausages",
+          "name": "Grill sausages",
+          "task": "kettle-grill",
+          "duration": {
+            "type": "fixed",
+            "seconds": 840
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "light-kettle"
+          }
+        },
+        {
+          "stepId": "grill-corn",
+          "name": "Grill corn",
+          "task": "kettle-grill",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "grill-sausages"
+          }
+        },
+        {
+          "stepId": "toast-buns",
+          "name": "Toast buns last",
+          "task": "kettle-grill",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "grill-corn"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "table",
+      "name": "Table and serving",
+      "steps": [
+        {
+          "stepId": "set-table",
+          "name": "Set out plates, pickles and sauce",
+          "task": "table-service",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "toast-buns"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "pull-pork"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "simmer-beans"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "chill-slaw"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "lay-out-barbecue",
+          "name": "Call everyone over and lay everything out",
+          "task": "table-service",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "set-table"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "offset-smoker",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "kettle-grill",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "side-burner",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "cooler",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "refrigerator",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "prep",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "table-service",
+      "maxConcurrent": 2
+    }
+  ],
+  "metadata": {
+    "serves": "about 12",
+    "ingredients": [
+      {
+        "name": "pork shoulder",
+        "measure": "1"
+      },
+      {
+        "name": "salt, pepper and paprika",
+        "measure": "for rubbing"
+      },
+      {
+        "name": "butcher paper",
+        "measure": "as needed"
+      },
+      {
+        "name": "bacon and onion",
+        "measure": "for beans"
+      },
+      {
+        "name": "beans, molasses and pork drippings",
+        "measure": "for beans"
+      },
+      {
+        "name": "cabbage and carrot",
+        "measure": "for slaw"
+      },
+      {
+        "name": "buttermilk dressing",
+        "measure": "for slaw"
+      },
+      {
+        "name": "sausages",
+        "measure": "for 12"
+      },
+      {
+        "name": "corn",
+        "measure": "for 12"
+      },
+      {
+        "name": "buns",
+        "measure": "for 12"
+      },
+      {
+        "name": "pickles and sauce",
+        "measure": "for serving"
+      }
+    ],
+    "sourceUrl": "",
+    "attribution": "Built from the supplied Backyard Barbecue: Smoker and Grill source text."
+  }
+}

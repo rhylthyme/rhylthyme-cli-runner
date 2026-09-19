@@ -1,0 +1,305 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "erg-session-four-rowers",
+  "name": "Erg Session — Four Rowers, Two Machines",
+  "environmentType": "gym",
+  "actors": 4,
+  "tracks": [
+    {
+      "trackId": "coach",
+      "name": "Coach",
+      "steps": [
+        {
+          "stepId": "briefing",
+          "name": "Brief the crew",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "call-splits",
+          "name": "Call splits from the first piece",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "briefing"
+          }
+        },
+        {
+          "stepId": "drills",
+          "name": "Run the drills",
+          "task": "coach",
+          "replicates": {
+            "count": 4,
+            "mode": "serial"
+          },
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "call-splits"
+          }
+        },
+        {
+          "stepId": "debrief",
+          "name": "Debrief after the cooldown",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cooldown"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "pair-ab",
+      "name": "Pair A and B",
+      "steps": [
+        {
+          "stepId": "warm-up-ab",
+          "name": "Warm-up A and B",
+          "task": "erg",
+          "replicates": {
+            "count": 2,
+            "mode": "parallel"
+          },
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "piece1-ab",
+          "name": "First piece A and B",
+          "task": "erg",
+          "replicates": {
+            "count": 2,
+            "mode": "parallel"
+          },
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warm-up-cd"
+          }
+        },
+        {
+          "stepId": "piece2-ab",
+          "name": "Second piece A and B",
+          "task": "erg",
+          "replicates": {
+            "count": 2,
+            "mode": "parallel"
+          },
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "piece1-ab",
+            "offsetSeconds": 240
+          }
+        },
+        {
+          "stepId": "piece3-ab",
+          "name": "Third piece A and B",
+          "task": "erg",
+          "replicates": {
+            "count": 2,
+            "mode": "parallel"
+          },
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "piece2-ab",
+            "offsetSeconds": 240
+          }
+        },
+        {
+          "stepId": "drill-a",
+          "name": "Drill A",
+          "task": "drill",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "piece3-cd"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "pair-cd",
+      "name": "Pair C and D",
+      "steps": [
+        {
+          "stepId": "warm-up-cd",
+          "name": "Warm-up C and D",
+          "task": "erg",
+          "replicates": {
+            "count": 2,
+            "mode": "parallel"
+          },
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warm-up-ab",
+            "offsetSeconds": 600
+          }
+        },
+        {
+          "stepId": "piece1-cd",
+          "name": "First piece C and D",
+          "task": "erg",
+          "replicates": {
+            "count": 2,
+            "mode": "parallel"
+          },
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "piece1-ab"
+          }
+        },
+        {
+          "stepId": "piece2-cd",
+          "name": "Second piece C and D",
+          "task": "erg",
+          "replicates": {
+            "count": 2,
+            "mode": "parallel"
+          },
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "piece2-ab"
+          }
+        },
+        {
+          "stepId": "piece3-cd",
+          "name": "Third piece C and D",
+          "task": "erg",
+          "replicates": {
+            "count": 2,
+            "mode": "parallel"
+          },
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "piece3-ab"
+          }
+        },
+        {
+          "stepId": "drill-c",
+          "name": "Drill C",
+          "task": "drill",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "drill-b"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "shared",
+      "name": "Shared Steps",
+      "steps": [
+        {
+          "stepId": "drill-b",
+          "name": "Drill B",
+          "task": "drill",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "drill-a"
+          }
+        },
+        {
+          "stepId": "drill-d",
+          "name": "Drill D",
+          "task": "drill",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "drill-c"
+          }
+        },
+        {
+          "stepId": "cooldown",
+          "name": "Cooldown",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "drill-d"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "erg",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "coach",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "drill",
+      "maxConcurrent": 1
+    }
+  ]
+}

@@ -1,0 +1,294 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "sandwich-elisa-two-plates-one-washer",
+  "name": "Sandwich ELISA on Two Plates, One Washer",
+  "description": "Two 96-well plates are coated 30 minutes apart and run through a sandwich ELISA. The program starts when the first capture-antibody coating begins. Reagent preparation starts 15 hours after the first coating; the plates then proceed as two staggered instances constrained by one washer, one two-plate incubator, one reader, and one operator.",
+  "environmentType": "laboratory",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "reagents",
+      "name": "Reagent preparation",
+      "steps": [
+        {
+          "stepId": "prepareStandards",
+          "name": "Prepare seven-point standard curve in assay diluent",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 54000
+          }
+        },
+        {
+          "stepId": "prepareSamples",
+          "name": "Dilute samples 1:4 and lay out plate map",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prepareStandards"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "plates",
+      "name": "Two-plate ELISA line",
+      "steps": [
+        {
+          "stepId": "coatCapture",
+          "name": "Coat plate with capture antibody and seal",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "replicates": {
+            "count": 2,
+            "mode": "stagger",
+            "delay": 1800
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "coldIncubate",
+          "name": "Cold-room overnight coat incubation",
+          "task": "coldRoom",
+          "duration": {
+            "type": "fixed",
+            "seconds": 57600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "coatCapture",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "wash1",
+          "name": "Wash plate four times",
+          "task": "washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "coldIncubate",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "block",
+          "name": "Block with assay diluent at 37 C",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash1",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "wash2",
+          "name": "Wash plate four times",
+          "task": "washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "block",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "addStandardsSamples",
+          "name": "Add standards and samples",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash2",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "incubateStandardsSamples",
+          "name": "Incubate standards and samples at 37 C",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 7200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "addStandardsSamples",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "wash3",
+          "name": "Wash plate four times",
+          "task": "washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "incubateStandardsSamples",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "addDetectionAb",
+          "name": "Add biotinylated detection antibody",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash3",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "incubateDetectionAb",
+          "name": "Incubate detection antibody at 37 C",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "addDetectionAb",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "wash4",
+          "name": "Wash plate four times",
+          "task": "washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "incubateDetectionAb",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "addSubstrate",
+          "name": "Add TMB substrate",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash4",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "developDark",
+          "name": "Develop in the dark",
+          "task": "darkBox",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "addSubstrate",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "stopReaction",
+          "name": "Stop with 2 N sulfuric acid",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "developDark",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "readAbsorbance",
+          "name": "Read absorbance at 450 nm with 570 nm reference",
+          "task": "reader",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "stopReaction",
+            "instances": "each"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "operator",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "coldRoom",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "washer",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "incubator",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "darkBox",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "reader",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "plates": 2,
+    "staggerMinutes": 30,
+    "bottleneck": "washer",
+    "source": "Sandwich ELISA on Two Plates, One Washer",
+    "attribution": "User-provided source text"
+  }
+}

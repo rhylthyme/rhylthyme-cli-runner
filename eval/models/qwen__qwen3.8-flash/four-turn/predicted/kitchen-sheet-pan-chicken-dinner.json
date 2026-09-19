@@ -1,0 +1,420 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "sheet-pan-chicken-potatoes-broccoli-one-cook",
+  "name": "Sheet-Pan Chicken with Potatoes and Broccoli",
+  "description": "Tuesday dinner for four, scheduled for one cook around one oven, two sheet pans, one burner, and one active work line.",
+  "environmentType": "kitchen",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "oven",
+      "name": "Oven",
+      "steps": [
+        {
+          "stepId": "preheat-oven",
+          "name": "Preheat the oven to 425°F",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Heat the oven to 425°F; 15 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "roast-potatoes-alone",
+          "name": "Roast the potatoes alone",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "preheat-oven"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "toss-potatoes"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Slide the potatoes in and roast them for 15 minutes on their own.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "put-chicken-pan-in-oven",
+          "name": "Put the chicken pan in the oven",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 0
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "roast-potatoes-alone"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "prepare-chicken-on-second-pan"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": null,
+            "inferred": true
+          }
+        },
+        {
+          "stepId": "roast-chicken-and-potatoes-before-pull",
+          "name": "Roast chicken and potatoes together for 20 minutes before pulling the pans",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "put-chicken-pan-in-oven"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Twenty minutes after the chicken goes in, pull both pans out",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "final-roast",
+          "name": "Final roast until chicken reads 175°F and broccoli is charred at the edges",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "pull-rotate-add-broccoli-return"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Roast for a final 15 minutes, until the thighs read 175°F and the broccoli is charred at the edges.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "main-prep",
+      "name": "Main-dish hand work",
+      "steps": [
+        {
+          "stepId": "toss-potatoes",
+          "name": "Toss halved potatoes with oil and salt on the first sheet pan",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "toss the halved potatoes with oil and salt on the first sheet pan; 8 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "prepare-chicken-on-second-pan",
+          "name": "Pat chicken thighs dry, rub with spice mix, and lay on second pan",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "roast-potatoes-alone",
+            "event": "start"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Pat the chicken thighs dry, rub them with the spice mix and lay them on the second pan; 10 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "pull-rotate-add-broccoli-return",
+          "name": "Pull both pans out, rotate them, tip broccoli onto the potato pan, and put everything back",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "roast-chicken-and-potatoes-before-pull"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "pull both pans out, rotate them, tip the broccoli onto the potato pan and put everything back; 4 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "salad",
+      "name": "Salad",
+      "steps": [
+        {
+          "stepId": "wash-dry-salad-leaves",
+          "name": "Wash and dry the salad leaves",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 360
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "roast-chicken-and-potatoes-before-pull",
+            "event": "start"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Wash and dry the leaves; 6 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "shake-vinaigrette",
+          "name": "Shake the vinaigrette together in a jar",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-dry-salad-leaves"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Shake the vinaigrette together in a jar; 3 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "dress-salad",
+          "name": "Dress the salad after the chicken has rested for five minutes",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "shake-vinaigrette"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "rest-chicken",
+                "event": "start",
+                "offsetSeconds": 300
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Dress the salad only when the chicken has been resting five minutes; 2 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "pan-sauce",
+      "name": "Pan sauce",
+      "steps": [
+        {
+          "stepId": "reduce-pan-sauce",
+          "name": "Tip pan juices into a small pan, add stock and mustard, and reduce",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 360
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "final-roast"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "tip the pan juices into a small pan, add stock and mustard and reduce for 6 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "whisk-butter-into-sauce",
+          "name": "Whisk cold butter into the sauce off the heat",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "reduce-pan-sauce"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "dress-salad"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Whisk in cold butter off the heat; 2 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "rest-and-serve",
+      "name": "Rest and serve",
+      "steps": [
+        {
+          "stepId": "rest-chicken",
+          "name": "Rest the chicken on a board",
+          "task": "rest_area",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "final-roast"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Rest the chicken on a board for 8 minutes before slicing.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "slice-and-plate",
+          "name": "Slice the thighs and plate everything",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 360
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "rest-chicken"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "whisk-butter-into-sauce"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "dress-salad"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Slice the thighs and plate everything; 6 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "oven",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "sheet_pan",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "burner",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "prep",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "rest_area",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "serves": "4",
+    "earliestFinishMinutes": 84,
+    "toolStatus": "Rhylthyme MCP tools are unavailable in this session, so validate_program, analyze_schedule, and visualize_schedule were not run live and no live URL or Gantt was generated."
+  }
+}

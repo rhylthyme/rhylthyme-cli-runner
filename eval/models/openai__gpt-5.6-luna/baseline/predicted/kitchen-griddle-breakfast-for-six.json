@@ -1,0 +1,362 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "breakfast-for-six-one-griddle",
+  "name": "Breakfast for Six on One Griddle",
+  "description": "Coordinated breakfast for six, completed by 09:00 using one griddle, one two-slice toaster, one coffee maker, one low oven, and one cook.",
+  "environmentType": "kitchen",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "prep",
+      "name": "Breakfast preparation",
+      "steps": [
+        {
+          "stepId": "mix-batter",
+          "name": "Whisk pancake dry ingredients and beat in buttermilk and eggs",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 24000
+          }
+        },
+        {
+          "stepId": "rest-batter",
+          "name": "Let pancake batter stand",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "mix-batter"
+          }
+        },
+        {
+          "stepId": "season-eggs",
+          "name": "Crack and season a dozen eggs",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest-batter"
+          }
+        },
+        {
+          "stepId": "set-table",
+          "name": "Set the table for six",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "season-eggs"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "griddle",
+      "name": "Griddle",
+      "steps": [
+        {
+          "stepId": "heat-griddle",
+          "name": "Heat griddle to 375°F",
+          "task": "griddle",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 28260
+          }
+        },
+        {
+          "stepId": "cook-bacon",
+          "name": "Cook bacon, turning once",
+          "task": "griddle",
+          "duration": {
+            "type": "fixed",
+            "seconds": 840
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "heat-griddle"
+          }
+        },
+        {
+          "stepId": "clean-griddle",
+          "name": "Scrape and wipe the griddle",
+          "task": "griddle",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cook-bacon"
+          }
+        },
+        {
+          "stepId": "pancake-passes",
+          "name": "Cook a pancake pass and slide it into the warm oven",
+          "task": "griddle",
+          "duration": {
+            "type": "fixed",
+            "seconds": 360
+          },
+          "replicates": {
+            "count": 3,
+            "mode": "serial"
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "clean-griddle"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "rest-batter"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "settle-griddle",
+          "name": "Lower griddle to 300°F and let it settle",
+          "task": "griddle",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "pancake-passes",
+            "instances": "all"
+          }
+        },
+        {
+          "stepId": "scramble-eggs",
+          "name": "Scramble eggs slowly",
+          "task": "griddle",
+          "duration": {
+            "type": "fixed",
+            "seconds": 420
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "settle-griddle"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "toast",
+      "name": "Toast",
+      "steps": [
+        {
+          "stepId": "toast-batches",
+          "name": "Toast two batches, two slices at a time",
+          "task": "toaster",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "replicates": {
+            "count": 2,
+            "mode": "serial"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "pancake-passes",
+            "instances": "all",
+            "event": "start"
+          }
+        },
+        {
+          "stepId": "butter-toast",
+          "name": "Butter all toast",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "toast-batches",
+            "instances": "all"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "coffee",
+      "name": "Coffee",
+      "steps": [
+        {
+          "stepId": "grind-coffee",
+          "name": "Grind the beans",
+          "task": "grinder",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cook-bacon",
+            "event": "start",
+            "offsetSeconds": 600
+          }
+        },
+        {
+          "stepId": "brew-coffee",
+          "name": "Brew a full pot",
+          "task": "coffee-maker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 540
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "grind-coffee"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "plates",
+      "name": "Warm plates",
+      "steps": [
+        {
+          "stepId": "warm-plates",
+          "name": "Warm six plates in the lowest oven setting",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 31500
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "serve",
+      "name": "Serve",
+      "steps": [
+        {
+          "stepId": "call-and-carry",
+          "name": "Call everyone and carry the warm plates through",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "scramble-eggs"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "butter-toast"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "brew-coffee"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "warm-plates"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "cook",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "prep",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "griddle",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "toaster",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "grinder",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "coffee-maker",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "oven",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "ingredients": [
+      {
+        "name": "pancake ingredients",
+        "measure": "for six"
+      },
+      {
+        "name": "buttermilk",
+        "measure": "for pancake batter"
+      },
+      {
+        "name": "eggs",
+        "measure": "12"
+      },
+      {
+        "name": "bacon",
+        "measure": "for six"
+      },
+      {
+        "name": "bread",
+        "measure": "2 toaster batches"
+      },
+      {
+        "name": "coffee beans",
+        "measure": "1 full pot"
+      },
+      {
+        "name": "butter",
+        "measure": "for toast"
+      }
+    ],
+    "serves": "6",
+    "finishBy": "09:00",
+    "sourceUrl": "",
+    "attribution": "Breakfast for Six on One Griddle"
+  }
+}

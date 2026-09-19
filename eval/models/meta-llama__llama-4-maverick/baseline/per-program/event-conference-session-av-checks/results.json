@@ -1,0 +1,309 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "meta-llama/llama-4-maverick",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/baseline/cache",
+    "limit": null,
+    "only": [
+      "event-conference-session-av-checks"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 1,
+      "input_tokens": 4292,
+      "output_tokens": 3790,
+      "cost_usd": 0.0032779759999999997,
+      "fix_iterations": 0
+    },
+    "generated_at": "2026-09-19T18:48:29+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.95,
+    "steps_f1": 0.9743589743589743,
+    "durations_accuracy": 1.0,
+    "resources_precision": 0.6666666666666666,
+    "resources_recall": 0.6666666666666666,
+    "actors_accuracy": 0.0,
+    "relationships_precision": 0.631578947368421,
+    "relationships_recall": 0.6,
+    "relationships_f1": 0.6153846153846154,
+    "structure_rand_index": 0.9824561403508771,
+    "end_to_end_pass": 1.0,
+    "unsupported_rate": 0.05
+  },
+  "programs": [
+    {
+      "slug": "event-conference-session-av-checks",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.95,
+        "steps_f1": 0.9743589743589743,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.6666666666666666,
+        "resources_recall": 0.6666666666666666,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.631578947368421,
+        "relationships_recall": 0.6,
+        "relationships_f1": 0.6153846153846154,
+        "structure_rand_index": 0.9824561403508771,
+        "end_to_end_pass": 1.0,
+        "unsupported_rate": 0.05
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.95,
+        "f1": 0.9743589743589743,
+        "tp": 19,
+        "n_gold": 20,
+        "n_pred": 19
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 19,
+        "total": 19
+      },
+      "resources": {
+        "precision": 0.6666666666666666,
+        "recall": 0.6666666666666666,
+        "f1": 0.6666666666666666,
+        "tp": 4,
+        "n_gold": 6,
+        "n_pred": 6
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.631578947368421,
+        "recall": 0.6,
+        "f1": 0.6153846153846154,
+        "tp": 12,
+        "n_gold": 20,
+        "n_pred": 19
+      },
+      "structure": {
+        "rand_index": 0.9824561403508771,
+        "agreements": 168,
+        "pairs": 171,
+        "n_steps": 19
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 15240.0,
+        "pred_makespan": 14340.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "line-check",
+          "projector-test",
+          "mic-check",
+          "load-deck-one",
+          "chair-opens",
+          "talk-one",
+          "qa-one",
+          "load-deck-two",
+          "changeover-one",
+          "talk-two",
+          "qa-two",
+          "serve-coffee",
+          "clear-foyer",
+          "changeover-two",
+          "talk-three",
+          "qa-three",
+          "chair-closes",
+          "strike-av"
+        ],
+        "pred_critical_path": [
+          "line-check",
+          "test-projector",
+          "check-lapel-pack",
+          "chair-opens",
+          "first-talk",
+          "questions-first-talk",
+          "changeover-to-second-speaker",
+          "second-talk",
+          "questions-second-talk",
+          "coffee-goes-out",
+          "clear-foyer",
+          "changeover-to-third-speaker",
+          "third-talk",
+          "questions-third-talk",
+          "chair-closes",
+          "strike-av-desk"
+        ],
+        "js_critical_path": [
+          "line-check",
+          "test-projector",
+          "check-lapel-pack",
+          "chair-opens",
+          "first-talk",
+          "questions-first-talk",
+          "changeover-to-second-speaker",
+          "second-talk",
+          "questions-second-talk",
+          "coffee-goes-out",
+          "clear-foyer",
+          "changeover-to-third-speaker",
+          "third-talk",
+          "questions-third-talk",
+          "chair-closes",
+          "strike-av-desk"
+        ],
+        "js_makespan": 14340,
+        "critical_overlap": 0.8333333333333334,
+        "critical_ok": true,
+        "passed": true
+      },
+      "unsupported_rate": 0.05,
+      "unsupported_steps": [
+        "coffee-goes-out"
+      ],
+      "matching": [
+        {
+          "gold": "line-check",
+          "predicted": "line-check",
+          "by": "name"
+        },
+        {
+          "gold": "projector-test",
+          "predicted": "test-projector",
+          "by": "name"
+        },
+        {
+          "gold": "mic-check",
+          "predicted": "check-lapel-pack",
+          "by": "name"
+        },
+        {
+          "gold": "strike-av",
+          "predicted": "strike-av-desk",
+          "by": "name"
+        },
+        {
+          "gold": "load-deck-one",
+          "predicted": "load-first-deck",
+          "by": "name"
+        },
+        {
+          "gold": "load-deck-two",
+          "predicted": "load-second-deck",
+          "by": "name"
+        },
+        {
+          "gold": "load-deck-three",
+          "predicted": "load-third-deck",
+          "by": "name"
+        },
+        {
+          "gold": "chair-opens",
+          "predicted": "chair-opens",
+          "by": "name"
+        },
+        {
+          "gold": "talk-one",
+          "predicted": "first-talk",
+          "by": "name"
+        },
+        {
+          "gold": "qa-one",
+          "predicted": "questions-first-talk",
+          "by": "name"
+        },
+        {
+          "gold": "changeover-one",
+          "predicted": "changeover-to-second-speaker",
+          "by": "name"
+        },
+        {
+          "gold": "talk-two",
+          "predicted": "second-talk",
+          "by": "name"
+        },
+        {
+          "gold": "qa-two",
+          "predicted": "questions-second-talk",
+          "by": "name"
+        },
+        {
+          "gold": "changeover-two",
+          "predicted": "changeover-to-third-speaker",
+          "by": "name"
+        },
+        {
+          "gold": "talk-three",
+          "predicted": "third-talk",
+          "by": "name"
+        },
+        {
+          "gold": "qa-three",
+          "predicted": "questions-third-talk",
+          "by": "name"
+        },
+        {
+          "gold": "chair-closes",
+          "predicted": "chair-closes",
+          "by": "name"
+        },
+        {
+          "gold": "set-coffee",
+          "predicted": "set-coffee-station",
+          "by": "name"
+        },
+        {
+          "gold": "clear-foyer",
+          "predicted": "clear-foyer",
+          "by": "name"
+        },
+        {
+          "gold": "serve-coffee",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "coffee-goes-out",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "meta-llama/llama-4-maverick",
+        "pattern": "baseline",
+        "calls": 1,
+        "input_tokens": 4292,
+        "output_tokens": 3790,
+        "cost_usd": 0.0032779759999999997,
+        "cache_keys": [
+          "38d59861dea6ead47cecc00c07e8668d7c89cac77064b05dfe38f8ecffe7558a"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/baseline/per-program/event-conference-session-av-checks/responses/event-conference-session-av-checks.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/baseline/per-program/event-conference-session-av-checks/predicted/event-conference-session-av-checks.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Session Chair's Sheet \u2014 Room 2B for one room, three speakers, following the source text below",
+            "finish_at": "coffee break at 10:30",
+            "constraints": "one projector, one lapel microphone pack, one AV desk, one lectern, one foyer for catering",
+            "vertical": "events"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

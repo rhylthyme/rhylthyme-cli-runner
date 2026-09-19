@@ -1,0 +1,343 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "weekday-lentil-soup-salad-four",
+  "name": "Weekday Lentil Soup and Salad for Four",
+  "description": "Prepare lentil soup, salad, and warm bread for four people. Run from 11:20 to finish together at 12:30.",
+  "environmentType": "kitchen",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "soup",
+      "name": "Lentil soup",
+      "steps": [
+        {
+          "stepId": "dice-soup-vegetables",
+          "name": "Dice onion, carrot, and celery",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "sweat-soup-vegetables",
+          "name": "Sweat vegetables with oil and bay leaf",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "dice-soup-vegetables"
+          }
+        },
+        {
+          "stepId": "add-lentils-stock",
+          "name": "Stir in lentils, tomato paste, and stock",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "sweat-soup-vegetables"
+          }
+        },
+        {
+          "stepId": "simmer-soup",
+          "name": "Simmer until lentils are soft",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "add-lentils-stock"
+          }
+        },
+        {
+          "stepId": "blitz-soup",
+          "name": "Blitz one third of the soup and stir it back in",
+          "task": "stick-blender",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "simmer-soup"
+          }
+        },
+        {
+          "stepId": "season-soup",
+          "name": "Season the soup",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "blitz-soup"
+          }
+        },
+        {
+          "stepId": "hold-soup",
+          "name": "Keep soup at a bare simmer until serving",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "season-soup"
+          }
+        },
+        {
+          "stepId": "carry-meal",
+          "name": "Carry soup, salad, and bread through together",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "hold-soup"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "dress-toss-salad"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "lay-four-places"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "salad",
+      "name": "Salad",
+      "steps": [
+        {
+          "stepId": "wash-spin-leaves",
+          "name": "Wash and spin the leaves",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "simmer-soup",
+            "event": "start"
+          }
+        },
+        {
+          "stepId": "shave-salad-vegetables",
+          "name": "Shave fennel and radishes thin",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 420
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-spin-leaves"
+          }
+        },
+        {
+          "stepId": "whisk-salad-dressing",
+          "name": "Whisk lemon, oil, and mustard in the bowl",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "shave-salad-vegetables"
+          }
+        },
+        {
+          "stepId": "dress-toss-salad",
+          "name": "Dress and toss the salad",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "whisk-salad-dressing"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "blitz-soup",
+                "offsetSeconds": 300
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "bread-and-table",
+      "name": "Bread and table",
+      "steps": [
+        {
+          "stepId": "slice-bread",
+          "name": "Cut loaf into thick slices",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "whisk-salad-dressing"
+          }
+        },
+        {
+          "stepId": "warm-bread",
+          "name": "Warm bread in the toaster oven",
+          "task": "toaster-oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "slice-bread"
+          }
+        },
+        {
+          "stepId": "wrap-bread",
+          "name": "Wrap warm bread in a cloth and leave it on the table",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warm-bread"
+          }
+        },
+        {
+          "stepId": "lay-four-places",
+          "name": "Lay four places",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wrap-bread"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "cook",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "burner",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "toaster-oven",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "stick-blender",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "ingredients": [
+      {
+        "name": "onion",
+        "measure": "1"
+      },
+      {
+        "name": "carrot",
+        "measure": "1"
+      },
+      {
+        "name": "celery",
+        "measure": "2 sticks"
+      },
+      {
+        "name": "bay leaf",
+        "measure": "1"
+      },
+      {
+        "name": "rinsed lentils",
+        "measure": "as specified in source recipe"
+      },
+      {
+        "name": "tomato paste",
+        "measure": "1 spoonful"
+      },
+      {
+        "name": "stock",
+        "measure": "1 litre"
+      },
+      {
+        "name": "salad leaves",
+        "measure": "as needed"
+      },
+      {
+        "name": "fennel",
+        "measure": "as needed"
+      },
+      {
+        "name": "radishes",
+        "measure": "as needed"
+      },
+      {
+        "name": "lemon",
+        "measure": "as needed"
+      },
+      {
+        "name": "oil",
+        "measure": "as needed"
+      },
+      {
+        "name": "mustard",
+        "measure": "as needed"
+      },
+      {
+        "name": "loaf of bread",
+        "measure": "1"
+      }
+    ],
+    "serves": "4",
+    "finishTime": "12:30",
+    "sourceUrl": "",
+    "attribution": "User-provided source text"
+  }
+}

@@ -1,0 +1,271 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "weeknight-chicken-broccoli-stir-fry-rice",
+  "name": "Weeknight Chicken and Broccoli Stir-Fry with Rice",
+  "description": "Serves 2. One cook, two burners, about 35 minutes.",
+  "environmentType": "kitchen",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "rice",
+      "name": "Rice",
+      "steps": [
+        {
+          "stepId": "rinse-rice",
+          "name": "Rinse rice until clear",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "boil-rice",
+          "name": "Bring rice and water to a boil",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rinse-rice"
+          }
+        },
+        {
+          "stepId": "simmer-rice",
+          "name": "Cover and simmer on low",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "boil-rice"
+          }
+        },
+        {
+          "stepId": "steam-rice-off-heat",
+          "name": "Remove from heat and steam, lid on",
+          "task": "rest",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "simmer-rice"
+          }
+        },
+        {
+          "stepId": "fluff-rice-and-serve",
+          "name": "Fluff rice with a fork and serve",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wok-toss"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "chicken-prep",
+      "name": "Chicken prep",
+      "steps": [
+        {
+          "stepId": "slice-chicken",
+          "name": "Slice chicken thighs into thin strips",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rinse-rice"
+          }
+        },
+        {
+          "stepId": "marinate-chicken",
+          "name": "Toss chicken with soy sauce and cornstarch; marinate",
+          "task": "rest",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "slice-chicken"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "broccoli-sauce",
+      "name": "Broccoli, aromatics, and sauce",
+      "steps": [
+        {
+          "stepId": "cut-broccoli-and-aromatics",
+          "name": "Cut broccoli into florets; mince garlic and ginger",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "slice-chicken"
+          }
+        },
+        {
+          "stepId": "stir-sauce",
+          "name": "Stir together sauce",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cut-broccoli-and-aromatics"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "stir-fry",
+      "name": "Stir-fry",
+      "steps": [
+        {
+          "stepId": "heat-wok",
+          "name": "Heat wok over highest flame until smoking",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "simmer-rice"
+          }
+        },
+        {
+          "stepId": "stir-fry-chicken",
+          "name": "Add oil and chicken; stir-fry until browned, then remove to a plate",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "heat-wok"
+          }
+        },
+        {
+          "stepId": "steam-broccoli",
+          "name": "Add broccoli with a splash of water; cover and steam",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "stir-fry-chicken"
+          }
+        },
+        {
+          "stepId": "wok-toss",
+          "name": "Add garlic and ginger, return chicken and sauce, toss until glossy",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 90
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "steam-broccoli"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "cook",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "burner",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "rest",
+      "maxConcurrent": 2
+    }
+  ],
+  "metadata": {
+    "ingredients": [
+      {
+        "name": "jasmine rice",
+        "measure": "1 cup"
+      },
+      {
+        "name": "water",
+        "measure": "1 1/4 cups"
+      },
+      {
+        "name": "chicken thighs",
+        "measure": "1 lb"
+      },
+      {
+        "name": "soy sauce",
+        "measure": "2 tbsp + 1 tbsp"
+      },
+      {
+        "name": "cornstarch",
+        "measure": "1 tsp"
+      },
+      {
+        "name": "broccoli",
+        "measure": "1 head"
+      },
+      {
+        "name": "garlic",
+        "measure": "3 cloves"
+      },
+      {
+        "name": "ginger",
+        "measure": "1 thumb"
+      },
+      {
+        "name": "oyster sauce",
+        "measure": "1 tbsp"
+      },
+      {
+        "name": "sugar",
+        "measure": "1 tsp"
+      },
+      {
+        "name": "rice vinegar",
+        "measure": "splash"
+      },
+      {
+        "name": "oil",
+        "measure": "for wok"
+      }
+    ],
+    "serves": "2",
+    "sourceUrl": "",
+    "attribution": ""
+  }
+}

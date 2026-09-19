@@ -1,0 +1,306 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "openai/gpt-5.6-luna",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/openai__gpt-5.6-luna/baseline/cache",
+    "limit": null,
+    "only": [
+      "kitchen-weekend-brunch"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 64000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 1,
+      "input_tokens": 4126,
+      "output_tokens": 4841,
+      "cost_usd": 0.0066343999999999995,
+      "fix_iterations": 0
+    },
+    "generated_at": "2026-09-19T19:28:15+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.15384615384615385,
+    "steps_f1": 0.2666666666666667,
+    "durations_accuracy": 1.0,
+    "resources_precision": 0.25,
+    "resources_recall": 0.5,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.0,
+    "relationships_recall": 0.0,
+    "relationships_f1": 0.0,
+    "structure_rand_index": 1.0,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.8461538461538461
+  },
+  "programs": [
+    {
+      "slug": "kitchen-weekend-brunch",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.15384615384615385,
+        "steps_f1": 0.2666666666666667,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.25,
+        "resources_recall": 0.5,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.0,
+        "relationships_recall": 0.0,
+        "relationships_f1": 0.0,
+        "structure_rand_index": 1.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.8461538461538461
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.15384615384615385,
+        "f1": 0.2666666666666667,
+        "tp": 2,
+        "n_gold": 13,
+        "n_pred": 2
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 2,
+        "total": 2
+      },
+      "resources": {
+        "precision": 0.25,
+        "recall": 0.5,
+        "f1": 0.3333333333333333,
+        "tp": 2,
+        "n_gold": 4,
+        "n_pred": 8
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 16,
+        "n_pred": 3
+      },
+      "structure": {
+        "rand_index": 1.0,
+        "agreements": 1,
+        "pairs": 1,
+        "n_steps": 2
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 2820.0,
+        "pred_makespan": 2880.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "preheat-oven",
+          "bake-bacon",
+          "rest-batter",
+          "heat-griddle",
+          "cook-pancakes",
+          "serve"
+        ],
+        "pred_critical_path": [
+          "bacon-prep",
+          "pancake-dry",
+          "pancake-mix",
+          "fruit-prep",
+          "coffee-setup",
+          "griddle-heat",
+          "pancake-cook",
+          "serve-brunch"
+        ],
+        "js_critical_path": [
+          "bacon-prep",
+          "pancake-dry",
+          "pancake-mix",
+          "fruit-prep",
+          "coffee-setup",
+          "griddle-heat",
+          "pancake-cook",
+          "serve-brunch"
+        ],
+        "js_makespan": 2880,
+        "critical_overlap": 0.16666666666666666,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.8461538461538461,
+      "unsupported_steps": [
+        "bacon-prep",
+        "bacon-bake",
+        "bacon-drain",
+        "pancake-dry",
+        "pancake-mix",
+        "pancake-rest",
+        "griddle-heat",
+        "fruit-prep",
+        "fruit-chill",
+        "coffee-setup",
+        "serve-brunch"
+      ],
+      "matching": [
+        {
+          "gold": "cook-pancakes",
+          "predicted": "pancake-cook",
+          "by": "name"
+        },
+        {
+          "gold": "brew-coffee",
+          "predicted": "coffee-brew",
+          "by": "name"
+        },
+        {
+          "gold": "preheat-oven",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "bake-bacon",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "drain-bacon",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "mix-dry",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "mix-batter",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "rest-batter",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "heat-griddle",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "prep-fruit",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "chill-fruit",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "grind-coffee",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "serve",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "bacon-prep",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "bacon-bake",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "bacon-drain",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "pancake-dry",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "pancake-mix",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "pancake-rest",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "griddle-heat",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "fruit-prep",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "fruit-chill",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "coffee-setup",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "serve-brunch",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "openai/gpt-5.6-luna",
+        "pattern": "baseline",
+        "calls": 1,
+        "input_tokens": 4126,
+        "output_tokens": 4841,
+        "cost_usd": 0.0066343999999999995,
+        "cache_keys": [
+          "0c94ed6bd76cea9d14d349c89554fe24400ab9b1dd85a13882dbdc4d4ca7ad8d"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/openai__gpt-5.6-luna/baseline/per-program/kitchen-weekend-brunch/responses/kitchen-weekend-brunch.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/openai__gpt-5.6-luna/baseline/per-program/kitchen-weekend-brunch/predicted/kitchen-weekend-brunch.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Saturday Brunch for Four for 4 people, following the source text below",
+            "finish_at": "10:00",
+            "constraints": "one oven, two burners, one cook, about 45 minutes",
+            "vertical": "kitchen"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

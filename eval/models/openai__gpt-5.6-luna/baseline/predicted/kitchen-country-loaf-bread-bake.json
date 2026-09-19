@@ -1,0 +1,390 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "country-loaf-two-boules-one-dutch-oven",
+  "name": "Country Loaf: Two Boules, One Dutch Oven",
+  "description": "One batch of dough shaped into two 900 g boules, retarded overnight, and baked sequentially in one Dutch oven.",
+  "environmentType": "kitchen",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "dough",
+      "name": "Dough and shaping",
+      "steps": [
+        {
+          "stepId": "weigh-ingredients",
+          "name": "Weigh flour, water, and salt for the whole bake",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "mix-levain",
+          "name": "Mix ripe starter, flour, and water",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "weigh-ingredients"
+          }
+        },
+        {
+          "stepId": "whisk-dough",
+          "name": "Whisk flour into water",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "mix-levain",
+            "offsetSeconds": 900
+          }
+        },
+        {
+          "stepId": "autolyse",
+          "name": "Autolyse the dough",
+          "task": "bowl",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "whisk-dough"
+          }
+        },
+        {
+          "stepId": "mix-final-dough",
+          "name": "Work ripe levain and salt into the autolysed dough",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "autolyse"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "levain-ripe"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "bulk-first-segment",
+          "name": "Bulk ferment before first fold",
+          "task": "fermentation",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "mix-final-dough"
+          }
+        },
+        {
+          "stepId": "fold-one",
+          "name": "First fold",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bulk-first-segment"
+          }
+        },
+        {
+          "stepId": "bulk-second-segment",
+          "name": "Bulk ferment before second fold",
+          "task": "fermentation",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "fold-one"
+          }
+        },
+        {
+          "stepId": "fold-two",
+          "name": "Second fold",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bulk-second-segment"
+          }
+        },
+        {
+          "stepId": "bulk-third-segment",
+          "name": "Bulk ferment before third fold",
+          "task": "fermentation",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "fold-two"
+          }
+        },
+        {
+          "stepId": "fold-three",
+          "name": "Third fold",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bulk-third-segment"
+          }
+        },
+        {
+          "stepId": "bulk-final-segment",
+          "name": "Continue bulk ferment until dough rises by half",
+          "task": "fermentation",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 7200,
+            "maxSeconds": 14400,
+            "defaultSeconds": 10800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "fold-three"
+          }
+        },
+        {
+          "stepId": "divide-preshape",
+          "name": "Divide dough and preshape two loose rounds",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bulk-final-segment"
+          }
+        },
+        {
+          "stepId": "bench-rest",
+          "name": "Rest the preshaped rounds",
+          "task": "bench-rest",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1500
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "divide-preshape"
+          }
+        },
+        {
+          "stepId": "final-shape",
+          "name": "Shape both boules and place them in floured bannetons",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bench-rest"
+          }
+        },
+        {
+          "stepId": "retard",
+          "name": "Retard both boules in the refrigerator",
+          "task": "refrigerator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 36000
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "final-shape"
+          }
+        },
+        {
+          "stepId": "preheat",
+          "name": "Heat oven and Dutch oven to 250°C",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "retard"
+          }
+        },
+        {
+          "stepId": "score-load",
+          "name": "Score and lower one boule into the Dutch oven",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "replicates": {
+            "count": 2,
+            "mode": "serial"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "preheat"
+          }
+        },
+        {
+          "stepId": "bake-loaf",
+          "name": "Bake one loaf covered, then uncovered; reheat Dutch oven for the next loaf",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3000
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "score-load",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "cool-loaf",
+          "name": "Cool loaf on a rack for at least one hour",
+          "task": "cooling-rack",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bake-loaf",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "loaves-ready",
+          "name": "Both loaves are cooled and ready to cut",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cool-loaf",
+            "instances": "all"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "levain",
+      "name": "Levain ripening",
+      "steps": [
+        {
+          "stepId": "levain-ripe",
+          "name": "Leave levain at room temperature until domed and sweet-smelling",
+          "task": "fermentation",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 14400,
+            "maxSeconds": 21600,
+            "defaultSeconds": 18000
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "mix-levain"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "baker",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "oven",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "refrigerator",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "fermentation",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "bowl",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "bench-rest",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "cooling-rack",
+      "maxConcurrent": 2
+    }
+  ],
+  "metadata": {
+    "ingredients": [
+      {
+        "name": "ripe starter",
+        "measure": "50 g"
+      },
+      {
+        "name": "flour for levain",
+        "measure": "100 g"
+      },
+      {
+        "name": "water for levain",
+        "measure": "100 g"
+      },
+      {
+        "name": "flour for dough",
+        "measure": "900 g"
+      },
+      {
+        "name": "water for dough",
+        "measure": "680 g"
+      },
+      {
+        "name": "salt",
+        "measure": "20 g"
+      }
+    ],
+    "serves": "Two 900 g boules",
+    "sourceUrl": "",
+    "attribution": "Provided source text"
+  }
+}

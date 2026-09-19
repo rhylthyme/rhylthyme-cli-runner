@@ -1,0 +1,411 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "hiit-circuit-card",
+  "name": "HIIT Circuit Card",
+  "environmentType": "gym",
+  "actors": 3,
+  "tracks": [
+    {
+      "trackId": "athlete-a",
+      "name": "Athlete A",
+      "steps": [
+        {
+          "stepId": "warm-up",
+          "name": "Warm-up",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "round-1",
+          "name": "Rower",
+          "task": "rower",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warm-up"
+          }
+        },
+        {
+          "stepId": "rest-1",
+          "name": "Rest",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "round-1"
+          }
+        },
+        {
+          "stepId": "round-2",
+          "name": "Kettlebell",
+          "task": "kettlebell",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest-1"
+          }
+        },
+        {
+          "stepId": "rest-2",
+          "name": "Rest",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "round-2"
+          }
+        },
+        {
+          "stepId": "round-3",
+          "name": "Box",
+          "task": "box",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest-2"
+          }
+        },
+        {
+          "stepId": "rest-3",
+          "name": "Rest",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "round-3"
+          }
+        },
+        {
+          "stepId": "round-4",
+          "name": "Sled",
+          "task": "sled",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest-3"
+          }
+        },
+        {
+          "stepId": "cooldown",
+          "name": "Cooldown",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "round-4"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "athlete-b",
+      "name": "Athlete B",
+      "steps": [
+        {
+          "stepId": "warm-up-b",
+          "name": "Warm-up",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "round-1-b",
+          "name": "Kettlebell",
+          "task": "kettlebell",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warm-up-b"
+          }
+        },
+        {
+          "stepId": "rest-1-b",
+          "name": "Rest",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "round-1-b"
+          }
+        },
+        {
+          "stepId": "round-2-b",
+          "name": "Box",
+          "task": "box",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest-1-b"
+          }
+        },
+        {
+          "stepId": "rest-2-b",
+          "name": "Rest",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "round-2-b"
+          }
+        },
+        {
+          "stepId": "round-3-b",
+          "name": "Sled",
+          "task": "sled",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest-2-b"
+          }
+        },
+        {
+          "stepId": "rest-3-b",
+          "name": "Rest",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "round-3-b"
+          }
+        },
+        {
+          "stepId": "round-4-b",
+          "name": "Rower",
+          "task": "rower",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest-3-b"
+          }
+        },
+        {
+          "stepId": "cooldown-b",
+          "name": "Cooldown",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "round-4-b"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "athlete-c",
+      "name": "Athlete C",
+      "steps": [
+        {
+          "stepId": "warm-up-c",
+          "name": "Warm-up",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "round-1-c",
+          "name": "Box",
+          "task": "box",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warm-up-c"
+          }
+        },
+        {
+          "stepId": "rest-1-c",
+          "name": "Rest",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "round-1-c"
+          }
+        },
+        {
+          "stepId": "round-2-c",
+          "name": "Sled",
+          "task": "sled",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest-1-c"
+          }
+        },
+        {
+          "stepId": "rest-2-c",
+          "name": "Rest",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "round-2-c"
+          }
+        },
+        {
+          "stepId": "round-3-c",
+          "name": "Rower",
+          "task": "rower",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest-2-c"
+          }
+        },
+        {
+          "stepId": "rest-3-c",
+          "name": "Rest",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "round-3-c"
+          }
+        },
+        {
+          "stepId": "round-4-c",
+          "name": "Kettlebell",
+          "task": "kettlebell",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest-3-c"
+          }
+        },
+        {
+          "stepId": "cooldown-c",
+          "name": "Cooldown",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "round-4"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "round-4-b"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "round-4-c"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "rower",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "kettlebell",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "box",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "sled",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "floor",
+      "maxConcurrent": 3
+    }
+  ]
+}

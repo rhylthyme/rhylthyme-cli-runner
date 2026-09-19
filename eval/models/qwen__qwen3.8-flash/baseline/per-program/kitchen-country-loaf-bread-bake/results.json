@@ -1,0 +1,434 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "qwen/qwen3.8-flash",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/baseline/cache",
+    "limit": null,
+    "only": [
+      "kitchen-country-loaf-bread-bake"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 64000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 2,
+      "input_tokens": 9100,
+      "output_tokens": 83728,
+      "cost_usd": 0.040717159999999995,
+      "fix_iterations": 1
+    },
+    "generated_at": "2026-09-19T19:39:37+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 0.0,
+    "steps_recall": 0.0,
+    "steps_f1": 0.0,
+    "durations_accuracy": 0.0,
+    "resources_precision": 0.6666666666666666,
+    "resources_recall": 1.0,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.0,
+    "relationships_recall": 0.0,
+    "relationships_f1": 0.0,
+    "structure_rand_index": 0.0,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 1.0
+  },
+  "programs": [
+    {
+      "slug": "kitchen-country-loaf-bread-bake",
+      "headline": {
+        "steps_precision": 0.0,
+        "steps_recall": 0.0,
+        "steps_f1": 0.0,
+        "durations_accuracy": 0.0,
+        "resources_precision": 0.6666666666666666,
+        "resources_recall": 1.0,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.0,
+        "relationships_recall": 0.0,
+        "relationships_f1": 0.0,
+        "structure_rand_index": 0.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 1.0
+      },
+      "steps": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 24,
+        "n_pred": 0
+      },
+      "durations": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 0
+      },
+      "resources": {
+        "precision": 0.6666666666666666,
+        "recall": 1.0,
+        "f1": 0.8,
+        "tp": 4,
+        "n_gold": 4,
+        "n_pred": 6
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 26,
+        "n_pred": 0
+      },
+      "structure": {
+        "rand_index": 0.0,
+        "agreements": 0,
+        "pairs": 0,
+        "n_steps": 0
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 88560.0,
+        "pred_makespan": 74880.0,
+        "makespan_ok": false,
+        "gold_critical_path": [
+          "mix-levain",
+          "ripen-levain",
+          "mix-dough",
+          "bulk-ferment",
+          "divide-preshape",
+          "bench-rest",
+          "shape-boules",
+          "retard",
+          "score-load-first",
+          "bake-first-covered",
+          "bake-first-uncovered",
+          "reheat-dutch-oven",
+          "score-load-second",
+          "bake-second-covered",
+          "bake-second-uncovered",
+          "cool-second"
+        ],
+        "pred_critical_path": [
+          "l_mix",
+          "l_ripe",
+          "d_finalMix",
+          "d_bulk",
+          "p_divide",
+          "p_bench",
+          "p_shape",
+          "s_preheat",
+          "s_load",
+          "s_covered",
+          "s_uncovered",
+          "s_cool",
+          "s_done"
+        ],
+        "js_critical_path": [
+          "l_mix",
+          "l_ripe",
+          "d_finalMix",
+          "d_bulk",
+          "p_divide",
+          "p_bench",
+          "p_shape",
+          "s_preheat",
+          "s_load-r1",
+          "s_covered-r1",
+          "s_uncovered-r1",
+          "s_cool-r1",
+          "s_load-r2",
+          "s_covered-r2",
+          "s_uncovered-r2",
+          "s_cool-r2",
+          "s_done"
+        ],
+        "js_makespan": 81060,
+        "critical_overlap": 0.0,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 1.0,
+      "unsupported_steps": [
+        "l_mix",
+        "l_ripe",
+        "d_weigh",
+        "d_whisk",
+        "d_autolyse",
+        "d_finalMix",
+        "d_bulk",
+        "f_fold",
+        "p_divide",
+        "p_bench",
+        "p_shape",
+        "p_retard",
+        "s_preheat",
+        "s_reheat",
+        "s_load",
+        "s_covered",
+        "s_uncovered",
+        "s_cool",
+        "s_done"
+      ],
+      "matching": [
+        {
+          "gold": "mix-levain",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "ripen-levain",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "weigh-ingredients",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "mix-flour-water",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "autolyse",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "mix-dough",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "bulk-ferment",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "divide-preshape",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "bench-rest",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "shape-boules",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "retard",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "fold-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "fold-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "fold-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "heat-dutch-oven",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "score-load-first",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "bake-first-covered",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "bake-first-uncovered",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "reheat-dutch-oven",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "score-load-second",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "bake-second-covered",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "bake-second-uncovered",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cool-second",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cool-first",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "l_mix",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "l_ripe",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "d_weigh",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "d_whisk",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "d_autolyse",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "d_finalMix",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "d_bulk",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "f_fold",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "p_divide",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "p_bench",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "p_shape",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "p_retard",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "s_preheat",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "s_reheat",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "s_load",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "s_covered",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "s_uncovered",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "s_cool",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "s_done",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "qwen/qwen3.8-flash",
+        "pattern": "baseline",
+        "calls": 2,
+        "input_tokens": 9100,
+        "output_tokens": 83728,
+        "cost_usd": 0.040717159999999995,
+        "cache_keys": [
+          "0847124e49df7a4cb0fb79f78681533383fc0e256dd6387709fcbeb002ffc63b",
+          "a052710aa54cf191e5978050b9f601df20329174c3ba015ed901a475fc4621e4"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/baseline/per-program/kitchen-country-loaf-bread-bake/responses/kitchen-country-loaf-bread-bake.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/baseline/per-program/kitchen-country-loaf-bread-bake/predicted/kitchen-country-loaf-bread-bake.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Country Loaf: Two Boules, One Dutch Oven for one batch, two 900 g boules, following the source text below",
+            "finish_at": null,
+            "constraints": "one oven, one dutch oven, one refrigerator, one baker, the two loaves bake one after the other",
+            "vertical": "kitchen"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

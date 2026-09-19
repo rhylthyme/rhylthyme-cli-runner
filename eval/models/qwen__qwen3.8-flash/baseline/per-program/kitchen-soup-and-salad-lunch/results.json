@@ -1,0 +1,328 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "qwen/qwen3.8-flash",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/baseline/cache",
+    "limit": null,
+    "only": [
+      "kitchen-soup-and-salad-lunch"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 64000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 1,
+      "input_tokens": 4383,
+      "output_tokens": 42507,
+      "cost_usd": 0.02063574,
+      "fix_iterations": 0
+    },
+    "generated_at": "2026-09-19T20:17:06+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.2,
+    "steps_f1": 0.33333333333333337,
+    "durations_accuracy": 0.6666666666666666,
+    "resources_precision": 0.25,
+    "resources_recall": 0.25,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.0,
+    "relationships_recall": 0.0,
+    "relationships_f1": 0.0,
+    "structure_rand_index": 0.6666666666666666,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.8125
+  },
+  "programs": [
+    {
+      "slug": "kitchen-soup-and-salad-lunch",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.2,
+        "steps_f1": 0.33333333333333337,
+        "durations_accuracy": 0.6666666666666666,
+        "resources_precision": 0.25,
+        "resources_recall": 0.25,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.0,
+        "relationships_recall": 0.0,
+        "relationships_f1": 0.0,
+        "structure_rand_index": 0.6666666666666666,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.8125
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.2,
+        "f1": 0.33333333333333337,
+        "tp": 3,
+        "n_gold": 15,
+        "n_pred": 3
+      },
+      "durations": {
+        "accuracy": 0.6666666666666666,
+        "correct": 2,
+        "total": 3
+      },
+      "resources": {
+        "precision": 0.25,
+        "recall": 0.25,
+        "f1": 0.25,
+        "tp": 1,
+        "n_gold": 4,
+        "n_pred": 4
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 17,
+        "n_pred": 4
+      },
+      "structure": {
+        "rand_index": 0.6666666666666666,
+        "agreements": 2,
+        "pairs": 3,
+        "n_steps": 3
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 4080.0,
+        "pred_makespan": 3600.0,
+        "makespan_ok": false,
+        "gold_critical_path": [
+          "dice-vegetables",
+          "sweat-vegetables",
+          "add-lentils",
+          "simmer-lentils",
+          "blitz-soup",
+          "hold-soup",
+          "serve-lunch"
+        ],
+        "pred_critical_path": [
+          "diceSoupBase",
+          "sweatVegetables",
+          "addLentilsStock",
+          "simmerLentils",
+          "blitzOneThird",
+          "dressSalad",
+          "carryTogether"
+        ],
+        "js_critical_path": [
+          "diceSoupBase",
+          "sweatVegetables",
+          "addLentilsStock",
+          "simmerLentils",
+          "blitzOneThird",
+          "seasonSoup",
+          "dressSalad",
+          "carryTogether"
+        ],
+        "js_makespan": 3600,
+        "critical_overlap": 0.14285714285714285,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.8125,
+      "unsupported_steps": [
+        "diceSoupBase",
+        "sweatVegetables",
+        "addLentilsStock",
+        "cutBread",
+        "washSpinLeaves",
+        "shaveFennelRadishes",
+        "whiskDressing",
+        "wrapBread",
+        "blitzOneThird",
+        "seasonSoup",
+        "carryTogether",
+        "holdAtBareSimmer",
+        "warmBreadToaster"
+      ],
+      "matching": [
+        {
+          "gold": "simmer-lentils",
+          "predicted": "simmerLentils",
+          "by": "name"
+        },
+        {
+          "gold": "dress-salad",
+          "predicted": "dressSalad",
+          "by": "name"
+        },
+        {
+          "gold": "lay-places",
+          "predicted": "layFourPlaces",
+          "by": "name"
+        },
+        {
+          "gold": "dice-vegetables",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "sweat-vegetables",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "add-lentils",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "blitz-soup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "hold-soup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "wash-leaves",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "shave-fennel",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "whisk-dressing",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "slice-bread",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "warm-bread",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "wrap-bread",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "serve-lunch",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "diceSoupBase",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "sweatVegetables",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "addLentilsStock",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "cutBread",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "washSpinLeaves",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "shaveFennelRadishes",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "whiskDressing",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "wrapBread",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "blitzOneThird",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "seasonSoup",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "carryTogether",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "holdAtBareSimmer",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "warmBreadToaster",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "qwen/qwen3.8-flash",
+        "pattern": "baseline",
+        "calls": 1,
+        "input_tokens": 4383,
+        "output_tokens": 42507,
+        "cost_usd": 0.02063574,
+        "cache_keys": [
+          "1fe43d2503722c7cad85b97f0dc73ced0ca71b2203faabdfceda88a86b781b44"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/baseline/per-program/kitchen-soup-and-salad-lunch/responses/kitchen-soup-and-salad-lunch.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/baseline/per-program/kitchen-soup-and-salad-lunch/predicted/kitchen-soup-and-salad-lunch.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Weekday Lentil Soup and Salad for Four for 4 people, following the source text below",
+            "finish_at": "12:30",
+            "constraints": "one cook, two burners, one toaster oven, one stick blender",
+            "vertical": "kitchen"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

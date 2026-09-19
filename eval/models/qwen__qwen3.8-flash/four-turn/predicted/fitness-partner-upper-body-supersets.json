@@ -1,0 +1,365 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "partner-upper-body-superset-session",
+  "name": "Partner Upper-Body Superset Session",
+  "description": "Two-lifter upper-body superset session with paired handoffs, equipment limits, and a finish as early as the work allows.",
+  "environmentType": "gym",
+  "actors": 2,
+  "tracks": [
+    {
+      "trackId": "warmup",
+      "name": "Warm-up",
+      "steps": [
+        {
+          "stepId": "warmup-row",
+          "name": "Easy rowing warm-up",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Both partners start together with 5 minutes of easy rowing on the ergs",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "warmup-arms",
+          "name": "Arm circles and band pull-aparts",
+          "task": "bodyweight",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warmup-row"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "3 minutes of arm circles and band pull-aparts",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "bench",
+      "name": "Bench / barbell",
+      "steps": [
+        {
+          "stepId": "bench-press-a",
+          "name": "Partner A bench press",
+          "task": "bench_barbell",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "replicates": {
+            "count": 2,
+            "mode": "stagger",
+            "delay": "170s"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warmup-arms"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "a set of 8 bench presses, which takes about 40 seconds",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "bench-press-b",
+          "name": "Partner B bench press after swap",
+          "task": "bench_barbell",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bench-press-a",
+            "instances": "each"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "B takes the bench as soon as A racks the bar",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "dumbbells",
+      "name": "Dumbbells",
+      "steps": [
+        {
+          "stepId": "dumbbell-row-b",
+          "name": "Partner B dumbbell row",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "replicates": {
+            "count": 2,
+            "mode": "stagger",
+            "delay": "170s"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warmup-arms"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Partner B starts on the dumbbell row at the same time, 8 per side, also about 40 seconds",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "dumbbell-row-a",
+          "name": "Partner A dumbbell row after swap",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "dumbbell-row-b",
+            "instances": "each"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "A goes to the rows once B has finished with the dumbbells",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "overhead-press-a",
+          "name": "Partner A overhead press",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 45
+          },
+          "replicates": {
+            "count": 2,
+            "mode": "stagger",
+            "delay": "210s"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "superset-a-rest",
+            "instances": "all"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Partner A does 8 strict overhead presses with the dumbbells, about 45 seconds",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "overhead-press-b",
+          "name": "Partner B overhead press after swap",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 45
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "overhead-press-a",
+            "instances": "each"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "B takes the dumbbells when A sets them down",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "pullup",
+      "name": "Pull-up bar",
+      "steps": [
+        {
+          "stepId": "pull-ups-b",
+          "name": "Partner B pull-ups",
+          "task": "pullup_bar",
+          "duration": {
+            "type": "fixed",
+            "seconds": 30
+          },
+          "replicates": {
+            "count": 2,
+            "mode": "stagger",
+            "delay": "210s"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "superset-a-rest",
+            "instances": "all"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "6 to 10 reps, about 30 seconds",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "pull-ups-a",
+          "name": "Partner A pull-ups after swap",
+          "task": "pullup_bar",
+          "duration": {
+            "type": "fixed",
+            "seconds": 30
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "overhead-press-a",
+            "instances": "each"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "A moves to the pull-up bar",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "recovery",
+      "name": "Rest / cool-down",
+      "steps": [
+        {
+          "stepId": "superset-a-rest",
+          "name": "Rest after superset A round",
+          "task": "bodyweight",
+          "duration": {
+            "type": "fixed",
+            "seconds": 90
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "dumbbell-row-a",
+            "instances": "each"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "rest 90 seconds before the next round",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "superset-b-rest",
+          "name": "Rest between superset B rounds",
+          "task": "bodyweight",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "overhead-press-b",
+            "instances": "any"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Rest 2 minutes between rounds",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "cool-down-stretch",
+          "name": "Finish together with stretching",
+          "task": "bodyweight",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "superset-b-rest"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "overhead-press-b",
+                "instances": "all"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "pull-ups-a",
+                "instances": "all"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Finish together with 5 minutes of stretching",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "erg",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "bodyweight",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "bench_barbell",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "dumbbells",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "pullup_bar",
+      "maxConcurrent": 1
+    }
+  ]
+}

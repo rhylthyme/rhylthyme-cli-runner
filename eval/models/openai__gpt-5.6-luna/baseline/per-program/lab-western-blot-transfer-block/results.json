@@ -1,0 +1,363 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "openai/gpt-5.6-luna",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/openai__gpt-5.6-luna/baseline/cache",
+    "limit": null,
+    "only": [
+      "lab-western-blot-transfer-block"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 64000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 2,
+      "input_tokens": 11500,
+      "output_tokens": 7236,
+      "cost_usd": 0.010983199999999999,
+      "fix_iterations": 1
+    },
+    "generated_at": "2026-09-19T19:26:46+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.5714285714285714,
+    "steps_f1": 0.7272727272727273,
+    "durations_accuracy": 1.0,
+    "resources_precision": 0.5,
+    "resources_recall": 0.75,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.35714285714285715,
+    "relationships_recall": 0.21739130434782608,
+    "relationships_f1": 0.27027027027027023,
+    "structure_rand_index": 0.7727272727272727,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.42857142857142855
+  },
+  "programs": [
+    {
+      "slug": "lab-western-blot-transfer-block",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.5714285714285714,
+        "steps_f1": 0.7272727272727273,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.5,
+        "resources_recall": 0.75,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.35714285714285715,
+        "relationships_recall": 0.21739130434782608,
+        "relationships_f1": 0.27027027027027023,
+        "structure_rand_index": 0.7727272727272727,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.42857142857142855
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.5714285714285714,
+        "f1": 0.7272727272727273,
+        "tp": 12,
+        "n_gold": 21,
+        "n_pred": 12
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 12,
+        "total": 12
+      },
+      "resources": {
+        "precision": 0.5,
+        "recall": 0.75,
+        "f1": 0.6,
+        "tp": 6,
+        "n_gold": 8,
+        "n_pred": 12
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.35714285714285715,
+        "recall": 0.21739130434782608,
+        "f1": 0.27027027027027023,
+        "tp": 5,
+        "n_gold": 23,
+        "n_pred": 14
+      },
+      "structure": {
+        "rand_index": 0.7727272727272727,
+        "agreements": 51,
+        "pairs": 66,
+        "n_steps": 12
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 78120.0,
+        "pred_makespan": 67920.0,
+        "makespan_ok": false,
+        "gold_critical_path": [
+          "thaw-lysates",
+          "denature-samples",
+          "spin-lysates",
+          "load-gel",
+          "run-gel",
+          "assemble-sandwich",
+          "transfer-blot",
+          "ponceau-stain",
+          "block-membrane",
+          "primary-overnight",
+          "wash-after-primary",
+          "secondary-antibody",
+          "wash-after-secondary",
+          "develop-ecl",
+          "image-blot",
+          "quantify-bands"
+        ],
+        "pred_critical_path": [
+          "thaw-normalize-lysates",
+          "denature-samples",
+          "spin-condensate",
+          "assemble-gel-tank",
+          "load-gel",
+          "run-sds-page",
+          "build-transfer-sandwich",
+          "wet-transfer",
+          "ponceau-stain-rinse",
+          "block-membrane",
+          "primary-antibody",
+          "wash-after-primary",
+          "secondary-antibody",
+          "wash-after-secondary",
+          "apply-ecl",
+          "image-blot",
+          "quantify-bands"
+        ],
+        "js_critical_path": [
+          "thaw-normalize-lysates",
+          "denature-samples",
+          "spin-condensate",
+          "assemble-gel-tank",
+          "load-gel",
+          "run-sds-page",
+          "build-transfer-sandwich",
+          "wet-transfer",
+          "ponceau-stain-rinse",
+          "block-membrane",
+          "primary-antibody",
+          "wash-after-primary",
+          "secondary-antibody",
+          "wash-after-secondary",
+          "apply-ecl",
+          "image-blot",
+          "quantify-bands"
+        ],
+        "js_makespan": 67920,
+        "critical_overlap": 0.625,
+        "critical_ok": true,
+        "passed": false
+      },
+      "unsupported_rate": 0.42857142857142855,
+      "unsupported_steps": [
+        "thaw-normalize-lysates",
+        "spin-condensate",
+        "assemble-gel-tank",
+        "run-sds-page",
+        "wet-pvdf-membrane",
+        "soak-transfer-pads",
+        "wet-transfer",
+        "primary-antibody",
+        "apply-ecl"
+      ],
+      "matching": [
+        {
+          "gold": "denature-samples",
+          "predicted": "denature-samples",
+          "by": "name"
+        },
+        {
+          "gold": "load-gel",
+          "predicted": "load-gel",
+          "by": "name"
+        },
+        {
+          "gold": "chill-transfer-buffer",
+          "predicted": "chill-transfer-buffer",
+          "by": "name"
+        },
+        {
+          "gold": "assemble-sandwich",
+          "predicted": "build-transfer-sandwich",
+          "by": "name"
+        },
+        {
+          "gold": "ponceau-stain",
+          "predicted": "ponceau-stain-rinse",
+          "by": "name"
+        },
+        {
+          "gold": "block-membrane",
+          "predicted": "block-membrane",
+          "by": "name"
+        },
+        {
+          "gold": "wash-after-primary",
+          "predicted": "wash-after-primary",
+          "by": "name"
+        },
+        {
+          "gold": "secondary-antibody",
+          "predicted": "secondary-antibody",
+          "by": "name"
+        },
+        {
+          "gold": "wash-after-secondary",
+          "predicted": "wash-after-secondary",
+          "by": "name"
+        },
+        {
+          "gold": "mix-ecl",
+          "predicted": "mix-ecl-substrate",
+          "by": "name"
+        },
+        {
+          "gold": "image-blot",
+          "predicted": "image-blot",
+          "by": "name"
+        },
+        {
+          "gold": "quantify-bands",
+          "predicted": "quantify-bands",
+          "by": "name"
+        },
+        {
+          "gold": "thaw-lysates",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "spin-lysates",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "assemble-tank",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "run-gel",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "activate-membrane",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "soak-pads",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "transfer-blot",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "primary-overnight",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "develop-ecl",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "thaw-normalize-lysates",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "spin-condensate",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "assemble-gel-tank",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "run-sds-page",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "wet-pvdf-membrane",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "soak-transfer-pads",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "wet-transfer",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "primary-antibody",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "apply-ecl",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "openai/gpt-5.6-luna",
+        "pattern": "baseline",
+        "calls": 2,
+        "input_tokens": 11500,
+        "output_tokens": 7236,
+        "cost_usd": 0.010983199999999999,
+        "cache_keys": [
+          "f1f29ae9f21b4d3663e9cca03356099b6379614f193d7e9253d66c1e2ee61d6d",
+          "6437569e1ebc741640a8e0d1ed0d105660204ee2d7a270c7b15d4bed7d7a200a"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/openai__gpt-5.6-luna/baseline/per-program/lab-western-blot-transfer-block/responses/lab-western-blot-transfer-block.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/openai__gpt-5.6-luna/baseline/per-program/lab-western-blot-transfer-block/predicted/lab-western-blot-transfer-block.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Western Blot: SDS-PAGE, Wet Transfer and Overnight Primary for one 10-lane gel, one membrane, following the source text below",
+            "finish_at": null,
+            "constraints": "one gel tank, one wet transfer tank, one orbital rocker, one tray at a time, one cold room, one chemiluminescence imager, one operator",
+            "vertical": "lab"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

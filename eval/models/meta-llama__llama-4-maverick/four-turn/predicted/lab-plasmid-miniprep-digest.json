@@ -1,0 +1,478 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "plasmid-miniprep-digest-gel",
+  "name": "Plasmid Miniprep, Restriction Digest and Gel Check",
+  "environmentType": "laboratory",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "miniprep",
+      "name": "Miniprep",
+      "steps": [
+        {
+          "stepId": "pellet-culture",
+          "name": "Pellet the culture",
+          "task": "benchtop centrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "centrifuge at 4,000 × g for 10 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "resuspend-pellet",
+          "name": "Resuspend the pellet",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "pellet-culture"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "about 2 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "lyse-cells",
+          "name": "Lyse cells",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "resuspend-pellet"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "incubate at room temperature for 5 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "neutralize-lyse",
+          "name": "Neutralize and centrifuge",
+          "task": "microcentrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "lyse-cells"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "centrifuge at maximum speed for 10 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "load-lysate",
+          "name": "Load lysate onto spin column",
+          "task": "microcentrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "neutralize-lyse"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "spin for 1 minute",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "wash-column",
+          "name": "Wash the column",
+          "task": "microcentrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "load-lysate"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "spin for 1 minute",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "dry-column",
+          "name": "Dry the column",
+          "task": "microcentrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-column"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "spin the empty column for 2 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "elute-plasmid",
+          "name": "Elute plasmid",
+          "task": "microcentrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "dry-column"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "wait 1 minute, and spin for 1 minute",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "measure-concentration",
+          "name": "Measure concentration",
+          "task": "spectrophotometer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "elute-plasmid"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "3 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "gel-prep",
+      "name": "Agarose Gel Preparation",
+      "steps": [
+        {
+          "stepId": "microwave-agarose",
+          "name": "Microwave agarose",
+          "task": "microwave",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "pellet-culture"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "microwave for 2 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "cool-agarose",
+          "name": "Cool agarose",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "microwave-agarose"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Cool the flask on the bench for 10 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "pour-gel",
+          "name": "Pour gel",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cool-agarose"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "2 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "set-gel",
+          "name": "Let gel set",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "pour-gel"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Let the gel set for 30 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "digest-gel-run",
+      "name": "Digest and Gel Running",
+      "steps": [
+        {
+          "stepId": "prepare-digest",
+          "name": "Prepare digest",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "elute-plasmid"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "set-gel"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "5 minutes of pipetting",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "incubate-digest",
+          "name": "Incubate digest",
+          "task": "37 °C heat block",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prepare-digest"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Incubate at 37 °C for 60 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "inactivate-enzymes",
+          "name": "Inactivate enzymes",
+          "task": "65 °C heat block",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "incubate-digest"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "at 65 °C for 20 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "prepare-ladder",
+          "name": "Prepare ladder",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "inactivate-enzymes"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "5 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "load-gel",
+          "name": "Load gel",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prepare-ladder"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "5 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "run-gel",
+          "name": "Run gel",
+          "task": "gel rig",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "load-gel"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "for 45 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "image-gel",
+          "name": "Image gel",
+          "task": "transilluminator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "run-gel"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "5 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "benchtop centrifuge",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "microcentrifuge",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "prep",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "microwave",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "bench",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "37 °C heat block",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "65 °C heat block",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "spectrophotometer",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "gel rig",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "transilluminator",
+      "maxConcurrent": 1
+    }
+  ]
+}

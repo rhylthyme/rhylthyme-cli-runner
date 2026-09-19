@@ -1,0 +1,411 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "qwen/qwen3.8-flash",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/baseline/cache",
+    "limit": null,
+    "only": [
+      "kitchen-two-burner-three-course-dinner"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 64000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 2,
+      "input_tokens": 8982,
+      "output_tokens": 75765,
+      "cost_usd": 0.03695685,
+      "fix_iterations": 1
+    },
+    "generated_at": "2026-09-19T20:42:45+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.2,
+    "steps_f1": 0.33333333333333337,
+    "durations_accuracy": 1.0,
+    "resources_precision": 0.42857142857142855,
+    "resources_recall": 0.5,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.0,
+    "relationships_recall": 0.0,
+    "relationships_f1": 0.0,
+    "structure_rand_index": 1.0,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.8260869565217391
+  },
+  "programs": [
+    {
+      "slug": "kitchen-two-burner-three-course-dinner",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.2,
+        "steps_f1": 0.33333333333333337,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.42857142857142855,
+        "resources_recall": 0.5,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.0,
+        "relationships_recall": 0.0,
+        "relationships_f1": 0.0,
+        "structure_rand_index": 1.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.8260869565217391
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.2,
+        "f1": 0.33333333333333337,
+        "tp": 4,
+        "n_gold": 20,
+        "n_pred": 4
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 4,
+        "total": 4
+      },
+      "resources": {
+        "precision": 0.42857142857142855,
+        "recall": 0.5,
+        "f1": 0.4615384615384615,
+        "tp": 3,
+        "n_gold": 6,
+        "n_pred": 7
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 21,
+        "n_pred": 4
+      },
+      "structure": {
+        "rand_index": 1.0,
+        "agreements": 6,
+        "pairs": 6,
+        "n_steps": 4
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 22500.0,
+        "pred_makespan": 22380.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "mise-en-place",
+          "sear-ribs",
+          "soften-mirepoix",
+          "reduce-wine",
+          "braise-ribs",
+          "sweat-leeks",
+          "simmer-soup",
+          "blend-soup",
+          "hold-soup",
+          "serve-soup",
+          "plate-ribs",
+          "main-course",
+          "serve-tart"
+        ],
+        "pred_critical_path": [
+          "mise-knife",
+          "rib-sear",
+          "rib-mirepoix",
+          "rib-wine",
+          "rib-load",
+          "soup-sweat",
+          "soup-simmer",
+          "soup-blend",
+          "soup-hold",
+          "srv-soup",
+          "srv-clear",
+          "srv-plate-ribs",
+          "srv-main",
+          "srv-pause",
+          "srv-tart"
+        ],
+        "js_critical_path": [
+          "mise-knife",
+          "rib-sear",
+          "rib-mirepoix",
+          "rib-wine",
+          "rib-load",
+          "soup-sweat",
+          "soup-simmer",
+          "soup-blend",
+          "soup-hold",
+          "srv-soup",
+          "srv-clear",
+          "srv-plate-ribs",
+          "srv-main",
+          "srv-pause",
+          "srv-tart"
+        ],
+        "js_makespan": 22380,
+        "critical_overlap": 0.15384615384615385,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.8260869565217391,
+      "unsupported_steps": [
+        "mise-knife",
+        "oven-preheat",
+        "rib-braise",
+        "tart-bake",
+        "rib-sear",
+        "rib-mirepoix",
+        "rib-load",
+        "rib-reduce",
+        "soup-sweat",
+        "soup-simmer",
+        "soup-hold",
+        "tart-chill",
+        "tart-apples",
+        "srv-soup",
+        "srv-clear",
+        "srv-plate-ribs",
+        "srv-main",
+        "srv-pause",
+        "srv-tart"
+      ],
+      "matching": [
+        {
+          "gold": "reduce-wine",
+          "predicted": "rib-wine",
+          "by": "name"
+        },
+        {
+          "gold": "rest-pot",
+          "predicted": "rib-rest",
+          "by": "name"
+        },
+        {
+          "gold": "blend-soup",
+          "predicted": "soup-blend",
+          "by": "name"
+        },
+        {
+          "gold": "roll-pastry",
+          "predicted": "tart-roll",
+          "by": "name"
+        },
+        {
+          "gold": "mise-en-place",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "preheat-oven",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "sear-ribs",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "soften-mirepoix",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "braise-ribs",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "reduce-liquid",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "plate-ribs",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "main-course",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "sweat-leeks",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "simmer-soup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "hold-soup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "serve-soup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "chill-shell",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "slice-apples",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "bake-tart",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "serve-tart",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "mise-knife",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "oven-preheat",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "rib-braise",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "tart-bake",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "rib-sear",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "rib-mirepoix",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "rib-load",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "rib-reduce",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "soup-sweat",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "soup-simmer",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "soup-hold",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "tart-chill",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "tart-apples",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "srv-soup",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "srv-clear",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "srv-plate-ribs",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "srv-main",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "srv-pause",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "srv-tart",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "qwen/qwen3.8-flash",
+        "pattern": "baseline",
+        "calls": 2,
+        "input_tokens": 8982,
+        "output_tokens": 75765,
+        "cost_usd": 0.03695685,
+        "cache_keys": [
+          "0d22808ae42fae2dcf96b37de5c209b17a80af6441027ff89293ea8f7cb9db38",
+          "7ee5e93095fe69b99ccbaf26545b33f701b8b8cc3f9002701722c7b754c9f125"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/baseline/per-program/kitchen-two-burner-three-course-dinner/responses/kitchen-two-burner-three-course-dinner.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/baseline/per-program/kitchen-two-burner-three-course-dinner/predicted/kitchen-two-burner-three-course-dinner.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Three-Course Dinner for Six: Two Burners, One Oven for 6 people, three courses, following the source text below",
+            "finish_at": "19:30",
+            "constraints": "one oven, two burners, one cook, courses go out in order",
+            "vertical": "kitchen"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

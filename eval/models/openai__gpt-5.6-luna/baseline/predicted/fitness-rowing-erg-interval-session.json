@@ -1,0 +1,198 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "erg-session-four-rowers-two-machines",
+  "name": "Erg Session — Four Rowers, Two Machines",
+  "description": "Four rowers share two ergs in alternating pairs: A and B row first, followed by C and D. Three four-minute pieces are staggered between the pairs, followed by a coached technique drill, cooldown, and debrief.",
+  "environmentType": "gym",
+  "actors": 4,
+  "tracks": [
+    {
+      "trackId": "pair-ab",
+      "name": "A and B",
+      "steps": [
+        {
+          "stepId": "ab-warmup",
+          "name": "A and B warm-up",
+          "task": "rower",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "coach-briefing"
+          }
+        },
+        {
+          "stepId": "ab-pieces",
+          "name": "A and B three rowing pieces",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "replicates": {
+            "count": 3,
+            "mode": "stagger",
+            "delay": 480
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cd-warmup"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "pair-cd",
+      "name": "C and D",
+      "steps": [
+        {
+          "stepId": "cd-warmup",
+          "name": "C and D warm-up",
+          "task": "rower",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 900
+          }
+        },
+        {
+          "stepId": "cd-pieces",
+          "name": "C and D three rowing pieces",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "ab-pieces",
+            "offsetSeconds": 240,
+            "instances": "each"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "coach-and-group",
+      "name": "Coach and group",
+      "steps": [
+        {
+          "stepId": "coach-briefing",
+          "name": "Brief the crew on the boards",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "coach-splits",
+          "name": "Call splits from the first piece",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "ab-pieces",
+            "event": "start",
+            "instances": "any"
+          }
+        },
+        {
+          "stepId": "technique-drill",
+          "name": "Technique drill: finish pause, half-slide pause, then build",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "replicates": {
+            "count": 4,
+            "mode": "serial"
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "coach-splits"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "cd-pieces",
+                "instances": "all"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "cooldown",
+          "name": "Group cooldown: legs up the wall, hips, lats, and tea",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "technique-drill",
+            "instances": "all"
+          }
+        },
+        {
+          "stepId": "debrief",
+          "name": "Debrief: splits and Saturday plan",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cooldown"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "erg",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "rower",
+      "maxConcurrent": 4
+    },
+    {
+      "task": "coach",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "floor",
+      "maxConcurrent": 4
+    }
+  ],
+  "metadata": {
+    "sourceUrl": "",
+    "attribution": "",
+    "sessionNotes": [
+      "A and B warm up first.",
+      "C and D begin their warm-up ten minutes later.",
+      "A and B begin each piece when the handover permits; C and D follow directly after each A/B piece.",
+      "The four technique drills run serially, one rower at a time.",
+      "Rest periods are represented by the staggered handover timing rather than as separate steps."
+    ]
+  }
+}

@@ -1,0 +1,353 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "qwen/qwen3.8-flash",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/baseline/cache",
+    "limit": null,
+    "only": [
+      "event-conference-session-av-checks"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 64000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 1,
+      "input_tokens": 4576,
+      "output_tokens": 43105,
+      "cost_usd": 0.02094575,
+      "fix_iterations": 0
+    },
+    "generated_at": "2026-09-19T19:05:18+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.6,
+    "steps_f1": 0.7499999999999999,
+    "durations_accuracy": 1.0,
+    "resources_precision": 0.8333333333333334,
+    "resources_recall": 0.8333333333333334,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.47058823529411764,
+    "relationships_recall": 0.4,
+    "relationships_f1": 0.4324324324324324,
+    "structure_rand_index": 0.9393939393939394,
+    "end_to_end_pass": 1.0,
+    "unsupported_rate": 0.4
+  },
+  "programs": [
+    {
+      "slug": "event-conference-session-av-checks",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.6,
+        "steps_f1": 0.7499999999999999,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.8333333333333334,
+        "resources_recall": 0.8333333333333334,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.47058823529411764,
+        "relationships_recall": 0.4,
+        "relationships_f1": 0.4324324324324324,
+        "structure_rand_index": 0.9393939393939394,
+        "end_to_end_pass": 1.0,
+        "unsupported_rate": 0.4
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.6,
+        "f1": 0.7499999999999999,
+        "tp": 12,
+        "n_gold": 20,
+        "n_pred": 12
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 12,
+        "total": 12
+      },
+      "resources": {
+        "precision": 0.8333333333333334,
+        "recall": 0.8333333333333334,
+        "f1": 0.8333333333333334,
+        "tp": 5,
+        "n_gold": 6,
+        "n_pred": 6
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.47058823529411764,
+        "recall": 0.4,
+        "f1": 0.4324324324324324,
+        "tp": 8,
+        "n_gold": 20,
+        "n_pred": 17
+      },
+      "structure": {
+        "rand_index": 0.9393939393939394,
+        "agreements": 62,
+        "pairs": 66,
+        "n_steps": 12
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 15240.0,
+        "pred_makespan": 14940.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "line-check",
+          "projector-test",
+          "mic-check",
+          "load-deck-one",
+          "chair-opens",
+          "talk-one",
+          "qa-one",
+          "load-deck-two",
+          "changeover-one",
+          "talk-two",
+          "qa-two",
+          "serve-coffee",
+          "clear-foyer",
+          "changeover-two",
+          "talk-three",
+          "qa-three",
+          "chair-closes",
+          "strike-av"
+        ],
+        "pred_critical_path": [
+          "line_check",
+          "test_projector",
+          "check_lapel",
+          "load_deck_1",
+          "room_open",
+          "talk_1",
+          "questions_1",
+          "load_deck_2",
+          "talk_2",
+          "questions_2",
+          "coffee_out",
+          "clear_foyer",
+          "changeover_2",
+          "talk_3",
+          "questions_3",
+          "close_session",
+          "strike_av"
+        ],
+        "js_critical_path": [
+          "line_check",
+          "test_projector",
+          "check_lapel",
+          "load_deck_1",
+          "room_open",
+          "talk_1",
+          "questions_1",
+          "load_deck_2",
+          "talk_2",
+          "questions_2",
+          "coffee_out",
+          "clear_foyer",
+          "changeover_2",
+          "talk_3",
+          "questions_3",
+          "close_session",
+          "strike_av"
+        ],
+        "js_makespan": 14940,
+        "critical_overlap": 0.6666666666666666,
+        "critical_ok": true,
+        "passed": true
+      },
+      "unsupported_rate": 0.4,
+      "unsupported_steps": [
+        "load_deck_1",
+        "load_deck_3",
+        "check_lapel",
+        "changeover_1",
+        "changeover_2",
+        "room_open",
+        "coffee_station",
+        "coffee_out"
+      ],
+      "matching": [
+        {
+          "gold": "line-check",
+          "predicted": "line_check",
+          "by": "name"
+        },
+        {
+          "gold": "projector-test",
+          "predicted": "test_projector",
+          "by": "name"
+        },
+        {
+          "gold": "strike-av",
+          "predicted": "strike_av",
+          "by": "name"
+        },
+        {
+          "gold": "load-deck-two",
+          "predicted": "load_deck_2",
+          "by": "name"
+        },
+        {
+          "gold": "talk-one",
+          "predicted": "talk_1",
+          "by": "name"
+        },
+        {
+          "gold": "qa-one",
+          "predicted": "questions_1",
+          "by": "name"
+        },
+        {
+          "gold": "talk-two",
+          "predicted": "talk_2",
+          "by": "name"
+        },
+        {
+          "gold": "qa-two",
+          "predicted": "questions_2",
+          "by": "name"
+        },
+        {
+          "gold": "talk-three",
+          "predicted": "talk_3",
+          "by": "name"
+        },
+        {
+          "gold": "qa-three",
+          "predicted": "questions_3",
+          "by": "name"
+        },
+        {
+          "gold": "chair-closes",
+          "predicted": "close_session",
+          "by": "name"
+        },
+        {
+          "gold": "clear-foyer",
+          "predicted": "clear_foyer",
+          "by": "name"
+        },
+        {
+          "gold": "mic-check",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "load-deck-one",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "load-deck-three",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "chair-opens",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "changeover-one",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "changeover-two",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "set-coffee",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "serve-coffee",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "load_deck_1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "load_deck_3",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "check_lapel",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "changeover_1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "changeover_2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "room_open",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "coffee_station",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "coffee_out",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "qwen/qwen3.8-flash",
+        "pattern": "baseline",
+        "calls": 1,
+        "input_tokens": 4576,
+        "output_tokens": 43105,
+        "cost_usd": 0.02094575,
+        "cache_keys": [
+          "32411b88b8f4d724e1c80d760c9543235e4864df81dbe604fe4ad86da1264c2d"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/baseline/per-program/event-conference-session-av-checks/responses/event-conference-session-av-checks.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/baseline/per-program/event-conference-session-av-checks/predicted/event-conference-session-av-checks.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Session Chair's Sheet \u2014 Room 2B for one room, three speakers, following the source text below",
+            "finish_at": "coffee break at 10:30",
+            "constraints": "one projector, one lapel microphone pack, one AV desk, one lectern, one foyer for catering",
+            "vertical": "events"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

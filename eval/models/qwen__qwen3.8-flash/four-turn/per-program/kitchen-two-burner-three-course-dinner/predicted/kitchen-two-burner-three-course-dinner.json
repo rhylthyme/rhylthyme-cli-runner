@@ -1,0 +1,519 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "three-course-dinner-six-two-burners-one-oven",
+  "name": "Three-Course Dinner for Six: Two Burners, One Oven",
+  "description": "One cook, one oven, two burners. All courses are cooked, held, and ready for service at 19:30; service steps continue after guests are seated.",
+  "environmentType": "kitchen",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "mise",
+      "name": "Mise en place",
+      "steps": [
+        {
+          "stepId": "knife-mise-en-place",
+          "name": "Chop mirepoix, trim short ribs, and measure stock",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2400
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Chop the mirepoix, trim the short ribs and measure the stock: forty minutes of knife work before anything goes on the heat.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "oven",
+      "name": "Oven line",
+      "steps": [
+        {
+          "stepId": "preheat-oven",
+          "name": "Heat the oven to 300°F",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "knife-mise-en-place"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Heat the oven to 300°F; give it 20 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "braise-short-ribs",
+          "name": "Braise the short ribs, covered",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 10800
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "reduce-wine"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "preheat-oven"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Braise the ribs, covered, for 3 hours.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "bake-tart",
+          "name": "Bake the tart",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "braise-short-ribs"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "slice-and-arrange-apples"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Bake the tart for 45 minutes the moment the ribs leave the oven, while the ribs are resting.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "ribs-stovetop",
+      "name": "Short ribs stovetop line",
+      "steps": [
+        {
+          "stepId": "sear-short-ribs",
+          "name": "Sear the short ribs",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 720
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "knife-mise-en-place"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Sear the short ribs in a heavy pot over high heat for 12 minutes, turning once.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "soften-mirepoix",
+          "name": "Soften the mirepoix",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "sear-short-ribs"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "soften the mirepoix in the same pot for 8 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "reduce-wine",
+          "name": "Add the wine and reduce it",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "soften-mirepoix"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "add the wine and reduce it for 5 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "ribs-finish",
+      "name": "Short ribs finish line",
+      "steps": [
+        {
+          "stepId": "rest-ribs-pot",
+          "name": "Rest the pot off the heat",
+          "task": "counter",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "braise-short-ribs"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Rest the pot off the heat for 20 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "skim-and-reduce-braising-liquid",
+          "name": "Skim the fat and reduce the braising liquid",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest-ribs-pot"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "skim the fat and reduce the braising liquid for 15 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "tart-prep",
+      "name": "Apple tart prep line",
+      "steps": [
+        {
+          "stepId": "roll-pastry-line-tin",
+          "name": "Roll the pastry and line the tin",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "reduce-wine"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Roll the pastry and line the tin; 15 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "chill-tart-shell",
+          "name": "Chill the tart shell in the refrigerator",
+          "task": "fridge",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 1800,
+            "maxSeconds": 7200,
+            "defaultSeconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "roll-pastry-line-tin"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Chill the shell in the refrigerator for at least 30 minutes and no more than two hours.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "slice-and-arrange-apples",
+          "name": "Slice the apples and arrange them in the shell",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "chill-tart-shell"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Slice the apples and arrange them in the shell; 20 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "soup",
+      "name": "Leek and potato soup line",
+      "steps": [
+        {
+          "stepId": "sweat-leeks",
+          "name": "Sweat the sliced leeks",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "braise-short-ribs",
+                "event": "start",
+                "offsetSeconds": 7200
+              },
+              {
+                "type": "afterStep",
+                "stepId": "slice-and-arrange-apples"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Two hours into the braise, sweat the sliced leeks in butter for 10 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "simmer-soup",
+          "name": "Add potatoes and stock and simmer",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "sweat-leeks"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Add the potatoes and the stock and simmer for 30 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "blend-soup",
+          "name": "Blend the soup smooth",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "simmer-soup"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "blend the soup smooth; 5 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "hold-soup-warm",
+          "name": "Hold the soup warm on the back burner",
+          "task": "burner",
+          "duration": {
+            "type": "indefinite",
+            "defaultSeconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "blend-soup"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Hold it warm on the back burner until the guests are seated.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "service",
+      "name": "Service line",
+      "steps": [
+        {
+          "stepId": "serve-soup",
+          "name": "Ladle the soup at the table",
+          "task": "table",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "hold-soup-warm"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Ladle the soup when everyone is seated; ten minutes at the table.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "plate-ribs",
+          "name": "Plate the ribs",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStepWithBuffer",
+            "stepId": "serve-soup",
+            "bufferSeconds": 600
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Plate the ribs ten minutes after the soup bowls are cleared, and give the plating five minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "main-course-table-time",
+          "name": "Let the main course run at the table",
+          "task": "table",
+          "duration": {
+            "type": "indefinite",
+            "defaultSeconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "plate-ribs"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Let the main course run as long as it runs.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "slice-and-serve-tart",
+          "name": "Slice and serve the tart",
+          "task": "table",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStepWithBuffer",
+            "stepId": "main-course-table-time",
+            "bufferSeconds": 1200
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "The tart goes out twenty minutes after the main plates come back; ten minutes to slice and serve.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "oven",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "burner",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "cook",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "counter",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "fridge",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "table",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "serves": "6",
+    "deadline": "19:30",
+    "recommendedProgramStart": "14:40",
+    "finishAtScope": "Cooking and holding finish at 19:30; service steps begin after guests are seated and continue afterward."
+  }
+}

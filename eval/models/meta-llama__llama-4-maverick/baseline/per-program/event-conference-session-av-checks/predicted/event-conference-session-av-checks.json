@@ -1,0 +1,329 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "session-chair-sheet-room-2b",
+  "name": "Session Chair's Sheet — Room 2B",
+  "environmentType": "event",
+  "tracks": [
+    {
+      "trackId": "av-setup",
+      "name": "AV Setup",
+      "steps": [
+        {
+          "stepId": "line-check",
+          "name": "Line check at AV desk",
+          "task": "av-desk",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "test-projector",
+          "name": "Test projector",
+          "task": "projector",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "line-check"
+          }
+        },
+        {
+          "stepId": "check-lapel-pack",
+          "name": "Check lapel pack",
+          "task": "lapel-pack",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "test-projector"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "slide-loading",
+      "name": "Slide Loading",
+      "steps": [
+        {
+          "stepId": "load-first-deck",
+          "name": "Load first deck",
+          "task": "projector",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "check-lapel-pack"
+          }
+        },
+        {
+          "stepId": "load-second-deck",
+          "name": "Load second deck",
+          "task": "projector",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "questions-first-talk"
+          }
+        },
+        {
+          "stepId": "load-third-deck",
+          "name": "Load third deck",
+          "task": "projector",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "coffee-goes-out"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "session",
+      "name": "Session",
+      "steps": [
+        {
+          "stepId": "chair-opens",
+          "name": "Chair opens the room",
+          "task": "chair",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "check-lapel-pack"
+          }
+        },
+        {
+          "stepId": "first-talk",
+          "name": "First talk",
+          "task": "lectern",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "chair-opens"
+          }
+        },
+        {
+          "stepId": "questions-first-talk",
+          "name": "Questions after first talk",
+          "task": "lectern",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 300,
+            "maxSeconds": 600,
+            "defaultSeconds": 420
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "first-talk"
+          }
+        },
+        {
+          "stepId": "changeover-to-second-speaker",
+          "name": "Changeover to second speaker",
+          "task": "lapel-pack",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "questions-first-talk"
+          }
+        },
+        {
+          "stepId": "second-talk",
+          "name": "Second talk",
+          "task": "lectern",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "changeover-to-second-speaker"
+          }
+        },
+        {
+          "stepId": "questions-second-talk",
+          "name": "Questions after second talk",
+          "task": "lectern",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 300,
+            "maxSeconds": 600,
+            "defaultSeconds": 420
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "second-talk"
+          }
+        },
+        {
+          "stepId": "changeover-to-third-speaker",
+          "name": "Changeover to third speaker",
+          "task": "lapel-pack",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "clear-foyer"
+          }
+        },
+        {
+          "stepId": "third-talk",
+          "name": "Third talk",
+          "task": "lectern",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "changeover-to-third-speaker"
+          }
+        },
+        {
+          "stepId": "questions-third-talk",
+          "name": "Questions after third talk",
+          "task": "lectern",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 300,
+            "maxSeconds": 900,
+            "defaultSeconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "third-talk"
+          }
+        },
+        {
+          "stepId": "chair-closes",
+          "name": "Chair closes the session",
+          "task": "chair",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "questions-third-talk"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "catering",
+      "name": "Catering",
+      "steps": [
+        {
+          "stepId": "set-coffee-station",
+          "name": "Set coffee station",
+          "task": "foyer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 5400
+          }
+        },
+        {
+          "stepId": "coffee-goes-out",
+          "name": "Coffee goes out",
+          "task": "foyer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "questions-second-talk"
+          }
+        },
+        {
+          "stepId": "clear-foyer",
+          "name": "Clear foyer",
+          "task": "foyer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "coffee-goes-out"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "strike",
+      "name": "Strike",
+      "steps": [
+        {
+          "stepId": "strike-av-desk",
+          "name": "Strike AV desk",
+          "task": "av-desk",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "chair-closes"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "projector",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "lapel-pack",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "av-desk",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "lectern",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "foyer",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "chair",
+      "maxConcurrent": 1
+    }
+  ]
+}

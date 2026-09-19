@@ -1,0 +1,545 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "ashgrove-wedding-reception-run-sheet",
+  "name": "Wedding Reception Run Sheet — Ashgrove Barn",
+  "description": "Reception run-of-show for 90 guests at Ashgrove Barn, starting at ceremony break and sequenced through three courses, programme moments, and dancing.",
+  "environmentType": "event",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "room",
+      "name": "Room and seating",
+      "steps": [
+        {
+          "stepId": "flip-room",
+          "name": "Flip ceremony room to reception seating",
+          "task": "room",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Flip the ceremony room to reception seating: 45 minutes, chairs out, rounds in, linen on.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "dress-tables",
+          "name": "Dress tables with centrepieces, place cards, and candles",
+          "task": "room",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "flip-room"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Dress the tables with centrepieces, place cards and candles; 15 minutes once the flip is done.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "seat-guests",
+          "name": "Seat guests",
+          "task": "room",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "dress-tables"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "call-room"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Seat the guests when the planner calls the room; 15 minutes to get 90 people down.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "bar-foyer",
+      "name": "Bar and foyer",
+      "steps": [
+        {
+          "stepId": "open-bar",
+          "name": "Open bar and pour first round",
+          "task": "bar",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Open the bar as soon as the ceremony breaks; 20 minutes to set and pour the first round.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "pass-canapes",
+          "name": "Pass canapes in the foyer",
+          "task": "floor",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 2400,
+            "maxSeconds": 3600,
+            "defaultSeconds": 3000
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "open-bar"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Pass canapes in the foyer from twenty minutes in, and keep passing for forty minutes to an hour, however long the photographs take.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "call-room",
+          "name": "Call the room to dinner",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "pass-canapes"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Call the room to dinner once the canapes are done; 5 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "kitchen-pass",
+      "name": "Kitchen pass",
+      "steps": [
+        {
+          "stepId": "plate-starters",
+          "name": "Plate starters",
+          "task": "kitchen_pass",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "seat-guests",
+            "event": "start",
+            "offsetSeconds": 900
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Starters plate up fifteen minutes after the room starts seating; 15 minutes on the pass.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "plate-mains",
+          "name": "Plate mains",
+          "task": "kitchen_pass",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "clear-starters",
+            "offsetSeconds": 300
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Mains go on the pass five minutes after the starter plates are cleared; 30 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "plate-dessert",
+          "name": "Plate dessert",
+          "task": "kitchen_pass",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "plate-mains"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "cut-cake",
+                "event": "start"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Dessert plates up the moment the cake is cut; 15 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "floor-service",
+      "name": "Floor service",
+      "steps": [
+        {
+          "stepId": "serve-starters",
+          "name": "Serve starters",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "plate-starters"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Serve the starters; 10 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "clear-starters",
+          "name": "Clear starters",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "serve-starters",
+            "event": "start",
+            "offsetSeconds": 1200
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Clear the starters twenty minutes after they go out; 10 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "serve-mains",
+          "name": "Serve mains",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "plate-mains"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Serve the mains; 15 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "clear-mains",
+          "name": "Clear mains",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "serve-mains",
+            "event": "start",
+            "offsetSeconds": 2400
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Clear the mains forty minutes after they go out; 10 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "serve-dessert",
+          "name": "Serve dessert",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "clear-mains"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "plate-dessert"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Serve the dessert; 10 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "microphone",
+      "name": "Microphone",
+      "steps": [
+        {
+          "stepId": "mc-sound-check",
+          "name": "Sound-check the microphone",
+          "task": "microphone",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": null,
+            "inferred": true
+          }
+        },
+        {
+          "stepId": "welcome-toast",
+          "name": "Welcome toast",
+          "task": "microphone",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "mc-sound-check"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "seat-guests"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Welcome toast as soon as the guests are seated; 5 minutes on the microphone.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "speeches",
+          "name": "Speeches",
+          "task": "microphone",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 900,
+            "maxSeconds": 1500,
+            "defaultSeconds": 900
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "first-dance"
+              },
+              {
+                "type": "manual",
+                "triggerName": "mc-cues-speeches"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Speeches when the MC cues them: two or three of them, fifteen minutes total, twenty-five at the outside.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "dance-floor",
+      "name": "Dance floor programme",
+      "steps": [
+        {
+          "stepId": "first-dance",
+          "name": "First dance",
+          "task": "dance_floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "clear-mains"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "First dance once the main plates are cleared; 5 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "cut-cake",
+          "name": "Cut the cake",
+          "task": "dance_floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "speeches"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Cut the cake straight after the speeches; 10 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "dancing",
+          "name": "Dancing until band's last set",
+          "task": "dance_floor",
+          "duration": {
+            "type": "indefinite",
+            "defaultSeconds": 3600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "cut-cake"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "serve-dessert",
+                "offsetSeconds": 600
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Dancing starts ten minutes after the dessert is served and runs until the band's last set.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "room",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "bar",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "kitchen_pass",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "floor",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "microphone",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "dance_floor",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "serves": "90 guests",
+    "scale": "45 rounds; three courses",
+    "start": "16:00 ceremony break",
+    "deadline": "Band's last set; exact wall-clock time not specified in source"
+  }
+}

@@ -1,0 +1,275 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "qwen/qwen3.8-flash",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/baseline/cache",
+    "limit": null,
+    "only": [
+      "kitchen-sheet-pan-chicken-dinner"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 64000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 2,
+      "input_tokens": 8810,
+      "output_tokens": 83126,
+      "cost_usd": 0.04039072,
+      "fix_iterations": 1
+    },
+    "generated_at": "2026-09-19T20:27:16+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.6428571428571429,
+    "steps_f1": 0.782608695652174,
+    "durations_accuracy": 1.0,
+    "resources_precision": 0.4,
+    "resources_recall": 0.6666666666666666,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.5555555555555556,
+    "relationships_recall": 0.2777777777777778,
+    "relationships_f1": 0.3703703703703704,
+    "structure_rand_index": 0.7222222222222222,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.35714285714285715
+  },
+  "programs": [
+    {
+      "slug": "kitchen-sheet-pan-chicken-dinner",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.6428571428571429,
+        "steps_f1": 0.782608695652174,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.4,
+        "resources_recall": 0.6666666666666666,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.5555555555555556,
+        "relationships_recall": 0.2777777777777778,
+        "relationships_f1": 0.3703703703703704,
+        "structure_rand_index": 0.7222222222222222,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.35714285714285715
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.6428571428571429,
+        "f1": 0.782608695652174,
+        "tp": 9,
+        "n_gold": 14,
+        "n_pred": 9
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 9,
+        "total": 9
+      },
+      "resources": {
+        "precision": 0.4,
+        "recall": 0.6666666666666666,
+        "f1": 0.5,
+        "tp": 2,
+        "n_gold": 3,
+        "n_pred": 5
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.5555555555555556,
+        "recall": 0.2777777777777778,
+        "f1": 0.3703703703703704,
+        "tp": 5,
+        "n_gold": 18,
+        "n_pred": 9
+      },
+      "structure": {
+        "rand_index": 0.7222222222222222,
+        "agreements": 26,
+        "pairs": 36,
+        "n_steps": 9
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 4980.0,
+        "pred_makespan": 5040.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "preheat-oven",
+          "roast-potatoes",
+          "roast-chicken",
+          "swap-pans",
+          "final-roast",
+          "rest-chicken",
+          "plate-dinner"
+        ],
+        "pred_critical_path": [
+          "toss-potatoes",
+          "prep-chicken",
+          "wash-dry-leaves",
+          "shake-vinaigrette",
+          "dress-salad",
+          "whisk-butter",
+          "slice-and-plate"
+        ],
+        "js_critical_path": [
+          "toss-potatoes",
+          "prep-chicken",
+          "wash-dry-leaves",
+          "shake-vinaigrette",
+          "dress-salad",
+          "whisk-butter",
+          "slice-and-plate"
+        ],
+        "js_makespan": 5040,
+        "critical_overlap": 0.14285714285714285,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.35714285714285715,
+      "unsupported_steps": [
+        "roast-potatoes-with-chicken",
+        "rotate-add-broccoli",
+        "prep-chicken",
+        "whisk-butter",
+        "reduce-pan-sauce"
+      ],
+      "matching": [
+        {
+          "gold": "toss-potatoes",
+          "predicted": "toss-potatoes",
+          "by": "name"
+        },
+        {
+          "gold": "preheat-oven",
+          "predicted": "preheat-oven",
+          "by": "name"
+        },
+        {
+          "gold": "roast-potatoes",
+          "predicted": "roast-potatoes-alone",
+          "by": "name"
+        },
+        {
+          "gold": "final-roast",
+          "predicted": "final-roast",
+          "by": "name"
+        },
+        {
+          "gold": "rest-chicken",
+          "predicted": "rest-chicken",
+          "by": "name"
+        },
+        {
+          "gold": "wash-leaves",
+          "predicted": "wash-dry-leaves",
+          "by": "name"
+        },
+        {
+          "gold": "make-vinaigrette",
+          "predicted": "shake-vinaigrette",
+          "by": "name"
+        },
+        {
+          "gold": "dress-salad",
+          "predicted": "dress-salad",
+          "by": "name"
+        },
+        {
+          "gold": "plate-dinner",
+          "predicted": "slice-and-plate",
+          "by": "name"
+        },
+        {
+          "gold": "season-chicken",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "roast-chicken",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "swap-pans",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "reduce-sauce",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "finish-butter",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "roast-potatoes-with-chicken",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "rotate-add-broccoli",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "prep-chicken",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "whisk-butter",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "reduce-pan-sauce",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "qwen/qwen3.8-flash",
+        "pattern": "baseline",
+        "calls": 2,
+        "input_tokens": 8810,
+        "output_tokens": 83126,
+        "cost_usd": 0.04039072,
+        "cache_keys": [
+          "eb96f755c9c9878c6c64aff168c875d0651842687c610fed76b55cd942746431",
+          "4dd1e3c651863f454bb86fe1177be65175bb527ad6fa993446df125c4d8cf58d"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/baseline/per-program/kitchen-sheet-pan-chicken-dinner/responses/kitchen-sheet-pan-chicken-dinner.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/baseline/per-program/kitchen-sheet-pan-chicken-dinner/predicted/kitchen-sheet-pan-chicken-dinner.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Sheet-Pan Chicken with Potatoes and Broccoli for 4 people, following the source text below",
+            "finish_at": null,
+            "constraints": "one oven, two sheet pans, one burner, one cook",
+            "vertical": "kitchen"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

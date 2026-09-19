@@ -1,0 +1,328 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "holiday-cookie-batch",
+  "name": "Holiday Cookie Batch: Three Doughs, One Oven",
+  "environmentType": "kitchen",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "dough-prep",
+      "name": "Dough Preparation",
+      "steps": [
+        {
+          "stepId": "prep-sugar-dough",
+          "name": "Prepare Sugar Cookie Dough",
+          "task": "mixer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 720
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "chill-sugar-dough",
+          "name": "Chill Sugar Cookie Dough",
+          "task": "fridge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep-sugar-dough"
+          }
+        },
+        {
+          "stepId": "prep-chocolate-chip-dough",
+          "name": "Prepare Chocolate Chip Dough",
+          "task": "mixer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 720
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "chill-sugar-dough"
+          }
+        },
+        {
+          "stepId": "prep-gingerbread-dough",
+          "name": "Prepare Gingerbread Dough",
+          "task": "mixer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep-chocolate-chip-dough"
+          }
+        },
+        {
+          "stepId": "chill-gingerbread-dough",
+          "name": "Chill Gingerbread Dough",
+          "task": "fridge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 7200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep-gingerbread-dough"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "baking",
+      "name": "Baking",
+      "steps": [
+        {
+          "stepId": "heat-oven",
+          "name": "Heat Oven",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "prep-chocolate-chip-pan",
+          "name": "Prepare Chocolate Chip Pan",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 360
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "heat-oven"
+          }
+        },
+        {
+          "stepId": "bake-chocolate-chip",
+          "name": "Bake Chocolate Chip Cookies",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 660
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep-chocolate-chip-pan"
+          }
+        },
+        {
+          "stepId": "cool-chocolate-chip",
+          "name": "Cool Chocolate Chip Cookies",
+          "task": "rack",
+          "duration": {
+            "type": "fixed",
+            "seconds": 720
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bake-chocolate-chip"
+          }
+        },
+        {
+          "stepId": "cool-chocolate-chip-pan",
+          "name": "Cool Chocolate Chip Pan",
+          "task": "rack",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cool-chocolate-chip"
+          }
+        },
+        {
+          "stepId": "prep-sugar-cookie-pan",
+          "name": "Prepare Sugar Cookie Pan",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 840
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "cool-chocolate-chip-pan"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "chill-sugar-dough"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "bake-sugar-cookie",
+          "name": "Bake Sugar Cookies",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 540
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep-sugar-cookie-pan"
+          }
+        },
+        {
+          "stepId": "cool-sugar-cookie",
+          "name": "Cool Sugar Cookies",
+          "task": "rack",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bake-sugar-cookie"
+          }
+        },
+        {
+          "stepId": "cool-sugar-cookie-pan",
+          "name": "Cool Sugar Cookie Pan",
+          "task": "rack",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cool-sugar-cookie"
+          }
+        },
+        {
+          "stepId": "prep-gingerbread-pan",
+          "name": "Prepare Gingerbread Pan",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1080
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "cool-sugar-cookie-pan"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "chill-gingerbread-dough"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "bake-gingerbread",
+          "name": "Bake Gingerbread",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep-gingerbread-pan"
+          }
+        },
+        {
+          "stepId": "cool-gingerbread",
+          "name": "Cool Gingerbread",
+          "task": "rack",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bake-gingerbread"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "final-steps",
+      "name": "Final Steps",
+      "steps": [
+        {
+          "stepId": "ice-gingerbread",
+          "name": "Ice Gingerbread",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1500
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cool-gingerbread"
+          }
+        },
+        {
+          "stepId": "box-cookies",
+          "name": "Box Cookies",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "cool-chocolate-chip"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "cool-sugar-cookie"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "ice-gingerbread"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "mixer",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "oven",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "prep",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "fridge",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "rack",
+      "maxConcurrent": 2
+    }
+  ]
+}

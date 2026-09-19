@@ -1,0 +1,346 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "thanksgiving-for-eight",
+  "name": "Thanksgiving for Eight with One Oven",
+  "environmentType": "kitchen",
+  "actors": 2,
+  "tracks": [
+    {
+      "trackId": "t1",
+      "name": "Turkey",
+      "steps": [
+        {
+          "stepId": "s1",
+          "name": "Take turkey out of fridge",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2400
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "s2",
+          "name": "Heat oven to 325°F",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "s1"
+          }
+        },
+        {
+          "stepId": "s3",
+          "name": "Season the turkey",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "s2"
+          }
+        },
+        {
+          "stepId": "s4",
+          "name": "Roast the turkey",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 10800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "s3"
+          }
+        },
+        {
+          "stepId": "s5",
+          "name": "Let turkey rest",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2400
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "s4"
+          }
+        },
+        {
+          "stepId": "s6",
+          "name": "Carve the turkey",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "s5"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "t2",
+      "name": "Stuffing",
+      "steps": [
+        {
+          "stepId": "s7",
+          "name": "Prepare bread cubes",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 1800
+          }
+        },
+        {
+          "stepId": "s8",
+          "name": "Cook onion and celery",
+          "task": "stove",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 9600
+          }
+        },
+        {
+          "stepId": "s9",
+          "name": "Mix bread with vegetables and stock",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "s8"
+          }
+        },
+        {
+          "stepId": "s10",
+          "name": "Bake stuffing",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2100
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "s4"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "t3",
+      "name": "Gravy",
+      "steps": [
+        {
+          "stepId": "s11",
+          "name": "Prepare gravy",
+          "task": "stove",
+          "duration": {
+            "type": "fixed",
+            "seconds": 780
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "s4"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "t4",
+      "name": "Green Bean Casserole",
+      "steps": [
+        {
+          "stepId": "s12",
+          "name": "Blanch green beans",
+          "task": "stove",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 9900
+          }
+        },
+        {
+          "stepId": "s13",
+          "name": "Cook mushrooms",
+          "task": "stove",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "s12"
+          }
+        },
+        {
+          "stepId": "s14",
+          "name": "Combine beans and mushroom sauce",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "s13"
+          }
+        },
+        {
+          "stepId": "s15",
+          "name": "Bake green bean casserole",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "s10"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "t5",
+      "name": "Mashed Potatoes",
+      "steps": [
+        {
+          "stepId": "s16",
+          "name": "Peel and quarter potatoes",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "s4"
+          }
+        },
+        {
+          "stepId": "s17",
+          "name": "Boil potatoes",
+          "task": "stove",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "s16"
+          }
+        },
+        {
+          "stepId": "s18",
+          "name": "Mash potatoes",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "s17"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "t6",
+      "name": "Dinner Rolls",
+      "steps": [
+        {
+          "stepId": "s19",
+          "name": "Warm dinner rolls",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "s15"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "t7",
+      "name": "Serve",
+      "steps": [
+        {
+          "stepId": "s20",
+          "name": "Serve dinner",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "s6"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "s11"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "s15"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "s18"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "s19"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "oven",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "stove",
+      "maxConcurrent": 4
+    },
+    {
+      "task": "prep",
+      "maxConcurrent": 2
+    }
+  ]
+}

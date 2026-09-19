@@ -1,0 +1,407 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "partner-upper-body-superset-corrected",
+  "name": "Partner Upper-Body Superset Session",
+  "environmentType": "gym",
+  "actors": 2,
+  "tracks": [
+    {
+      "trackId": "partner-a",
+      "name": "Partner A",
+      "steps": [
+        {
+          "stepId": "warm-up-row",
+          "name": "Warm-up Rowing",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "warm-up-arm-circles",
+          "name": "Arm Circles and Band Pull-aparts",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warm-up-row"
+          }
+        },
+        {
+          "stepId": "bench-press-1",
+          "name": "Bench Press (Set 1)",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warm-up-arm-circles"
+          }
+        },
+        {
+          "stepId": "dumbbell-row-1-b-done",
+          "name": "Wait for Partner B to finish Dumbbell Row",
+          "task": "wait",
+          "duration": {
+            "type": "indefinite",
+            "defaultSeconds": 40
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bench-press-1"
+          }
+        },
+        {
+          "stepId": "bench-press-2",
+          "name": "Bench Press (Set 2)",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "dumbbell-row-1-b-done"
+          }
+        },
+        {
+          "stepId": "rest-after-superset-a",
+          "name": "Rest",
+          "task": "rest",
+          "duration": {
+            "type": "fixed",
+            "seconds": 90
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bench-press-2"
+          }
+        },
+        {
+          "stepId": "overhead-press-1",
+          "name": "Overhead Press (Set 1)",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 45
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest-after-superset-a"
+          }
+        },
+        {
+          "stepId": "pull-ups-1-b-done",
+          "name": "Wait for Partner B to finish Pull-ups",
+          "task": "wait",
+          "duration": {
+            "type": "indefinite",
+            "defaultSeconds": 30
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "overhead-press-1"
+          }
+        },
+        {
+          "stepId": "overhead-press-2",
+          "name": "Overhead Press (Set 2)",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 45
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "pull-ups-1-b-done"
+          }
+        },
+        {
+          "stepId": "rest-after-superset-b-1",
+          "name": "Rest",
+          "task": "rest",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "overhead-press-2"
+          }
+        },
+        {
+          "stepId": "overhead-press-3",
+          "name": "Overhead Press (Set 3)",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 45
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest-after-superset-b-1"
+          }
+        },
+        {
+          "stepId": "pull-ups-3-b-done",
+          "name": "Wait for Partner B to finish Pull-ups",
+          "task": "wait",
+          "duration": {
+            "type": "indefinite",
+            "defaultSeconds": 30
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "overhead-press-3"
+          }
+        },
+        {
+          "stepId": "cool-down",
+          "name": "Cool-down Stretching",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "overhead-press-3"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "pull-ups-3-b-done"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "partner-b",
+      "name": "Partner B",
+      "steps": [
+        {
+          "stepId": "warm-up-row-b",
+          "name": "Warm-up Rowing",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "warm-up-arm-circles-b",
+          "name": "Arm Circles and Band Pull-aparts",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warm-up-row-b"
+          }
+        },
+        {
+          "stepId": "dumbbell-row-1",
+          "name": "Dumbbell Row (Set 1)",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warm-up-arm-circles-b"
+          }
+        },
+        {
+          "stepId": "bench-press-1-a-done",
+          "name": "Wait for Partner A to finish Bench Press",
+          "task": "wait",
+          "duration": {
+            "type": "indefinite",
+            "defaultSeconds": 40
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "dumbbell-row-1"
+          }
+        },
+        {
+          "stepId": "dumbbell-row-2",
+          "name": "Dumbbell Row (Set 2)",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bench-press-1-a-done"
+          }
+        },
+        {
+          "stepId": "rest-after-superset-a-b",
+          "name": "Rest",
+          "task": "rest",
+          "duration": {
+            "type": "fixed",
+            "seconds": 90
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "dumbbell-row-2"
+          }
+        },
+        {
+          "stepId": "pull-ups-1",
+          "name": "Pull-ups (Set 1)",
+          "task": "pull-up-bar",
+          "duration": {
+            "type": "fixed",
+            "seconds": 30
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest-after-superset-a-b"
+          }
+        },
+        {
+          "stepId": "overhead-press-1-a-done",
+          "name": "Wait for Partner A to finish Overhead Press",
+          "task": "wait",
+          "duration": {
+            "type": "indefinite",
+            "defaultSeconds": 45
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "pull-ups-1"
+          }
+        },
+        {
+          "stepId": "pull-ups-2",
+          "name": "Pull-ups (Set 2)",
+          "task": "pull-up-bar",
+          "duration": {
+            "type": "fixed",
+            "seconds": 30
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "overhead-press-1-a-done"
+          }
+        },
+        {
+          "stepId": "rest-after-superset-b-1-b",
+          "name": "Rest",
+          "task": "rest",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "pull-ups-2"
+          }
+        },
+        {
+          "stepId": "pull-ups-3",
+          "name": "Pull-ups (Set 3)",
+          "task": "pull-up-bar",
+          "duration": {
+            "type": "fixed",
+            "seconds": 30
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest-after-superset-b-1-b"
+          }
+        },
+        {
+          "stepId": "overhead-press-3-a-done",
+          "name": "Wait for Partner A to finish Overhead Press",
+          "task": "wait",
+          "duration": {
+            "type": "indefinite",
+            "defaultSeconds": 45
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "pull-ups-3"
+          }
+        },
+        {
+          "stepId": "cool-down-b",
+          "name": "Cool-down Stretching",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "overhead-press-3-a-done"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "pull-ups-3"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "erg",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "bench",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "dumbbells",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "pull-up-bar",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "prep",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "rest",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "wait",
+      "maxConcurrent": 2
+    }
+  ]
+}

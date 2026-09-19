@@ -1,0 +1,371 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "ashgrove-barn-wedding-reception",
+  "name": "Ashgrove Barn Wedding Reception Run Sheet",
+  "description": "Run-of-show for a 90-guest wedding reception beginning at the four o'clock ceremony break. Dancing is manually ended at the band's last set.",
+  "environmentType": "event",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "room",
+      "name": "Room",
+      "steps": [
+        {
+          "stepId": "room-flip",
+          "name": "Flip ceremony room to reception seating",
+          "task": "room",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "dress-tables",
+          "name": "Dress tables with centrepieces, place cards and candles",
+          "task": "room",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "room-flip"
+          }
+        },
+        {
+          "stepId": "seat-guests",
+          "name": "Seat 90 guests",
+          "task": "servers",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "room-call"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "foyer",
+      "name": "Foyer and Bar",
+      "steps": [
+        {
+          "stepId": "open-bar",
+          "name": "Set and pour the first round",
+          "task": "bar",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "pass-canapes",
+          "name": "Pass canapes in the foyer",
+          "task": "servers",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 2400,
+            "maxSeconds": 3600,
+            "defaultSeconds": 3000
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "open-bar"
+          }
+        },
+        {
+          "stepId": "room-call",
+          "name": "Call the room to dinner",
+          "task": "planner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "pass-canapes"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "kitchen",
+      "name": "Kitchen Pass",
+      "steps": [
+        {
+          "stepId": "plate-starters",
+          "name": "Plate starters",
+          "task": "kitchen-pass",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "seat-guests",
+            "event": "start",
+            "offsetSeconds": 900
+          }
+        },
+        {
+          "stepId": "plate-mains",
+          "name": "Plate mains",
+          "task": "kitchen-pass",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "clear-starters",
+            "offsetSeconds": 300
+          }
+        },
+        {
+          "stepId": "plate-dessert",
+          "name": "Plate dessert",
+          "task": "kitchen-pass",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cut-cake"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "floor",
+      "name": "Floor Service",
+      "steps": [
+        {
+          "stepId": "serve-starters",
+          "name": "Serve starters",
+          "task": "servers",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "plate-starters"
+          }
+        },
+        {
+          "stepId": "clear-starters",
+          "name": "Clear starters",
+          "task": "servers",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "serve-starters",
+            "offsetSeconds": 1200
+          }
+        },
+        {
+          "stepId": "serve-mains",
+          "name": "Serve mains",
+          "task": "servers",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "plate-mains"
+          }
+        },
+        {
+          "stepId": "clear-mains",
+          "name": "Clear mains",
+          "task": "servers",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "serve-mains",
+            "offsetSeconds": 2400
+          }
+        },
+        {
+          "stepId": "serve-dessert",
+          "name": "Serve dessert",
+          "task": "servers",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "plate-dessert"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "programme",
+      "name": "Programme and MC",
+      "steps": [
+        {
+          "stepId": "welcome-toast",
+          "name": "Welcome toast",
+          "task": "microphone",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "seat-guests",
+            "event": "start"
+          }
+        },
+        {
+          "stepId": "first-dance",
+          "name": "First dance",
+          "task": "microphone",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "clear-mains"
+          }
+        },
+        {
+          "stepId": "speeches",
+          "name": "MC-cued speeches",
+          "task": "microphone",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 900,
+            "maxSeconds": 1500,
+            "defaultSeconds": 900
+          },
+          "startTrigger": {
+            "type": "manual",
+            "triggerName": "MC cues speeches"
+          }
+        },
+        {
+          "stepId": "cut-cake",
+          "name": "Cut the cake",
+          "task": "cake-table",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "speeches"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "dancing",
+      "name": "Dancing",
+      "steps": [
+        {
+          "stepId": "dancing",
+          "name": "Dancing until the band's last set",
+          "task": "dance-floor",
+          "duration": {
+            "type": "indefinite",
+            "defaultSeconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "serve-dessert",
+            "offsetSeconds": 600
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "band",
+      "name": "Band",
+      "steps": [
+        {
+          "stepId": "band-final-set",
+          "name": "Band performance and final-set end cue",
+          "task": "band",
+          "duration": {
+            "type": "indefinite",
+            "defaultSeconds": 3600
+          },
+          "startTrigger": {
+            "type": "manual",
+            "triggerName": "Band starts"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "room",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "servers",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "bar",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "planner",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "kitchen-pass",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "microphone",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "cake-table",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "dance-floor",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "band",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "venue": "Ashgrove Barn",
+    "guests": 90,
+    "serves": "90",
+    "courses": [
+      "starter",
+      "main",
+      "dessert"
+    ],
+    "sourceUrl": "",
+    "attribution": "Wedding Reception Run Sheet — Ashgrove Barn"
+  }
+}

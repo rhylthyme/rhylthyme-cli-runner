@@ -1,0 +1,385 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "sandwich-elisa-two-plates",
+  "name": "Sandwich ELISA on Two Plates",
+  "environmentType": "laboratory",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "plate1",
+      "name": "Plate 1",
+      "steps": [
+        {
+          "stepId": "coat1",
+          "name": "Coat Plate 1",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "wash1-1",
+          "name": "Wash Plate 1 (1st)",
+          "task": "washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "coat1",
+            "offsetSeconds": 54000
+          }
+        },
+        {
+          "stepId": "block1",
+          "name": "Block Plate 1",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash1-1"
+          }
+        },
+        {
+          "stepId": "wash1-2",
+          "name": "Wash Plate 1 (2nd)",
+          "task": "washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "block1"
+          }
+        },
+        {
+          "stepId": "add-std-samples1",
+          "name": "Add Standards and Samples to Plate 1",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash1-2"
+          }
+        },
+        {
+          "stepId": "incubate1",
+          "name": "Incubate Plate 1",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 7200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "add-std-samples1"
+          }
+        },
+        {
+          "stepId": "wash1-3",
+          "name": "Wash Plate 1 (3rd)",
+          "task": "washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "incubate1"
+          }
+        },
+        {
+          "stepId": "add-detection-ab1",
+          "name": "Add Detection Antibody to Plate 1",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash1-3"
+          }
+        },
+        {
+          "stepId": "incubate-detection1",
+          "name": "Incubate Detection Antibody Plate 1",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "add-detection-ab1"
+          }
+        },
+        {
+          "stepId": "wash1-4",
+          "name": "Wash Plate 1 (4th)",
+          "task": "washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "incubate-detection1"
+          }
+        },
+        {
+          "stepId": "develop1",
+          "name": "Develop Plate 1",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash1-4"
+          }
+        },
+        {
+          "stepId": "read1",
+          "name": "Read Plate 1",
+          "task": "reader",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "develop1"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "plate2",
+      "name": "Plate 2",
+      "steps": [
+        {
+          "stepId": "coat2",
+          "name": "Coat Plate 2",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 1800
+          }
+        },
+        {
+          "stepId": "wash2-1",
+          "name": "Wash Plate 2 (1st)",
+          "task": "washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "coat2",
+            "offsetSeconds": 54000
+          }
+        },
+        {
+          "stepId": "block2",
+          "name": "Block Plate 2",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash2-1"
+          }
+        },
+        {
+          "stepId": "wash2-2",
+          "name": "Wash Plate 2 (2nd)",
+          "task": "washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "block1",
+            "offsetSeconds": 1800
+          }
+        },
+        {
+          "stepId": "add-std-samples2",
+          "name": "Add Standards and Samples to Plate 2",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash2-2"
+          }
+        },
+        {
+          "stepId": "incubate2",
+          "name": "Incubate Plate 2",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 7200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "add-std-samples2"
+          }
+        },
+        {
+          "stepId": "wash2-3",
+          "name": "Wash Plate 2 (3rd)",
+          "task": "washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "incubate2"
+          }
+        },
+        {
+          "stepId": "add-detection-ab2",
+          "name": "Add Detection Antibody to Plate 2",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash2-3"
+          }
+        },
+        {
+          "stepId": "incubate-detection2",
+          "name": "Incubate Detection Antibody Plate 2",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "add-detection-ab2"
+          }
+        },
+        {
+          "stepId": "wash2-4",
+          "name": "Wash Plate 2 (4th)",
+          "task": "washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "incubate-detection2"
+          }
+        },
+        {
+          "stepId": "develop2",
+          "name": "Develop Plate 2",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash2-4"
+          }
+        },
+        {
+          "stepId": "read2",
+          "name": "Read Plate 2",
+          "task": "reader",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "develop2"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "prep",
+      "name": "Preparation",
+      "steps": [
+        {
+          "stepId": "make-standard-curve",
+          "name": "Make Standard Curve",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 54000
+          }
+        },
+        {
+          "stepId": "dilute-samples",
+          "name": "Dilute Samples",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "make-standard-curve"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "washer",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "incubator",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "reader",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "prep",
+      "maxConcurrent": 1
+    }
+  ]
+}

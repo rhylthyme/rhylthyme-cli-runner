@@ -1,0 +1,290 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "openai/gpt-5.6-luna",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/openai__gpt-5.6-luna/baseline/cache",
+    "limit": null,
+    "only": [
+      "kitchen-griddle-breakfast-for-six"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 64000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 1,
+      "input_tokens": 4207,
+      "output_tokens": 5200,
+      "cost_usd": 0.0070814,
+      "fix_iterations": 0
+    },
+    "generated_at": "2026-09-19T19:23:51+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.5789473684210527,
+    "steps_f1": 0.7333333333333334,
+    "durations_accuracy": 0.9090909090909091,
+    "resources_precision": 0.7142857142857143,
+    "resources_recall": 0.8333333333333334,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.45454545454545453,
+    "relationships_recall": 0.21739130434782608,
+    "relationships_f1": 0.29411764705882354,
+    "structure_rand_index": 0.9454545454545454,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.3125
+  },
+  "programs": [
+    {
+      "slug": "kitchen-griddle-breakfast-for-six",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.5789473684210527,
+        "steps_f1": 0.7333333333333334,
+        "durations_accuracy": 0.9090909090909091,
+        "resources_precision": 0.7142857142857143,
+        "resources_recall": 0.8333333333333334,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.45454545454545453,
+        "relationships_recall": 0.21739130434782608,
+        "relationships_f1": 0.29411764705882354,
+        "structure_rand_index": 0.9454545454545454,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.3125
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.5789473684210527,
+        "f1": 0.7333333333333334,
+        "tp": 11,
+        "n_gold": 19,
+        "n_pred": 11
+      },
+      "durations": {
+        "accuracy": 0.9090909090909091,
+        "correct": 10,
+        "total": 11
+      },
+      "resources": {
+        "precision": 0.7142857142857143,
+        "recall": 0.8333333333333334,
+        "f1": 0.7692307692307692,
+        "tp": 5,
+        "n_gold": 6,
+        "n_pred": 7
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.45454545454545453,
+        "recall": 0.21739130434782608,
+        "f1": 0.29411764705882354,
+        "tp": 5,
+        "n_gold": 23,
+        "n_pred": 11
+      },
+      "structure": {
+        "rand_index": 0.9454545454545454,
+        "agreements": 52,
+        "pairs": 55,
+        "n_steps": 11
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 3840.0,
+        "pred_makespan": 32400.0,
+        "makespan_ok": false,
+        "gold_critical_path": [
+          "mix-batter",
+          "rest-batter",
+          "pancakes-pass-1",
+          "pancakes-pass-2",
+          "pancakes-pass-3",
+          "drop-griddle-heat",
+          "scramble-eggs",
+          "serve-breakfast"
+        ],
+        "pred_critical_path": [
+          "warm-plates",
+          "call-and-carry"
+        ],
+        "js_critical_path": [
+          "warm-plates",
+          "call-and-carry"
+        ],
+        "js_makespan": 32400,
+        "critical_overlap": 0.0,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.3125,
+      "unsupported_steps": [
+        "season-eggs",
+        "pancake-passes",
+        "settle-griddle",
+        "toast-batches",
+        "call-and-carry"
+      ],
+      "matching": [
+        {
+          "gold": "mix-batter",
+          "predicted": "mix-batter",
+          "by": "name"
+        },
+        {
+          "gold": "rest-batter",
+          "predicted": "rest-batter",
+          "by": "name"
+        },
+        {
+          "gold": "set-table",
+          "predicted": "set-table",
+          "by": "name"
+        },
+        {
+          "gold": "warm-plates",
+          "predicted": "warm-plates",
+          "by": "name"
+        },
+        {
+          "gold": "heat-griddle",
+          "predicted": "heat-griddle",
+          "by": "name"
+        },
+        {
+          "gold": "cook-bacon",
+          "predicted": "cook-bacon",
+          "by": "name"
+        },
+        {
+          "gold": "scrape-griddle",
+          "predicted": "clean-griddle",
+          "by": "name"
+        },
+        {
+          "gold": "scramble-eggs",
+          "predicted": "scramble-eggs",
+          "by": "name"
+        },
+        {
+          "gold": "butter-toast",
+          "predicted": "butter-toast",
+          "by": "name"
+        },
+        {
+          "gold": "grind-beans",
+          "predicted": "grind-coffee",
+          "by": "name"
+        },
+        {
+          "gold": "brew-coffee",
+          "predicted": "brew-coffee",
+          "by": "name"
+        },
+        {
+          "gold": "crack-eggs",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "pancakes-pass-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "pancakes-pass-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "pancakes-pass-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "drop-griddle-heat",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "toast-batch-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "toast-batch-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "serve-breakfast",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "season-eggs",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "pancake-passes",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "settle-griddle",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "toast-batches",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "call-and-carry",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "openai/gpt-5.6-luna",
+        "pattern": "baseline",
+        "calls": 1,
+        "input_tokens": 4207,
+        "output_tokens": 5200,
+        "cost_usd": 0.0070814,
+        "cache_keys": [
+          "3cdeafdc40c1ae0c18a9e1649dd5fb082add0277b84d6399c08ebcdc8a6839dd"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/openai__gpt-5.6-luna/baseline/per-program/kitchen-griddle-breakfast-for-six/responses/kitchen-griddle-breakfast-for-six.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/openai__gpt-5.6-luna/baseline/per-program/kitchen-griddle-breakfast-for-six/predicted/kitchen-griddle-breakfast-for-six.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Breakfast for Six on One Griddle for 6 people, following the source text below",
+            "finish_at": "09:00",
+            "constraints": "one griddle, one two-slice toaster, one coffee maker, one oven on its lowest setting, one cook",
+            "vertical": "kitchen"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

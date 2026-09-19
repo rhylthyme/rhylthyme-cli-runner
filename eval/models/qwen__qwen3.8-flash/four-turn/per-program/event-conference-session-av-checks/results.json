@@ -1,0 +1,352 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "qwen/qwen3.8-flash",
+    "pattern": "four-turn",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/four-turn/cache",
+    "limit": null,
+    "only": [
+      "event-conference-session-av-checks"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 64000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 4,
+      "input_tokens": 29495,
+      "output_tokens": 69536,
+      "cost_usd": 0.03710617,
+      "fix_iterations": 0
+    },
+    "generated_at": "2026-09-19T19:15:35+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 1.0,
+    "steps_f1": 1.0,
+    "durations_accuracy": 1.0,
+    "resources_precision": 0.6666666666666666,
+    "resources_recall": 0.6666666666666666,
+    "actors_accuracy": 0.0,
+    "relationships_precision": 0.5333333333333333,
+    "relationships_recall": 0.8,
+    "relationships_f1": 0.64,
+    "structure_rand_index": 0.6736842105263158,
+    "end_to_end_pass": 1.0,
+    "unsupported_rate": 0.047619047619047616
+  },
+  "programs": [
+    {
+      "slug": "event-conference-session-av-checks",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 1.0,
+        "steps_f1": 1.0,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.6666666666666666,
+        "resources_recall": 0.6666666666666666,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.5333333333333333,
+        "relationships_recall": 0.8,
+        "relationships_f1": 0.64,
+        "structure_rand_index": 0.6736842105263158,
+        "end_to_end_pass": 1.0,
+        "unsupported_rate": 0.047619047619047616
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 20,
+        "n_gold": 20,
+        "n_pred": 20
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 20,
+        "total": 20
+      },
+      "resources": {
+        "precision": 0.6666666666666666,
+        "recall": 0.6666666666666666,
+        "f1": 0.6666666666666666,
+        "tp": 4,
+        "n_gold": 6,
+        "n_pred": 6
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.5333333333333333,
+        "recall": 0.8,
+        "f1": 0.64,
+        "tp": 16,
+        "n_gold": 20,
+        "n_pred": 30
+      },
+      "structure": {
+        "rand_index": 0.6736842105263158,
+        "agreements": 128,
+        "pairs": 190,
+        "n_steps": 20
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 15240.0,
+        "pred_makespan": 14940.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "line-check",
+          "projector-test",
+          "mic-check",
+          "load-deck-one",
+          "chair-opens",
+          "talk-one",
+          "qa-one",
+          "load-deck-two",
+          "changeover-one",
+          "talk-two",
+          "qa-two",
+          "serve-coffee",
+          "clear-foyer",
+          "changeover-two",
+          "talk-three",
+          "qa-three",
+          "chair-closes",
+          "strike-av"
+        ],
+        "pred_critical_path": [
+          "line-check-av-desk",
+          "test-projector",
+          "check-lapel-pack",
+          "load-first-deck",
+          "chair-open-room",
+          "first-talk",
+          "first-questions",
+          "load-second-deck",
+          "second-talk",
+          "second-questions",
+          "coffee-out-foyer",
+          "clear-foyer",
+          "changeover-third-speaker",
+          "third-talk",
+          "third-questions",
+          "chair-close-session",
+          "strike-av-desk"
+        ],
+        "js_critical_path": [
+          "line-check-av-desk",
+          "test-projector",
+          "check-lapel-pack",
+          "load-first-deck",
+          "chair-open-room",
+          "first-talk",
+          "first-questions",
+          "load-second-deck",
+          "second-talk",
+          "second-questions",
+          "coffee-out-foyer",
+          "clear-foyer",
+          "changeover-third-speaker",
+          "third-talk",
+          "third-questions",
+          "chair-close-session",
+          "strike-av-desk"
+        ],
+        "js_makespan": 14940,
+        "critical_overlap": 0.9444444444444444,
+        "critical_ok": true,
+        "passed": true
+      },
+      "unsupported_rate": 0.047619047619047616,
+      "unsupported_steps": [
+        "confirm-coffee-ready"
+      ],
+      "matching": [
+        {
+          "gold": "line-check",
+          "predicted": "line-check-av-desk",
+          "by": "span"
+        },
+        {
+          "gold": "projector-test",
+          "predicted": "test-projector",
+          "by": "span"
+        },
+        {
+          "gold": "mic-check",
+          "predicted": "check-lapel-pack",
+          "by": "span"
+        },
+        {
+          "gold": "strike-av",
+          "predicted": "strike-av-desk",
+          "by": "span"
+        },
+        {
+          "gold": "load-deck-one",
+          "predicted": "load-first-deck",
+          "by": "span"
+        },
+        {
+          "gold": "load-deck-two",
+          "predicted": "load-second-deck",
+          "by": "span"
+        },
+        {
+          "gold": "load-deck-three",
+          "predicted": "load-third-deck",
+          "by": "span"
+        },
+        {
+          "gold": "chair-opens",
+          "predicted": "chair-open-room",
+          "by": "span"
+        },
+        {
+          "gold": "talk-one",
+          "predicted": "first-talk",
+          "by": "span"
+        },
+        {
+          "gold": "qa-one",
+          "predicted": "first-questions",
+          "by": "span"
+        },
+        {
+          "gold": "changeover-one",
+          "predicted": "changeover-second-speaker",
+          "by": "span"
+        },
+        {
+          "gold": "talk-two",
+          "predicted": "second-talk",
+          "by": "span"
+        },
+        {
+          "gold": "qa-two",
+          "predicted": "second-questions",
+          "by": "span"
+        },
+        {
+          "gold": "changeover-two",
+          "predicted": "changeover-third-speaker",
+          "by": "span"
+        },
+        {
+          "gold": "talk-three",
+          "predicted": "third-talk",
+          "by": "span"
+        },
+        {
+          "gold": "qa-three",
+          "predicted": "third-questions",
+          "by": "span"
+        },
+        {
+          "gold": "chair-closes",
+          "predicted": "chair-close-session",
+          "by": "span"
+        },
+        {
+          "gold": "set-coffee",
+          "predicted": "set-coffee-station",
+          "by": "span"
+        },
+        {
+          "gold": "serve-coffee",
+          "predicted": "coffee-out-foyer",
+          "by": "span"
+        },
+        {
+          "gold": "clear-foyer",
+          "predicted": "clear-foyer",
+          "by": "span"
+        },
+        {
+          "gold": null,
+          "predicted": "confirm-coffee-ready",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "qwen/qwen3.8-flash",
+        "pattern": "four-turn",
+        "calls": 4,
+        "input_tokens": 29495,
+        "output_tokens": 69536,
+        "cost_usd": 0.03710617,
+        "cache_keys": [
+          "454b83c1d04118fe412b50a72cae3891c09eab7829a083d70c6fff4829f05f40",
+          "090f25f2171bd5ba2efb94e7b4fb7be91cc5a387b4b41866e2a031466e3bca56",
+          "9e54b45ef2366b55047c01818bea5ebc0322a2994f12c4aa22fb9277f83e4995",
+          "d1c17d36333e7b3ab879b9373e895b1ebbdbcce715b82f8731035e3257ebdb3c"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/four-turn/per-program/event-conference-session-av-checks/responses/event-conference-session-av-checks.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/four-turn/per-program/event-conference-session-av-checks/predicted/event-conference-session-av-checks.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 20,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Session Chair's Sheet \u2014 Room 2B for one room, three speakers",
+            "finish_at": "coffee break at 10:30",
+            "constraints": "one projector, one lapel microphone pack, one AV desk, one lectern, one foyer for catering",
+            "vertical": "events",
+            "turn": "T1",
+            "kind": "run-of-show",
+            "constraintsLine": "Resource limits: one projector, one lapel microphone pack, one AV desk, one lectern, one foyer for catering.",
+            "deadlineLine": "Everything must be finished by coffee break at 10:30.",
+            "source": "Source text (read all of it):\n<<<\nSession Chair's Sheet \u2014 Room 2B, Thursday morning\n\nOne room, one projector, one lapel pack, one AV desk, one chair. Three talks, thirty minutes each, with questions after every one. The chair calls each speaker to the lectern; nothing starts until they do.\n\nBefore the room opens\nLine check at the AV desk: laptop, HDMI, house sound, record feed. 30 minutes.\nTest the projector once the desk is up: resolution, keystone, the cue slide. 15 minutes.\nCheck the lapel pack after the projector: battery, gain, a walk to the back row. 10 minutes.\n\nSlides\nLoad the first deck once the lapel pack is checked; 10 minutes, and leave it on the cue slide.\nLoad the second deck as soon as the first talk's questions are over; 5 minutes.\nLoad the third deck while the coffee is going out; 5 minutes.\n\nThe session\nChair opens the room, housekeeping and fire exits; 5 minutes.\nFirst talk when the chair calls the first speaker: 30 minutes.\nQuestions after the first talk: five to ten minutes, seven is the plan.\nChangeover to the second speaker: unclip the pack, clip it on, 5 minutes.\nSecond talk when the chair calls the second speaker: 30 minutes.\nQuestions after the second talk: five to ten minutes, seven is the plan.\nChangeover to the third speaker once the coffee is cleared from the foyer; 5 minutes.\nThird talk when the chair calls the third speaker: 30 minutes.\nQuestions after the third talk: five to fifteen minutes, ten is the plan.\nChair closes the session; 5 minutes.\n\nCatering\nSet the coffee station in the service corridor from ninety minutes in; 30 minutes.\nCoffee goes out to the foyer when the second talk's questions end; 20 minutes.\nClear the foyer; 10 minutes.\n\nStrike\nStrike the AV desk when the chair closes; 20 minutes, cables coiled, record feed off.\n\nNotes\nThe projector is the contended thing, not the room: a deck cannot be loaded while a talk is on it, so every load sits in a gap. The lapel pack is the other one, and it is the reason changeovers are real steps rather than slack. Question time is the only elastic in the morning; if the first two run long the chair trims the third.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Session Chair's Sheet \u2014 Room 2B for one room, three speakers",
+            "finish_at": "coffee break at 10:30",
+            "constraints": "one projector, one lapel microphone pack, one AV desk, one lectern, one foyer for catering",
+            "vertical": "events",
+            "turn": "T2",
+            "kind": "run-of-show"
+          },
+          "T3 extraction": {
+            "goal": "Session Chair's Sheet \u2014 Room 2B for one room, three speakers",
+            "finish_at": "coffee break at 10:30",
+            "constraints": "one projector, one lapel microphone pack, one AV desk, one lectern, one foyer for catering",
+            "vertical": "events",
+            "turn": "T3",
+            "kind": "run-of-show",
+            "environment": "a venue where you have: one projector, one lapel microphone pack, one AV desk, one lectern, one foyer for catering",
+            "deadline": "coffee break at 10:30",
+            "source": "Source text (read all of it):\n<<<\nSession Chair's Sheet \u2014 Room 2B, Thursday morning\n\nOne room, one projector, one lapel pack, one AV desk, one chair. Three talks, thirty minutes each, with questions after every one. The chair calls each speaker to the lectern; nothing starts until they do.\n\nBefore the room opens\nLine check at the AV desk: laptop, HDMI, house sound, record feed. 30 minutes.\nTest the projector once the desk is up: resolution, keystone, the cue slide. 15 minutes.\nCheck the lapel pack after the projector: battery, gain, a walk to the back row. 10 minutes.\n\nSlides\nLoad the first deck once the lapel pack is checked; 10 minutes, and leave it on the cue slide.\nLoad the second deck as soon as the first talk's questions are over; 5 minutes.\nLoad the third deck while the coffee is going out; 5 minutes.\n\nThe session\nChair opens the room, housekeeping and fire exits; 5 minutes.\nFirst talk when the chair calls the first speaker: 30 minutes.\nQuestions after the first talk: five to ten minutes, seven is the plan.\nChangeover to the second speaker: unclip the pack, clip it on, 5 minutes.\nSecond talk when the chair calls the second speaker: 30 minutes.\nQuestions after the second talk: five to ten minutes, seven is the plan.\nChangeover to the third speaker once the coffee is cleared from the foyer; 5 minutes.\nThird talk when the chair calls the third speaker: 30 minutes.\nQuestions after the third talk: five to fifteen minutes, ten is the plan.\nChair closes the session; 5 minutes.\n\nCatering\nSet the coffee station in the service corridor from ninety minutes in; 30 minutes.\nCoffee goes out to the foyer when the second talk's questions end; 20 minutes.\nClear the foyer; 10 minutes.\n\nStrike\nStrike the AV desk when the chair closes; 20 minutes, cables coiled, record feed off.\n\nNotes\nThe projector is the contended thing, not the room: a deck cannot be loaded while a talk is on it, so every load sits in a gap. The lapel pack is the other one, and it is the reason changeovers are real steps rather than slack. Question time is the only elastic in the morning; if the first two run long the chair trims the third.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Session Chair's Sheet \u2014 Room 2B for one room, three speakers",
+            "finish_at": "coffee break at 10:30",
+            "constraints": "one projector, one lapel microphone pack, one AV desk, one lectern, one foyer for catering",
+            "vertical": "events",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or plan_event",
+            "finishAtArg": " with finishAt=\"coffee break at 10:30\""
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

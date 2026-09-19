@@ -1,0 +1,482 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "hiit-circuit-card-3-athletes-4-stations-4-rounds",
+  "name": "HIIT Circuit Card — 3 Athletes, 4 Stations, 4 Rounds",
+  "description": "Small-group HIIT circuit: 5-minute shared warm-up on the floor, four 60-second station intervals per athlete, 60 seconds of floor rest after the first three stations, and a 10-minute shared cooldown once all fourth stations finish. One athlete may use each of rower, kettlebell, box, or sled at a time; the floor can hold three athletes.",
+  "environmentType": "gym",
+  "actors": 3,
+  "tracks": [
+    {
+      "trackId": "athlete-a",
+      "name": "Athlete A",
+      "steps": [
+        {
+          "stepId": "warmup-a",
+          "name": "Warm-up — Athlete A",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "round1-a-rower",
+          "name": "Round 1 — Athlete A: Rower",
+          "task": "rower",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "warmup-a"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "warmup-b"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "warmup-c"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "rest1-a",
+          "name": "Rest after Round 1 — Athlete A",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "round1-a-rower"
+          }
+        },
+        {
+          "stepId": "round2-a-kettlebell",
+          "name": "Round 2 — Athlete A: Kettlebell swings",
+          "task": "kettlebell",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest1-a"
+          }
+        },
+        {
+          "stepId": "rest2-a",
+          "name": "Rest after Round 2 — Athlete A",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "round2-a-kettlebell"
+          }
+        },
+        {
+          "stepId": "round3-a-box",
+          "name": "Round 3 — Athlete A: Box step-overs",
+          "task": "box",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest2-a"
+          }
+        },
+        {
+          "stepId": "rest3-a",
+          "name": "Rest after Round 3 — Athlete A",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "round3-a-box"
+          }
+        },
+        {
+          "stepId": "round4-a-sled",
+          "name": "Round 4 — Athlete A: Sled push",
+          "task": "sled",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest3-a"
+          }
+        },
+        {
+          "stepId": "cooldown-a",
+          "name": "Cooldown — Athlete A",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "round4-a-sled"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "round4-b-rower"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "round4-c-kettlebell"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "athlete-b",
+      "name": "Athlete B",
+      "steps": [
+        {
+          "stepId": "warmup-b",
+          "name": "Warm-up — Athlete B",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "round1-b-kettlebell",
+          "name": "Round 1 — Athlete B: Kettlebell swings",
+          "task": "kettlebell",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "warmup-a"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "warmup-b"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "warmup-c"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "rest1-b",
+          "name": "Rest after Round 1 — Athlete B",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "round1-b-kettlebell"
+          }
+        },
+        {
+          "stepId": "round2-b-box",
+          "name": "Round 2 — Athlete B: Box step-overs",
+          "task": "box",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest1-b"
+          }
+        },
+        {
+          "stepId": "rest2-b",
+          "name": "Rest after Round 2 — Athlete B",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "round2-b-box"
+          }
+        },
+        {
+          "stepId": "round3-b-sled",
+          "name": "Round 3 — Athlete B: Sled push",
+          "task": "sled",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest2-b"
+          }
+        },
+        {
+          "stepId": "rest3-b",
+          "name": "Rest after Round 3 — Athlete B",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "round3-b-sled"
+          }
+        },
+        {
+          "stepId": "round4-b-rower",
+          "name": "Round 4 — Athlete B: Rower",
+          "task": "rower",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest3-b"
+          }
+        },
+        {
+          "stepId": "cooldown-b",
+          "name": "Cooldown — Athlete B",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "round4-a-sled"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "round4-b-rower"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "round4-c-kettlebell"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "athlete-c",
+      "name": "Athlete C",
+      "steps": [
+        {
+          "stepId": "warmup-c",
+          "name": "Warm-up — Athlete C",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "round1-c-box",
+          "name": "Round 1 — Athlete C: Box step-overs",
+          "task": "box",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "warmup-a"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "warmup-b"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "warmup-c"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "rest1-c",
+          "name": "Rest after Round 1 — Athlete C",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "round1-c-box"
+          }
+        },
+        {
+          "stepId": "round2-c-sled",
+          "name": "Round 2 — Athlete C: Sled push",
+          "task": "sled",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest1-c"
+          }
+        },
+        {
+          "stepId": "rest2-c",
+          "name": "Rest after Round 2 — Athlete C",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "round2-c-sled"
+          }
+        },
+        {
+          "stepId": "round3-c-rower",
+          "name": "Round 3 — Athlete C: Rower",
+          "task": "rower",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest2-c"
+          }
+        },
+        {
+          "stepId": "rest3-c",
+          "name": "Rest after Round 3 — Athlete C",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "round3-c-rower"
+          }
+        },
+        {
+          "stepId": "round4-c-kettlebell",
+          "name": "Round 4 — Athlete C: Kettlebell swings",
+          "task": "kettlebell",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest3-c"
+          }
+        },
+        {
+          "stepId": "cooldown-c",
+          "name": "Cooldown — Athlete C",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "round4-a-sled"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "round4-b-rower"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "round4-c-kettlebell"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "floor",
+      "maxConcurrent": 3
+    },
+    {
+      "task": "rower",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "kettlebell",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "box",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "sled",
+      "maxConcurrent": 1
+    }
+  ]
+}

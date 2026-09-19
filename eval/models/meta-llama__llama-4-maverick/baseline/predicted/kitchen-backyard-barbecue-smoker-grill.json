@@ -1,0 +1,296 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "backyard-bbq",
+  "name": "Backyard Barbecue",
+  "environmentType": "kitchen",
+  "actors": 2,
+  "tracks": [
+    {
+      "trackId": "pork",
+      "name": "Pork Shoulder",
+      "steps": [
+        {
+          "stepId": "light-smoker",
+          "name": "Light Smoker",
+          "task": "smoker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "prep-shoulder",
+          "name": "Trim and Rub Shoulder",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1500
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "light-smoker"
+          }
+        },
+        {
+          "stepId": "smoke-unwrapped",
+          "name": "Smoke Unwrapped",
+          "task": "smoker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 21600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep-shoulder"
+          }
+        },
+        {
+          "stepId": "wrap-shoulder",
+          "name": "Wrap Shoulder",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "smoke-unwrapped"
+          }
+        },
+        {
+          "stepId": "smoke-wrapped",
+          "name": "Smoke Wrapped",
+          "task": "smoker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 12600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wrap-shoulder"
+          }
+        },
+        {
+          "stepId": "hold-pork",
+          "name": "Hold Pork",
+          "task": "cooler",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 3600,
+            "maxSeconds": 10800,
+            "defaultSeconds": 7200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "smoke-wrapped"
+          }
+        },
+        {
+          "stepId": "pull-meat",
+          "name": "Pull Meat",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "hold-pork"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "beans",
+      "name": "Beans",
+      "steps": [
+        {
+          "stepId": "prep-beans",
+          "name": "Fry Bacon and Onion",
+          "task": "side-burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 720
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "hold-pork"
+          }
+        },
+        {
+          "stepId": "simmer-beans",
+          "name": "Simmer Beans",
+          "task": "side-burner",
+          "duration": {
+            "type": "indefinite",
+            "defaultSeconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep-beans"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "slaw",
+      "name": "Slaw",
+      "steps": [
+        {
+          "stepId": "shred-veggies",
+          "name": "Shred Cabbage and Carrot",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "hold-pork"
+          }
+        },
+        {
+          "stepId": "whisk-dressing",
+          "name": "Whisk Dressing",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "shred-veggies"
+          }
+        },
+        {
+          "stepId": "dress-slaw",
+          "name": "Dress Slaw",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "whisk-dressing"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "grill",
+      "name": "Grill",
+      "steps": [
+        {
+          "stepId": "light-grill",
+          "name": "Light Grill",
+          "task": "grill",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1500
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 21600
+          }
+        },
+        {
+          "stepId": "grill-sausages",
+          "name": "Grill Sausages",
+          "task": "grill",
+          "duration": {
+            "type": "fixed",
+            "seconds": 840
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "light-grill"
+          }
+        },
+        {
+          "stepId": "grill-corn",
+          "name": "Grill Corn",
+          "task": "grill",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "grill-sausages"
+          }
+        },
+        {
+          "stepId": "toast-buns",
+          "name": "Toast Buns",
+          "task": "grill",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "grill-corn"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "table",
+      "name": "Table Setup",
+      "steps": [
+        {
+          "stepId": "set-table",
+          "name": "Set Table",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "toast-buns"
+          }
+        },
+        {
+          "stepId": "call-everyone",
+          "name": "Call Everyone",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "set-table"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "smoker",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "grill",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "side-burner",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "cooler",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "prep",
+      "maxConcurrent": 2
+    }
+  ]
+}

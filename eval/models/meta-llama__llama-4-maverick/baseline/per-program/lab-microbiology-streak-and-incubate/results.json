@@ -1,0 +1,303 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "meta-llama/llama-4-maverick",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/baseline/cache",
+    "limit": null,
+    "only": [
+      "lab-microbiology-streak-and-incubate"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 3,
+      "input_tokens": 20193,
+      "output_tokens": 5453,
+      "cost_usd": 0.00735164,
+      "fix_iterations": 2
+    },
+    "generated_at": "2026-09-19T19:37:52+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.3333333333333333,
+    "steps_f1": 0.5,
+    "durations_accuracy": 1.0,
+    "resources_precision": 0.375,
+    "resources_recall": 0.6,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.5,
+    "relationships_recall": 0.15789473684210525,
+    "relationships_f1": 0.23999999999999996,
+    "structure_rand_index": 0.6,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.5
+  },
+  "programs": [
+    {
+      "slug": "lab-microbiology-streak-and-incubate",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.3333333333333333,
+        "steps_f1": 0.5,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.375,
+        "resources_recall": 0.6,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.5,
+        "relationships_recall": 0.15789473684210525,
+        "relationships_f1": 0.23999999999999996,
+        "structure_rand_index": 0.6,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.5
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.3333333333333333,
+        "f1": 0.5,
+        "tp": 6,
+        "n_gold": 18,
+        "n_pred": 6
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 6,
+        "total": 6
+      },
+      "resources": {
+        "precision": 0.375,
+        "recall": 0.6,
+        "f1": 0.4615384615384615,
+        "tp": 3,
+        "n_gold": 5,
+        "n_pred": 8
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.5,
+        "recall": 0.15789473684210525,
+        "f1": 0.23999999999999996,
+        "tp": 3,
+        "n_gold": 19,
+        "n_pred": 6
+      },
+      "structure": {
+        "rand_index": 0.6,
+        "agreements": 9,
+        "pairs": 15,
+        "n_steps": 6
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": false,
+        "js_errors": [
+          "Step \"supervisor-signoff\" has no duration."
+        ],
+        "gold_makespan": 98400.0,
+        "pred_makespan": 100200.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "sterilise-bench",
+          "label-plates",
+          "streak-1",
+          "streak-2",
+          "incubate-2",
+          "read-2",
+          "pick-colony",
+          "streak-purity-plate",
+          "incubate-purity-plate"
+        ],
+        "pred_critical_path": [
+          "wipe-bench",
+          "label-plates",
+          "streak-isolates",
+          "incubate-plates",
+          "read-plates",
+          "pick-colonies",
+          "supervisor-signoff",
+          "streak-purity-plate",
+          "incubate-purity",
+          "make-smear",
+          "gram-stain",
+          "read-stain"
+        ],
+        "js_critical_path": null,
+        "js_makespan": null,
+        "critical_overlap": 0.3333333333333333,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.5,
+      "unsupported_steps": [
+        "wipe-bench",
+        "streak-isolates",
+        "incubate-plates",
+        "read-plates",
+        "pick-colonies",
+        "supervisor-signoff"
+      ],
+      "matching": [
+        {
+          "gold": "label-plates",
+          "predicted": "label-plates",
+          "by": "name"
+        },
+        {
+          "gold": "streak-purity-plate",
+          "predicted": "streak-purity-plate",
+          "by": "name"
+        },
+        {
+          "gold": "incubate-purity-plate",
+          "predicted": "incubate-purity",
+          "by": "name"
+        },
+        {
+          "gold": "make-smear",
+          "predicted": "make-smear",
+          "by": "name"
+        },
+        {
+          "gold": "gram-stain",
+          "predicted": "gram-stain",
+          "by": "name"
+        },
+        {
+          "gold": "read-stain",
+          "predicted": "read-stain",
+          "by": "name"
+        },
+        {
+          "gold": "sterilise-bench",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "streak-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "incubate-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "read-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "streak-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "incubate-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "read-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "streak-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "hold-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "incubate-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "read-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "pick-colony",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "wipe-bench",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "streak-isolates",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "incubate-plates",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "read-plates",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "pick-colonies",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "supervisor-signoff",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "meta-llama/llama-4-maverick",
+        "pattern": "baseline",
+        "calls": 3,
+        "input_tokens": 20193,
+        "output_tokens": 5453,
+        "cost_usd": 0.00735164,
+        "cache_keys": [
+          "d86211b6a2c8d31ee86e731edd60504aff3c59f6d19f82f4029cbf8fa0a1dc11",
+          "cd3d8e2e0135899b663e5cad723eb94ecdb2b808343c49dc3c5004be00d4ddc1",
+          "c890882ccdd19fa694692aa7977a4e4f3a7b8c19fbb24d3fdadebe0681172650"
+        ],
+        "fix_iterations": 2,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/baseline/per-program/lab-microbiology-streak-and-incubate/responses/lab-microbiology-streak-and-incubate.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/baseline/per-program/lab-microbiology-streak-and-incubate/predicted/lab-microbiology-streak-and-incubate.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Streaking Three Cultures onto Selective Media for three isolates, one purity plate, following the source text below",
+            "finish_at": null,
+            "constraints": "one loop station at the burner, one 37 \u00b0C incubator shelf holding two plates, one staining rack, one microscope, one technician, a supervisor signs off the readings",
+            "vertical": "lab"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

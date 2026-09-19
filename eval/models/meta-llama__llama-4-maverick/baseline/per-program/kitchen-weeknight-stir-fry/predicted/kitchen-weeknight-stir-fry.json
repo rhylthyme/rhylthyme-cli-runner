@@ -1,0 +1,237 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "weeknight-chicken-stir-fry",
+  "name": "Weeknight Chicken and Broccoli Stir-Fry with Rice",
+  "environmentType": "kitchen",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "rice",
+      "name": "Rice",
+      "steps": [
+        {
+          "stepId": "rinse-rice",
+          "name": "Rinse rice",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "boil-rice",
+          "name": "Boil rice",
+          "task": "stove",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rinse-rice"
+          }
+        },
+        {
+          "stepId": "simmer-rice",
+          "name": "Simmer rice",
+          "task": "stove",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "boil-rice"
+          }
+        },
+        {
+          "stepId": "steam-rice",
+          "name": "Steam rice",
+          "task": "stove",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "simmer-rice"
+          }
+        },
+        {
+          "stepId": "fluff-rice",
+          "name": "Fluff rice",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "steam-rice"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "prep",
+      "name": "Prep",
+      "steps": [
+        {
+          "stepId": "slice-chicken",
+          "name": "Slice chicken",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rinse-rice"
+          }
+        },
+        {
+          "stepId": "prep-veggies",
+          "name": "Prepare broccoli, garlic, ginger",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "slice-chicken"
+          }
+        },
+        {
+          "stepId": "marinate-chicken",
+          "name": "Marinate chicken",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep-veggies"
+          }
+        },
+        {
+          "stepId": "mix-sauce",
+          "name": "Mix sauce",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "marinate-chicken"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "stir-fry",
+      "name": "Stir-fry",
+      "steps": [
+        {
+          "stepId": "heat-wok",
+          "name": "Heat wok",
+          "task": "stove",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "steam-rice"
+          }
+        },
+        {
+          "stepId": "cook-chicken",
+          "name": "Cook chicken",
+          "task": "stove",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "heat-wok"
+          }
+        },
+        {
+          "stepId": "cook-broccoli",
+          "name": "Cook broccoli",
+          "task": "stove",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cook-chicken"
+          }
+        },
+        {
+          "stepId": "finish-stir-fry",
+          "name": "Finish stir-fry",
+          "task": "stove",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cook-broccoli"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "serve",
+      "name": "Serve",
+      "steps": [
+        {
+          "stepId": "serve",
+          "name": "Serve",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "fluff-rice"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "finish-stir-fry"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "stove",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "prep",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "serves": "2"
+  }
+}

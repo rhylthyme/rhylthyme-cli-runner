@@ -1,0 +1,484 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "meta-llama/llama-4-maverick",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/baseline/cache",
+    "limit": null,
+    "only": [
+      "fitness-partner-upper-body-supersets"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 2,
+      "input_tokens": 14051,
+      "output_tokens": 9781,
+      "cost_usd": 0.0090188,
+      "fix_iterations": 1
+    },
+    "generated_at": "2026-09-19T19:26:38+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.03571428571428571,
+    "steps_f1": 0.0689655172413793,
+    "durations_accuracy": 1.0,
+    "resources_precision": 0.5714285714285714,
+    "resources_recall": 0.8,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.0,
+    "relationships_recall": 0.0,
+    "relationships_f1": 0.0,
+    "structure_rand_index": 1.0,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.9615384615384616
+  },
+  "programs": [
+    {
+      "slug": "fitness-partner-upper-body-supersets",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.03571428571428571,
+        "steps_f1": 0.0689655172413793,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.5714285714285714,
+        "resources_recall": 0.8,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.0,
+        "relationships_recall": 0.0,
+        "relationships_f1": 0.0,
+        "structure_rand_index": 1.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.9615384615384616
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.03571428571428571,
+        "f1": 0.0689655172413793,
+        "tp": 1,
+        "n_gold": 28,
+        "n_pred": 1
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "resources": {
+        "precision": 0.5714285714285714,
+        "recall": 0.8,
+        "f1": 0.6666666666666666,
+        "tp": 4,
+        "n_gold": 5,
+        "n_pred": 7
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 38,
+        "n_pred": 1
+      },
+      "structure": {
+        "rand_index": 1.0,
+        "agreements": 0,
+        "pairs": 0,
+        "n_steps": 1
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 1405.0,
+        "pred_makespan": 1305.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "a-warmup-row",
+          "a-mobility",
+          "a-bench-1",
+          "a-row-1",
+          "a-rest-a1",
+          "a-bench-2",
+          "a-row-2",
+          "a-rest-a2",
+          "a-press-1",
+          "b-press-1",
+          "b-rest-b1",
+          "b-pullups-2",
+          "b-press-2",
+          "a-cooldown"
+        ],
+        "pred_critical_path": [
+          "warm-up-row",
+          "warm-up-arm-circles",
+          "bench-press-1",
+          "dumbbell-row-1-b-done",
+          "bench-press-2",
+          "rest-after-superset-a",
+          "overhead-press-1",
+          "pull-ups-1-b-done",
+          "overhead-press-2",
+          "rest-after-superset-b-1",
+          "overhead-press-3",
+          "pull-ups-3-b-done",
+          "cool-down"
+        ],
+        "js_critical_path": [
+          "warm-up-row",
+          "warm-up-arm-circles",
+          "bench-press-1",
+          "dumbbell-row-1-b-done",
+          "bench-press-2",
+          "rest-after-superset-a",
+          "overhead-press-1",
+          "pull-ups-1-b-done",
+          "overhead-press-2",
+          "rest-after-superset-b-1",
+          "overhead-press-3",
+          "pull-ups-3-b-done",
+          "cool-down"
+        ],
+        "js_makespan": 1305,
+        "critical_overlap": 0.07142857142857142,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.9615384615384616,
+      "unsupported_steps": [
+        "warm-up-row",
+        "bench-press-1",
+        "dumbbell-row-1-b-done",
+        "bench-press-2",
+        "rest-after-superset-a",
+        "overhead-press-1",
+        "pull-ups-1-b-done",
+        "overhead-press-2",
+        "rest-after-superset-b-1",
+        "overhead-press-3",
+        "pull-ups-3-b-done",
+        "cool-down",
+        "warm-up-row-b",
+        "warm-up-arm-circles-b",
+        "dumbbell-row-1",
+        "bench-press-1-a-done",
+        "dumbbell-row-2",
+        "rest-after-superset-a-b",
+        "pull-ups-1",
+        "overhead-press-1-a-done",
+        "pull-ups-2",
+        "rest-after-superset-b-1-b",
+        "pull-ups-3",
+        "overhead-press-3-a-done",
+        "cool-down-b"
+      ],
+      "matching": [
+        {
+          "gold": "a-mobility",
+          "predicted": "warm-up-arm-circles",
+          "by": "name"
+        },
+        {
+          "gold": "a-warmup-row",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-bench-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-row-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-rest-a1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-bench-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-row-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-rest-a2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-press-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-pullups-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-rest-b1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-press-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-pullups-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-cooldown",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-warmup-row",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-mobility",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-row-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-bench-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rest-a1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-row-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-bench-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rest-a2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-pullups-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-press-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rest-b1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-pullups-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-press-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-cooldown",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "warm-up-row",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "bench-press-1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "dumbbell-row-1-b-done",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "bench-press-2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "rest-after-superset-a",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "overhead-press-1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "pull-ups-1-b-done",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "overhead-press-2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "rest-after-superset-b-1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "overhead-press-3",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "pull-ups-3-b-done",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "cool-down",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "warm-up-row-b",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "warm-up-arm-circles-b",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "dumbbell-row-1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "bench-press-1-a-done",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "dumbbell-row-2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "rest-after-superset-a-b",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "pull-ups-1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "overhead-press-1-a-done",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "pull-ups-2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "rest-after-superset-b-1-b",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "pull-ups-3",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "overhead-press-3-a-done",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "cool-down-b",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "meta-llama/llama-4-maverick",
+        "pattern": "baseline",
+        "calls": 2,
+        "input_tokens": 14051,
+        "output_tokens": 9781,
+        "cost_usd": 0.0090188,
+        "cache_keys": [
+          "34dd19f9ea9e4d1ac607800d8cf8b0761e0b67d48ee9aef5120f1d8f2654a404",
+          "5fe73c3f93ca7f2ccdd41d2ac9ef2b43ba924be736fdce86db2cc9d910ed0933"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/baseline/per-program/fitness-partner-upper-body-supersets/responses/fitness-partner-upper-body-supersets.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/baseline/per-program/fitness-partner-upper-body-supersets/predicted/fitness-partner-upper-body-supersets.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Partner Upper-Body Superset Session for 2 lifters, following the source text below",
+            "finish_at": null,
+            "constraints": "one bench and barbell, one pair of dumbbells, one pull-up bar, two ergs, about 25 minutes",
+            "vertical": "gym"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

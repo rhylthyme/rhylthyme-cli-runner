@@ -1,0 +1,405 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "qwen/qwen3.8-flash",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/baseline/cache",
+    "limit": null,
+    "only": [
+      "lab-elisa-plate-wash"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 64000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 1,
+      "input_tokens": 4711,
+      "output_tokens": 25595,
+      "cost_usd": 0.012736299999999999,
+      "fix_iterations": 0
+    },
+    "generated_at": "2026-09-19T19:48:47+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 0.0,
+    "steps_recall": 0.0,
+    "steps_f1": 0.0,
+    "durations_accuracy": 0.0,
+    "resources_precision": 0.16666666666666666,
+    "resources_recall": 0.2,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.0,
+    "relationships_recall": 0.0,
+    "relationships_f1": 0.0,
+    "structure_rand_index": 0.0,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 1.0
+  },
+  "programs": [
+    {
+      "slug": "lab-elisa-plate-wash",
+      "headline": {
+        "steps_precision": 0.0,
+        "steps_recall": 0.0,
+        "steps_f1": 0.0,
+        "durations_accuracy": 0.0,
+        "resources_precision": 0.16666666666666666,
+        "resources_recall": 0.2,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.0,
+        "relationships_recall": 0.0,
+        "relationships_f1": 0.0,
+        "structure_rand_index": 0.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 1.0
+      },
+      "steps": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 22,
+        "n_pred": 0
+      },
+      "durations": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 0
+      },
+      "resources": {
+        "precision": 0.16666666666666666,
+        "recall": 0.2,
+        "f1": 0.1818181818181818,
+        "tp": 1,
+        "n_gold": 5,
+        "n_pred": 6
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 25,
+        "n_pred": 0
+      },
+      "structure": {
+        "rand_index": 0.0,
+        "agreements": 0,
+        "pairs": 0,
+        "n_steps": 0
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 76200.0,
+        "pred_makespan": 76620.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "coat-plate-2",
+          "wash-2-coat",
+          "block-2",
+          "wash-2-block",
+          "samples-2",
+          "wash-2-samples",
+          "detection-2",
+          "wash-2-detection",
+          "develop-2",
+          "read-2"
+        ],
+        "pred_critical_path": [
+          "coatCapture",
+          "coldIncubate",
+          "wash1",
+          "block",
+          "wash2",
+          "addStandardsSamples",
+          "incubateStandardsSamples",
+          "wash3",
+          "addDetectionAb",
+          "incubateDetectionAb",
+          "wash4",
+          "addSubstrate",
+          "developDark",
+          "stopReaction",
+          "readAbsorbance"
+        ],
+        "js_critical_path": [
+          "coatCapture-r2",
+          "coldIncubate-r2",
+          "wash1-r2",
+          "block-r2",
+          "wash2-r2",
+          "addStandardsSamples-r2",
+          "incubateStandardsSamples-r2",
+          "wash3-r2",
+          "addDetectionAb-r2",
+          "incubateDetectionAb-r2",
+          "wash4-r2",
+          "addSubstrate-r2",
+          "developDark-r2",
+          "stopReaction-r2",
+          "readAbsorbance-r2"
+        ],
+        "js_makespan": 78420,
+        "critical_overlap": 0.0,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 1.0,
+      "unsupported_steps": [
+        "prepareStandards",
+        "prepareSamples",
+        "coatCapture",
+        "coldIncubate",
+        "wash1",
+        "block",
+        "wash2",
+        "addStandardsSamples",
+        "incubateStandardsSamples",
+        "wash3",
+        "addDetectionAb",
+        "incubateDetectionAb",
+        "wash4",
+        "addSubstrate",
+        "developDark",
+        "stopReaction",
+        "readAbsorbance"
+      ],
+      "matching": [
+        {
+          "gold": "make-standards",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "dilute-samples",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "coat-plate-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "wash-1-coat",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "block-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "wash-1-block",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "samples-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "wash-1-samples",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "detection-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "wash-1-detection",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "develop-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "read-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "coat-plate-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "wash-2-coat",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "block-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "wash-2-block",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "samples-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "wash-2-samples",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "detection-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "wash-2-detection",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "develop-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "read-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "prepareStandards",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "prepareSamples",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "coatCapture",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "coldIncubate",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "wash1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "block",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "wash2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "addStandardsSamples",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "incubateStandardsSamples",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "wash3",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "addDetectionAb",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "incubateDetectionAb",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "wash4",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "addSubstrate",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "developDark",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "stopReaction",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "readAbsorbance",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "qwen/qwen3.8-flash",
+        "pattern": "baseline",
+        "calls": 1,
+        "input_tokens": 4711,
+        "output_tokens": 25595,
+        "cost_usd": 0.012736299999999999,
+        "cache_keys": [
+          "21e6d23dfb7e82965fec803b97a3cabe14f787be1e3ffeb214ba5fd193aa741a"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/baseline/per-program/lab-elisa-plate-wash/responses/lab-elisa-plate-wash.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/baseline/per-program/lab-elisa-plate-wash/predicted/lab-elisa-plate-wash.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Sandwich ELISA on Two Plates, One Washer for two 96-well plates, staggered 30 minutes, following the source text below",
+            "finish_at": null,
+            "constraints": "one plate washer, one 37 \u00b0C incubator holding two plates, one plate reader, one operator",
+            "vertical": "lab"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

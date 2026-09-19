@@ -1,0 +1,370 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "qwen/qwen3.8-flash",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/baseline/cache",
+    "limit": null,
+    "only": [
+      "kitchen-holiday-cookie-batch"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 64000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 1,
+      "input_tokens": 4433,
+      "output_tokens": 47803,
+      "cost_usd": 0.02313236,
+      "fix_iterations": 0
+    },
+    "generated_at": "2026-09-19T20:18:01+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.2,
+    "steps_f1": 0.33333333333333337,
+    "durations_accuracy": 1.0,
+    "resources_precision": 0.5,
+    "resources_recall": 0.5,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.0,
+    "relationships_recall": 0.0,
+    "relationships_f1": 0.0,
+    "structure_rand_index": 0.8333333333333334,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.7894736842105263
+  },
+  "programs": [
+    {
+      "slug": "kitchen-holiday-cookie-batch",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.2,
+        "steps_f1": 0.33333333333333337,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.5,
+        "resources_recall": 0.5,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.0,
+        "relationships_recall": 0.0,
+        "relationships_f1": 0.0,
+        "structure_rand_index": 0.8333333333333334,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.7894736842105263
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.2,
+        "f1": 0.33333333333333337,
+        "tp": 4,
+        "n_gold": 20,
+        "n_pred": 4
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 4,
+        "total": 4
+      },
+      "resources": {
+        "precision": 0.5,
+        "recall": 0.5,
+        "f1": 0.5,
+        "tp": 3,
+        "n_gold": 6,
+        "n_pred": 6
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 26,
+        "n_pred": 7
+      },
+      "structure": {
+        "rand_index": 0.8333333333333334,
+        "agreements": 5,
+        "pairs": 6,
+        "n_steps": 4
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 14220.0,
+        "pred_makespan": 14220.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "cream-sugar-dough",
+          "mix-choc-dough",
+          "mix-gingerbread-dough",
+          "chill-gingerbread-dough",
+          "cut-gingerbread",
+          "bake-gingerbread",
+          "cool-gingerbread",
+          "ice-gingerbread",
+          "box-everything"
+        ],
+        "pred_critical_path": [
+          "mixSugarDough",
+          "mixChocolateChipDough",
+          "mixGingerbreadDough",
+          "chillGingerbreadDough",
+          "rollCutGingerbreadDough",
+          "bakeGingerbreadCookies",
+          "coolGingerbreadCookies",
+          "iceGingerbreadCookies",
+          "boxAllCookies"
+        ],
+        "js_critical_path": [
+          "mixSugarDough",
+          "mixChocolateChipDough",
+          "mixGingerbreadDough",
+          "chillGingerbreadDough",
+          "rollCutGingerbreadDough",
+          "bakeGingerbreadCookies",
+          "coolGingerbreadCookies",
+          "iceGingerbreadCookies",
+          "boxAllCookies"
+        ],
+        "js_makespan": 14220,
+        "critical_overlap": 0.2222222222222222,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.7894736842105263,
+      "unsupported_steps": [
+        "mixSugarDough",
+        "mixChocolateChipDough",
+        "mixGingerbreadDough",
+        "scoopChocolateChipDough",
+        "rollCutSugarDough",
+        "rollCutGingerbreadDough",
+        "iceGingerbreadCookies",
+        "preheatOven",
+        "bakeChocolateChipCookies",
+        "bakeGingerbreadCookies",
+        "coolChocolateCookies",
+        "coolSugarCookies",
+        "coolGingerbreadCookies",
+        "coolPanAfterChocolate",
+        "coolPanAfterSugar"
+      ],
+      "matching": [
+        {
+          "gold": "bake-sugar",
+          "predicted": "bakeSugarCookies",
+          "by": "name"
+        },
+        {
+          "gold": "chill-sugar-dough",
+          "predicted": "chillSugarDough",
+          "by": "name"
+        },
+        {
+          "gold": "chill-gingerbread-dough",
+          "predicted": "chillGingerbreadDough",
+          "by": "name"
+        },
+        {
+          "gold": "box-everything",
+          "predicted": "boxAllCookies",
+          "by": "name"
+        },
+        {
+          "gold": "cream-sugar-dough",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "mix-choc-dough",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "mix-gingerbread-dough",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "preheat-oven",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "bake-choc",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "bake-gingerbread",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "scoop-choc",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cool-choc-cookies",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cool-pan-one",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cool-pan-two",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "temper-sugar-dough",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cut-sugar",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cool-sugar-cookies",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cut-gingerbread",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cool-gingerbread",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "ice-gingerbread",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "mixSugarDough",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "mixChocolateChipDough",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "mixGingerbreadDough",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "scoopChocolateChipDough",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "rollCutSugarDough",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "rollCutGingerbreadDough",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "iceGingerbreadCookies",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "preheatOven",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "bakeChocolateChipCookies",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "bakeGingerbreadCookies",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "coolChocolateCookies",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "coolSugarCookies",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "coolGingerbreadCookies",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "coolPanAfterChocolate",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "coolPanAfterSugar",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "qwen/qwen3.8-flash",
+        "pattern": "baseline",
+        "calls": 1,
+        "input_tokens": 4433,
+        "output_tokens": 47803,
+        "cost_usd": 0.02313236,
+        "cache_keys": [
+          "747d72e472d720505a7bb769dbc5155a5a0b5297a2589df86b63db7fd5d97d9a"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/baseline/per-program/kitchen-holiday-cookie-batch/responses/kitchen-holiday-cookie-batch.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/baseline/per-program/kitchen-holiday-cookie-batch/predicted/kitchen-holiday-cookie-batch.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Holiday Cookie Batch: Three Doughs, One Oven for three doughs, roughly a hundred cookies, following the source text below",
+            "finish_at": null,
+            "constraints": "one stand mixer, one oven, two sheet pans that must cool between batches, one baker",
+            "vertical": "kitchen"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

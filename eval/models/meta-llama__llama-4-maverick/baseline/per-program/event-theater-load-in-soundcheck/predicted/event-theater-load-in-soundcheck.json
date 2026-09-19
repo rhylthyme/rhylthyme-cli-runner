@@ -1,0 +1,338 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "lyric-load-in-schedule",
+  "name": "The Lyric Load-In Schedule",
+  "environmentType": "event",
+  "actors": 8,
+  "tracks": [
+    {
+      "trackId": "dock",
+      "name": "Loading Dock",
+      "steps": [
+        {
+          "stepId": "lighting_truck_in",
+          "name": "Lighting truck in",
+          "task": "dock",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "backline_truck_in",
+          "name": "Backline truck in",
+          "task": "dock",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "lighting_truck_in"
+          }
+        },
+        {
+          "stepId": "clear_dock",
+          "name": "Clear the dock",
+          "task": "dock",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "backline_truck_in"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "lighting",
+      "name": "Lighting",
+      "steps": [
+        {
+          "stepId": "rig_bars",
+          "name": "Rig bars",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "lighting_truck_in"
+          }
+        },
+        {
+          "stepId": "focus",
+          "name": "Focus",
+          "task": "lighting_desk",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rig_bars"
+          }
+        },
+        {
+          "stepId": "build_cues",
+          "name": "Build cues",
+          "task": "lighting_desk",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 1800,
+            "maxSeconds": 5400,
+            "defaultSeconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "focus"
+          }
+        },
+        {
+          "stepId": "strike_rig",
+          "name": "Strike the rig",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "show"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "pa",
+      "name": "PA",
+      "steps": [
+        {
+          "stepId": "fly_pa",
+          "name": "Fly PA",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 4500
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "lighting_truck_in"
+          }
+        },
+        {
+          "stepId": "ring_out_house",
+          "name": "Ring out the house",
+          "task": "pa",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "fly_pa"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "monitors",
+      "name": "Monitors",
+      "steps": [
+        {
+          "stepId": "set_monitor_world",
+          "name": "Set monitor world",
+          "task": "monitor_world",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "backline_truck_in"
+          }
+        },
+        {
+          "stepId": "ring_out_wedges",
+          "name": "Ring out the wedges",
+          "task": "monitor_world",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "set_monitor_world"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "band",
+      "name": "Band",
+      "steps": [
+        {
+          "stepId": "backline_up",
+          "name": "Backline up",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "clear_dock"
+          }
+        },
+        {
+          "stepId": "soundcheck",
+          "name": "Soundcheck",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "backline_up"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "ring_out_house"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "ring_out_wedges"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "band_dinner",
+          "name": "Band dinner",
+          "task": "green_room",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "soundcheck"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "house",
+      "name": "House",
+      "steps": [
+        {
+          "stepId": "set_front_of_house",
+          "name": "Set front of house",
+          "task": "house",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 7200
+          }
+        },
+        {
+          "stepId": "clean_house",
+          "name": "Clean the house",
+          "task": "house",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "band_dinner"
+          }
+        },
+        {
+          "stepId": "doors",
+          "name": "Doors",
+          "task": "house",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "manual",
+            "triggerName": "House Manager calls doors"
+          }
+        },
+        {
+          "stepId": "show",
+          "name": "Show",
+          "task": "stage",
+          "duration": {
+            "type": "indefinite",
+            "defaultSeconds": 7200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "doors"
+          }
+        },
+        {
+          "stepId": "backline_out",
+          "name": "Backline out",
+          "task": "dock",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStepWithBuffer",
+            "stepId": "show",
+            "bufferSeconds": 900
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "dock",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "stage",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "lighting_desk",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "pa",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "monitor_world",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "green_room",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "house",
+      "maxConcurrent": 1
+    }
+  ]
+}

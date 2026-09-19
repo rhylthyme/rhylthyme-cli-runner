@@ -1,0 +1,424 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "three-course-dinner",
+  "name": "Three-Course Dinner for Six",
+  "environmentType": "kitchen",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "prep",
+      "name": "Preparation",
+      "steps": [
+        {
+          "stepId": "mise-en-place",
+          "name": "Mise en place",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2400
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "forty minutes of knife work",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "roll-pastry",
+          "name": "Roll pastry",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "mise-en-place"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "15 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "prepare-tart",
+          "name": "Prepare tart",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "chill-shell"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "20 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "ribs",
+      "name": "Braised Short Ribs",
+      "steps": [
+        {
+          "stepId": "preheat-oven",
+          "name": "Preheat oven",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "give it 20 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "sear-ribs",
+          "name": "Sear short ribs",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 720
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "mise-en-place"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "12 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "soften-mirepoix",
+          "name": "Soften mirepoix",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "sear-ribs"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "8 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "reduce-wine",
+          "name": "Reduce wine",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "soften-mirepoix"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "5 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "braise-ribs",
+          "name": "Braise short ribs",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 10800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "reduce-wine"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "3 hours",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "rest-ribs",
+          "name": "Rest ribs",
+          "task": "counter",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "braise-ribs"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "20 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "reduce-braising-liquid",
+          "name": "Reduce braising liquid",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest-ribs"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "15 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "soup",
+      "name": "Leek and Potato Soup",
+      "steps": [
+        {
+          "stepId": "sweat-leeks",
+          "name": "Sweat leeks",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "braise-ribs",
+            "event": "start",
+            "offsetSeconds": 7200
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Two hours into the braise",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "simmer-soup",
+          "name": "Simmer soup",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "sweat-leeks"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "30 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "blend-soup",
+          "name": "Blend soup",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "simmer-soup"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "5 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "tart",
+      "name": "Apple Tart",
+      "steps": [
+        {
+          "stepId": "chill-shell",
+          "name": "Chill shell",
+          "task": "fridge",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 1800,
+            "maxSeconds": 7200,
+            "defaultSeconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "roll-pastry"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "at least 30 minutes and no more than two hours",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "bake-tart",
+          "name": "Bake tart",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest-ribs"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "45 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "service",
+      "name": "Service",
+      "steps": [
+        {
+          "stepId": "serve-soup",
+          "name": "Serve soup",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "manual"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "ten minutes at the table",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "plate-ribs",
+          "name": "Plate ribs",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "serve-soup",
+            "offsetSeconds": 600
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "five minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "serve-tart",
+          "name": "Serve tart",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "plate-ribs",
+            "offsetSeconds": 1200
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "ten minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "oven",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "burner",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "prep",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "counter",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "fridge",
+      "maxConcurrent": 1
+    }
+  ]
+}

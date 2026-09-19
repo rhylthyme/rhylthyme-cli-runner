@@ -1,0 +1,195 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "meta-llama/llama-4-maverick",
+    "pattern": "four-turn",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/four-turn/cache",
+    "limit": null,
+    "only": [
+      "kitchen-country-loaf-bread-bake"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 6,
+      "input_tokens": 55450,
+      "output_tokens": 12500,
+      "cost_usd": 0.0185746,
+      "fix_iterations": 2
+    },
+    "generated_at": "2026-09-19T19:29:03+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 0.0,
+    "steps_recall": 0.0,
+    "steps_f1": 0.0,
+    "durations_accuracy": 0.0,
+    "resources_precision": 0.0,
+    "resources_recall": 0.0,
+    "actors_accuracy": 0.0,
+    "relationships_precision": 0.0,
+    "relationships_recall": 0.0,
+    "relationships_f1": 0.0,
+    "structure_rand_index": 0.0,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.0
+  },
+  "programs": [
+    {
+      "slug": "kitchen-country-loaf-bread-bake",
+      "headline": {
+        "steps_precision": 0.0,
+        "steps_recall": 0.0,
+        "steps_f1": 0.0,
+        "durations_accuracy": 0.0,
+        "resources_precision": 0.0,
+        "resources_recall": 0.0,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.0,
+        "relationships_recall": 0.0,
+        "relationships_f1": 0.0,
+        "structure_rand_index": 0.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.0
+      },
+      "steps": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 24,
+        "n_pred": 0
+      },
+      "durations": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 24
+      },
+      "resources": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 4,
+        "n_pred": 0
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 26,
+        "n_pred": 0
+      },
+      "structure": {
+        "rand_index": 0.0,
+        "agreements": 0,
+        "pairs": 0,
+        "n_steps": 0
+      },
+      "end_to_end": {
+        "python_valid": false,
+        "python_errors": [],
+        "js_status": "skipped",
+        "js_valid": null,
+        "js_errors": [],
+        "gold_makespan": 0.0,
+        "pred_makespan": 0.0,
+        "makespan_ok": false,
+        "gold_critical_path": [],
+        "pred_critical_path": [],
+        "js_critical_path": null,
+        "js_makespan": null,
+        "critical_overlap": 0.0,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.0,
+      "unsupported_steps": [],
+      "matching": [],
+      "extras": {
+        "model": "meta-llama/llama-4-maverick",
+        "pattern": "four-turn",
+        "calls": 6,
+        "input_tokens": 55450,
+        "output_tokens": 12500,
+        "cost_usd": 0.0185746,
+        "cache_keys": [
+          "e36d161db8504b9861087b405d317c8bc2992b4c1d10e2a98ce146549f34241c",
+          "09fb5196fe118a82169f941836301505d4fec110070afc4580fc1138462b13ff",
+          "ad6dfcbc11566b70d6d4a497cbd05c44a198bf9502264a005abee4f8ef6b8c2d",
+          "745e792fb9e36f2ff2ba0d9aeae67d3e29da77545c76d17e55e990bc8d0a9a3e",
+          "278bef11010bcb4b6beb10f074bd0c699f4bd22834d9a469ab952905fbdcf512",
+          "d9cbe2470846cb7aa63e86485e7b8badcf063b2ba5011a76030e1bff93b2493c"
+        ],
+        "fix_iterations": 2,
+        "validation_errors": [
+          "no JSON object with a `tracks` array was found in the reply"
+        ],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/four-turn/per-program/kitchen-country-loaf-bread-bake/responses/kitchen-country-loaf-bread-bake.json",
+        "predicted_path": null,
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 0,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Country Loaf: Two Boules, One Dutch Oven for one batch, two 900 g boules",
+            "finish_at": null,
+            "constraints": "one oven, one dutch oven, one refrigerator, one baker, the two loaves bake one after the other",
+            "vertical": "kitchen",
+            "turn": "T1",
+            "kind": "recipe",
+            "constraintsLine": "Resource limits: one oven, one dutch oven, one refrigerator, one baker, the two loaves bake one after the other.",
+            "deadlineLine": "No finishing time was given; finish as early as the work allows.",
+            "source": "Source text (read all of it):\n<<<\nCountry Loaf: Two Boules, One Dutch Oven\n\nOne batch of dough, two loaves, and a single dutch oven that has to bake them one after the other. One oven, one baker, one refrigerator. Times count from eight in the morning; the loaves come out of the fridge the next day.\n\nLevain\nMix 50 g of ripe starter with 100 g of flour and 100 g of water in a jar; 5 minutes. Leave the jar at room temperature until it domes and smells sweet, 4 to 6 hours.\n\nDough\nWeigh the flour, water and salt for the whole bake first thing; 10 minutes. At half past eight, whisk 900 g of flour into 680 g of water; 5 minutes. Let it autolyse for 1 hour. When the levain is ripe, squeeze it into the autolysed dough with 20 g of salt and work it by hand for 10 minutes. Bulk ferment at 24\u00b0C until the dough has risen by half, 3 to 5 hours. Fold the dough in the bowl half an hour after mixing, again half an hour later, and a third time after another half hour; each fold takes 2 minutes.\n\nDivide and shape\nTip the dough out, cut it in two and preshape each piece into a loose round; 10 minutes. Let the rounds rest on the bench for 25 minutes. Shape both boules tightly and settle them into floured bannetons; 10 minutes. Retard them in the refrigerator, 10 to 14 hours.\n\nBake\nThree quarters of an hour before the dough comes out, put the dutch oven in the oven and heat both to 250\u00b0C. Score the first loaf and lower it in; 3 minutes. Bake the first loaf covered for 20 minutes, then uncover it and bake for another 20 minutes until the crust is dark. Cool it on a rack for at least an hour before cutting. Re-heat the empty dutch oven for 10 minutes. Score the second loaf and lower it in; 3 minutes. Bake the second loaf covered for 20 minutes, then uncover it for a final 20 minutes. Cool the second loaf on the rack beside the first.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Country Loaf: Two Boules, One Dutch Oven for one batch, two 900 g boules",
+            "finish_at": null,
+            "constraints": "one oven, one dutch oven, one refrigerator, one baker, the two loaves bake one after the other",
+            "vertical": "kitchen",
+            "turn": "T2",
+            "kind": "recipe"
+          },
+          "T3 extraction": {
+            "goal": "Country Loaf: Two Boules, One Dutch Oven for one batch, two 900 g boules",
+            "finish_at": null,
+            "constraints": "one oven, one dutch oven, one refrigerator, one baker, the two loaves bake one after the other",
+            "vertical": "kitchen",
+            "turn": "T3",
+            "kind": "recipe",
+            "environment": "a kitchen where you have: one oven, one dutch oven, one refrigerator, one baker, the two loaves bake one after the other",
+            "deadline": "the earliest time the work allows",
+            "source": "Source text (read all of it):\n<<<\nCountry Loaf: Two Boules, One Dutch Oven\n\nOne batch of dough, two loaves, and a single dutch oven that has to bake them one after the other. One oven, one baker, one refrigerator. Times count from eight in the morning; the loaves come out of the fridge the next day.\n\nLevain\nMix 50 g of ripe starter with 100 g of flour and 100 g of water in a jar; 5 minutes. Leave the jar at room temperature until it domes and smells sweet, 4 to 6 hours.\n\nDough\nWeigh the flour, water and salt for the whole bake first thing; 10 minutes. At half past eight, whisk 900 g of flour into 680 g of water; 5 minutes. Let it autolyse for 1 hour. When the levain is ripe, squeeze it into the autolysed dough with 20 g of salt and work it by hand for 10 minutes. Bulk ferment at 24\u00b0C until the dough has risen by half, 3 to 5 hours. Fold the dough in the bowl half an hour after mixing, again half an hour later, and a third time after another half hour; each fold takes 2 minutes.\n\nDivide and shape\nTip the dough out, cut it in two and preshape each piece into a loose round; 10 minutes. Let the rounds rest on the bench for 25 minutes. Shape both boules tightly and settle them into floured bannetons; 10 minutes. Retard them in the refrigerator, 10 to 14 hours.\n\nBake\nThree quarters of an hour before the dough comes out, put the dutch oven in the oven and heat both to 250\u00b0C. Score the first loaf and lower it in; 3 minutes. Bake the first loaf covered for 20 minutes, then uncover it and bake for another 20 minutes until the crust is dark. Cool it on a rack for at least an hour before cutting. Re-heat the empty dutch oven for 10 minutes. Score the second loaf and lower it in; 3 minutes. Bake the second loaf covered for 20 minutes, then uncover it for a final 20 minutes. Cool the second loaf on the rack beside the first.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Country Loaf: Two Boules, One Dutch Oven for one batch, two 900 g boules",
+            "finish_at": null,
+            "constraints": "one oven, one dutch oven, one refrigerator, one baker, the two loaves bake one after the other",
+            "vertical": "kitchen",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or cook_recipe",
+            "finishAtArg": ""
+          }
+        }
+      },
+      "error": "no JSON object with a `tracks` array was found in the reply"
+    }
+  ],
+  "missing": [
+    "kitchen-country-loaf-bread-bake"
+  ]
+}

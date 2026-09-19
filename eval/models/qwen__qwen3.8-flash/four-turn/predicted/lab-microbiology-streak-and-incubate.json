@@ -1,0 +1,497 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "streaking-three-cultures-selective-media",
+  "name": "Streaking Three Cultures onto Selective Media",
+  "description": "One technician streaks three isolates onto selective plates, handles a two-plate incubator shelf, reads plates, performs supervisor-gated purity streaking, and completes Gram staining with oil-immersion morphology reading as early as the work allows.",
+  "environmentType": "laboratory",
+  "actors": 2,
+  "tracks": [
+    {
+      "trackId": "bench-workflow",
+      "name": "Bench technician workflow",
+      "steps": [
+        {
+          "stepId": "setup-bench-and-burner",
+          "name": "Wipe bench and light burner",
+          "task": "technician",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Wipe the bench with 70 % ethanol and light the burner; 10 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "label-three-selective-plates",
+          "name": "Label three selective plates",
+          "task": "technician",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "setup-bench-and-burner"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Label three selective plates with the isolate number, the medium and the date; 10 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "streak-isolate-1",
+          "name": "Streak isolate 1",
+          "task": "loop_station",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "label-three-selective-plates"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Streak isolate 1 for single colonies in four quadrants, flaming the loop between each; 10 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "streak-isolate-2",
+          "name": "Streak isolate 2",
+          "task": "loop_station",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "streak-isolate-1"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Streak isolate 2 the same way; 10 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "streak-isolate-3",
+          "name": "Streak isolate 3",
+          "task": "loop_station",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "streak-isolate-2"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Streak isolate 3 the same way; 10 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "read-plate-1",
+          "name": "Read plate 1",
+          "task": "technician",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "streak-isolate-3"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "incubate-plates-1-and-2"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Read plate 1 in the morning: count the colonies, note the colour and record the selective growth; 15 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "read-plate-2",
+          "name": "Read plate 2",
+          "task": "technician",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "read-plate-1"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Read plate 2 the same way; 15 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "label-purity-plate",
+          "name": "Label the purity plate",
+          "task": "technician",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "read-plate-2"
+          },
+          "metadata": {
+            "sourceSpan": null,
+            "inferred": true
+          }
+        },
+        {
+          "stepId": "pick-colonies-from-plates-1-and-2",
+          "name": "Pick colonies from plates 1 and 2 into broth",
+          "task": "loop_station",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "label-purity-plate"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "supervisor-signoff-readings"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Pick a single well-separated colony from each of plates 1 and 2 into fresh broth; 10 minutes at the loop station.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "streak-purity-plate",
+          "name": "Streak the purity plate",
+          "task": "loop_station",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "pick-colonies-from-plates-1-and-2"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Streaking it takes 15 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "make-heat-fix-smear",
+          "name": "Make and heat-fix smear",
+          "task": "loop_station",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "streak-purity-plate"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Make a smear from the picked colony and heat-fix it; 10 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "gram-stain-smear",
+          "name": "Gram stain the smear",
+          "task": "staining_rack",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "make-heat-fix-smear"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Gram stain the smear on the rack: crystal violet, iodine, decolourise, safranin; 15 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "read-stain-under-oil-immersion",
+          "name": "Read stain under oil immersion",
+          "task": "microscope",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "gram-stain-smear"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Read the stain under oil immersion and record the morphology; 15 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "read-plate-3",
+          "name": "Read plate 3",
+          "task": "technician",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "read-stain-under-oil-immersion"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "incubate-plate-3"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Read plate 3 at the end of its run; 15 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "supervisor-review",
+      "name": "Supervisor review",
+      "steps": [
+        {
+          "stepId": "supervisor-signoff-readings",
+          "name": "Supervisor signs off the readings",
+          "task": "supervisor_signoff",
+          "duration": {
+            "type": "indefinite",
+            "defaultSeconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "read-plate-2"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Do not streak the purity plate until the supervisor has signed off the readings.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "plate-1-2-incubation",
+      "name": "Plates 1 and 2 incubation",
+      "steps": [
+        {
+          "stepId": "incubate-plates-1-and-2",
+          "name": "Incubate plates 1 and 2 overnight",
+          "task": "incubator37c",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 57600,
+            "maxSeconds": 72000,
+            "defaultSeconds": 57600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "streak-isolate-3"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Invert plates 1 and 2 and put them on the incubator shelf overnight, 16 to 20 hours.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "plate-3-hold",
+      "name": "Plate 3 ambient hold",
+      "steps": [
+        {
+          "stepId": "hold-plate-3-at-room-temperature",
+          "name": "Hold plate 3 at room temperature",
+          "task": "ambient_hold",
+          "duration": {
+            "type": "indefinite",
+            "defaultSeconds": 57600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "streak-isolate-3"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Only two plates fit on the shelf, so hold plate 3 at room temperature on the bench until plate 1 comes out.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "plate-3-incubation",
+      "name": "Plate 3 incubation",
+      "steps": [
+        {
+          "stepId": "incubate-plate-3",
+          "name": "Incubate plate 3 for 6 hours",
+          "task": "incubator37c",
+          "duration": {
+            "type": "fixed",
+            "seconds": 21600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "hold-plate-3-at-room-temperature"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "incubate-plates-1-and-2"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Incubate plate 3 at 37 °C for 6 hours once the shelf is free.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "purity-incubation",
+      "name": "Purity plate incubation",
+      "steps": [
+        {
+          "stepId": "incubate-purity-plate",
+          "name": "Incubate purity plate for 8 hours",
+          "task": "incubator37c",
+          "duration": {
+            "type": "fixed",
+            "seconds": 28800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "streak-purity-plate"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Incubate the purity plate at 37 °C for 8 hours.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "technician",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "loop_station",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "incubator37c",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "ambient_hold",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "supervisor_signoff",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "staining_rack",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "microscope",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "serves": "three isolates plus one purity plate"
+  }
+}

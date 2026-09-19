@@ -1,0 +1,373 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "weekday-lentil-soup-salad-for-four",
+  "name": "Weekday Lentil Soup and Salad for Four",
+  "description": "60-minute make. Start at 11:30 to carry through by 12:30 using the default 25-minute simmer; start earlier if the lentils need the longer 40-minute simmer. One cook, two burners, one toaster oven, one stick blender.",
+  "environmentType": "kitchen",
+  "tracks": [
+    {
+      "trackId": "activeHands",
+      "name": "Active hands (one cook)",
+      "steps": [
+        {
+          "stepId": "diceSoupBase",
+          "name": "Dice onion, carrot, and celery",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "sweatVegetables",
+          "name": "Sweat vegetables in oil with bay leaf",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "diceSoupBase"
+          }
+        },
+        {
+          "stepId": "addLentilsStock",
+          "name": "Stir in rinsed lentils, tomato paste, and stock",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "sweatVegetables"
+          }
+        },
+        {
+          "stepId": "cutBread",
+          "name": "Cut loaf into thick slices once soup is simmering",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "addLentilsStock"
+          }
+        },
+        {
+          "stepId": "washSpinLeaves",
+          "name": "Wash and spin salad leaves",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cutBread"
+          }
+        },
+        {
+          "stepId": "shaveFennelRadishes",
+          "name": "Shave fennel and radishes thin",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 420
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "washSpinLeaves"
+          }
+        },
+        {
+          "stepId": "whiskDressing",
+          "name": "Whisk lemon, oil, and mustard in the salad bowl",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "shaveFennelRadishes"
+          }
+        },
+        {
+          "stepId": "wrapBread",
+          "name": "Wrap warm bread in a cloth",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "whiskDressing"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "warmBreadToaster"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "layFourPlaces",
+          "name": "Lay four places",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 75
+          },
+          "replicates": {
+            "count": 4,
+            "mode": "serial"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wrapBread"
+          }
+        },
+        {
+          "stepId": "blitzOneThird",
+          "name": "Blitz one third of the soup and stir it back in",
+          "task": "stickBlender",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "layFourPlaces",
+                "instances": "all"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "simmerLentils"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "seasonSoup",
+          "name": "Season the soup",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "blitzOneThird"
+          }
+        },
+        {
+          "stepId": "dressSalad",
+          "name": "Dress and toss the salad",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "seasonSoup"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "blitzOneThird",
+                "offsetSeconds": 300
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "carryTogether",
+          "name": "Carry pot and bowl through together",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "dressSalad"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "holdAtBareSimmer"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "soupBurner",
+      "name": "Soup burner",
+      "steps": [
+        {
+          "stepId": "simmerLentils",
+          "name": "Simmer until the lentils are soft",
+          "task": "burner",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 1500,
+            "maxSeconds": 2400,
+            "defaultSeconds": 1500
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "addLentilsStock"
+          }
+        },
+        {
+          "stepId": "holdAtBareSimmer",
+          "name": "Keep soup at a bare simmer until service",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 360
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "simmerLentils"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "seasonSoup"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "breadToaster",
+      "name": "Toaster oven",
+      "steps": [
+        {
+          "stepId": "warmBreadToaster",
+          "name": "Warm bread slices in toaster oven",
+          "task": "toasterOven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cutBread"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "cook",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "burner",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "toasterOven",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "stickBlender",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "serves": "4",
+    "ingredients": [
+      {
+        "name": "onion",
+        "measure": "1"
+      },
+      {
+        "name": "carrot",
+        "measure": "1"
+      },
+      {
+        "name": "celery",
+        "measure": "2 sticks"
+      },
+      {
+        "name": "oil",
+        "measure": "for sweating"
+      },
+      {
+        "name": "bay leaf",
+        "measure": "1"
+      },
+      {
+        "name": "lentils",
+        "measure": "rinsed, about 250g"
+      },
+      {
+        "name": "tomato paste",
+        "measure": "1 spoonful"
+      },
+      {
+        "name": "stock",
+        "measure": "1 litre"
+      },
+      {
+        "name": "salad leaves",
+        "measure": "for 4"
+      },
+      {
+        "name": "fennel",
+        "measure": "1"
+      },
+      {
+        "name": "radishes",
+        "measure": "1 bunch"
+      },
+      {
+        "name": "lemon",
+        "measure": "1"
+      },
+      {
+        "name": "mustard",
+        "measure": "1 spoonful"
+      },
+      {
+        "name": "bread",
+        "measure": "loaf, thick slices"
+      }
+    ],
+    "sourceUrl": "",
+    "attribution": "Weekday Lentil Soup and Salad for Four"
+  }
+}

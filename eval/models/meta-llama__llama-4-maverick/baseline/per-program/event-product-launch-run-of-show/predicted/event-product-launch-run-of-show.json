@@ -1,0 +1,305 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "product-launch-evening",
+  "name": "Product Launch Evening",
+  "description": "Run of show for 200 guests",
+  "environmentType": "event",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "av-prep",
+      "name": "AV Preparation",
+      "steps": [
+        {
+          "stepId": "av-line-check",
+          "name": "AV line check",
+          "task": "av-tech",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 3600
+          }
+        },
+        {
+          "stepId": "keynote-rehearsal",
+          "name": "Keynote rehearsal",
+          "task": "producer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "av-line-check"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "foh-prep",
+      "name": "Front of House Preparation",
+      "steps": [
+        {
+          "stepId": "reg-desk-setup",
+          "name": "Registration desk setup",
+          "task": "foh",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 3600
+          },
+          "replicates": {
+            "count": 1
+          }
+        },
+        {
+          "stepId": "foh-walkthrough",
+          "name": "FOH walkthrough",
+          "task": "foh",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "reg-desk-setup"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "catering-prep",
+      "name": "Catering Preparation",
+      "steps": [
+        {
+          "stepId": "bar-setup",
+          "name": "Bar and canapé setup",
+          "task": "catering",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 3600
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "doors",
+      "name": "Doors Open",
+      "steps": [
+        {
+          "stepId": "doors-open",
+          "name": "Doors open",
+          "task": "foh",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "foh-walkthrough"
+          }
+        },
+        {
+          "stepId": "usher-guests",
+          "name": "Usher guests to seats",
+          "task": "foh",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "doors-open"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "program",
+      "name": "Main Program",
+      "steps": [
+        {
+          "stepId": "host-welcome",
+          "name": "Host welcome",
+          "task": "host",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "usher-guests"
+          }
+        },
+        {
+          "stepId": "ceo-keynote",
+          "name": "CEO keynote",
+          "task": "ceo",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "host-welcome"
+          }
+        },
+        {
+          "stepId": "product-video",
+          "name": "Product video",
+          "task": "av-tech",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "ceo-keynote"
+          }
+        },
+        {
+          "stepId": "product-demo",
+          "name": "Product demo",
+          "task": "product-lead",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1500
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "product-video"
+          }
+        },
+        {
+          "stepId": "q-and-a",
+          "name": "Q&A session",
+          "task": "moderator",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 900,
+            "maxSeconds": 1500,
+            "defaultSeconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "product-demo"
+          }
+        },
+        {
+          "stepId": "host-close",
+          "name": "Host close",
+          "task": "host",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "q-and-a"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "reception",
+      "name": "Reception",
+      "steps": [
+        {
+          "stepId": "bar-reopen",
+          "name": "Bar reopen",
+          "task": "catering",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "host-close"
+          }
+        },
+        {
+          "stepId": "reg-desk-breakdown",
+          "name": "Registration desk breakdown",
+          "task": "foh",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bar-reopen"
+          }
+        },
+        {
+          "stepId": "stage-strike",
+          "name": "Stage strike",
+          "task": "av-tech",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "reg-desk-breakdown"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "av-tech",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "producer",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "foh",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "catering",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "host",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "ceo",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "product-lead",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "moderator",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "stage",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "projector",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "sourceUrl": "",
+    "attribution": ""
+  }
+}

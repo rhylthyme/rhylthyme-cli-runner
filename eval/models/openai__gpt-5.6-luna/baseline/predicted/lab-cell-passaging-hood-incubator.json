@@ -1,0 +1,276 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "passage-two-t75-hek293-flasks",
+  "name": "Passaging Two T75 Flasks of Adherent HEK293 Cells",
+  "description": "Split two approximately 90% confluent HEK293 T75 flasks 1:6 into four new T75 flasks using pre-warmed PBS, trypsin-EDTA, and medium.",
+  "environmentType": "laboratory",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "passage",
+      "name": "HEK293 passage workflow",
+      "steps": [
+        {
+          "stepId": "prewarm-reagents",
+          "name": "Pre-warm medium, PBS, and trypsin-EDTA",
+          "task": "water_bath",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "prepare-cabinet",
+          "name": "Wipe down cabinet, lay out pipettes and tubes, and run blower",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prewarm-reagents"
+          }
+        },
+        {
+          "stepId": "check-source-flasks",
+          "name": "Check both source flasks for confluence and contamination",
+          "task": "microscope",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prepare-cabinet"
+          }
+        },
+        {
+          "stepId": "rinse-source-flasks",
+          "name": "Aspirate spent medium and rinse source flask with 5 mL PBS",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "replicates": {
+            "count": 2,
+            "mode": "serial"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "check-source-flasks"
+          }
+        },
+        {
+          "stepId": "trypsinize-source-flasks",
+          "name": "Add 2 mL trypsin-EDTA, rock flask, and return it to the incubator",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rinse-source-flasks",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "incubate-detachment",
+          "name": "Allow cells to detach in the incubator",
+          "task": "incubation",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "trypsinize-source-flasks",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "neutralize-source-flasks",
+          "name": "Knock flask, check detachment, and neutralize with 8 mL medium",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "incubate-detachment",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "spin-source-flasks",
+          "name": "Transfer suspension to a 15 mL tube and centrifuge at 300 × g",
+          "task": "centrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "neutralize-source-flasks",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "resuspend-pellets",
+          "name": "Aspirate supernatant and resuspend pellet in 10 mL fresh medium",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "spin-source-flasks",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "count-source-flasks",
+          "name": "Count cells with the haemocytometer",
+          "task": "microscope",
+          "duration": {
+            "type": "fixed",
+            "seconds": 360
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "resuspend-pellets",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "seed-new-flasks",
+          "name": "Seed two new T75 flasks at 1:6 and label them",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": 360
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "count-source-flasks",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "settle-new-flasks",
+          "name": "Return new flasks to the CO2 incubator and settle overnight",
+          "task": "incubation",
+          "duration": {
+            "type": "fixed",
+            "seconds": 57600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "seed-new-flasks",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "finish-cabinet",
+          "name": "Wipe down cabinet, discard waste, and switch blower to standby",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "settle-new-flasks",
+            "instances": "all"
+          }
+        },
+        {
+          "stepId": "culture-log",
+          "name": "Record passage number, split ratio, and cell counts in the culture log",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "finish-cabinet"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "cabinet",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "water_bath",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "incubation",
+      "maxConcurrent": 4
+    },
+    {
+      "task": "centrifuge",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "microscope",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "operator",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "ingredients": [
+      {
+        "name": "PBS",
+        "measure": "5 mL per source flask"
+      },
+      {
+        "name": "trypsin-EDTA",
+        "measure": "2 mL per source flask"
+      },
+      {
+        "name": "fresh medium for neutralization",
+        "measure": "8 mL per source flask"
+      },
+      {
+        "name": "fresh medium for resuspension",
+        "measure": "10 mL per source flask"
+      }
+    ],
+    "materials": [
+      {
+        "name": "T75 flasks",
+        "quantity": 4
+      },
+      {
+        "name": "15 mL tubes",
+        "quantity": 2
+      },
+      {
+        "name": "haemocytometer",
+        "quantity": 1
+      }
+    ],
+    "sourceUrl": "",
+    "attribution": "Provided source text",
+    "splitRatio": "1:6",
+    "sourceFlasks": 2,
+    "newFlasks": 4,
+    "overnightMinimumHours": 16
+  }
+}

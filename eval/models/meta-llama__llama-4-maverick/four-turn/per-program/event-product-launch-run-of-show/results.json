@@ -1,0 +1,322 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "meta-llama/llama-4-maverick",
+    "pattern": "four-turn",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/four-turn/cache",
+    "limit": null,
+    "only": [
+      "event-product-launch-run-of-show"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 4,
+      "input_tokens": 24760,
+      "output_tokens": 4610,
+      "cost_usd": 0.0076606,
+      "fix_iterations": 0
+    },
+    "generated_at": "2026-09-19T19:22:38+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 0.9375,
+    "steps_recall": 0.8333333333333334,
+    "steps_f1": 0.8823529411764706,
+    "durations_accuracy": 1.0,
+    "resources_precision": 0.0,
+    "resources_recall": 0.0,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.625,
+    "relationships_recall": 0.5555555555555556,
+    "relationships_f1": 0.5882352941176471,
+    "structure_rand_index": 0.9142857142857143,
+    "end_to_end_pass": 1.0,
+    "unsupported_rate": 0.0
+  },
+  "programs": [
+    {
+      "slug": "event-product-launch-run-of-show",
+      "headline": {
+        "steps_precision": 0.9375,
+        "steps_recall": 0.8333333333333334,
+        "steps_f1": 0.8823529411764706,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.0,
+        "resources_recall": 0.0,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.625,
+        "relationships_recall": 0.5555555555555556,
+        "relationships_f1": 0.5882352941176471,
+        "structure_rand_index": 0.9142857142857143,
+        "end_to_end_pass": 1.0,
+        "unsupported_rate": 0.0
+      },
+      "steps": {
+        "precision": 0.9375,
+        "recall": 0.8333333333333334,
+        "f1": 0.8823529411764706,
+        "tp": 15,
+        "n_gold": 18,
+        "n_pred": 16
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 15,
+        "total": 15
+      },
+      "resources": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 6,
+        "n_pred": 8
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.625,
+        "recall": 0.5555555555555556,
+        "f1": 0.5882352941176471,
+        "tp": 10,
+        "n_gold": 18,
+        "n_pred": 16
+      },
+      "structure": {
+        "rand_index": 0.9142857142857143,
+        "agreements": 96,
+        "pairs": 105,
+        "n_steps": 15
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 13020.0,
+        "pred_makespan": 13020.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "setup-registration",
+          "walkthrough",
+          "doors-open",
+          "usher-to-seats",
+          "host-welcome",
+          "ceo-keynote",
+          "product-video",
+          "product-demo",
+          "qa",
+          "host-close",
+          "breakdown-desk",
+          "strike-stage"
+        ],
+        "pred_critical_path": [
+          "setup-registration",
+          "foh-walkthrough",
+          "guest-registration",
+          "usher-guests",
+          "host-welcome",
+          "ceo-keynote",
+          "play-video",
+          "live-demo",
+          "q-and-a",
+          "host-close",
+          "serve-canapes"
+        ],
+        "js_critical_path": [
+          "setup-registration",
+          "foh-walkthrough",
+          "guest-registration",
+          "usher-guests",
+          "host-welcome",
+          "ceo-keynote",
+          "play-video",
+          "live-demo",
+          "q-and-a",
+          "host-close",
+          "serve-canapes"
+        ],
+        "js_makespan": 13020,
+        "critical_overlap": 0.75,
+        "critical_ok": true,
+        "passed": true
+      },
+      "unsupported_rate": 0.0,
+      "unsupported_steps": [],
+      "matching": [
+        {
+          "gold": "line-check",
+          "predicted": "av-line-check",
+          "by": "span"
+        },
+        {
+          "gold": "rehearsal",
+          "predicted": "rehearse-keynote",
+          "by": "span"
+        },
+        {
+          "gold": "strike-stage",
+          "predicted": "strike-stage",
+          "by": "name"
+        },
+        {
+          "gold": "setup-registration",
+          "predicted": "setup-registration",
+          "by": "span"
+        },
+        {
+          "gold": "walkthrough",
+          "predicted": "foh-walkthrough",
+          "by": "span"
+        },
+        {
+          "gold": "usher-to-seats",
+          "predicted": "usher-guests",
+          "by": "span"
+        },
+        {
+          "gold": "breakdown-desk",
+          "predicted": "breakdown-registration",
+          "by": "span"
+        },
+        {
+          "gold": "host-welcome",
+          "predicted": "host-welcome",
+          "by": "span"
+        },
+        {
+          "gold": "ceo-keynote",
+          "predicted": "ceo-keynote",
+          "by": "span"
+        },
+        {
+          "gold": "product-video",
+          "predicted": "play-video",
+          "by": "span"
+        },
+        {
+          "gold": "product-demo",
+          "predicted": "live-demo",
+          "by": "span"
+        },
+        {
+          "gold": "qa",
+          "predicted": "q-and-a",
+          "by": "span"
+        },
+        {
+          "gold": "host-close",
+          "predicted": "host-close",
+          "by": "span"
+        },
+        {
+          "gold": "set-bar",
+          "predicted": "setup-catering",
+          "by": "span"
+        },
+        {
+          "gold": "reception",
+          "predicted": "serve-canapes",
+          "by": "span"
+        },
+        {
+          "gold": "welcome-playlist",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "doors-open",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "bar-service",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "guest-registration",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "meta-llama/llama-4-maverick",
+        "pattern": "four-turn",
+        "calls": 4,
+        "input_tokens": 24760,
+        "output_tokens": 4610,
+        "cost_usd": 0.0076606,
+        "cache_keys": [
+          "42b17929e5b993f581b32a891d2ab6a45b5db35c412120f4a9b62f23111c5abf",
+          "c42dfcb5ab27a62968c22e67f90bcd149c1af31b43497f041302d05bf584d551",
+          "bc35be725d06a3b3872efe5873bb440ac72337d785550ccfa105b67793289964",
+          "761b2e8854380997826e3c2178c8760420d14adc278a72bdbdb9c08078e8d8b0"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/four-turn/per-program/event-product-launch-run-of-show/responses/event-product-launch-run-of-show.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/four-turn/per-program/event-product-launch-run-of-show/predicted/event-product-launch-run-of-show.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 16,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Product Launch Evening: Run of Show for 200 guests",
+            "finish_at": "21:00",
+            "constraints": "one stage, one projector, crew call 17:00, doors 18:00, program over by 20:00, venue resets at 21:00",
+            "vertical": "events",
+            "turn": "T1",
+            "kind": "run-of-show",
+            "constraintsLine": "Resource limits: one stage, one projector, crew call 17:00, doors 18:00, program over by 20:00, venue resets at 21:00.",
+            "deadlineLine": "Everything must be finished by 21:00.",
+            "source": "Source text (read all of it):\n<<<\nProduct Launch Evening: Run of Show\n\nVenue: the main hall, 200 seats, one stage with a single projector and a two-microphone PA, and a foyer with a bar. Crew: one producer calling the show, one AV technician, two front-of-house staff and the caterers. Crew call is 5:00 pm, doors are scheduled for 6:00 pm, and the program must be over by 8:00 pm so the reception can run before the venue resets at 9:00 pm.\n\nPre-show\nThe AV technician runs a full line check of the projector, clicker and both microphones; allow 30 minutes. The producer then walks the CEO and the product lead through the stage for a 20-minute rehearsal of the keynote transitions. Meanwhile front-of-house sets up the registration desk and lays out name badges, which takes 45 minutes, then does a 15-minute walkthrough of the foyer and the seating. Catering sets the bar and the canap\u00e9 stations in the foyer over 60 minutes.\n\nDoors\nDoors open on the producer's call, not before front-of-house confirms the walkthrough is done. Guests arrive and register over 30 minutes while a welcome playlist runs in the hall and the bar serves drinks. When registration closes, front-of-house ushers guests to their seats, which takes 5 minutes.\n\nProgram\nThe host opens the program as soon as the hall is seated and welcomes the audience for 5 minutes. The CEO keynote begins on the host's cue and runs 20 minutes; the AV technician brings up the deck. Straight after the keynote the technician plays a 2-minute product video from the booth, and the product lead follows with a 25-minute live demo. A moderated Q&A follows for about 20 minutes, no less than 15 and no more than 25; the moderator closes it when the questions run dry or the clock says so. When the moderator hands back, the host closes the program in 5 minutes and invites everyone to the reception.\n\nReception\nThe foyer bar reopens as soon as the host closes, and catering circulates canap\u00e9s for 45 minutes. Front-of-house breaks down the registration desk once the last guests have left the hall, about 15 minutes, and the AV technician strikes the stage over 30 minutes after the hall is clear.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Product Launch Evening: Run of Show for 200 guests",
+            "finish_at": "21:00",
+            "constraints": "one stage, one projector, crew call 17:00, doors 18:00, program over by 20:00, venue resets at 21:00",
+            "vertical": "events",
+            "turn": "T2",
+            "kind": "run-of-show"
+          },
+          "T3 extraction": {
+            "goal": "Product Launch Evening: Run of Show for 200 guests",
+            "finish_at": "21:00",
+            "constraints": "one stage, one projector, crew call 17:00, doors 18:00, program over by 20:00, venue resets at 21:00",
+            "vertical": "events",
+            "turn": "T3",
+            "kind": "run-of-show",
+            "environment": "a venue where you have: one stage, one projector, crew call 17:00, doors 18:00, program over by 20:00, venue resets at 21:00",
+            "deadline": "21:00",
+            "source": "Source text (read all of it):\n<<<\nProduct Launch Evening: Run of Show\n\nVenue: the main hall, 200 seats, one stage with a single projector and a two-microphone PA, and a foyer with a bar. Crew: one producer calling the show, one AV technician, two front-of-house staff and the caterers. Crew call is 5:00 pm, doors are scheduled for 6:00 pm, and the program must be over by 8:00 pm so the reception can run before the venue resets at 9:00 pm.\n\nPre-show\nThe AV technician runs a full line check of the projector, clicker and both microphones; allow 30 minutes. The producer then walks the CEO and the product lead through the stage for a 20-minute rehearsal of the keynote transitions. Meanwhile front-of-house sets up the registration desk and lays out name badges, which takes 45 minutes, then does a 15-minute walkthrough of the foyer and the seating. Catering sets the bar and the canap\u00e9 stations in the foyer over 60 minutes.\n\nDoors\nDoors open on the producer's call, not before front-of-house confirms the walkthrough is done. Guests arrive and register over 30 minutes while a welcome playlist runs in the hall and the bar serves drinks. When registration closes, front-of-house ushers guests to their seats, which takes 5 minutes.\n\nProgram\nThe host opens the program as soon as the hall is seated and welcomes the audience for 5 minutes. The CEO keynote begins on the host's cue and runs 20 minutes; the AV technician brings up the deck. Straight after the keynote the technician plays a 2-minute product video from the booth, and the product lead follows with a 25-minute live demo. A moderated Q&A follows for about 20 minutes, no less than 15 and no more than 25; the moderator closes it when the questions run dry or the clock says so. When the moderator hands back, the host closes the program in 5 minutes and invites everyone to the reception.\n\nReception\nThe foyer bar reopens as soon as the host closes, and catering circulates canap\u00e9s for 45 minutes. Front-of-house breaks down the registration desk once the last guests have left the hall, about 15 minutes, and the AV technician strikes the stage over 30 minutes after the hall is clear.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Product Launch Evening: Run of Show for 200 guests",
+            "finish_at": "21:00",
+            "constraints": "one stage, one projector, crew call 17:00, doors 18:00, program over by 20:00, venue resets at 21:00",
+            "vertical": "events",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or plan_event",
+            "finishAtArg": " with finishAt=\"21:00\""
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

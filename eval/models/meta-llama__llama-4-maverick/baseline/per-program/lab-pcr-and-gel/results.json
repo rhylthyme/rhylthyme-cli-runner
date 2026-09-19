@@ -1,0 +1,154 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "meta-llama/llama-4-maverick",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/baseline/cache",
+    "limit": null,
+    "only": [
+      "lab-pcr-and-gel"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 3,
+      "input_tokens": 22789,
+      "output_tokens": 7474,
+      "cost_usd": 0.009157380000000001,
+      "fix_iterations": 2
+    },
+    "generated_at": "2026-09-19T19:46:03+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 0.0,
+    "steps_recall": 0.0,
+    "steps_f1": 0.0,
+    "durations_accuracy": 0.0,
+    "resources_precision": 0.0,
+    "resources_recall": 0.0,
+    "actors_accuracy": 0.0,
+    "relationships_precision": 0.0,
+    "relationships_recall": 0.0,
+    "relationships_f1": 0.0,
+    "structure_rand_index": 0.0,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.0
+  },
+  "programs": [
+    {
+      "slug": "lab-pcr-and-gel",
+      "headline": {
+        "steps_precision": 0.0,
+        "steps_recall": 0.0,
+        "steps_f1": 0.0,
+        "durations_accuracy": 0.0,
+        "resources_precision": 0.0,
+        "resources_recall": 0.0,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.0,
+        "relationships_recall": 0.0,
+        "relationships_f1": 0.0,
+        "structure_rand_index": 0.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.0
+      },
+      "steps": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 16,
+        "n_pred": 0
+      },
+      "durations": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 16
+      },
+      "resources": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 7,
+        "n_pred": 0
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 18,
+        "n_pred": 0
+      },
+      "structure": {
+        "rand_index": 0.0,
+        "agreements": 0,
+        "pairs": 0,
+        "n_steps": 0
+      },
+      "end_to_end": {
+        "python_valid": false,
+        "python_errors": [],
+        "js_status": "skipped",
+        "js_valid": null,
+        "js_errors": [],
+        "gold_makespan": 0.0,
+        "pred_makespan": 0.0,
+        "makespan_ok": false,
+        "gold_critical_path": [],
+        "pred_critical_path": [],
+        "js_critical_path": null,
+        "js_makespan": null,
+        "critical_overlap": 0.0,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.0,
+      "unsupported_steps": [],
+      "matching": [],
+      "extras": {
+        "model": "meta-llama/llama-4-maverick",
+        "pattern": "baseline",
+        "calls": 3,
+        "input_tokens": 22789,
+        "output_tokens": 7474,
+        "cost_usd": 0.009157380000000001,
+        "cache_keys": [
+          "78c28f9763e68c589015633d770ac915d4b1ab1d8c53c486c08276f5aef11b35",
+          "4f8e9a17e5e3bfaf035ebb5055dcf98aefdc7ba8c7231dc04d02bdf15bf89a17",
+          "165cc49f1600efe0b159f110df948727d2af31cecf4db4a8e335838222b6eca8"
+        ],
+        "fix_iterations": 2,
+        "validation_errors": [
+          "Track 'Agarose Gel Preparation': Steps 'Setup gel rig' and 'Prepare ladder' overlap by 120 seconds. Step 'Setup gel rig' ends at 6780s, but step 'Prepare ladder' starts at 6660s."
+        ],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/baseline/per-program/lab-pcr-and-gel/responses/lab-pcr-and-gel.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/baseline/per-program/lab-pcr-and-gel/predicted/lab-pcr-and-gel.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Colony PCR Screen with a Diagnostic Gel for eight clones, one gel, following the source text below",
+            "finish_at": null,
+            "constraints": "one thermocycler, one microcentrifuge, one microwave, one gel rig, one transilluminator, one operator",
+            "vertical": "lab"
+          }
+        }
+      },
+      "error": "program failed validation after 2 fix iteration(s): Track 'Agarose Gel Preparation': Steps 'Setup gel rig' and 'Prepare ladder' overlap by 120 seconds. Step 'Setup gel rig' ends at 6780s, but step 'Prepare ladder' starts at 6660s."
+    }
+  ],
+  "missing": [
+    "lab-pcr-and-gel"
+  ]
+}

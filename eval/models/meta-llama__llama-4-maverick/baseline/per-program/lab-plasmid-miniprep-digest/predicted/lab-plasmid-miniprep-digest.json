@@ -1,0 +1,312 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "plasmid-miniprep-digest-gel",
+  "name": "Plasmid Miniprep, Restriction Digest and Gel Check",
+  "environmentType": "laboratory",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "miniprep",
+      "name": "Miniprep",
+      "steps": [
+        {
+          "stepId": "pellet-culture",
+          "name": "Pellet culture",
+          "task": "centrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "resuspend-pellet",
+          "name": "Resuspend pellet",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "pellet-culture"
+          }
+        },
+        {
+          "stepId": "lyse-cells",
+          "name": "Lyse cells",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "resuspend-pellet"
+          }
+        },
+        {
+          "stepId": "neutralize-centrifuge",
+          "name": "Neutralize and centrifuge",
+          "task": "microcentrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "lyse-cells"
+          }
+        },
+        {
+          "stepId": "load-lysate",
+          "name": "Load lysate onto spin column",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "neutralize-centrifuge"
+          }
+        },
+        {
+          "stepId": "wash-column",
+          "name": "Wash column",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "load-lysate"
+          }
+        },
+        {
+          "stepId": "elute-dna",
+          "name": "Elute DNA",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-column"
+          }
+        },
+        {
+          "stepId": "measure-concentration",
+          "name": "Measure concentration",
+          "task": "spectrophotometer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "elute-dna"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "gel-prep",
+      "name": "Agarose Gel Preparation",
+      "steps": [
+        {
+          "stepId": "microwave-agarose",
+          "name": "Microwave agarose",
+          "task": "microwave",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "pellet-culture"
+          }
+        },
+        {
+          "stepId": "cool-pour-gel",
+          "name": "Cool and pour gel",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 720
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "microwave-agarose"
+          }
+        },
+        {
+          "stepId": "let-gel-set",
+          "name": "Let gel set",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cool-pour-gel"
+          }
+        },
+        {
+          "stepId": "prepare-gel",
+          "name": "Prepare gel for running",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "let-gel-set"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "digest",
+      "name": "Restriction Digest",
+      "steps": [
+        {
+          "stepId": "prepare-digest",
+          "name": "Prepare digest mix",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "measure-concentration"
+          }
+        },
+        {
+          "stepId": "incubate-digest",
+          "name": "Incubate at 37 °C",
+          "task": "heat-block-37",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prepare-digest"
+          }
+        },
+        {
+          "stepId": "prepare-ladder",
+          "name": "Prepare ladder and loading dye",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prepare-digest",
+            "offsetSeconds": 600
+          }
+        },
+        {
+          "stepId": "heat-inactivate",
+          "name": "Heat-inactivate enzymes",
+          "task": "heat-block-65",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "incubate-digest"
+          }
+        },
+        {
+          "stepId": "load-gel",
+          "name": "Load gel",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "heat-inactivate"
+          }
+        },
+        {
+          "stepId": "run-gel",
+          "name": "Run gel",
+          "task": "gel-rig",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "load-gel"
+          }
+        },
+        {
+          "stepId": "image-gel",
+          "name": "Image gel",
+          "task": "transilluminator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "run-gel"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "microcentrifuge",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "centrifuge",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "heat-block-37",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "heat-block-65",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "gel-rig",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "microwave",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "spectrophotometer",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "transilluminator",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "prep",
+      "maxConcurrent": 1
+    }
+  ]
+}

@@ -1,0 +1,449 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "qwen/qwen3.8-flash",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/baseline/cache",
+    "limit": null,
+    "only": [
+      "lab-western-blot-transfer-block"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 64000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 1,
+      "input_tokens": 4647,
+      "output_tokens": 20849,
+      "cost_usd": 0.010496079999999998,
+      "fix_iterations": 0
+    },
+    "generated_at": "2026-09-19T20:33:03+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 0.0,
+    "steps_recall": 0.0,
+    "steps_f1": 0.0,
+    "durations_accuracy": 0.0,
+    "resources_precision": 0.3333333333333333,
+    "resources_recall": 0.375,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.0,
+    "relationships_recall": 0.0,
+    "relationships_f1": 0.0,
+    "structure_rand_index": 0.0,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 1.0
+  },
+  "programs": [
+    {
+      "slug": "lab-western-blot-transfer-block",
+      "headline": {
+        "steps_precision": 0.0,
+        "steps_recall": 0.0,
+        "steps_f1": 0.0,
+        "durations_accuracy": 0.0,
+        "resources_precision": 0.3333333333333333,
+        "resources_recall": 0.375,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.0,
+        "relationships_recall": 0.0,
+        "relationships_f1": 0.0,
+        "structure_rand_index": 0.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 1.0
+      },
+      "steps": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 21,
+        "n_pred": 0
+      },
+      "durations": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 0
+      },
+      "resources": {
+        "precision": 0.3333333333333333,
+        "recall": 0.375,
+        "f1": 0.35294117647058826,
+        "tp": 3,
+        "n_gold": 8,
+        "n_pred": 9
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 23,
+        "n_pred": 0
+      },
+      "structure": {
+        "rand_index": 0.0,
+        "agreements": 0,
+        "pairs": 0,
+        "n_steps": 0
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 78120.0,
+        "pred_makespan": 72180.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "thaw-lysates",
+          "denature-samples",
+          "spin-lysates",
+          "load-gel",
+          "run-gel",
+          "assemble-sandwich",
+          "transfer-blot",
+          "ponceau-stain",
+          "block-membrane",
+          "primary-overnight",
+          "wash-after-primary",
+          "secondary-antibody",
+          "wash-after-secondary",
+          "develop-ecl",
+          "image-blot",
+          "quantify-bands"
+        ],
+        "pred_critical_path": [
+          "sample-thaw",
+          "sample-denature",
+          "sample-spin",
+          "gel-assemble",
+          "gel-load",
+          "gel-run",
+          "blot-build",
+          "blot-transfer",
+          "blot-stain",
+          "blot-block",
+          "blot-primary",
+          "blot-wash-1",
+          "blot-secondary",
+          "blot-wash-2",
+          "detection-apply",
+          "detection-image",
+          "detection-quantify"
+        ],
+        "js_critical_path": [
+          "sample-thaw",
+          "sample-denature",
+          "sample-spin",
+          "gel-assemble",
+          "gel-load-r1",
+          "gel-load-r2",
+          "gel-load-r3",
+          "gel-load-r4",
+          "gel-load-r5",
+          "gel-load-r6",
+          "gel-load-r7",
+          "gel-load-r8",
+          "gel-load-r9",
+          "gel-load-r10",
+          "transfer-chill",
+          "transfer-membrane",
+          "transfer-pads",
+          "blot-build",
+          "blot-transfer",
+          "blot-stain",
+          "blot-block",
+          "blot-primary",
+          "blot-wash-1-r1",
+          "blot-wash-1-r2",
+          "blot-wash-1-r3",
+          "blot-secondary",
+          "blot-wash-2-r1",
+          "blot-wash-2-r2",
+          "blot-wash-2-r3",
+          "detection-apply",
+          "detection-image",
+          "detection-quantify"
+        ],
+        "js_makespan": 75120,
+        "critical_overlap": 0.0,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 1.0,
+      "unsupported_steps": [
+        "sample-thaw",
+        "sample-denature",
+        "sample-spin",
+        "gel-assemble",
+        "gel-load",
+        "gel-run",
+        "transfer-chill",
+        "transfer-membrane",
+        "transfer-pads",
+        "blot-build",
+        "blot-transfer",
+        "blot-stain",
+        "blot-block",
+        "blot-primary",
+        "blot-wash-1",
+        "blot-secondary",
+        "blot-wash-2",
+        "detection-ecl",
+        "detection-apply",
+        "detection-image",
+        "detection-quantify"
+      ],
+      "matching": [
+        {
+          "gold": "thaw-lysates",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "denature-samples",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "spin-lysates",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "assemble-tank",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "load-gel",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "run-gel",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "chill-transfer-buffer",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "activate-membrane",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "soak-pads",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "assemble-sandwich",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "transfer-blot",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "ponceau-stain",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "block-membrane",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "primary-overnight",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "wash-after-primary",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "secondary-antibody",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "wash-after-secondary",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "mix-ecl",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "develop-ecl",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "image-blot",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "quantify-bands",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "sample-thaw",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "sample-denature",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "sample-spin",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "gel-assemble",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "gel-load",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "gel-run",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "transfer-chill",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "transfer-membrane",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "transfer-pads",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "blot-build",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "blot-transfer",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "blot-stain",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "blot-block",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "blot-primary",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "blot-wash-1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "blot-secondary",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "blot-wash-2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "detection-ecl",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "detection-apply",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "detection-image",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "detection-quantify",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "qwen/qwen3.8-flash",
+        "pattern": "baseline",
+        "calls": 1,
+        "input_tokens": 4647,
+        "output_tokens": 20849,
+        "cost_usd": 0.010496079999999998,
+        "cache_keys": [
+          "37dabdd8813c4f4d22a4f0330f143a8f987251a45c71add853c360af13e06493"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/baseline/per-program/lab-western-blot-transfer-block/responses/lab-western-blot-transfer-block.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/baseline/per-program/lab-western-blot-transfer-block/predicted/lab-western-blot-transfer-block.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Western Blot: SDS-PAGE, Wet Transfer and Overnight Primary for one 10-lane gel, one membrane, following the source text below",
+            "finish_at": null,
+            "constraints": "one gel tank, one wet transfer tank, one orbital rocker, one tray at a time, one cold room, one chemiluminescence imager, one operator",
+            "vertical": "lab"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

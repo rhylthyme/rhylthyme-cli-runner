@@ -1,0 +1,392 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "product-launch-evening",
+  "name": "Product Launch Evening",
+  "environmentType": "event",
+  "actors": 5,
+  "tracks": [
+    {
+      "trackId": "av-technician",
+      "name": "AV Technician",
+      "steps": [
+        {
+          "stepId": "av-line-check",
+          "name": "AV line check",
+          "task": "av-technician",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "allow 30 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "play-video",
+          "name": "Play product video",
+          "task": "av-technician",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "ceo-keynote"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "2-minute product video",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "strike-stage",
+          "name": "Strike the stage",
+          "task": "av-technician",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStepWithBuffer",
+            "stepId": "host-close",
+            "bufferSeconds": 300
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "over 30 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "producer",
+      "name": "Producer",
+      "steps": [
+        {
+          "stepId": "rehearse-keynote",
+          "name": "Rehearse keynote transitions",
+          "task": "producer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "20-minute rehearsal",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "front-of-house",
+      "name": "Front-of-House",
+      "steps": [
+        {
+          "stepId": "setup-registration",
+          "name": "Set up registration desk",
+          "task": "front-of-house",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "takes 45 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "foh-walkthrough",
+          "name": "Front-of-house walkthrough",
+          "task": "front-of-house",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "setup-registration"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "15-minute walkthrough",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "guest-registration",
+          "name": "Guest registration",
+          "task": "front-of-house",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "foh-walkthrough"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "over 30 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "usher-guests",
+          "name": "Usher guests to seats",
+          "task": "front-of-house",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "guest-registration"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "takes 5 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "breakdown-registration",
+          "name": "Break down registration desk",
+          "task": "front-of-house",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "host-close"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "about 15 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "catering",
+      "name": "Catering",
+      "steps": [
+        {
+          "stepId": "setup-catering",
+          "name": "Set up bar and canapé stations",
+          "task": "catering",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "over 60 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "serve-canapes",
+          "name": "Serve canapés",
+          "task": "catering",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "host-close"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "circulates canapés for 45 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "program",
+      "name": "Program",
+      "steps": [
+        {
+          "stepId": "host-welcome",
+          "name": "Host welcome",
+          "task": "host",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "usher-guests"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "welcomes the audience for 5 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "ceo-keynote",
+          "name": "CEO keynote",
+          "task": "ceo",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "host-welcome"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "runs 20 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "live-demo",
+          "name": "Live demo",
+          "task": "product-lead",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1500
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "play-video"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "25-minute live demo",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "q-and-a",
+          "name": "Q&A session",
+          "task": "moderator",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 900,
+            "maxSeconds": 1500,
+            "defaultSeconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "live-demo"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "about 20 minutes, no less than 15 and no more than 25",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "host-close",
+          "name": "Host close",
+          "task": "host",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "q-and-a"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "closes the program in 5 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "av-technician",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "producer",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "front-of-house",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "catering",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "host",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "ceo",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "product-lead",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "moderator",
+      "maxConcurrent": 1
+    }
+  ]
+}

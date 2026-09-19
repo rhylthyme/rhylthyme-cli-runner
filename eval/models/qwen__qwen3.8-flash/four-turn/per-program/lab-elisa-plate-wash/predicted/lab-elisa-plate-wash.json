@@ -1,0 +1,1011 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "sandwich-elisa-two-plates-one-washer",
+  "name": "Sandwich ELISA on Two Plates, One Washer",
+  "description": "Two 96-well plates run half an hour apart through a sandwich ELISA with one automated plate washer, one two-plate 37 °C incubator, one plate reader, and one operator.",
+  "environmentType": "laboratory",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "operator",
+      "name": "One operator",
+      "steps": [
+        {
+          "stepId": "coat-plate-1-capture-antibody",
+          "name": "Coat plate 1 with capture antibody",
+          "task": "operator",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 120,
+            "maxSeconds": 900,
+            "defaultSeconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Coat plate 1 with 100 µL per well of capture antibody in carbonate buffer",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "coat-plate-2-capture-antibody",
+          "name": "Coat plate 2 with capture antibody",
+          "task": "operator",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 120,
+            "maxSeconds": 900,
+            "defaultSeconds": 300
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "programStartOffset",
+                "offsetSeconds": 1800
+              },
+              {
+                "type": "afterStep",
+                "stepId": "coat-plate-1-capture-antibody"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Coat plate 2 the same way half an hour later, so the two plates stay half an hour apart all day",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "add-blocking-buffer-to-plate-1",
+          "name": "Add blocking buffer to plate 1",
+          "task": "operator",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 0,
+            "maxSeconds": 300,
+            "defaultSeconds": 60
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "coat-plate-2-capture-antibody"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "wash-plate-1-before-block"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Block with 200 µL per well of assay diluent",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "make-up-seven-point-standards",
+          "name": "Make up the seven-point standard curve",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "add-blocking-buffer-to-plate-1"
+              },
+              {
+                "type": "programStartOffset",
+                "offsetSeconds": 54000
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "make up the seven-point standard curve in assay diluent; 30 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "add-blocking-buffer-to-plate-2",
+          "name": "Add blocking buffer to plate 2",
+          "task": "operator",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 0,
+            "maxSeconds": 300,
+            "defaultSeconds": 60
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "make-up-seven-point-standards"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "wash-plate-2-before-block"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Block plate 2 with 200 µL of assay diluent",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "dilute-samples-and-layout-plate-map",
+          "name": "Dilute samples 1:4 and lay out the plate map",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "add-blocking-buffer-to-plate-2"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Dilute the samples 1:4 into assay diluent and lay out the plate map; 30 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "add-standards-and-samples-to-plate-1",
+          "name": "Add standards and samples to plate 1",
+          "task": "operator",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 0,
+            "maxSeconds": 600,
+            "defaultSeconds": 120
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "dilute-samples-and-layout-plate-map"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "wash-plate-1-after-block"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Add 100 µL of standards and samples",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "add-standards-and-samples-to-plate-2",
+          "name": "Add standards and samples to plate 2",
+          "task": "operator",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 0,
+            "maxSeconds": 600,
+            "defaultSeconds": 120
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "add-standards-and-samples-to-plate-1"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "wash-plate-2-after-block"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Add the standards and samples to plate 2",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "add-detection-antibody-to-plate-1",
+          "name": "Add biotinylated detection antibody to plate 1",
+          "task": "operator",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 0,
+            "maxSeconds": 300,
+            "defaultSeconds": 60
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "add-standards-and-samples-to-plate-2"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "wash-plate-1-after-standards-and-samples"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Add 100 µL of biotinylated detection antibody",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "add-detection-antibody-to-plate-2",
+          "name": "Add detection antibody to plate 2",
+          "task": "operator",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 0,
+            "maxSeconds": 300,
+            "defaultSeconds": 60
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "add-detection-antibody-to-plate-1"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "wash-plate-2-after-standards-and-samples"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Add the detection antibody to plate 2",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "add-tmb-substrate-to-plate-1",
+          "name": "Add TMB substrate to plate 1",
+          "task": "operator",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 0,
+            "maxSeconds": 300,
+            "defaultSeconds": 60
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "add-detection-antibody-to-plate-2"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "wash-plate-1-before-development"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Add 100 µL of TMB substrate",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "develop-plate-1-tmb-in-dark",
+          "name": "Develop plate 1 TMB in the dark",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "add-tmb-substrate-to-plate-1"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "develop in the dark for exactly 15 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "stop-plate-1-development-with-acid",
+          "name": "Stop plate 1 development with sulfuric acid",
+          "task": "operator",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 0,
+            "maxSeconds": 120,
+            "defaultSeconds": 30
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "develop-plate-1-tmb-in-dark"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "stop with 50 µL of 2 N sulfuric acid",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "add-tmb-substrate-to-plate-2",
+          "name": "Add TMB substrate to plate 2",
+          "task": "operator",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 0,
+            "maxSeconds": 300,
+            "defaultSeconds": 60
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "stop-plate-1-development-with-acid"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "wash-plate-2-before-development"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": null,
+            "inferred": true
+          }
+        },
+        {
+          "stepId": "develop-plate-2-tmb-in-dark",
+          "name": "Develop plate 2 TMB in the dark",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "add-tmb-substrate-to-plate-2"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Develop plate 2 with TMB for exactly 15 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "stop-plate-2-development",
+          "name": "Stop plate 2 development",
+          "task": "operator",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 0,
+            "maxSeconds": 120,
+            "defaultSeconds": 30
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "develop-plate-2-tmb-in-dark"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "stop it",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "washer",
+      "name": "Automated plate washer",
+      "steps": [
+        {
+          "stepId": "wash-plate-1-before-block",
+          "name": "Wash plate 1 before blocking",
+          "task": "washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cold-hold-plate-1-overnight"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Wash the plate four times with 300 µL of wash buffer; 5 minutes on the washer",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "wash-plate-2-before-block",
+          "name": "Wash plate 2 before blocking",
+          "task": "washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "wash-plate-1-before-block"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "cold-hold-plate-2-overnight"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Wash plate 2 four times as soon as the washer is free; 5 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "wash-plate-1-after-block",
+          "name": "Wash plate 1 after blocking",
+          "task": "washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "wash-plate-2-before-block"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "incubate-plate-1-block-at-37c"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Wash four times; 5 minutes on the washer",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "wash-plate-2-after-block",
+          "name": "Wash plate 2 after blocking",
+          "task": "washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "wash-plate-1-after-block"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "incubate-plate-2-block-at-37c"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Wash plate 2 again once plate 1 is off the washer; 5 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "wash-plate-1-after-standards-and-samples",
+          "name": "Wash plate 1 after standards and samples",
+          "task": "washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "wash-plate-2-after-block"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "incubate-plate-1-standards-and-samples-at-37c"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Wash four times; 5 minutes on the washer",
+              "occurrence": 2
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "wash-plate-2-after-standards-and-samples",
+          "name": "Wash plate 2 after standards and samples",
+          "task": "washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "wash-plate-1-after-standards-and-samples"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "incubate-plate-2-standards-and-samples-at-37c"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Wash plate 2; 5 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "wash-plate-1-before-development",
+          "name": "Wash plate 1 before development",
+          "task": "washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "wash-plate-2-after-standards-and-samples"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "incubate-plate-1-detection-antibody-at-37c"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Wash four times; 5 minutes on the washer",
+              "occurrence": 3
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "wash-plate-2-before-development",
+          "name": "Wash plate 2 before development",
+          "task": "washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "wash-plate-1-before-development"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "incubate-plate-2-detection-antibody-at-37c"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Wash plate 2 a final time; 5 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "plate-1",
+      "name": "Plate 1",
+      "steps": [
+        {
+          "stepId": "cold-hold-plate-1-overnight",
+          "name": "Hold plate 1 in the cold room overnight",
+          "task": "coldRoom",
+          "duration": {
+            "type": "indefinite",
+            "defaultSeconds": 54000
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "coat-plate-1-capture-antibody"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "leave it in the cold room at 4 °C overnight",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "incubate-plate-1-block-at-37c",
+          "name": "Incubate plate 1 block at 37 °C",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "cold-hold-plate-1-overnight"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "add-blocking-buffer-to-plate-1"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Block with 200 µL per well of assay diluent for 1 hour at 37 °C",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "incubate-plate-1-standards-and-samples-at-37c",
+          "name": "Incubate plate 1 standards and samples at 37 °C",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 7200
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "incubate-plate-1-block-at-37c"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "add-standards-and-samples-to-plate-1"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Add 100 µL of standards and samples and incubate for 2 hours at 37 °C",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "incubate-plate-1-detection-antibody-at-37c",
+          "name": "Incubate plate 1 detection antibody at 37 °C",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "incubate-plate-1-standards-and-samples-at-37c"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "add-detection-antibody-to-plate-1"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Add 100 µL of biotinylated detection antibody and incubate for 1 hour at 37 °C",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "read-plate-1-absorbance",
+          "name": "Read plate 1 absorbance",
+          "task": "reader",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "incubate-plate-1-detection-antibody-at-37c"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "stop-plate-1-development-with-acid"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Read the absorbance at 450 nm with a 570 nm reference; 5 minutes on the reader",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "plate-2",
+      "name": "Plate 2",
+      "steps": [
+        {
+          "stepId": "cold-hold-plate-2-overnight",
+          "name": "Hold plate 2 in the cold room overnight",
+          "task": "coldRoom",
+          "duration": {
+            "type": "indefinite",
+            "defaultSeconds": 54000
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "coat-plate-2-capture-antibody"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Coat plate 2 the same way half an hour later, so the two plates stay half an hour apart all day",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "incubate-plate-2-block-at-37c",
+          "name": "Incubate plate 2 block at 37 °C",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "cold-hold-plate-2-overnight"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "add-blocking-buffer-to-plate-2"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Block plate 2 with 200 µL of assay diluent for 1 hour at 37 °C",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "incubate-plate-2-standards-and-samples-at-37c",
+          "name": "Incubate plate 2 standards and samples at 37 °C",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 7200
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "incubate-plate-2-block-at-37c"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "add-standards-and-samples-to-plate-2"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Add the standards and samples to plate 2 and incubate for 2 hours at 37 °C",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "incubate-plate-2-detection-antibody-at-37c",
+          "name": "Incubate plate 2 detection antibody at 37 °C",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "incubate-plate-2-standards-and-samples-at-37c"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "add-detection-antibody-to-plate-2"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Add the detection antibody to plate 2 and incubate for 1 hour at 37 °C",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "read-plate-2-absorbance",
+          "name": "Read plate 2 absorbance",
+          "task": "reader",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "incubate-plate-2-detection-antibody-at-37c"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "stop-plate-2-development"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Read plate 2 at 450 nm; 5 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "operator",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "washer",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "incubator",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "reader",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "coldRoom",
+      "maxConcurrent": 2
+    }
+  ],
+  "metadata": {
+    "serves": "two 96-well plates",
+    "sourceUrl": "",
+    "attribution": ""
+  }
+}

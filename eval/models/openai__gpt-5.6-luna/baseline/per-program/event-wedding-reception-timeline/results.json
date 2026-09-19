@@ -1,0 +1,301 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "openai/gpt-5.6-luna",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/openai__gpt-5.6-luna/baseline/cache",
+    "limit": null,
+    "only": [
+      "event-wedding-reception-timeline"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 64000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 1,
+      "input_tokens": 4320,
+      "output_tokens": 4277,
+      "cost_usd": 0.0059964,
+      "fix_iterations": 0
+    },
+    "generated_at": "2026-09-19T19:23:39+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 1.0,
+    "steps_f1": 1.0,
+    "durations_accuracy": 1.0,
+    "resources_precision": 0.2222222222222222,
+    "resources_recall": 0.2857142857142857,
+    "actors_accuracy": 0.0,
+    "relationships_precision": 0.631578947368421,
+    "relationships_recall": 0.631578947368421,
+    "relationships_f1": 0.631578947368421,
+    "structure_rand_index": 0.9766081871345029,
+    "end_to_end_pass": 1.0,
+    "unsupported_rate": 0.05
+  },
+  "programs": [
+    {
+      "slug": "event-wedding-reception-timeline",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 1.0,
+        "steps_f1": 1.0,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.2222222222222222,
+        "resources_recall": 0.2857142857142857,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.631578947368421,
+        "relationships_recall": 0.631578947368421,
+        "relationships_f1": 0.631578947368421,
+        "structure_rand_index": 0.9766081871345029,
+        "end_to_end_pass": 1.0,
+        "unsupported_rate": 0.05
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 19,
+        "n_gold": 19,
+        "n_pred": 19
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 19,
+        "total": 19
+      },
+      "resources": {
+        "precision": 0.2222222222222222,
+        "recall": 0.2857142857142857,
+        "f1": 0.25,
+        "tp": 2,
+        "n_gold": 7,
+        "n_pred": 9
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.631578947368421,
+        "recall": 0.631578947368421,
+        "f1": 0.631578947368421,
+        "tp": 12,
+        "n_gold": 19,
+        "n_pred": 19
+      },
+      "structure": {
+        "rand_index": 0.9766081871345029,
+        "agreements": 167,
+        "pairs": 171,
+        "n_steps": 19
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 23400.0,
+        "pred_makespan": 22200.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "flip-room",
+          "dress-tables",
+          "seat-guests",
+          "plate-starters",
+          "serve-starters",
+          "clear-starters",
+          "plate-mains",
+          "serve-mains",
+          "clear-mains",
+          "first-dance",
+          "speeches",
+          "cake-cut",
+          "plate-dessert",
+          "serve-dessert",
+          "dancing"
+        ],
+        "pred_critical_path": [
+          "open-bar",
+          "pass-canapes",
+          "room-call",
+          "seat-guests",
+          "plate-starters",
+          "serve-starters",
+          "clear-starters",
+          "plate-mains",
+          "serve-mains",
+          "clear-mains",
+          "first-dance",
+          "speeches",
+          "cut-cake",
+          "plate-dessert",
+          "serve-dessert",
+          "dancing"
+        ],
+        "js_critical_path": [
+          "open-bar",
+          "pass-canapes",
+          "room-call",
+          "seat-guests",
+          "plate-starters",
+          "serve-starters",
+          "clear-starters",
+          "plate-mains",
+          "serve-mains",
+          "clear-mains",
+          "first-dance",
+          "speeches",
+          "cut-cake",
+          "plate-dessert",
+          "serve-dessert",
+          "dancing"
+        ],
+        "js_makespan": 22200,
+        "critical_overlap": 0.8666666666666667,
+        "critical_ok": true,
+        "passed": true
+      },
+      "unsupported_rate": 0.05,
+      "unsupported_steps": [
+        "band-final-set"
+      ],
+      "matching": [
+        {
+          "gold": "flip-room",
+          "predicted": "room-flip",
+          "by": "name"
+        },
+        {
+          "gold": "dress-tables",
+          "predicted": "dress-tables",
+          "by": "name"
+        },
+        {
+          "gold": "seat-guests",
+          "predicted": "seat-guests",
+          "by": "name"
+        },
+        {
+          "gold": "open-bar",
+          "predicted": "open-bar",
+          "by": "name"
+        },
+        {
+          "gold": "pass-canapes",
+          "predicted": "pass-canapes",
+          "by": "name"
+        },
+        {
+          "gold": "call-to-dinner",
+          "predicted": "room-call",
+          "by": "name"
+        },
+        {
+          "gold": "plate-starters",
+          "predicted": "plate-starters",
+          "by": "name"
+        },
+        {
+          "gold": "plate-mains",
+          "predicted": "plate-mains",
+          "by": "name"
+        },
+        {
+          "gold": "plate-dessert",
+          "predicted": "plate-dessert",
+          "by": "name"
+        },
+        {
+          "gold": "serve-starters",
+          "predicted": "serve-starters",
+          "by": "name"
+        },
+        {
+          "gold": "clear-starters",
+          "predicted": "clear-starters",
+          "by": "name"
+        },
+        {
+          "gold": "serve-mains",
+          "predicted": "serve-mains",
+          "by": "name"
+        },
+        {
+          "gold": "clear-mains",
+          "predicted": "clear-mains",
+          "by": "name"
+        },
+        {
+          "gold": "serve-dessert",
+          "predicted": "serve-dessert",
+          "by": "name"
+        },
+        {
+          "gold": "welcome-toast",
+          "predicted": "welcome-toast",
+          "by": "name"
+        },
+        {
+          "gold": "first-dance",
+          "predicted": "first-dance",
+          "by": "name"
+        },
+        {
+          "gold": "speeches",
+          "predicted": "speeches",
+          "by": "name"
+        },
+        {
+          "gold": "cake-cut",
+          "predicted": "cut-cake",
+          "by": "name"
+        },
+        {
+          "gold": "dancing",
+          "predicted": "dancing",
+          "by": "name"
+        },
+        {
+          "gold": null,
+          "predicted": "band-final-set",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "openai/gpt-5.6-luna",
+        "pattern": "baseline",
+        "calls": 1,
+        "input_tokens": 4320,
+        "output_tokens": 4277,
+        "cost_usd": 0.0059964,
+        "cache_keys": [
+          "8becd9be3d7d5481c192e3ad77dc66de2713fa268578e3170e2bea1f36cd1af0"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/openai__gpt-5.6-luna/baseline/per-program/event-wedding-reception-timeline/responses/event-wedding-reception-timeline.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/openai__gpt-5.6-luna/baseline/per-program/event-wedding-reception-timeline/predicted/event-wedding-reception-timeline.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Wedding Reception Run Sheet \u2014 Ashgrove Barn for 90 guests, three courses, following the source text below",
+            "finish_at": "band's last set",
+            "constraints": "one kitchen pass, one bar, one microphone, two servers on the floor, one dance floor",
+            "vertical": "events"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

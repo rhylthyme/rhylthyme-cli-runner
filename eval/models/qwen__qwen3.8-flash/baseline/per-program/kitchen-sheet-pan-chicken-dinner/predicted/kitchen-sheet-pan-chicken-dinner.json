@@ -1,0 +1,287 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "sheet-pan-chicken-potatoes-broccoli",
+  "name": "Sheet-Pan Chicken with Potatoes and Broccoli",
+  "description": "Tuesday dinner for four: one oven, two sheet pans, one burner, one cook.",
+  "environmentType": "kitchen",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "oven",
+      "name": "Oven",
+      "steps": [
+        {
+          "stepId": "preheat-oven",
+          "name": "Preheat oven to 425°F",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "roast-potatoes-alone",
+          "name": "Roast potatoes on their own",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "preheat-oven"
+          }
+        },
+        {
+          "stepId": "roast-potatoes-with-chicken",
+          "name": "Add chicken pan and roast both pans",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "roast-potatoes-alone"
+          }
+        },
+        {
+          "stepId": "rotate-add-broccoli",
+          "name": "Pull pans, rotate, add broccoli, return pans",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "roast-potatoes-with-chicken"
+          }
+        },
+        {
+          "stepId": "final-roast",
+          "name": "Final roast until chicken and broccoli are done",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rotate-add-broccoli"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "cook",
+      "name": "Cook / Prep",
+      "steps": [
+        {
+          "stepId": "toss-potatoes",
+          "name": "Toss halved potatoes with oil and salt on sheet pan 1",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "prep-chicken",
+          "name": "Pat chicken dry, spice, and lay on sheet pan 2",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "toss-potatoes"
+          }
+        },
+        {
+          "stepId": "wash-dry-leaves",
+          "name": "Wash and dry salad leaves",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 360
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep-chicken",
+            "offsetSeconds": 720
+          }
+        },
+        {
+          "stepId": "shake-vinaigrette",
+          "name": "Shake vinaigrette in a jar",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-dry-leaves"
+          }
+        },
+        {
+          "stepId": "dress-salad",
+          "name": "Dress the salad",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "shake-vinaigrette",
+            "offsetSeconds": 2100
+          }
+        },
+        {
+          "stepId": "whisk-butter",
+          "name": "Whisk cold butter into the sauce off the heat",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "dress-salad"
+          }
+        },
+        {
+          "stepId": "slice-and-plate",
+          "name": "Slice chicken thighs and plate everything",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 360
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "whisk-butter"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "pan-sauce",
+      "name": "Pan Sauce",
+      "steps": [
+        {
+          "stepId": "reduce-pan-sauce",
+          "name": "Tip pan juices into a small pan; reduce with stock and mustard",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 360
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "final-roast"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "rest-chicken",
+      "name": "Rest Chicken",
+      "steps": [
+        {
+          "stepId": "rest-chicken",
+          "name": "Rest chicken on a board",
+          "task": "board",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "final-roast"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "oven",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "sheetPan",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "burner",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "cook",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "board",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "serves": "4",
+    "ingredients": [
+      {
+        "name": "chicken thighs",
+        "measure": "4"
+      },
+      {
+        "name": "potatoes",
+        "measure": "halved, for 4"
+      },
+      {
+        "name": "broccoli",
+        "measure": "florets, for 4"
+      },
+      {
+        "name": "olive oil",
+        "measure": "as needed"
+      },
+      {
+        "name": "salt",
+        "measure": "to taste"
+      },
+      {
+        "name": "spice mix",
+        "measure": "for chicken"
+      },
+      {
+        "name": "stock",
+        "measure": "for sauce"
+      },
+      {
+        "name": "mustard",
+        "measure": "for sauce"
+      },
+      {
+        "name": "cold butter",
+        "measure": "for sauce"
+      },
+      {
+        "name": "salad leaves",
+        "measure": "for 4"
+      },
+      {
+        "name": "vinaigrette",
+        "measure": "to taste"
+      }
+    ]
+  }
+}

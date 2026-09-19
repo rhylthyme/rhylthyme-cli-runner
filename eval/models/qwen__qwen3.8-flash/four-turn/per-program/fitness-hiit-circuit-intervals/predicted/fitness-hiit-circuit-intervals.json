@@ -1,0 +1,671 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "hiit-circuit-card-3-athletes-4-stations-4-rounds",
+  "name": "HIIT Circuit Card — 3 athletes, 4 stations, 4 rounds",
+  "environmentType": "gym",
+  "actors": 3,
+  "tracks": [
+    {
+      "trackId": "session",
+      "name": "Shared session timing",
+      "steps": [
+        {
+          "stepId": "warmup-floor",
+          "name": "Warm-up on floor together",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Five minutes on the floor together",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "cooldown-floor",
+          "name": "Cooldown on floor together",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "a-r4-sled-reset"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "b-r4-rower-work"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "c-r4-kettlebell-work"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Ten minutes on the floor when all three of you have finished the fourth station",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "athlete-a",
+      "name": "Athlete A",
+      "steps": [
+        {
+          "stepId": "a-r1-rower-work",
+          "name": "Athlete A — Rower — Round 1",
+          "task": "rower",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warmup-floor"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Round 1: A on the rower",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "a-r1-rest",
+          "name": "Athlete A — Rest on floor after station",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "a-r1-rower-work"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Sixty seconds of rest on the floor after every station.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "a-r2-kettlebell-work",
+          "name": "Athlete A — Kettlebell swings — Round 2",
+          "task": "kettlebell",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "a-r1-rest"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "b-r1-kettlebell-work"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "A on the kettlebell",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "a-r2-rest",
+          "name": "Athlete A — Rest on floor after station",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "a-r2-kettlebell-work"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Sixty seconds of rest on the floor after every station.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "a-r3-box-work",
+          "name": "Athlete A — Box step-overs — Round 3",
+          "task": "box",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "a-r2-rest"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "b-r2-box-work"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "A on the box",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "a-r3-rest",
+          "name": "Athlete A — Rest on floor after station",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "a-r3-box-work"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Sixty seconds of rest on the floor after every station.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "a-r4-sled-work",
+          "name": "Athlete A — Sled push — Round 4",
+          "task": "sled",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "a-r3-rest"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "b-r3-sled-reset"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "A on the sled",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "a-r4-sled-reset",
+          "name": "Clear and reset sled after Round 4 — Athlete A",
+          "task": "sled",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 0,
+            "maxSeconds": 60,
+            "defaultSeconds": 0
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "a-r4-sled-work"
+          },
+          "metadata": {
+            "sourceSpan": null,
+            "inferred": true
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "athlete-b",
+      "name": "Athlete B",
+      "steps": [
+        {
+          "stepId": "b-r1-kettlebell-work",
+          "name": "Athlete B — Kettlebell swings — Round 1",
+          "task": "kettlebell",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warmup-floor"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "B on the kettlebell",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "b-r1-rest",
+          "name": "Athlete B — Rest on floor after station",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "b-r1-kettlebell-work"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Sixty seconds of rest on the floor after every station.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "b-r2-box-work",
+          "name": "Athlete B — Box step-overs — Round 2",
+          "task": "box",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "b-r1-rest"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "c-r1-box-work"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "B on the box",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "b-r2-rest",
+          "name": "Athlete B — Rest on floor after station",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "b-r2-box-work"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Sixty seconds of rest on the floor after every station.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "b-r3-sled-work",
+          "name": "Athlete B — Sled push — Round 3",
+          "task": "sled",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "b-r2-rest"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "c-r2-sled-reset"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "B on the sled",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "b-r3-sled-reset",
+          "name": "Clear and reset sled after Round 3 — Athlete B",
+          "task": "sled",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 0,
+            "maxSeconds": 60,
+            "defaultSeconds": 0
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "b-r3-sled-work"
+          },
+          "metadata": {
+            "sourceSpan": null,
+            "inferred": true
+          }
+        },
+        {
+          "stepId": "b-r3-rest",
+          "name": "Athlete B — Rest on floor after station",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "b-r3-sled-reset"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Sixty seconds of rest on the floor after every station.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "b-r4-rower-work",
+          "name": "Athlete B — Rower — Round 4",
+          "task": "rower",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "b-r3-rest"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "c-r3-rower-work"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "B on the rower",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "athlete-c",
+      "name": "Athlete C",
+      "steps": [
+        {
+          "stepId": "c-r1-box-work",
+          "name": "Athlete C — Box step-overs — Round 1",
+          "task": "box",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warmup-floor"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "C on the box",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "c-r1-rest",
+          "name": "Athlete C — Rest on floor after station",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "c-r1-box-work"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Sixty seconds of rest on the floor after every station.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "c-r2-sled-work",
+          "name": "Athlete C — Sled push — Round 2",
+          "task": "sled",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "c-r1-rest"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "C on the sled",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "c-r2-sled-reset",
+          "name": "Clear and reset sled after Round 2 — Athlete C",
+          "task": "sled",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 0,
+            "maxSeconds": 60,
+            "defaultSeconds": 0
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "c-r2-sled-work"
+          },
+          "metadata": {
+            "sourceSpan": null,
+            "inferred": true
+          }
+        },
+        {
+          "stepId": "c-r2-rest",
+          "name": "Athlete C — Rest on floor after station",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "c-r2-sled-reset"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Sixty seconds of rest on the floor after every station.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "c-r3-rower-work",
+          "name": "Athlete C — Rower — Round 3",
+          "task": "rower",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "c-r2-rest"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "a-r1-rower-work"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "C on the rower",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "c-r3-rest",
+          "name": "Athlete C — Rest on floor after station",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "c-r3-rower-work"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Sixty seconds of rest on the floor after every station.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "c-r4-kettlebell-work",
+          "name": "Athlete C — Kettlebell swings — Round 4",
+          "task": "kettlebell",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "c-r3-rest"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "a-r2-kettlebell-work"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "C on the kettlebell",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "floor",
+      "maxConcurrent": 3
+    },
+    {
+      "task": "rower",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "kettlebell",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "box",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "sled",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "serves": "3 athletes",
+    "statedSessionLength": "45m",
+    "earliestMakespanSeconds": 1320,
+    "note": "The explicit timings give a 22-minute earliest schedule; the source’s 45-minute clock is longer than the stated work/rest details. The sled-reset steps default to 0 seconds to preserve the earliest finish while still allowing the coach to hold the next sled user if the hand-off runs long."
+  }
+}

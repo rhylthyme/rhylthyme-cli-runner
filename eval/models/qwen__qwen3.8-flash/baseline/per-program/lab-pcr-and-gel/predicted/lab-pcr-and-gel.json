@@ -1,0 +1,351 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "colony-pcr-diagnostic-gel-eight-clones",
+  "name": "Colony PCR Screen with Diagnostic Gel (8 Clones)",
+  "description": "Screen eight candidate clones by colony PCR, cast and run one diagnostic agarose gel, and record insert-positive clones.",
+  "environmentType": "laboratory",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "pcr-setup-cycling",
+      "name": "PCR setup, cycling, and sample dyeing",
+      "steps": [
+        {
+          "stepId": "thawReagents",
+          "name": "Thaw primers, dNTPs, and buffer on ice",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "prepareMasterMix",
+          "name": "Assemble 25 uL master mix for 8 reactions plus one spare",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "thawReagents"
+          }
+        },
+        {
+          "stepId": "aliquotMasterMix",
+          "name": "Aliquot master mix into 8 strip tubes",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 30
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prepareMasterMix"
+          }
+        },
+        {
+          "stepId": "addColonySuspensions",
+          "name": "Add 1 uL colony suspension to each tube",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 30
+          },
+          "replicates": {
+            "count": 8,
+            "mode": "serial"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "aliquotMasterMix"
+          }
+        },
+        {
+          "stepId": "spinSetupTubes",
+          "name": "Spin down setup tubes",
+          "task": "microcentrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 30
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "addColonySuspensions",
+            "instances": "all"
+          }
+        },
+        {
+          "stepId": "loadThermocycler",
+          "name": "Load strip tubes into thermocycler and start program",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "spinSetupTubes"
+          }
+        },
+        {
+          "stepId": "runPcrCycles",
+          "name": "Run PCR program: reported 1h50m cycling block",
+          "task": "thermocycler",
+          "duration": {
+            "type": "fixed",
+            "seconds": 6600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "loadThermocycler"
+          }
+        },
+        {
+          "stepId": "spinPcrTubes",
+          "name": "Spin PCR tubes down after cycling",
+          "task": "microcentrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 30
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "runPcrCycles"
+          }
+        },
+        {
+          "stepId": "addDyeToPcr",
+          "name": "Add 5 uL loading dye to each PCR tube",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 35
+          },
+          "replicates": {
+            "count": 8,
+            "mode": "serial"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "spinPcrTubes"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "agarose-gel-prep",
+      "name": "Agarose gel casting and setting",
+      "steps": [
+        {
+          "stepId": "microwaveAgarose",
+          "name": "Weigh agarose into 1x TAE and microwave",
+          "task": "microwave",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "runPcrCycles",
+            "event": "start",
+            "offsetSeconds": 1500
+          }
+        },
+        {
+          "stepId": "coolAgarose",
+          "name": "Cool flask until comfortable to hold",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 720
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "microwaveAgarose"
+          }
+        },
+        {
+          "stepId": "pourStainGel",
+          "name": "Add DNA stain, pour gel, and seat 10-well comb",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "coolAgarose"
+          }
+        },
+        {
+          "stepId": "gelSet",
+          "name": "Let gel set at room temperature",
+          "task": "gelRig",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2100
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "pourStainGel"
+          }
+        },
+        {
+          "stepId": "removeCombPlaceGel",
+          "name": "Remove comb and place gel in rig under 1x TAE",
+          "task": "gelRig",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "gelSet"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "gel-run-read",
+      "name": "Ladder preparation, loading, gel run, and imaging",
+      "steps": [
+        {
+          "stepId": "prepareLadder",
+          "name": "Thaw 100 bp ladder and mix with 6x loading dye",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "pourStainGel",
+            "offsetSeconds": 600
+          }
+        },
+        {
+          "stepId": "loadSamples",
+          "name": "Load 10 uL of each PCR sample into wells",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 50
+          },
+          "replicates": {
+            "count": 8,
+            "mode": "serial"
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "addDyeToPcr",
+                "instances": "all"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "removeCombPlaceGel"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "prepareLadder"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "loadLadder",
+          "name": "Load 5 uL ladder into a well",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 80
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "loadSamples",
+            "instances": "all"
+          }
+        },
+        {
+          "stepId": "runGel",
+          "name": "Run gel at 120 V until dye front is two-thirds down",
+          "task": "gelRig",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2400
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "loadLadder"
+          }
+        },
+        {
+          "stepId": "imageGel",
+          "name": "Image gel on transilluminator",
+          "task": "transilluminator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "runGel"
+          }
+        },
+        {
+          "stepId": "recordResults",
+          "name": "Record which clones carry the insert and mark the plate",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "imageGel"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "operator",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "thermocycler",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "microcentrifuge",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "microwave",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "gelRig",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "transilluminator",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "source": "Colony PCR Screen with a Diagnostic Gel",
+    "cloneCount": 8,
+    "gelCount": 1,
+    "notes": "The agarose workflow starts 25 minutes after PCR cycling begins. Gel loading waits for dyed PCR samples, a set gel in the rig, and prepared ladder."
+  }
+}

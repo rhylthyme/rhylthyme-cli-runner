@@ -1,0 +1,328 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "colony-pcr-screen-diagnostic-gel-eight-clones",
+  "name": "Colony PCR Screen with Diagnostic Gel — Eight Clones",
+  "description": "Screen eight candidate clones by colony PCR and resolve the products on one agarose gel.",
+  "environmentType": "laboratory",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "pcr",
+      "name": "Reaction setup and PCR",
+      "steps": [
+        {
+          "stepId": "thaw-pcr-reagents",
+          "name": "Thaw primers, dNTPs, and 10× buffer on ice",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "assemble-master-mix",
+          "name": "Assemble master mix for eight reactions plus one spare",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "thaw-pcr-reagents"
+          }
+        },
+        {
+          "stepId": "aliquot-colony-reaction",
+          "name": "Aliquot master mix and add one colony suspension",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 7.5
+          },
+          "replicates": {
+            "count": 8,
+            "mode": "serial"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "assemble-master-mix"
+          }
+        },
+        {
+          "stepId": "spin-colony-reaction",
+          "name": "Spin down colony PCR reaction",
+          "task": "microcentrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 30
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "aliquot-colony-reaction",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "load-thermocycler",
+          "name": "Load strip tubes and start PCR program",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "spin-colony-reaction",
+            "instances": "all"
+          }
+        },
+        {
+          "stepId": "pcr-cycling",
+          "name": "Run PCR cycling program",
+          "task": "thermocycler",
+          "duration": {
+            "type": "fixed",
+            "seconds": 6600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "load-thermocycler"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "agarose-gel",
+      "name": "Agarose gel preparation",
+      "steps": [
+        {
+          "stepId": "dissolve-agarose",
+          "name": "Microwave 1.0 g agarose in 100 mL 1× TAE",
+          "task": "microwave",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 3480
+          }
+        },
+        {
+          "stepId": "cool-agarose",
+          "name": "Cool agarose solution on the bench",
+          "task": "gel_bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 720
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "dissolve-agarose"
+          }
+        },
+        {
+          "stepId": "pour-agarose-gel",
+          "name": "Add DNA stain, pour gel, and seat 10-well comb",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cool-agarose"
+          }
+        },
+        {
+          "stepId": "set-agarose-gel",
+          "name": "Let agarose gel set at room temperature",
+          "task": "gel_bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2100
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "pour-agarose-gel"
+          }
+        },
+        {
+          "stepId": "place-gel-in-rig",
+          "name": "Remove comb and place gel in rig under 1× TAE",
+          "task": "gel_rig",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "set-agarose-gel"
+          }
+        },
+        {
+          "stepId": "run-gel",
+          "name": "Run gel at 120 V",
+          "task": "gel_rig",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2400
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "load-pcr-products"
+          }
+        },
+        {
+          "stepId": "image-gel",
+          "name": "Image gel on transilluminator",
+          "task": "transilluminator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "run-gel"
+          }
+        },
+        {
+          "stepId": "record-results",
+          "name": "Record clones carrying the insert and mark the plate",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "image-gel"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "ladder",
+      "name": "DNA ladder preparation",
+      "steps": [
+        {
+          "stepId": "prepare-ladder",
+          "name": "Thaw 100 bp ladder and mix with 6× loading dye",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 5160
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "post-pcr-loading",
+      "name": "Post-PCR preparation and gel loading",
+      "steps": [
+        {
+          "stepId": "post-pcr-spin-and-dye",
+          "name": "Spin tubes down and add 5 µL loading dye to each",
+          "task": "microcentrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "pcr-cycling"
+          }
+        },
+        {
+          "stepId": "load-pcr-products",
+          "name": "Load 10 µL of each PCR product and 5 µL ladder",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "post-pcr-spin-and-dye"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "place-gel-in-rig"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "prepare-ladder"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "operator",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "thermocycler",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "microcentrifuge",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "microwave",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "gel_rig",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "transilluminator",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "gel_bench",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "sourceUrl": "",
+    "attribution": "User-provided source text",
+    "clones": 8,
+    "gelCount": 1,
+    "reagents": [
+      {
+        "name": "agarose",
+        "measure": "1.0 g"
+      },
+      {
+        "name": "1× TAE",
+        "measure": "100 mL"
+      },
+      {
+        "name": "DNA stain",
+        "measure": "5 µL"
+      },
+      {
+        "name": "100 bp ladder",
+        "measure": "5 µL loaded"
+      }
+    ]
+  }
+}

@@ -1,0 +1,347 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "western-blot-sds-page-wet-transfer-overnight-primary",
+  "name": "Western Blot: SDS-PAGE, Wet Transfer and Overnight Primary",
+  "environmentType": "laboratory",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "sample-prep",
+      "name": "Sample Preparation",
+      "steps": [
+        {
+          "stepId": "thaw-lysates",
+          "name": "Thaw lysates and normalize",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "denature-samples",
+          "name": "Denature samples",
+          "task": "heat-block",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "thaw-lysates"
+          }
+        },
+        {
+          "stepId": "spin-samples",
+          "name": "Spin samples",
+          "task": "microcentrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "denature-samples"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "gel-prep-and-run",
+      "name": "Gel Preparation and Run",
+      "steps": [
+        {
+          "stepId": "assemble-gel-tank",
+          "name": "Assemble gel tank",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "spin-samples"
+          }
+        },
+        {
+          "stepId": "load-gel",
+          "name": "Load gel",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "assemble-gel-tank"
+          }
+        },
+        {
+          "stepId": "run-gel",
+          "name": "Run gel",
+          "task": "gel-tank",
+          "duration": {
+            "type": "fixed",
+            "seconds": 4500
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "load-gel"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "transfer-prep",
+      "name": "Transfer Preparation",
+      "steps": [
+        {
+          "stepId": "chill-transfer-buffer",
+          "name": "Chill transfer buffer",
+          "task": "cold-room",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "prepare-pvdf",
+          "name": "Prepare PVDF membrane",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "run-gel",
+            "offsetSeconds": 0
+          }
+        },
+        {
+          "stepId": "soak-fibre-pads",
+          "name": "Soak fibre pads and filter paper",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prepare-pvdf"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "blot-and-probe",
+      "name": "Blot and Probe",
+      "steps": [
+        {
+          "stepId": "assemble-transfer-sandwich",
+          "name": "Assemble transfer sandwich",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "run-gel",
+            "offsetSeconds": 300
+          }
+        },
+        {
+          "stepId": "wet-transfer",
+          "name": "Wet transfer",
+          "task": "wet-transfer-tank",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "assemble-transfer-sandwich"
+          }
+        },
+        {
+          "stepId": "stain-membrane",
+          "name": "Stain membrane with Ponceau S",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wet-transfer"
+          }
+        },
+        {
+          "stepId": "block-membrane",
+          "name": "Block membrane",
+          "task": "orbital-rocker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "stain-membrane"
+          }
+        },
+        {
+          "stepId": "probe-primary",
+          "name": "Probe with primary antibody",
+          "task": "cold-room",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 43200,
+            "maxSeconds": 64800,
+            "defaultSeconds": 54000
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "block-membrane"
+          }
+        },
+        {
+          "stepId": "wash-primary",
+          "name": "Wash primary antibody",
+          "task": "orbital-rocker",
+          "replicates": {
+            "count": 3,
+            "mode": "serial",
+            "delay": "10m"
+          },
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "probe-primary"
+          }
+        },
+        {
+          "stepId": "probe-secondary",
+          "name": "Probe with secondary antibody",
+          "task": "orbital-rocker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-primary",
+            "instances": "all"
+          }
+        },
+        {
+          "stepId": "wash-secondary",
+          "name": "Wash secondary antibody",
+          "task": "orbital-rocker",
+          "replicates": {
+            "count": 3,
+            "mode": "serial",
+            "delay": "10m"
+          },
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "probe-secondary"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "detection",
+      "name": "Detection",
+      "steps": [
+        {
+          "stepId": "mix-ecl",
+          "name": "Mix ECL substrate",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "probe-secondary"
+          }
+        },
+        {
+          "stepId": "image-blot",
+          "name": "Image blot",
+          "task": "chemiluminescence-imager",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-secondary",
+            "instances": "all"
+          }
+        },
+        {
+          "stepId": "quantify-bands",
+          "name": "Quantify bands",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "image-blot"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "gel-tank",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "wet-transfer-tank",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "orbital-rocker",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "cold-room",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "chemiluminescence-imager",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "heat-block",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "microcentrifuge",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "prep",
+      "maxConcurrent": 1
+    }
+  ]
+}

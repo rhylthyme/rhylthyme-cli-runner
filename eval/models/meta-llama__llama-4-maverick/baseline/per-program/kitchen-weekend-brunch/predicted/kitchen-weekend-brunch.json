@@ -1,0 +1,210 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "saturday-brunch-for-four",
+  "name": "Saturday Brunch for Four",
+  "environmentType": "kitchen",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "bacon",
+      "name": "Bacon",
+      "steps": [
+        {
+          "stepId": "lay-bacon",
+          "name": "Lay bacon and bake",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "drain-bacon",
+          "name": "Drain bacon",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "lay-bacon"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "pancakes",
+      "name": "Pancakes",
+      "steps": [
+        {
+          "stepId": "prep-pancake-batter",
+          "name": "Prepare pancake batter",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "rest-batter",
+          "name": "Rest batter",
+          "task": "none",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep-pancake-batter"
+          }
+        },
+        {
+          "stepId": "heat-griddle",
+          "name": "Heat griddle",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest-batter"
+          }
+        },
+        {
+          "stepId": "cook-pancakes",
+          "name": "Cook pancakes",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "heat-griddle"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "fruit-salad",
+      "name": "Fruit Salad",
+      "steps": [
+        {
+          "stepId": "prep-fruit-salad",
+          "name": "Prepare fruit salad",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "chill-fruit-salad",
+          "name": "Chill fruit salad",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep-fruit-salad"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "coffee",
+      "name": "Coffee",
+      "steps": [
+        {
+          "stepId": "grind-coffee",
+          "name": "Grind and setup coffee",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "brew-coffee",
+          "name": "Brew coffee",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "grind-coffee"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "serve",
+      "name": "Serve",
+      "steps": [
+        {
+          "stepId": "serve-brunch",
+          "name": "Serve brunch",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "drain-bacon"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "cook-pancakes"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "chill-fruit-salad"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "brew-coffee"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "oven",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "burner",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "prep",
+      "maxConcurrent": 1
+    }
+  ]
+}

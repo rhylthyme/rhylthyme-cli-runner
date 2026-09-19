@@ -1,0 +1,287 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "thursday-am-swim-workout",
+  "name": "Thursday AM Swim Workout",
+  "environmentType": "gym",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "coach",
+      "name": "Coach Activities",
+      "steps": [
+        {
+          "stepId": "brief-squad",
+          "name": "Brief the squad",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "5 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "watch-warm-up",
+          "name": "Watch the warm-up",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "brief-squad"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "15 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "whiteboard-explanation",
+          "name": "Whiteboard explanation",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warm-up"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "5 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "time-sprints",
+          "name": "Time the sprints",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "sprint-set-lane3"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "30 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "debrief",
+          "name": "Debrief",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "time-sprints"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "10 minutes",
+              "occurrence": 3
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "lanes",
+      "name": "Lane Activities",
+      "steps": [
+        {
+          "stepId": "warm-up",
+          "name": "Warm-up",
+          "task": "lanes",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "brief-squad"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "20 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "kick-set",
+          "name": "Kick set",
+          "task": "lanes",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "whiteboard-explanation"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "20 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "main-set",
+          "name": "Main set",
+          "task": "lanes",
+          "replicates": {
+            "count": 3,
+            "mode": "parallel"
+          },
+          "duration": {
+            "type": "variable",
+            "minSeconds": 1800,
+            "maxSeconds": 3000,
+            "defaultSeconds": 2400
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "kick-set"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "30 to 50 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "cooldown",
+          "name": "Cooldown",
+          "task": "lanes",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "sprint-set-lane3"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "10 minutes",
+              "occurrence": 2
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "sprint-set",
+      "name": "Sprint Set Activities",
+      "steps": [
+        {
+          "stepId": "sprint-set-lane1",
+          "name": "Sprint set Lane 1",
+          "task": "lanes,startingBlocks",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "main-set",
+            "instances": "all"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "10 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "sprint-set-lane2",
+          "name": "Sprint set Lane 2",
+          "task": "lanes,startingBlocks",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "sprint-set-lane1"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "10 minutes",
+              "occurrence": 2
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "sprint-set-lane3",
+          "name": "Sprint set Lane 3",
+          "task": "lanes,startingBlocks",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "sprint-set-lane2"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "10 minutes",
+              "occurrence": 3
+            },
+            "inferred": false
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "coach",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "lanes",
+      "maxConcurrent": 3
+    },
+    {
+      "task": "startingBlocks",
+      "maxConcurrent": 1
+    }
+  ]
+}

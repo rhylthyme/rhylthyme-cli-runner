@@ -1,0 +1,467 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "thursday-am-three-lane-practice",
+  "name": "Thursday AM — Three-Lane Practice",
+  "description": "Practice plan for one squad of twelve in three lanes with one coach, starting blocks, and a 150-minute finish.",
+  "environmentType": "gym",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "coach",
+      "name": "Coach / deck",
+      "steps": [
+        {
+          "stepId": "brief",
+          "name": "Brief the squad on the deck",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "watch_warmup",
+          "name": "Watch warm-up from the deck",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "brief"
+          }
+        },
+        {
+          "stepId": "whiteboard",
+          "name": "Whiteboard the main set",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "watch_warmup"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "warmup_lane1"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "warmup_lane2"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "warmup_lane3"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "time_sprints",
+          "name": "Time the sprint set from the deck",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "whiteboard"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "main_lane1"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "main_lane2"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "main_lane3"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "coach_debrief",
+          "name": "Debrief on the deck",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "time_sprints"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "cooldown_lane1"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "cooldown_lane2"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "cooldown_lane3"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "lane1",
+      "name": "Lane 1 — sprint group",
+      "steps": [
+        {
+          "stepId": "warmup_lane1",
+          "name": "Warm-up",
+          "task": "lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "brief"
+          }
+        },
+        {
+          "stepId": "kick_lane1",
+          "name": "Kick set — boards",
+          "task": "lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "warmup_lane1"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "whiteboard"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "main_lane1",
+          "name": "Main set",
+          "task": "lane",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 1800,
+            "maxSeconds": 3000,
+            "defaultSeconds": 2400
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "kick_lane1"
+          }
+        },
+        {
+          "stepId": "cooldown_lane1",
+          "name": "Cooldown",
+          "task": "lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "main_lane1"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "sprint_set",
+                "instances": "all"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "debrief_lane1",
+          "name": "Lane 1 debrief",
+          "task": "lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cooldown_lane1"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "lane2",
+      "name": "Lane 2 — middle distance",
+      "steps": [
+        {
+          "stepId": "warmup_lane2",
+          "name": "Warm-up",
+          "task": "lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "brief"
+          }
+        },
+        {
+          "stepId": "kick_lane2",
+          "name": "Kick set — boards",
+          "task": "lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "warmup_lane2"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "whiteboard"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "main_lane2",
+          "name": "Main set",
+          "task": "lane",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 1800,
+            "maxSeconds": 3000,
+            "defaultSeconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "kick_lane2"
+          }
+        },
+        {
+          "stepId": "cooldown_lane2",
+          "name": "Cooldown",
+          "task": "lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "main_lane2"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "sprint_set",
+                "instances": "all"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "debrief_lane2",
+          "name": "Lane 2 debrief",
+          "task": "lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cooldown_lane2"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "lane3",
+      "name": "Lane 3 — distance group",
+      "steps": [
+        {
+          "stepId": "warmup_lane3",
+          "name": "Warm-up",
+          "task": "lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "brief"
+          }
+        },
+        {
+          "stepId": "kick_lane3",
+          "name": "Kick set — vertical kick",
+          "task": "lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "warmup_lane3"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "whiteboard"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "main_lane3",
+          "name": "Main set",
+          "task": "lane",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 1800,
+            "maxSeconds": 3000,
+            "defaultSeconds": 3000
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "kick_lane3"
+          }
+        },
+        {
+          "stepId": "cooldown_lane3",
+          "name": "Cooldown",
+          "task": "lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "main_lane3"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "sprint_set",
+                "instances": "all"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "debrief_lane3",
+          "name": "Lane 3 debrief",
+          "task": "lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cooldown_lane3"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "blocks",
+      "name": "Starting blocks",
+      "steps": [
+        {
+          "stepId": "sprint_set",
+          "name": "Sprint set — one lane at a time",
+          "task": "starting_blocks",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "replicates": {
+            "count": 3,
+            "mode": "serial"
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "main_lane1"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "main_lane2"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "main_lane3"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "coach",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "lane",
+      "maxConcurrent": 3
+    },
+    {
+      "task": "starting_blocks",
+      "maxConcurrent": 1
+    }
+  ]
+}

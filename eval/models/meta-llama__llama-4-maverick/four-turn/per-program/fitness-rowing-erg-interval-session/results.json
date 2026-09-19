@@ -1,0 +1,396 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "meta-llama/llama-4-maverick",
+    "pattern": "four-turn",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/four-turn/cache",
+    "limit": null,
+    "only": [
+      "fitness-rowing-erg-interval-session"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 4,
+      "input_tokens": 24871,
+      "output_tokens": 4889,
+      "cost_usd": 0.007863376,
+      "fix_iterations": 0
+    },
+    "generated_at": "2026-09-19T19:38:50+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 0.625,
+    "steps_recall": 0.35714285714285715,
+    "steps_f1": 0.45454545454545453,
+    "durations_accuracy": 0.9,
+    "resources_precision": 0.5,
+    "resources_recall": 0.6666666666666666,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.5,
+    "relationships_recall": 0.27586206896551724,
+    "relationships_f1": 0.35555555555555557,
+    "structure_rand_index": 0.8666666666666667,
+    "end_to_end_pass": 1.0,
+    "unsupported_rate": 0.0
+  },
+  "programs": [
+    {
+      "slug": "fitness-rowing-erg-interval-session",
+      "headline": {
+        "steps_precision": 0.625,
+        "steps_recall": 0.35714285714285715,
+        "steps_f1": 0.45454545454545453,
+        "durations_accuracy": 0.9,
+        "resources_precision": 0.5,
+        "resources_recall": 0.6666666666666666,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.5,
+        "relationships_recall": 0.27586206896551724,
+        "relationships_f1": 0.35555555555555557,
+        "structure_rand_index": 0.8666666666666667,
+        "end_to_end_pass": 1.0,
+        "unsupported_rate": 0.0
+      },
+      "steps": {
+        "precision": 0.625,
+        "recall": 0.35714285714285715,
+        "f1": 0.45454545454545453,
+        "tp": 10,
+        "n_gold": 28,
+        "n_pred": 16
+      },
+      "durations": {
+        "accuracy": 0.9,
+        "correct": 9,
+        "total": 10
+      },
+      "resources": {
+        "precision": 0.5,
+        "recall": 0.6666666666666666,
+        "f1": 0.5714285714285715,
+        "tp": 2,
+        "n_gold": 3,
+        "n_pred": 4
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.5,
+        "recall": 0.27586206896551724,
+        "f1": 0.35555555555555557,
+        "tp": 8,
+        "n_gold": 29,
+        "n_pred": 16
+      },
+      "structure": {
+        "rand_index": 0.8666666666666667,
+        "agreements": 39,
+        "pairs": 45,
+        "n_steps": 10
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 4560.0,
+        "pred_makespan": 4560.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "d-warmup",
+          "a-piece-1",
+          "a-piece-2",
+          "a-piece-3",
+          "c-piece-3",
+          "a-drill",
+          "b-drill",
+          "c-drill",
+          "d-drill",
+          "a-cooldown",
+          "debrief"
+        ],
+        "pred_critical_path": [
+          "warm-up-cd",
+          "piece-1-ab",
+          "piece-2-ab",
+          "piece-3-ab",
+          "piece-3-cd",
+          "drill-a",
+          "drill-b",
+          "drill-c",
+          "drill-d",
+          "cooldown",
+          "debrief"
+        ],
+        "js_critical_path": [
+          "warm-up-cd",
+          "piece-1-ab",
+          "piece-2-ab",
+          "piece-3-ab",
+          "piece-3-cd",
+          "drill-a",
+          "drill-b",
+          "drill-c",
+          "drill-d",
+          "cooldown",
+          "debrief"
+        ],
+        "js_makespan": 4560,
+        "critical_overlap": 0.5454545454545454,
+        "critical_ok": true,
+        "passed": true
+      },
+      "unsupported_rate": 0.0,
+      "unsupported_steps": [],
+      "matching": [
+        {
+          "gold": "a-warmup",
+          "predicted": "warm-up-ab",
+          "by": "span"
+        },
+        {
+          "gold": "a-drill",
+          "predicted": "drill-a",
+          "by": "span"
+        },
+        {
+          "gold": "a-cooldown",
+          "predicted": "cooldown",
+          "by": "span"
+        },
+        {
+          "gold": "b-drill",
+          "predicted": "drill-b",
+          "by": "span"
+        },
+        {
+          "gold": "c-warmup",
+          "predicted": "warm-up-cd",
+          "by": "span"
+        },
+        {
+          "gold": "c-drill",
+          "predicted": "drill-c",
+          "by": "span"
+        },
+        {
+          "gold": "d-drill",
+          "predicted": "drill-d",
+          "by": "span"
+        },
+        {
+          "gold": "brief-crew",
+          "predicted": "brief-crew",
+          "by": "span"
+        },
+        {
+          "gold": "call-splits",
+          "predicted": "call-splits",
+          "by": "span"
+        },
+        {
+          "gold": "debrief",
+          "predicted": "debrief",
+          "by": "span"
+        },
+        {
+          "gold": "a-piece-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-piece-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-piece-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-warmup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-piece-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-piece-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-piece-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-cooldown",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-piece-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-piece-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-piece-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-cooldown",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "d-warmup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "d-piece-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "d-piece-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "d-piece-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "d-cooldown",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "run-drills",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "piece-1-ab",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "piece-2-ab",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "piece-3-ab",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "piece-1-cd",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "piece-2-cd",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "piece-3-cd",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "meta-llama/llama-4-maverick",
+        "pattern": "four-turn",
+        "calls": 4,
+        "input_tokens": 24871,
+        "output_tokens": 4889,
+        "cost_usd": 0.007863376,
+        "cache_keys": [
+          "968a5e930cebd1c5bf4debee3b8f58352ca1905ebb4ad434ec7770f8cf4418e7",
+          "7c0689f2d004d58116441710f07c411d0ce5ff12209b7fd819e447be58d61b9c",
+          "c115fd4387c83c47a2a61d0eb1d0c692eddad2d3d11d33744aeba91db73acf68",
+          "948d4e6931eba5abcf6edebbd58d537388a2813fddf32d8b2d786d68c1d21a16"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/four-turn/per-program/fitness-rowing-erg-interval-session/responses/fitness-rowing-erg-interval-session.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/four-turn/per-program/fitness-rowing-erg-interval-session/predicted/fitness-rowing-erg-interval-session.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 0,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Erg Session \u2014 four rowers, two machines for 4 rowers, 2 ergs, 3 pieces",
+            "finish_at": null,
+            "constraints": "two ergs, four rowers, one coach, one rower on the coached drill at a time",
+            "vertical": "gym",
+            "turn": "T1",
+            "kind": "workout",
+            "constraintsLine": "Resource limits: two ergs, four rowers, one coach, one rower on the coached drill at a time.",
+            "deadlineLine": "No finishing time was given; finish as early as the work allows.",
+            "source": "Source text (read all of it):\n<<<\nErg Session \u2014 four rowers, two machines\n\nTwo ergs in the bay and four of us, so we row in pairs and the pair that is off the machines is the pair that is resting. A and B are the first pair, C and D the second. Nobody sits on a machine they are not rowing.\n\nWarm-up\nA and B warm up first: 10 minutes, rate 18, light pressure, half slide to full slide.\nC and D come in ten minutes later and take the machines for their own 10 minute warm-up.\n\nThe pieces\nThree pieces, four minutes each, rate 26 to 28, target split on the monitor.\nA and B take the first piece as soon as C and D are off the machines.\nC and D take the first piece straight off the back of A and B's first piece.\nA and B start their second piece four minutes after their first one ends.\nC and D take the second piece as soon as A and B are off.\nA and B start their third piece four minutes after their second one ends.\nC and D take the third piece as soon as A and B are off.\n\nTechnique drill\nThree minutes each, one at a time, coach on the machine with you: pause at the finish, pause at half slide, then build. A goes first once C and D are off the last piece, then B, then C, then D.\n\nCooldown\nTen minutes on the floor together once the last drill is done: legs up the wall, hips, lats, then a cup of tea.\n\nCoach\nBrief the crew on the boards before anyone gets on: 5 minutes.\nCall splits from the first piece: 20 minutes on the clock, watch the catch not the monitor.\nRun the drills: 12 minutes, one rower at a time, straight through.\nDebrief after the cooldown: 10 minutes, what the splits said and what Saturday looks like.\n\nNote\nThe rests are not steps for the first pair: they are the gap between one piece ending and the next one starting, because the machines are handed over in that gap and the second pair is using them. The second pair's rests are the first pair's pieces. That is the whole design of the session.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Erg Session \u2014 four rowers, two machines for 4 rowers, 2 ergs, 3 pieces",
+            "finish_at": null,
+            "constraints": "two ergs, four rowers, one coach, one rower on the coached drill at a time",
+            "vertical": "gym",
+            "turn": "T2",
+            "kind": "workout"
+          },
+          "T3 extraction": {
+            "goal": "Erg Session \u2014 four rowers, two machines for 4 rowers, 2 ergs, 3 pieces",
+            "finish_at": null,
+            "constraints": "two ergs, four rowers, one coach, one rower on the coached drill at a time",
+            "vertical": "gym",
+            "turn": "T3",
+            "kind": "workout",
+            "environment": "a gym where you have: two ergs, four rowers, one coach, one rower on the coached drill at a time",
+            "deadline": "the earliest time the work allows",
+            "source": "Source text (read all of it):\n<<<\nErg Session \u2014 four rowers, two machines\n\nTwo ergs in the bay and four of us, so we row in pairs and the pair that is off the machines is the pair that is resting. A and B are the first pair, C and D the second. Nobody sits on a machine they are not rowing.\n\nWarm-up\nA and B warm up first: 10 minutes, rate 18, light pressure, half slide to full slide.\nC and D come in ten minutes later and take the machines for their own 10 minute warm-up.\n\nThe pieces\nThree pieces, four minutes each, rate 26 to 28, target split on the monitor.\nA and B take the first piece as soon as C and D are off the machines.\nC and D take the first piece straight off the back of A and B's first piece.\nA and B start their second piece four minutes after their first one ends.\nC and D take the second piece as soon as A and B are off.\nA and B start their third piece four minutes after their second one ends.\nC and D take the third piece as soon as A and B are off.\n\nTechnique drill\nThree minutes each, one at a time, coach on the machine with you: pause at the finish, pause at half slide, then build. A goes first once C and D are off the last piece, then B, then C, then D.\n\nCooldown\nTen minutes on the floor together once the last drill is done: legs up the wall, hips, lats, then a cup of tea.\n\nCoach\nBrief the crew on the boards before anyone gets on: 5 minutes.\nCall splits from the first piece: 20 minutes on the clock, watch the catch not the monitor.\nRun the drills: 12 minutes, one rower at a time, straight through.\nDebrief after the cooldown: 10 minutes, what the splits said and what Saturday looks like.\n\nNote\nThe rests are not steps for the first pair: they are the gap between one piece ending and the next one starting, because the machines are handed over in that gap and the second pair is using them. The second pair's rests are the first pair's pieces. That is the whole design of the session.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Erg Session \u2014 four rowers, two machines for 4 rowers, 2 ergs, 3 pieces",
+            "finish_at": null,
+            "constraints": "two ergs, four rowers, one coach, one rower on the coached drill at a time",
+            "vertical": "gym",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or start_workout",
+            "finishAtArg": ""
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

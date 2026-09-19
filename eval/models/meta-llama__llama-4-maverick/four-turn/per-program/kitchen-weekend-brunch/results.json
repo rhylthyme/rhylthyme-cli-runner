@@ -1,0 +1,197 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "meta-llama/llama-4-maverick",
+    "pattern": "four-turn",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/four-turn/cache",
+    "limit": null,
+    "only": [
+      "kitchen-weekend-brunch"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 6,
+      "input_tokens": 49521,
+      "output_tokens": 9143,
+      "cost_usd": 0.015271184000000002,
+      "fix_iterations": 2
+    },
+    "generated_at": "2026-09-19T20:02:24+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 0.0,
+    "steps_recall": 0.0,
+    "steps_f1": 0.0,
+    "durations_accuracy": 0.0,
+    "resources_precision": 0.0,
+    "resources_recall": 0.0,
+    "actors_accuracy": 0.0,
+    "relationships_precision": 0.0,
+    "relationships_recall": 0.0,
+    "relationships_f1": 0.0,
+    "structure_rand_index": 0.0,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.0
+  },
+  "programs": [
+    {
+      "slug": "kitchen-weekend-brunch",
+      "headline": {
+        "steps_precision": 0.0,
+        "steps_recall": 0.0,
+        "steps_f1": 0.0,
+        "durations_accuracy": 0.0,
+        "resources_precision": 0.0,
+        "resources_recall": 0.0,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.0,
+        "relationships_recall": 0.0,
+        "relationships_f1": 0.0,
+        "structure_rand_index": 0.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.0
+      },
+      "steps": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 13,
+        "n_pred": 0
+      },
+      "durations": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 13
+      },
+      "resources": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 4,
+        "n_pred": 0
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 16,
+        "n_pred": 0
+      },
+      "structure": {
+        "rand_index": 0.0,
+        "agreements": 0,
+        "pairs": 0,
+        "n_steps": 0
+      },
+      "end_to_end": {
+        "python_valid": false,
+        "python_errors": [],
+        "js_status": "skipped",
+        "js_valid": null,
+        "js_errors": [],
+        "gold_makespan": 0.0,
+        "pred_makespan": 0.0,
+        "makespan_ok": false,
+        "gold_critical_path": [],
+        "pred_critical_path": [],
+        "js_critical_path": null,
+        "js_makespan": null,
+        "critical_overlap": 0.0,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.0,
+      "unsupported_steps": [],
+      "matching": [],
+      "extras": {
+        "model": "meta-llama/llama-4-maverick",
+        "pattern": "four-turn",
+        "calls": 6,
+        "input_tokens": 49521,
+        "output_tokens": 9143,
+        "cost_usd": 0.015271184000000002,
+        "cache_keys": [
+          "1cea189d222ba7bc799d46922073029c7d44bf851f37d19f896c7e5f823022e2",
+          "c787df89bdd8cda217813546cfa1a0680bc268cdc6d06a4363dc8424a4502b57",
+          "611f0a220dc87ef68ee6a56b9753ff0fed61d822375105ba348fec386e2c7850",
+          "71ada6183849589bf52d11b0d6e1fe5d57519978fe13f8726683920da1ced3dc",
+          "27becda895ee1fd937a19699abfb23bc1fe7e6916c8139920507d3c237314c37",
+          "125c1631c9e7f5f4adf09d3193c75b668b36d369692df2c190bce3e57784408b"
+        ],
+        "fix_iterations": 2,
+        "validation_errors": [
+          "Track 'Bacon': Steps 'Bake Bacon' and 'Turn Bacon' overlap by 600 seconds. Step 'Bake Bacon' ends at 1830s, but step 'Turn Bacon' starts at 1230s."
+        ],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/four-turn/per-program/kitchen-weekend-brunch/responses/kitchen-weekend-brunch.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/four-turn/per-program/kitchen-weekend-brunch/predicted/kitchen-weekend-brunch.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 15,
+        "unsupported_step_ids": [
+          "preheat-oven"
+        ],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Saturday Brunch for Four for 4 people",
+            "finish_at": "10:00",
+            "constraints": "one oven, two burners, one cook, about 45 minutes",
+            "vertical": "kitchen",
+            "turn": "T1",
+            "kind": "recipe",
+            "constraintsLine": "Resource limits: one oven, two burners, one cook, about 45 minutes.",
+            "deadlineLine": "Everything must be finished by 10:00.",
+            "source": "Source text (read all of it):\n<<<\nSaturday Brunch for Four\n\nEverything on the table at ten. The bacon cooks in the oven so the stove is free for pancakes; the fruit salad and the coffee fill the gaps. One person can do this in about 45 minutes.\n\nBacon\nLay a pound of bacon on a rack over a sheet pan and bake at 400\u00b0F for 20 minutes, until crisp, turning the pan once halfway. Drain on paper towels for 2 minutes; it stays warm for a while.\n\nPancakes\nWhisk together two cups of flour, two tablespoons of sugar, a tablespoon of baking powder and a teaspoon of salt; 5 minutes. In a jug beat two eggs with a cup and a half of milk and three tablespoons of melted butter, then stir the wet into the dry until just combined, another 5 minutes; lumps are fine. Let the batter rest for 10 minutes while the bacon cooks. Heat a griddle over medium heat for 5 minutes. Cook the pancakes in batches, a quarter cup each, about 2 minutes per side, 15 minutes for the whole batch.\n\nFruit salad\nHalve a pint of strawberries, cube a small melon and a mango, and add a cup of blueberries; this takes about 10 minutes. Squeeze half a lime over the top and chill for at least 15 minutes.\n\nCoffee\nGrind the beans and set up the pot, 3 minutes, then brew a full pot, which takes 8 minutes, timed to finish as the pancakes come off the griddle.\n\nServe\nBring everything out together while the pancakes are hot; 2 minutes.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Saturday Brunch for Four for 4 people",
+            "finish_at": "10:00",
+            "constraints": "one oven, two burners, one cook, about 45 minutes",
+            "vertical": "kitchen",
+            "turn": "T2",
+            "kind": "recipe"
+          },
+          "T3 extraction": {
+            "goal": "Saturday Brunch for Four for 4 people",
+            "finish_at": "10:00",
+            "constraints": "one oven, two burners, one cook, about 45 minutes",
+            "vertical": "kitchen",
+            "turn": "T3",
+            "kind": "recipe",
+            "environment": "a kitchen where you have: one oven, two burners, one cook, about 45 minutes",
+            "deadline": "10:00",
+            "source": "Source text (read all of it):\n<<<\nSaturday Brunch for Four\n\nEverything on the table at ten. The bacon cooks in the oven so the stove is free for pancakes; the fruit salad and the coffee fill the gaps. One person can do this in about 45 minutes.\n\nBacon\nLay a pound of bacon on a rack over a sheet pan and bake at 400\u00b0F for 20 minutes, until crisp, turning the pan once halfway. Drain on paper towels for 2 minutes; it stays warm for a while.\n\nPancakes\nWhisk together two cups of flour, two tablespoons of sugar, a tablespoon of baking powder and a teaspoon of salt; 5 minutes. In a jug beat two eggs with a cup and a half of milk and three tablespoons of melted butter, then stir the wet into the dry until just combined, another 5 minutes; lumps are fine. Let the batter rest for 10 minutes while the bacon cooks. Heat a griddle over medium heat for 5 minutes. Cook the pancakes in batches, a quarter cup each, about 2 minutes per side, 15 minutes for the whole batch.\n\nFruit salad\nHalve a pint of strawberries, cube a small melon and a mango, and add a cup of blueberries; this takes about 10 minutes. Squeeze half a lime over the top and chill for at least 15 minutes.\n\nCoffee\nGrind the beans and set up the pot, 3 minutes, then brew a full pot, which takes 8 minutes, timed to finish as the pancakes come off the griddle.\n\nServe\nBring everything out together while the pancakes are hot; 2 minutes.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Saturday Brunch for Four for 4 people",
+            "finish_at": "10:00",
+            "constraints": "one oven, two burners, one cook, about 45 minutes",
+            "vertical": "kitchen",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or cook_recipe",
+            "finishAtArg": " with finishAt=\"10:00\""
+          }
+        }
+      },
+      "error": "program failed validation after 2 fix iteration(s): Track 'Bacon': Steps 'Bake Bacon' and 'Turn Bacon' overlap by 600 seconds. Step 'Bake Bacon' ends at 1830s, but step 'Turn Bacon' starts at 1230s."
+    }
+  ],
+  "missing": [
+    "kitchen-weekend-brunch"
+  ]
+}

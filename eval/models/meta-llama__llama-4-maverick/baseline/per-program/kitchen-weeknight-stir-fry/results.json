@@ -1,0 +1,275 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "meta-llama/llama-4-maverick",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/baseline/cache",
+    "limit": null,
+    "only": [
+      "kitchen-weeknight-stir-fry"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 2,
+      "input_tokens": 11095,
+      "output_tokens": 3995,
+      "cost_usd": 0.0046906000000000005,
+      "fix_iterations": 1
+    },
+    "generated_at": "2026-09-19T20:01:28+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.7333333333333333,
+    "steps_f1": 0.846153846153846,
+    "durations_accuracy": 1.0,
+    "resources_precision": 0.0,
+    "resources_recall": 0.0,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.5833333333333334,
+    "relationships_recall": 0.4117647058823529,
+    "relationships_f1": 0.4827586206896552,
+    "structure_rand_index": 0.9272727272727272,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.21428571428571427
+  },
+  "programs": [
+    {
+      "slug": "kitchen-weeknight-stir-fry",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.7333333333333333,
+        "steps_f1": 0.846153846153846,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.0,
+        "resources_recall": 0.0,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.5833333333333334,
+        "relationships_recall": 0.4117647058823529,
+        "relationships_f1": 0.4827586206896552,
+        "structure_rand_index": 0.9272727272727272,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.21428571428571427
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.7333333333333333,
+        "f1": 0.846153846153846,
+        "tp": 11,
+        "n_gold": 15,
+        "n_pred": 11
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 11,
+        "total": 11
+      },
+      "resources": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 2,
+        "n_pred": 2
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.5833333333333334,
+        "recall": 0.4117647058823529,
+        "f1": 0.4827586206896552,
+        "tp": 7,
+        "n_gold": 17,
+        "n_pred": 12
+      },
+      "structure": {
+        "rand_index": 0.9272727272727272,
+        "agreements": 51,
+        "pairs": 55,
+        "n_steps": 11
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 2070.0,
+        "pred_makespan": 2640.0,
+        "makespan_ok": false,
+        "gold_critical_path": [
+          "rinse-rice",
+          "boil-rice",
+          "simmer-rice",
+          "steam-rice",
+          "heat-wok",
+          "fry-chicken",
+          "steam-broccoli",
+          "cook-aromatics",
+          "finish-stir-fry",
+          "serve"
+        ],
+        "pred_critical_path": [
+          "rinse-rice",
+          "boil-rice",
+          "simmer-rice",
+          "steam-rice",
+          "heat-wok",
+          "cook-chicken",
+          "cook-broccoli",
+          "finish-stir-fry",
+          "serve"
+        ],
+        "js_critical_path": [
+          "rinse-rice",
+          "boil-rice",
+          "simmer-rice",
+          "steam-rice",
+          "heat-wok",
+          "cook-chicken",
+          "cook-broccoli",
+          "finish-stir-fry",
+          "serve"
+        ],
+        "js_makespan": 2640,
+        "critical_overlap": 0.7,
+        "critical_ok": true,
+        "passed": false
+      },
+      "unsupported_rate": 0.21428571428571427,
+      "unsupported_steps": [
+        "prep-veggies",
+        "cook-chicken",
+        "cook-broccoli"
+      ],
+      "matching": [
+        {
+          "gold": "rinse-rice",
+          "predicted": "rinse-rice",
+          "by": "name"
+        },
+        {
+          "gold": "boil-rice",
+          "predicted": "boil-rice",
+          "by": "name"
+        },
+        {
+          "gold": "simmer-rice",
+          "predicted": "simmer-rice",
+          "by": "name"
+        },
+        {
+          "gold": "steam-rice",
+          "predicted": "steam-rice",
+          "by": "name"
+        },
+        {
+          "gold": "fluff-rice",
+          "predicted": "fluff-rice",
+          "by": "name"
+        },
+        {
+          "gold": "slice-chicken",
+          "predicted": "slice-chicken",
+          "by": "name"
+        },
+        {
+          "gold": "mix-sauce",
+          "predicted": "mix-sauce",
+          "by": "name"
+        },
+        {
+          "gold": "marinate-chicken",
+          "predicted": "marinate-chicken",
+          "by": "name"
+        },
+        {
+          "gold": "heat-wok",
+          "predicted": "heat-wok",
+          "by": "name"
+        },
+        {
+          "gold": "finish-stir-fry",
+          "predicted": "finish-stir-fry",
+          "by": "name"
+        },
+        {
+          "gold": "serve",
+          "predicted": "serve",
+          "by": "name"
+        },
+        {
+          "gold": "prep-vegetables",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "fry-chicken",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "steam-broccoli",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cook-aromatics",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "prep-veggies",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "cook-chicken",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "cook-broccoli",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "meta-llama/llama-4-maverick",
+        "pattern": "baseline",
+        "calls": 2,
+        "input_tokens": 11095,
+        "output_tokens": 3995,
+        "cost_usd": 0.0046906000000000005,
+        "cache_keys": [
+          "7b139e172982ffb5956d11b056ec6a067b30724b7f53814a0b28d98efb422491",
+          "7d486bf92a644c53cd6c4d85626498f4b6fc8bbc5a1134dcb48d6d7f964a9f97"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/baseline/per-program/kitchen-weeknight-stir-fry/responses/kitchen-weeknight-stir-fry.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/baseline/per-program/kitchen-weeknight-stir-fry/predicted/kitchen-weeknight-stir-fry.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Weeknight Chicken and Broccoli Stir-Fry with Rice for 2 people, following the source text below",
+            "finish_at": null,
+            "constraints": "two burners, one cook, about 35 minutes",
+            "vertical": "kitchen"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

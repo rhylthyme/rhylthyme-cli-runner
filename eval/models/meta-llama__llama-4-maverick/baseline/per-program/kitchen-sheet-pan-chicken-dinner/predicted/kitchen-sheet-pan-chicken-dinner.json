@@ -1,0 +1,222 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "sheet-pan-chicken-with-potatoes-and-broccoli",
+  "name": "Sheet-Pan Chicken with Potatoes and Broccoli for 4",
+  "environmentType": "kitchen",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "oven-prep",
+      "name": "Oven Prep and Roasting",
+      "steps": [
+        {
+          "stepId": "heat-oven",
+          "name": "Heat oven to 425°F",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "prep-potatoes",
+          "name": "Toss potatoes with oil and salt",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "heat-oven"
+          }
+        },
+        {
+          "stepId": "roast-potatoes",
+          "name": "Roast potatoes",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep-potatoes"
+          }
+        },
+        {
+          "stepId": "prep-chicken-and-broccoli",
+          "name": "Prepare chicken and broccoli",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "roast-potatoes"
+          }
+        },
+        {
+          "stepId": "adjust-pans",
+          "name": "Adjust pans and add broccoli",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep-chicken-and-broccoli"
+          }
+        },
+        {
+          "stepId": "roast-chicken-and-broccoli",
+          "name": "Roast chicken and broccoli",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "adjust-pans"
+          }
+        },
+        {
+          "stepId": "rest-chicken",
+          "name": "Rest chicken",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "roast-chicken-and-broccoli"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "pan-sauce",
+      "name": "Pan Sauce",
+      "steps": [
+        {
+          "stepId": "reduce-pan-juices",
+          "name": "Reduce pan juices with stock and mustard",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 360
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "roast-chicken-and-broccoli"
+          }
+        },
+        {
+          "stepId": "whisk-in-butter",
+          "name": "Whisk in cold butter",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "reduce-pan-juices"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "salad",
+      "name": "Salad Prep",
+      "steps": [
+        {
+          "stepId": "wash-and-dry-leaves",
+          "name": "Wash and dry salad leaves",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 360
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep-chicken-and-broccoli"
+          }
+        },
+        {
+          "stepId": "prepare-vinaigrette",
+          "name": "Shake vinaigrette",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-and-dry-leaves"
+          }
+        },
+        {
+          "stepId": "dress-salad",
+          "name": "Dress salad",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest-chicken"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "serve",
+      "name": "Serve",
+      "steps": [
+        {
+          "stepId": "slice-and-plate",
+          "name": "Slice chicken and plate",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 360
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest-chicken"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "oven",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "prep",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "burner",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "sheet-pan",
+      "maxConcurrent": 2
+    }
+  ],
+  "metadata": {
+    "serves": "4"
+  }
+}

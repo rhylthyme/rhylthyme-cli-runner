@@ -1,0 +1,221 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "streaking-three-cultures",
+  "name": "Streaking Three Cultures onto Selective Media",
+  "environmentType": "laboratory",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "setup",
+      "name": "Setup",
+      "steps": [
+        {
+          "stepId": "wipe-bench",
+          "name": "Wipe bench with 70% ethanol and light burner",
+          "task": "bench-prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "label-plates",
+          "name": "Label three selective plates",
+          "task": "labeling",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wipe-bench"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "streaking",
+      "name": "Streaking and Incubation",
+      "steps": [
+        {
+          "stepId": "streak-isolates",
+          "name": "Streak isolates for single colonies",
+          "task": "loop-station",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "replicates": {
+            "count": 3,
+            "mode": "serial"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "label-plates"
+          }
+        },
+        {
+          "stepId": "incubate-plates",
+          "name": "Incubate plates at 37 °C",
+          "task": "incubator",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 57600,
+            "maxSeconds": 72000,
+            "defaultSeconds": 64800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "streak-isolates",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "read-plates",
+          "name": "Read incubated plates",
+          "task": "microscope",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "incubate-plates",
+            "instances": "each"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "subculture",
+      "name": "Subculture and Staining",
+      "steps": [
+        {
+          "stepId": "pick-colonies",
+          "name": "Pick colonies into fresh broth",
+          "task": "loop-station",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "read-plates",
+            "instances": "all"
+          }
+        },
+        {
+          "stepId": "supervisor-signoff",
+          "name": "Supervisor sign-off",
+          "task": "supervisor",
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "pick-colonies"
+          }
+        },
+        {
+          "stepId": "streak-purity-plate",
+          "name": "Streak purity plate",
+          "task": "loop-station",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "supervisor-signoff"
+          }
+        },
+        {
+          "stepId": "incubate-purity",
+          "name": "Incubate purity plate",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 28800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "streak-purity-plate"
+          }
+        },
+        {
+          "stepId": "make-smear",
+          "name": "Make smear and heat-fix",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "incubate-purity"
+          }
+        },
+        {
+          "stepId": "gram-stain",
+          "name": "Gram stain smear",
+          "task": "staining-rack",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "make-smear"
+          }
+        },
+        {
+          "stepId": "read-stain",
+          "name": "Read Gram stain",
+          "task": "microscope",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "gram-stain"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "bench-prep",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "labeling",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "loop-station",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "incubator",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "microscope",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "supervisor",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "staining-rack",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "prep",
+      "maxConcurrent": 1
+    }
+  ]
+}

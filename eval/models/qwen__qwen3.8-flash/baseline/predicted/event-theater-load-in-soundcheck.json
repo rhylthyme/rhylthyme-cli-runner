@@ -1,0 +1,427 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "the-lyric-one-nighter-load-in",
+  "name": "The Lyric — One-Nighter Load-In",
+  "description": "Crew call at 08:00. All pre-show work is gated by the doors-call milestone; doors walk-up, show, strike and backline out follow.",
+  "environmentType": "event",
+  "actors": 8,
+  "tracks": [
+    {
+      "trackId": "dock",
+      "name": "Dock",
+      "steps": [
+        {
+          "stepId": "dock-lighting-truck",
+          "name": "Lighting truck in — bars, fixtures, cable",
+          "task": "dock",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "dock-backline-truck",
+          "name": "Backline truck in",
+          "task": "dock",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "dock-lighting-truck"
+          }
+        },
+        {
+          "stepId": "dock-clear",
+          "name": "Clear dock and remove empties",
+          "task": "dock",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "dock-backline-truck"
+          }
+        },
+        {
+          "stepId": "dock-backline-out",
+          "name": "Backline out — 15 minutes after show is down",
+          "task": "dock",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "dock-clear"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "show-stage",
+                "offsetSeconds": 900
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "lighting",
+      "name": "Lighting",
+      "steps": [
+        {
+          "stepId": "lighting-rig",
+          "name": "Rig bars on stage",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "dock-lighting-truck"
+          }
+        },
+        {
+          "stepId": "lighting-focus",
+          "name": "Focus from the desk",
+          "task": "lighting_desk",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "lighting-rig"
+          }
+        },
+        {
+          "stepId": "lighting-cue-build",
+          "name": "Build cues after focus",
+          "task": "lighting_desk",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 1800,
+            "maxSeconds": 5400,
+            "defaultSeconds": 5400
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "lighting-focus"
+          }
+        },
+        {
+          "stepId": "lighting-strike",
+          "name": "Strike the rig after show is down",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "lighting-cue-build"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "show-stage"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "pa",
+      "name": "PA",
+      "steps": [
+        {
+          "stepId": "pa-fly",
+          "name": "Fly the PA",
+          "task": "pa",
+          "duration": {
+            "type": "fixed",
+            "seconds": 4500
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "dock-lighting-truck"
+          }
+        },
+        {
+          "stepId": "pa-ring-out",
+          "name": "Ring out the house",
+          "task": "pa",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "pa-fly"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "monitors",
+      "name": "Monitors",
+      "steps": [
+        {
+          "stepId": "monitors-set",
+          "name": "Set monitor world after backline truck is off the dock",
+          "task": "monitor_world",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "dock-backline-truck"
+          }
+        },
+        {
+          "stepId": "monitors-ring-out",
+          "name": "Ring out the wedges",
+          "task": "monitor_world",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "monitors-set"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "band",
+      "name": "Band",
+      "steps": [
+        {
+          "stepId": "band-backline-up",
+          "name": "Backline up after the second truck is off the dock",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "dock-backline-truck"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "lighting-rig"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "band-soundcheck",
+          "name": "Soundcheck — drums first",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "band-backline-up"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "pa-ring-out"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "monitors-ring-out"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "band-dinner",
+          "name": "Band dinner",
+          "task": "green_room",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "band-soundcheck"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "house",
+      "name": "House",
+      "steps": [
+        {
+          "stepId": "house-foh-set",
+          "name": "Set front of house — merch, bars, ushers",
+          "task": "house",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 7200
+          }
+        },
+        {
+          "stepId": "house-clean",
+          "name": "Clean the house after the band go to dinner",
+          "task": "house",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "house-foh-set"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "band-dinner",
+                "event": "start"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "doors-call",
+          "name": "Doors called",
+          "task": "house",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "house-clean"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "band-dinner"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "lighting-cue-build"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "doors-walk-up",
+          "name": "30 minutes of walk-up",
+          "task": "house",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "doors-call"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "show",
+      "name": "Show",
+      "steps": [
+        {
+          "stepId": "show-stage",
+          "name": "Show on stage once the house is in",
+          "task": "stage",
+          "duration": {
+            "type": "indefinite",
+            "defaultSeconds": 7200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "doors-walk-up"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "dock",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "stage",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "lighting_desk",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "pa",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "monitor_world",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "green_room",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "house",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "crewCall": "08:00",
+    "finishBy": "doors",
+    "worstCaseCueBuildMinutes": 90,
+    "notes": [
+      "Dock unloads lighting truck first, then backline truck, then clears.",
+      "Rig and PA fly start when lighting truck is off the dock.",
+      "Monitors set and band backline up start when the backline truck is off the dock.",
+      "Focus and cue-build are strictly sequential on the lighting desk.",
+      "Soundcheck waits for backline up, PA ring-out, and monitor ring-out.",
+      "Doors-call is gated by band dinner, house clean, and cue-build so all pre-show steps are complete by doors.",
+      "Show is indefinite; strike and backline-out are gated by the show ending."
+    ]
+  }
+}

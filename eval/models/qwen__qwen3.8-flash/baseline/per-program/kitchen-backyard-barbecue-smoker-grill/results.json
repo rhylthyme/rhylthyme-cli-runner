@@ -1,0 +1,370 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "qwen/qwen3.8-flash",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/baseline/cache",
+    "limit": null,
+    "only": [
+      "kitchen-backyard-barbecue-smoker-grill"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 64000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 1,
+      "input_tokens": 4426,
+      "output_tokens": 32540,
+      "cost_usd": 0.0159577,
+      "fix_iterations": 0
+    },
+    "generated_at": "2026-09-19T19:26:36+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.2777777777777778,
+    "steps_f1": 0.4347826086956522,
+    "durations_accuracy": 1.0,
+    "resources_precision": 0.5,
+    "resources_recall": 0.5,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.4,
+    "relationships_recall": 0.10526315789473684,
+    "relationships_f1": 0.16666666666666666,
+    "structure_rand_index": 0.8,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.7727272727272727
+  },
+  "programs": [
+    {
+      "slug": "kitchen-backyard-barbecue-smoker-grill",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.2777777777777778,
+        "steps_f1": 0.4347826086956522,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.5,
+        "resources_recall": 0.5,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.4,
+        "relationships_recall": 0.10526315789473684,
+        "relationships_f1": 0.16666666666666666,
+        "structure_rand_index": 0.8,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.7727272727272727
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.2777777777777778,
+        "f1": 0.4347826086956522,
+        "tp": 5,
+        "n_gold": 18,
+        "n_pred": 5
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 5,
+        "total": 5
+      },
+      "resources": {
+        "precision": 0.5,
+        "recall": 0.5,
+        "f1": 0.5,
+        "tp": 3,
+        "n_gold": 6,
+        "n_pred": 6
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.4,
+        "recall": 0.10526315789473684,
+        "f1": 0.16666666666666666,
+        "tp": 2,
+        "n_gold": 19,
+        "n_pred": 5
+      },
+      "structure": {
+        "rand_index": 0.8,
+        "agreements": 8,
+        "pairs": 10,
+        "n_steps": 5
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 43320.0,
+        "pred_makespan": 41520.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "light-smoker",
+          "smoke-unwrapped",
+          "wrap-pork",
+          "smoke-wrapped",
+          "rest-in-cooler",
+          "light-kettle",
+          "grill-sausages",
+          "grill-corn",
+          "toast-buns",
+          "set-table",
+          "call-everyone"
+        ],
+        "pred_critical_path": [
+          "pork-light-smoker",
+          "pork-smoke-unwrapped",
+          "pork-wrap",
+          "pork-smoke-wrapped",
+          "pork-hold-cooler",
+          "pork-pull",
+          "pork-hold-pulled"
+        ],
+        "js_critical_path": [
+          "pork-light-smoker",
+          "pork-smoke-unwrapped",
+          "pork-wrap",
+          "pork-smoke-wrapped",
+          "pork-hold-cooler",
+          "pork-pull",
+          "pork-hold-pulled"
+        ],
+        "js_makespan": 41520,
+        "critical_overlap": 0.0,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.7727272727272727,
+      "unsupported_steps": [
+        "pork-light-smoker",
+        "pork-smoke-unwrapped",
+        "pork-wrap",
+        "pork-smoke-wrapped",
+        "pork-hold-cooler",
+        "pork-pull",
+        "pork-hold-pulled",
+        "pork-trim-rub",
+        "beans-fry-bacon-onion",
+        "beans-tick-over",
+        "beans-keep-warm",
+        "slaw-dress",
+        "slaw-refrigerate",
+        "slaw-hold",
+        "grill-light-kettle",
+        "grill-toast-buns",
+        "table-call"
+      ],
+      "matching": [
+        {
+          "gold": "shred-cabbage",
+          "predicted": "slaw-shred",
+          "by": "name"
+        },
+        {
+          "gold": "whisk-slaw-dressing",
+          "predicted": "slaw-whisk-dressing",
+          "by": "name"
+        },
+        {
+          "gold": "grill-sausages",
+          "predicted": "grill-sausages",
+          "by": "name"
+        },
+        {
+          "gold": "grill-corn",
+          "predicted": "grill-corn",
+          "by": "name"
+        },
+        {
+          "gold": "set-table",
+          "predicted": "table-set-out",
+          "by": "name"
+        },
+        {
+          "gold": "trim-and-rub",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "light-smoker",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "smoke-unwrapped",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "wrap-pork",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "smoke-wrapped",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "rest-in-cooler",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "pull-pork",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "fry-bacon-onion",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "simmer-beans",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "chill-slaw",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "light-kettle",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "toast-buns",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "call-everyone",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "pork-light-smoker",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "pork-smoke-unwrapped",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "pork-wrap",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "pork-smoke-wrapped",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "pork-hold-cooler",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "pork-pull",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "pork-hold-pulled",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "pork-trim-rub",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "beans-fry-bacon-onion",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "beans-tick-over",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "beans-keep-warm",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "slaw-dress",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "slaw-refrigerate",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "slaw-hold",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "grill-light-kettle",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "grill-toast-buns",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "table-call",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "qwen/qwen3.8-flash",
+        "pattern": "baseline",
+        "calls": 1,
+        "input_tokens": 4426,
+        "output_tokens": 32540,
+        "cost_usd": 0.0159577,
+        "cache_keys": [
+          "2c6ed864d90bc07cb6e79b450658744c9ea8299dcfa1d01741f24332d0d08ad9"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/baseline/per-program/kitchen-backyard-barbecue-smoker-grill/responses/kitchen-backyard-barbecue-smoker-grill.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/qwen__qwen3.8-flash/baseline/per-program/kitchen-backyard-barbecue-smoker-grill/predicted/kitchen-backyard-barbecue-smoker-grill.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Backyard Barbecue: Smoker and Grill for a shoulder, sausages and sides for about twelve, following the source text below",
+            "finish_at": null,
+            "constraints": "one offset smoker, one kettle grill, one side burner, one cooler for holding, two cooks",
+            "vertical": "kitchen"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

@@ -1,0 +1,393 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "weekday-lentil-soup-salad-four",
+  "name": "Weekday Lentil Soup and Salad for Four",
+  "environmentType": "kitchen",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "soup",
+      "name": "Soup Preparation",
+      "steps": [
+        {
+          "stepId": "dice-veggies",
+          "name": "Dice onion, carrot, and celery",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Dice an onion, a carrot and two sticks of celery; 8 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "sweat-veggies",
+          "name": "Sweat diced veggies",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "dice-veggies"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Sweat them in oil with a bay leaf for 10 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "stir-lentils",
+          "name": "Stir in lentils, tomato paste, and stock",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "sweat-veggies"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Stir in the rinsed lentils, a spoonful of tomato paste and a litre of stock; 3 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "simmer-soup",
+          "name": "Simmer the soup",
+          "task": "burner",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 1500,
+            "maxSeconds": 2400,
+            "defaultSeconds": 1950
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "stir-lentils"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Simmer until the lentils are soft, 25 to 40 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "blitz-soup",
+          "name": "Blitz a third of the soup",
+          "task": "stick blender",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "simmer-soup"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Blitz a third of the pot with the stick blender and stir it back in; 4 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "season-soup",
+          "name": "Season the soup",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "blitz-soup"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Season it",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "keep-warm-soup",
+          "name": "Keep the soup warm",
+          "task": "burner",
+          "duration": {
+            "type": "indefinite",
+            "defaultSeconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "season-soup"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "keep it at a bare simmer until you sit down",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "salad",
+      "name": "Salad Preparation",
+      "steps": [
+        {
+          "stepId": "wash-leaves",
+          "name": "Wash and spin the leaves",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "simmer-soup",
+            "event": "start"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Wash and spin the leaves; 5 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "shave-fennel-radishes",
+          "name": "Shave fennel and radishes",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 420
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-leaves"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Shave the fennel and the radishes thin; 7 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "whisk-dressing",
+          "name": "Whisk the dressing",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "shave-fennel-radishes"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Whisk the lemon, oil and mustard in the bottom of the bowl; 3 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "dress-salad",
+          "name": "Dress and toss the salad",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStepWithBuffer",
+            "stepId": "simmer-soup",
+            "bufferSeconds": 300
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "dress and toss the salad; 2 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "bread",
+      "name": "Bread Preparation",
+      "steps": [
+        {
+          "stepId": "cut-bread",
+          "name": "Cut the bread into slices",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "simmer-soup",
+            "event": "start"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Cut the loaf into thick slices once the soup is simmering; 3 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "warm-bread",
+          "name": "Warm the bread in the toaster oven",
+          "task": "toaster oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cut-bread"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Warm them in the toaster oven for 8 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "wrap-bread",
+          "name": "Wrap the warm bread",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warm-bread"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Wrap the warm bread in a cloth",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "table",
+      "name": "Table Preparation",
+      "steps": [
+        {
+          "stepId": "lay-table",
+          "name": "Lay four places",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wrap-bread"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Lay four places once the bread is wrapped; 5 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "carry-through",
+          "name": "Carry the pot and bowl through",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "lay-table"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "dress-salad"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "wrap-bread"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "keep-warm-soup"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "carry the pot and the bowl through together; 3 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "prep",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "burner",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "toaster oven",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "stick blender",
+      "maxConcurrent": 1
+    }
+  ]
+}

@@ -1,0 +1,382 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "three-course-dinner-six-two-burners-one-oven",
+  "name": "Three-Course Dinner for Six: Two Burners, One Oven",
+  "description": "Prepare braised short ribs, leek and potato soup, and apple tart for six. Cooking and holding are complete by 19:30; service follows the source sequence after guests are seated.",
+  "environmentType": "kitchen",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "main",
+      "name": "Braised short ribs",
+      "steps": [
+        {
+          "stepId": "main-mise",
+          "name": "Chop mirepoix, trim short ribs, and measure stock",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2400
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "main-preheat",
+          "name": "Heat oven to 300°F",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "main-mise"
+          }
+        },
+        {
+          "stepId": "main-sear",
+          "name": "Sear short ribs, turning once",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 720
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "main-preheat"
+          }
+        },
+        {
+          "stepId": "main-soften",
+          "name": "Soften mirepoix in the pot",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "main-sear"
+          }
+        },
+        {
+          "stepId": "main-wine",
+          "name": "Add wine and reduce",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "main-soften"
+          }
+        },
+        {
+          "stepId": "main-braise",
+          "name": "Braise ribs, covered",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 10800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "main-wine"
+          }
+        },
+        {
+          "stepId": "main-rest",
+          "name": "Rest pot off the heat",
+          "task": "rest",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "main-braise"
+          }
+        },
+        {
+          "stepId": "main-reduce",
+          "name": "Skim fat and reduce braising liquid",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "main-rest"
+          }
+        },
+        {
+          "stepId": "main-hold",
+          "name": "Hold ribs and sauce for service",
+          "task": "main-hold",
+          "duration": {
+            "type": "fixed",
+            "seconds": 9000
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "main-reduce"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "soup",
+      "name": "Leek and potato soup",
+      "steps": [
+        {
+          "stepId": "soup-sweat",
+          "name": "Sweat sliced leeks in butter",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "main-braise",
+            "event": "start",
+            "offsetSeconds": 7200
+          }
+        },
+        {
+          "stepId": "soup-simmer",
+          "name": "Add potatoes and stock; simmer",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "soup-sweat"
+          }
+        },
+        {
+          "stepId": "soup-blend",
+          "name": "Blend soup smooth",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "soup-simmer"
+          }
+        },
+        {
+          "stepId": "soup-hold",
+          "name": "Hold soup warm until guests are seated",
+          "task": "warm-hold",
+          "duration": {
+            "type": "fixed",
+            "seconds": 12000
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "soup-blend"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "tart",
+      "name": "Apple tart",
+      "steps": [
+        {
+          "stepId": "tart-roll",
+          "name": "Roll pastry and line tart tin",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 7500
+          }
+        },
+        {
+          "stepId": "tart-chill",
+          "name": "Chill pastry shell",
+          "task": "refrigerator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "tart-roll"
+          }
+        },
+        {
+          "stepId": "tart-slice",
+          "name": "Slice apples and arrange in shell",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "tart-chill"
+          }
+        },
+        {
+          "stepId": "tart-bake",
+          "name": "Bake apple tart",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "tart-slice"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "main-rest"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "service",
+      "name": "Dinner service",
+      "steps": [
+        {
+          "stepId": "serve-soup",
+          "name": "Ladle and serve soup",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 27000
+          }
+        },
+        {
+          "stepId": "plate-main",
+          "name": "Plate and serve short ribs",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "serve-soup",
+            "offsetSeconds": 600
+          }
+        },
+        {
+          "stepId": "serve-tart",
+          "name": "Slice and serve tart",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "plate-main",
+            "offsetSeconds": 1200
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "cook",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "oven",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "burner",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "refrigerator",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "rest",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "warm-hold",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "main-hold",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "serves": "6",
+    "plannedStart": "12:00",
+    "prepAndHoldingCompleteBy": "19:30",
+    "ingredients": [
+      {
+        "name": "short ribs",
+        "measure": "for 6"
+      },
+      {
+        "name": "mirepoix",
+        "measure": "for 6"
+      },
+      {
+        "name": "stock",
+        "measure": "for braise and soup"
+      },
+      {
+        "name": "leeks",
+        "measure": "for soup"
+      },
+      {
+        "name": "potatoes",
+        "measure": "for soup"
+      },
+      {
+        "name": "butter",
+        "measure": "for soup"
+      },
+      {
+        "name": "pastry",
+        "measure": "1 tart shell"
+      },
+      {
+        "name": "apples",
+        "measure": "for 1 tart"
+      },
+      {
+        "name": "wine",
+        "measure": "for braise"
+      }
+    ],
+    "sourceUrl": "",
+    "attribution": "User-provided source text"
+  }
+}

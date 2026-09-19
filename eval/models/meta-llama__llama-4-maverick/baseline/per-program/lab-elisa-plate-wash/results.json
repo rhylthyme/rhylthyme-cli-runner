@@ -1,0 +1,411 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "meta-llama/llama-4-maverick",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/baseline/cache",
+    "limit": null,
+    "only": [
+      "lab-elisa-plate-wash"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 1,
+      "input_tokens": 4384,
+      "output_tokens": 2238,
+      "cost_usd": 0.0022833680000000005,
+      "fix_iterations": 0
+    },
+    "generated_at": "2026-09-19T19:25:22+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.3181818181818182,
+    "steps_f1": 0.4827586206896552,
+    "durations_accuracy": 0.7142857142857143,
+    "resources_precision": 0.25,
+    "resources_recall": 0.2,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.2857142857142857,
+    "relationships_recall": 0.08,
+    "relationships_f1": 0.125,
+    "structure_rand_index": 1.0,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.7307692307692307
+  },
+  "programs": [
+    {
+      "slug": "lab-elisa-plate-wash",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.3181818181818182,
+        "steps_f1": 0.4827586206896552,
+        "durations_accuracy": 0.7142857142857143,
+        "resources_precision": 0.25,
+        "resources_recall": 0.2,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.2857142857142857,
+        "relationships_recall": 0.08,
+        "relationships_f1": 0.125,
+        "structure_rand_index": 1.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.7307692307692307
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.3181818181818182,
+        "f1": 0.4827586206896552,
+        "tp": 7,
+        "n_gold": 22,
+        "n_pred": 7
+      },
+      "durations": {
+        "accuracy": 0.7142857142857143,
+        "correct": 5,
+        "total": 7
+      },
+      "resources": {
+        "precision": 0.25,
+        "recall": 0.2,
+        "f1": 0.22222222222222224,
+        "tp": 1,
+        "n_gold": 5,
+        "n_pred": 4
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.2857142857142857,
+        "recall": 0.08,
+        "f1": 0.125,
+        "tp": 2,
+        "n_gold": 25,
+        "n_pred": 7
+      },
+      "structure": {
+        "rand_index": 1.0,
+        "agreements": 21,
+        "pairs": 21,
+        "n_steps": 7
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 76200.0,
+        "pred_makespan": 76200.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "coat-plate-2",
+          "wash-2-coat",
+          "block-2",
+          "wash-2-block",
+          "samples-2",
+          "wash-2-samples",
+          "detection-2",
+          "wash-2-detection",
+          "develop-2",
+          "read-2"
+        ],
+        "pred_critical_path": [
+          "coat1",
+          "wash1-1",
+          "block1",
+          "wash2-2",
+          "add-std-samples2",
+          "incubate2",
+          "wash2-3",
+          "add-detection-ab2",
+          "incubate-detection2",
+          "wash2-4",
+          "develop2",
+          "read2"
+        ],
+        "js_critical_path": [
+          "coat1",
+          "wash1-1",
+          "block1",
+          "wash2-2",
+          "add-std-samples2",
+          "incubate2",
+          "wash2-3",
+          "add-detection-ab2",
+          "incubate-detection2",
+          "wash2-4",
+          "develop2",
+          "read2"
+        ],
+        "js_makespan": 76200,
+        "critical_overlap": 0.1,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.7307692307692307,
+      "unsupported_steps": [
+        "wash1-1",
+        "wash1-2",
+        "add-std-samples1",
+        "incubate1",
+        "wash1-3",
+        "add-detection-ab1",
+        "wash1-4",
+        "develop1",
+        "read1",
+        "wash2-1",
+        "wash2-2",
+        "add-std-samples2",
+        "incubate2",
+        "wash2-3",
+        "add-detection-ab2",
+        "wash2-4",
+        "develop2",
+        "read2",
+        "make-standard-curve"
+      ],
+      "matching": [
+        {
+          "gold": "dilute-samples",
+          "predicted": "dilute-samples",
+          "by": "name"
+        },
+        {
+          "gold": "coat-plate-1",
+          "predicted": "coat1",
+          "by": "name"
+        },
+        {
+          "gold": "block-1",
+          "predicted": "block1",
+          "by": "name"
+        },
+        {
+          "gold": "detection-1",
+          "predicted": "incubate-detection1",
+          "by": "name"
+        },
+        {
+          "gold": "coat-plate-2",
+          "predicted": "coat2",
+          "by": "name"
+        },
+        {
+          "gold": "block-2",
+          "predicted": "block2",
+          "by": "name"
+        },
+        {
+          "gold": "detection-2",
+          "predicted": "incubate-detection2",
+          "by": "name"
+        },
+        {
+          "gold": "make-standards",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "wash-1-coat",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "wash-1-block",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "samples-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "wash-1-samples",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "wash-1-detection",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "develop-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "read-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "wash-2-coat",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "wash-2-block",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "samples-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "wash-2-samples",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "wash-2-detection",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "develop-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "read-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "wash1-1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "wash1-2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "add-std-samples1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "incubate1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "wash1-3",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "add-detection-ab1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "wash1-4",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "develop1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "read1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "wash2-1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "wash2-2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "add-std-samples2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "incubate2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "wash2-3",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "add-detection-ab2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "wash2-4",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "develop2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "read2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "make-standard-curve",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "meta-llama/llama-4-maverick",
+        "pattern": "baseline",
+        "calls": 1,
+        "input_tokens": 4384,
+        "output_tokens": 2238,
+        "cost_usd": 0.0022833680000000005,
+        "cache_keys": [
+          "55aab0e12597a5b6e0bd8d86c935841a70066008c171a4991d0be9608142f5df"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/baseline/per-program/lab-elisa-plate-wash/responses/lab-elisa-plate-wash.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/baseline/per-program/lab-elisa-plate-wash/predicted/lab-elisa-plate-wash.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Sandwich ELISA on Two Plates, One Washer for two 96-well plates, staggered 30 minutes, following the source text below",
+            "finish_at": null,
+            "constraints": "one plate washer, one 37 \u00b0C incubator holding two plates, one plate reader, one operator",
+            "vertical": "lab"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

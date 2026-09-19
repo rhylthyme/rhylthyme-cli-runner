@@ -1,0 +1,333 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "saturday-brunch-for-four",
+  "name": "Saturday Brunch for Four",
+  "description": "Saturday brunch for four, scheduled so serving ends at 10:00. Assumes program t=0 is 09:15. One oven, two burners, one cook.",
+  "environmentType": "kitchen",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "bacon",
+      "name": "Bacon",
+      "steps": [
+        {
+          "stepId": "s_bacon_lay_bake",
+          "name": "Lay bacon on rack, bake at 400 F, turn once",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1320
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 1140
+          }
+        },
+        {
+          "stepId": "s_bacon_drain",
+          "name": "Drain bacon on paper towels",
+          "task": "counter",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "s_bacon_lay_bake"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "pancakes",
+      "name": "Pancakes",
+      "steps": [
+        {
+          "stepId": "s_pancake_dry_mix",
+          "name": "Whisk together flour, sugar, baking powder, salt",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "s_pancake_wet_mix",
+          "name": "Beat eggs, milk, melted butter; combine wet and dry",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "s_pancake_dry_mix"
+          }
+        },
+        {
+          "stepId": "s_pancake_rest",
+          "name": "Rest batter",
+          "task": "counter",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "s_pancake_wet_mix"
+          }
+        },
+        {
+          "stepId": "s_pancake_heat_griddle",
+          "name": "Heat griddle over medium heat",
+          "task": "stove",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "s_pancake_rest"
+          }
+        },
+        {
+          "stepId": "s_pancake_batches",
+          "name": "Cook pancake batch",
+          "task": "stove",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "replicates": {
+            "count": 3,
+            "mode": "serial"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "s_pancake_heat_griddle"
+          }
+        },
+        {
+          "stepId": "s_pancake_hold",
+          "name": "Hold finished pancakes warm",
+          "task": "stove",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "s_pancake_batches",
+            "instances": "all"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "fruit-salad",
+      "name": "Fruit salad",
+      "steps": [
+        {
+          "stepId": "s_fruit_chop",
+          "name": "Halve strawberries; cube melon and mango; add blueberries",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "s_pancake_wet_mix"
+          }
+        },
+        {
+          "stepId": "s_fruit_chill",
+          "name": "Squeeze lime over fruit and chill",
+          "task": "fridge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1380
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "s_fruit_chop"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "coffee",
+      "name": "Coffee",
+      "steps": [
+        {
+          "stepId": "s_coffee_grind_setup",
+          "name": "Grind beans and set up pot",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "s_fruit_chop",
+            "offsetSeconds": 540
+          }
+        },
+        {
+          "stepId": "s_coffee_brew",
+          "name": "Brew full pot",
+          "task": "coffee_maker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "s_coffee_grind_setup"
+          }
+        },
+        {
+          "stepId": "s_coffee_hold",
+          "name": "Hold coffee hot",
+          "task": "coffee_maker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "s_coffee_brew"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "serve",
+      "name": "Serve",
+      "steps": [
+        {
+          "stepId": "s_serve",
+          "name": "Bring everything to the table together",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "s_bacon_drain"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "s_fruit_chill"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "s_coffee_hold"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "s_pancake_hold"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "cook",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "oven",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "stove",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "counter",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "fridge",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "coffee_maker",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "ingredients": [
+      {
+        "name": "bacon",
+        "measure": "1 pound"
+      },
+      {
+        "name": "flour",
+        "measure": "2 cups"
+      },
+      {
+        "name": "sugar",
+        "measure": "2 tablespoons"
+      },
+      {
+        "name": "baking powder",
+        "measure": "1 tablespoon"
+      },
+      {
+        "name": "salt",
+        "measure": "1 teaspoon"
+      },
+      {
+        "name": "eggs",
+        "measure": "2"
+      },
+      {
+        "name": "milk",
+        "measure": "1 1/2 cups"
+      },
+      {
+        "name": "butter",
+        "measure": "3 tablespoons melted"
+      },
+      {
+        "name": "strawberries",
+        "measure": "1 pint"
+      },
+      {
+        "name": "small melon",
+        "measure": "1, cubed"
+      },
+      {
+        "name": "mango",
+        "measure": "1 small, cubed"
+      },
+      {
+        "name": "blueberries",
+        "measure": "1 cup"
+      },
+      {
+        "name": "lime",
+        "measure": "1/2"
+      },
+      {
+        "name": "coffee",
+        "measure": "1 full pot"
+      }
+    ],
+    "serves": "4",
+    "attribution": "Saturday Brunch for Four source text"
+  }
+}

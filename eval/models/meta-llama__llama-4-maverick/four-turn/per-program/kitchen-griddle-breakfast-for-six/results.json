@@ -1,0 +1,195 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "meta-llama/llama-4-maverick",
+    "pattern": "four-turn",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/four-turn/cache",
+    "limit": null,
+    "only": [
+      "kitchen-griddle-breakfast-for-six"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 6,
+      "input_tokens": 59893,
+      "output_tokens": 14799,
+      "cost_usd": 0.020908832000000002,
+      "fix_iterations": 2
+    },
+    "generated_at": "2026-09-19T19:42:26+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 0.0,
+    "steps_recall": 0.0,
+    "steps_f1": 0.0,
+    "durations_accuracy": 0.0,
+    "resources_precision": 0.0,
+    "resources_recall": 0.0,
+    "actors_accuracy": 0.0,
+    "relationships_precision": 0.0,
+    "relationships_recall": 0.0,
+    "relationships_f1": 0.0,
+    "structure_rand_index": 0.0,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.0
+  },
+  "programs": [
+    {
+      "slug": "kitchen-griddle-breakfast-for-six",
+      "headline": {
+        "steps_precision": 0.0,
+        "steps_recall": 0.0,
+        "steps_f1": 0.0,
+        "durations_accuracy": 0.0,
+        "resources_precision": 0.0,
+        "resources_recall": 0.0,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.0,
+        "relationships_recall": 0.0,
+        "relationships_f1": 0.0,
+        "structure_rand_index": 0.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.0
+      },
+      "steps": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 19,
+        "n_pred": 0
+      },
+      "durations": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 19
+      },
+      "resources": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 6,
+        "n_pred": 0
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 23,
+        "n_pred": 0
+      },
+      "structure": {
+        "rand_index": 0.0,
+        "agreements": 0,
+        "pairs": 0,
+        "n_steps": 0
+      },
+      "end_to_end": {
+        "python_valid": false,
+        "python_errors": [],
+        "js_status": "skipped",
+        "js_valid": null,
+        "js_errors": [],
+        "gold_makespan": 0.0,
+        "pred_makespan": 0.0,
+        "makespan_ok": false,
+        "gold_critical_path": [],
+        "pred_critical_path": [],
+        "js_critical_path": null,
+        "js_makespan": null,
+        "critical_overlap": 0.0,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.0,
+      "unsupported_steps": [],
+      "matching": [],
+      "extras": {
+        "model": "meta-llama/llama-4-maverick",
+        "pattern": "four-turn",
+        "calls": 6,
+        "input_tokens": 59893,
+        "output_tokens": 14799,
+        "cost_usd": 0.020908832000000002,
+        "cache_keys": [
+          "9098e308049d507aef2212f93e4536b969ddb643212d40482a52bde3c961e0e3",
+          "0af5866827de9bb43564b5988365cd67558eef007497f816f3e4a3f65b7a2ede",
+          "4a281915542c756c9a24069a21df501b865bc7213f05fad68d011625e874b979",
+          "298eb6f5f5c86565620b30773a1bf258035a4c95fd0e323dbaa76731c29025f9",
+          "7bf050582600fe0ec19d6bbfb8cbdcefe9b8a81c948549990df9fad7a02d15cc",
+          "972eb19528d4b388547d6cc4fd4a295c90dc732e34e46c7371fdabe5a2d3e2ca"
+        ],
+        "fix_iterations": 2,
+        "validation_errors": [
+          "Track 'Oven Activities': Steps 'Warm plates' and 'Rest pancake batter' overlap by 1200 seconds. Step 'Warm plates' ends at 1800s, but step 'Rest pancake batter' starts at 600s."
+        ],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/four-turn/per-program/kitchen-griddle-breakfast-for-six/responses/kitchen-griddle-breakfast-for-six.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/four-turn/per-program/kitchen-griddle-breakfast-for-six/predicted/kitchen-griddle-breakfast-for-six.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 19,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Breakfast for Six on One Griddle for 6 people",
+            "finish_at": "09:00",
+            "constraints": "one griddle, one two-slice toaster, one coffee maker, one oven on its lowest setting, one cook",
+            "vertical": "kitchen",
+            "turn": "T1",
+            "kind": "recipe",
+            "constraintsLine": "Resource limits: one griddle, one two-slice toaster, one coffee maker, one oven on its lowest setting, one cook.",
+            "deadlineLine": "Everything must be finished by 09:00.",
+            "source": "Source text (read all of it):\n<<<\nBreakfast for Six on One Griddle\n\nOne electric griddle, a two-slice toaster, a burr grinder, a drip coffee maker and an oven turned to its lowest setting to hold things warm. One cook, six people, everyone eating at nine.\n\nPrep\nWhisk the dry pancake ingredients together, then beat in the buttermilk and eggs; 10 minutes. Let the batter stand for 20 minutes while the griddle does its first job. Crack a dozen eggs into a jug and season them; 5 minutes. Set the table and lay out six places; 10 minutes. Put six plates in the oven at its lowest setting and leave them there until you call everyone.\n\nGriddle\nEverything cooks on the one griddle, in order. Heat the griddle to 375\u00b0F; 8 minutes. Lay the bacon out and cook it for 14 minutes, turning once, then move it to the warm oven. Scrape the griddle and wipe off the fat; 3 minutes. Pancakes go on as soon as the griddle is clean and the batter has rested, in three passes: the first pass takes 6 minutes, the second another 6, and the third 6 more. Slide each pass into the oven as it comes off. Drop the griddle to 300\u00b0F and give it 4 minutes to settle, then scramble the eggs slowly for 7 minutes.\n\nToast\nThe toaster takes two slices at a time. Start the first batch of toast when the last pancake pass goes on; 3 minutes. Run a second batch straight after; 3 minutes. Butter all of it; 4 minutes.\n\nCoffee\nStart the grinder ten minutes after the bacon goes on so the pot is fresh. Grind the beans; 2 minutes. Brew a full pot; 9 minutes.\n\nServe\nCall everyone when the eggs, the toast and the coffee are all ready, and carry the warm plates through; 5 minutes.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Breakfast for Six on One Griddle for 6 people",
+            "finish_at": "09:00",
+            "constraints": "one griddle, one two-slice toaster, one coffee maker, one oven on its lowest setting, one cook",
+            "vertical": "kitchen",
+            "turn": "T2",
+            "kind": "recipe"
+          },
+          "T3 extraction": {
+            "goal": "Breakfast for Six on One Griddle for 6 people",
+            "finish_at": "09:00",
+            "constraints": "one griddle, one two-slice toaster, one coffee maker, one oven on its lowest setting, one cook",
+            "vertical": "kitchen",
+            "turn": "T3",
+            "kind": "recipe",
+            "environment": "a kitchen where you have: one griddle, one two-slice toaster, one coffee maker, one oven on its lowest setting, one cook",
+            "deadline": "09:00",
+            "source": "Source text (read all of it):\n<<<\nBreakfast for Six on One Griddle\n\nOne electric griddle, a two-slice toaster, a burr grinder, a drip coffee maker and an oven turned to its lowest setting to hold things warm. One cook, six people, everyone eating at nine.\n\nPrep\nWhisk the dry pancake ingredients together, then beat in the buttermilk and eggs; 10 minutes. Let the batter stand for 20 minutes while the griddle does its first job. Crack a dozen eggs into a jug and season them; 5 minutes. Set the table and lay out six places; 10 minutes. Put six plates in the oven at its lowest setting and leave them there until you call everyone.\n\nGriddle\nEverything cooks on the one griddle, in order. Heat the griddle to 375\u00b0F; 8 minutes. Lay the bacon out and cook it for 14 minutes, turning once, then move it to the warm oven. Scrape the griddle and wipe off the fat; 3 minutes. Pancakes go on as soon as the griddle is clean and the batter has rested, in three passes: the first pass takes 6 minutes, the second another 6, and the third 6 more. Slide each pass into the oven as it comes off. Drop the griddle to 300\u00b0F and give it 4 minutes to settle, then scramble the eggs slowly for 7 minutes.\n\nToast\nThe toaster takes two slices at a time. Start the first batch of toast when the last pancake pass goes on; 3 minutes. Run a second batch straight after; 3 minutes. Butter all of it; 4 minutes.\n\nCoffee\nStart the grinder ten minutes after the bacon goes on so the pot is fresh. Grind the beans; 2 minutes. Brew a full pot; 9 minutes.\n\nServe\nCall everyone when the eggs, the toast and the coffee are all ready, and carry the warm plates through; 5 minutes.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Breakfast for Six on One Griddle for 6 people",
+            "finish_at": "09:00",
+            "constraints": "one griddle, one two-slice toaster, one coffee maker, one oven on its lowest setting, one cook",
+            "vertical": "kitchen",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or cook_recipe",
+            "finishAtArg": " with finishAt=\"09:00\""
+          }
+        }
+      },
+      "error": "program failed validation after 2 fix iteration(s): Track 'Oven Activities': Steps 'Warm plates' and 'Rest pancake batter' overlap by 1200 seconds. Step 'Warm plates' ends at 1800s, but step 'Rest pancake batter' starts at 600s."
+    }
+  ],
+  "missing": [
+    "kitchen-griddle-breakfast-for-six"
+  ]
+}

@@ -1,0 +1,932 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "erg-session-four-rowers-two-machines",
+  "name": "Erg Session — four rowers, two machines",
+  "environmentType": "gym",
+  "actors": 5,
+  "tracks": [
+    {
+      "trackId": "coach",
+      "name": "Coach",
+      "steps": [
+        {
+          "stepId": "coach-brief",
+          "name": "Coach briefs the crew on the boards before anyone gets on",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Brief the crew on the boards before anyone gets on: 5 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "coach-call-splits",
+          "name": "Coach calls splits from the first piece: 20 minutes, watch the catch",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "coach-brief"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "piece-a1",
+                "event": "start"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "piece-b1",
+                "event": "start"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Call splits from the first piece: 20 minutes on the clock, watch the catch not the monitor.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "coach-run-drills",
+          "name": "Coach runs the drills: 12 minutes, one rower at a time, straight through",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 720
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "coach-call-splits"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "piece-c3"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "piece-d3"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Run the drills: 12 minutes, one rower at a time, straight through.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "coach-debrief",
+          "name": "Coach debriefs after the cooldown: what the splits said and what Saturday looks like",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "coach-run-drills"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "cooldown-a"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "cooldown-b"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "cooldown-c"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "cooldown-d"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Debrief after the cooldown: 10 minutes, what the splits said and what Saturday looks like.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "row-a",
+      "name": "Rower A",
+      "steps": [
+        {
+          "stepId": "warmup-a",
+          "name": "A warm-up: 10 minutes, rate 18, light pressure, half slide to full slide",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "coach-brief"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "A and B warm up first: 10 minutes, rate 18, light pressure, half slide to full slide.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "piece-a1",
+          "name": "A piece 1: 4 minutes, rate 26 to 28",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "warmup-a"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "warmup-c"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "warmup-d"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "A and B take the first piece as soon as C and D are off the machines.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "piece-a2",
+          "name": "A piece 2: 4 minutes, four minutes after A piece 1 ends",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "piece-a1",
+                "offsetSeconds": 240
+              },
+              {
+                "type": "afterStep",
+                "stepId": "piece-c1"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "piece-d1"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "A and B start their second piece four minutes after their first one ends.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "piece-a3",
+          "name": "A piece 3: 4 minutes, four minutes after A piece 2 ends",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "piece-a2",
+                "offsetSeconds": 240
+              },
+              {
+                "type": "afterStep",
+                "stepId": "piece-c2"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "piece-d2"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "A and B start their third piece four minutes after their second one ends.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "drill-a",
+          "name": "A coached technique drill: pause at the finish, pause at half slide, then build",
+          "task": "coached_drill",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "piece-a3"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "piece-c3"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "piece-d3"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "coach-run-drills",
+                "event": "start"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Three minutes each, one at a time, coach on the machine with you: pause at the finish, pause at half slide, then build. A goes first once C and D are off the last piece, then B, then C, then D.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "cooldown-a",
+          "name": "A floor cooldown: legs up the wall, hips, lats, then tea",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "drill-a"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "drill-d"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Ten minutes on the floor together once the last drill is done: legs up the wall, hips, lats, then a cup of tea.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "row-b",
+      "name": "Rower B",
+      "steps": [
+        {
+          "stepId": "warmup-b",
+          "name": "B warm-up: 10 minutes, rate 18, light pressure, half slide to full slide",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "coach-brief"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "A and B warm up first: 10 minutes, rate 18, light pressure, half slide to full slide.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "piece-b1",
+          "name": "B piece 1: 4 minutes, rate 26 to 28",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "warmup-b"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "warmup-c"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "warmup-d"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "A and B take the first piece as soon as C and D are off the machines.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "piece-b2",
+          "name": "B piece 2: 4 minutes, four minutes after B piece 1 ends",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "piece-b1",
+                "offsetSeconds": 240
+              },
+              {
+                "type": "afterStep",
+                "stepId": "piece-c1"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "piece-d1"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "A and B start their second piece four minutes after their first one ends.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "piece-b3",
+          "name": "B piece 3: 4 minutes, four minutes after B piece 2 ends",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "piece-b2",
+                "offsetSeconds": 240
+              },
+              {
+                "type": "afterStep",
+                "stepId": "piece-c2"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "piece-d2"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "A and B start their third piece four minutes after their second one ends.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "drill-b",
+          "name": "B coached technique drill: pause at the finish, pause at half slide, then build",
+          "task": "coached_drill",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "piece-b3"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "drill-a"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Three minutes each, one at a time, coach on the machine with you: pause at the finish, pause at half slide, then build. A goes first once C and D are off the last piece, then B, then C, then D.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "cooldown-b",
+          "name": "B floor cooldown: legs up the wall, hips, lats, then tea",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "drill-b"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "drill-d"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Ten minutes on the floor together once the last drill is done: legs up the wall, hips, lats, then a cup of tea.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "row-c",
+      "name": "Rower C",
+      "steps": [
+        {
+          "stepId": "warmup-c",
+          "name": "C warm-up: 10 minutes, ten minutes after A/B start",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warmup-a"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "C and D come in ten minutes later and take the machines for their own 10 minute warm-up.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "piece-c1",
+          "name": "C piece 1: 4 minutes, rate 26 to 28",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "warmup-c"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "warmup-d"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "piece-a1"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "piece-b1"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "C and D take the first piece straight off the back of A and B's first piece.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "piece-c2",
+          "name": "C piece 2: 4 minutes, as soon as A and B are off",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "piece-c1"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "piece-a2"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "piece-b2"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "C and D take the second piece as soon as A and B are off.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "piece-c3",
+          "name": "C piece 3: 4 minutes, as soon as A and B are off",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "piece-c2"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "piece-a3"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "piece-b3"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "C and D take the third piece as soon as A and B are off.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "drill-c",
+          "name": "C coached technique drill: pause at the finish, pause at half slide, then build",
+          "task": "coached_drill",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "piece-c3"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "drill-b"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Three minutes each, one at a time, coach on the machine with you: pause at the finish, pause at half slide, then build. A goes first once C and D are off the last piece, then B, then C, then D.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "cooldown-c",
+          "name": "C floor cooldown: legs up the wall, hips, lats, then tea",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "drill-c"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "drill-d"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Ten minutes on the floor together once the last drill is done: legs up the wall, hips, lats, then a cup of tea.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "row-d",
+      "name": "Rower D",
+      "steps": [
+        {
+          "stepId": "warmup-d",
+          "name": "D warm-up: 10 minutes, ten minutes after A/B start",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warmup-b"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "C and D come in ten minutes later and take the machines for their own 10 minute warm-up.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "piece-d1",
+          "name": "D piece 1: 4 minutes, rate 26 to 28",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "warmup-c"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "warmup-d"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "piece-a1"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "piece-b1"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "C and D take the first piece straight off the back of A and B's first piece.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "piece-d2",
+          "name": "D piece 2: 4 minutes, as soon as A and B are off",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "piece-d1"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "piece-a2"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "piece-b2"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "C and D take the second piece as soon as A and B are off.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "piece-d3",
+          "name": "D piece 3: 4 minutes, as soon as A and B are off",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "piece-d2"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "piece-a3"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "piece-b3"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "C and D take the third piece as soon as A and B are off.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "drill-d",
+          "name": "D coached technique drill: pause at the finish, pause at half slide, then build",
+          "task": "coached_drill",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "piece-d3"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "drill-c"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Three minutes each, one at a time, coach on the machine with you: pause at the finish, pause at half slide, then build. A goes first once C and D are off the last piece, then B, then C, then D.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "cooldown-d",
+          "name": "D floor cooldown: legs up the wall, hips, lats, then tea",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "drill-d"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Ten minutes on the floor together once the last drill is done: legs up the wall, hips, lats, then a cup of tea.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "coach",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "erg",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "coached_drill",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "floor",
+      "maxConcurrent": 5
+    }
+  ],
+  "metadata": {
+    "serves": "4 rowers + 1 coach",
+    "sourceUrl": "",
+    "attribution": ""
+  }
+}

@@ -1,0 +1,343 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "partner-upper-body-superset",
+  "name": "Partner Upper-Body Superset Session",
+  "description": "Two-lifter upper-body superset session with bench/barbell, dumbbells, pull-up bar, two ergs, and about 25 minutes total.",
+  "environmentType": "gym",
+  "actors": 2,
+  "tracks": [
+    {
+      "trackId": "warmup",
+      "name": "Warm-up (both partners)",
+      "steps": [
+        {
+          "stepId": "warm_erg",
+          "name": "Easy rowing",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "replicates": {
+            "count": 2,
+            "mode": "parallel"
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "warm_mobility",
+          "name": "Arm circles and band pull-aparts",
+          "task": "mobility",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "replicates": {
+            "count": 2,
+            "mode": "parallel"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warm_erg",
+            "instances": "all"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "partnerA",
+      "name": "Partner A",
+      "steps": [
+        {
+          "stepId": "a_bench",
+          "name": "Bench press - 8 reps",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "replicates": {
+            "count": 2,
+            "mode": "stagger",
+            "delay": 170
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warm_mobility",
+            "instances": "all"
+          }
+        },
+        {
+          "stepId": "a_row",
+          "name": "Dumbbell row - 8 per side",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "a_bench",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "a_rest",
+          "name": "Rest after Superset A round",
+          "task": "rest",
+          "duration": {
+            "type": "fixed",
+            "seconds": 90
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "a_row",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "a_ohp",
+          "name": "Overhead press - 8 reps",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 45
+          },
+          "replicates": {
+            "count": 2,
+            "mode": "stagger",
+            "delay": 210
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "a_rest",
+            "instances": "all"
+          }
+        },
+        {
+          "stepId": "a_pullups",
+          "name": "Pull-ups - 6 to 10 reps",
+          "task": "pullup",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 30,
+            "maxSeconds": 45,
+            "defaultSeconds": 45
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "a_ohp",
+            "instances": "each"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "partnerB",
+      "name": "Partner B",
+      "steps": [
+        {
+          "stepId": "b_row",
+          "name": "Dumbbell row - 8 per side",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "replicates": {
+            "count": 2,
+            "mode": "stagger",
+            "delay": 170
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warm_mobility",
+            "instances": "all"
+          }
+        },
+        {
+          "stepId": "b_bench",
+          "name": "Bench press - 8 reps",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "b_row",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "b_rest",
+          "name": "Rest after Superset A round",
+          "task": "rest",
+          "duration": {
+            "type": "fixed",
+            "seconds": 90
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "b_bench",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "b_pullups",
+          "name": "Pull-ups - 6 to 10 reps",
+          "task": "pullup",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 30,
+            "maxSeconds": 45,
+            "defaultSeconds": 45
+          },
+          "replicates": {
+            "count": 2,
+            "mode": "stagger",
+            "delay": 210
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "b_rest",
+            "instances": "all"
+          }
+        },
+        {
+          "stepId": "b_ohp",
+          "name": "Overhead press - 8 reps",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 45
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "b_pullups",
+            "instances": "each"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "supersetBRest",
+      "name": "Rest between Superset B rounds",
+      "steps": [
+        {
+          "stepId": "b_round_rest",
+          "name": "Rest after first Superset B round",
+          "task": "rest",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "replicates": {
+            "count": 2,
+            "mode": "parallel"
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "a_pullups",
+                "instances": "any"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "b_ohp",
+                "instances": "any"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "cooldown",
+      "name": "Cool-down (both partners)",
+      "steps": [
+        {
+          "stepId": "cool_down",
+          "name": "Chest, lat, and shoulder stretch",
+          "task": "stretch",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "replicates": {
+            "count": 2,
+            "mode": "parallel"
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "a_pullups",
+                "instances": "all"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "b_ohp",
+                "instances": "all"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "erg",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "mobility",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "bench",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "dumbbells",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "pullup",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "rest",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "stretch",
+      "maxConcurrent": 2
+    }
+  ],
+  "metadata": {
+    "serves": "2 lifters",
+    "sourceUrl": "",
+    "attribution": "Source text provided in prompt",
+    "tags": [
+      "upper-body",
+      "superset",
+      "partner",
+      "gym"
+    ],
+    "equipment": [
+      "flat bench with barbell",
+      "one pair of dumbbells",
+      "one pull-up bar",
+      "two rowing ergs"
+    ]
+  }
+}

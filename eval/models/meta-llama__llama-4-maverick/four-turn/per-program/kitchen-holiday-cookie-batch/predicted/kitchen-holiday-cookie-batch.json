@@ -1,0 +1,538 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "holiday-cookie-batch",
+  "name": "Holiday Cookie Batch: Three Doughs, One Oven",
+  "environmentType": "kitchen",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "dough-prep",
+      "name": "Dough Preparation",
+      "steps": [
+        {
+          "stepId": "mix-sugar-cookie-dough",
+          "name": "Mix sugar cookie dough",
+          "task": "mixer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 720
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "12 minutes in the mixer",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "chill-sugar-cookie-dough",
+          "name": "Chill sugar cookie dough",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "mix-sugar-cookie-dough"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "chill it for 1 hour",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "wash-bowl-1",
+          "name": "Wash the bowl",
+          "task": "prep",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 30,
+            "maxSeconds": 120,
+            "defaultSeconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "chill-sugar-cookie-dough"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Wash the bowl",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "mix-chocolate-chip-dough",
+          "name": "Mix chocolate chip dough",
+          "task": "mixer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 720
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-bowl-1"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "12 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "wash-bowl-2",
+          "name": "Wash the bowl again",
+          "task": "prep",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 30,
+            "maxSeconds": 120,
+            "defaultSeconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "mix-chocolate-chip-dough"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Wash the bowl again",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "mix-gingerbread-dough",
+          "name": "Mix gingerbread dough",
+          "task": "mixer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-bowl-2"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "15 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "chill-gingerbread-dough",
+          "name": "Chill gingerbread dough",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 7200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "mix-gingerbread-dough"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Chill it for 2 hours",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "baking",
+      "name": "Baking",
+      "steps": [
+        {
+          "stepId": "preheat-oven",
+          "name": "Preheat the oven",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Heat the oven to 350°F; 15 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "prep-chocolate-chip-pan",
+          "name": "Prepare chocolate chip cookie pan",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 360
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "preheat-oven"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "mix-chocolate-chip-dough"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Scoop the chocolate chip dough onto the first pan; 6 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "bake-chocolate-chip",
+          "name": "Bake chocolate chip cookies",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 660
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep-chocolate-chip-pan"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Bake it for 11 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "cool-chocolate-chip-cookies",
+          "name": "Cool chocolate chip cookies",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 720
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bake-chocolate-chip"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "let it cool for 12 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "cool-chocolate-chip-pan",
+          "name": "Cool the chocolate chip cookie pan",
+          "task": "pan",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cool-chocolate-chip-cookies"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "let the pan itself cool for 20 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "prep-sugar-cookie-pan",
+          "name": "Prepare sugar cookie pan",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 840
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "chill-sugar-cookie-dough"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "cool-chocolate-chip-pan"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Roll and cut the chilled sugar cookies onto the second pan; 14 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "bake-sugar-cookies",
+          "name": "Bake sugar cookies",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 540
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "prep-sugar-cookie-pan"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "bake-chocolate-chip"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Bake for 9 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "cool-sugar-cookies",
+          "name": "Cool sugar cookies",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bake-sugar-cookies"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Let the sugar cookies cool on the rack for 10 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "cool-sugar-cookie-pan",
+          "name": "Cool the sugar cookie pan",
+          "task": "pan",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cool-sugar-cookies"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "the second pan needs its own 20 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "prep-gingerbread-pan",
+          "name": "Prepare gingerbread pan",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1080
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "chill-gingerbread-dough"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "cool-sugar-cookie-pan"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Roll the gingerbread a quarter inch thick and cut it out; 18 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "bake-gingerbread",
+          "name": "Bake gingerbread",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "prep-gingerbread-pan"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "bake-sugar-cookies"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "cool-chocolate-chip-pan"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Bake for 10 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "cool-gingerbread",
+          "name": "Cool gingerbread",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bake-gingerbread"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Cool the gingerbread for 15 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "finishing",
+      "name": "Finishing",
+      "steps": [
+        {
+          "stepId": "ice-gingerbread",
+          "name": "Ice gingerbread",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1500
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cool-gingerbread"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Ice the gingerbread when it is cold; 25 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "box-cookies",
+          "name": "Box cookies",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "ice-gingerbread"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "cool-sugar-cookies"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "cool-chocolate-chip-cookies"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Box everything; 10 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "mixer",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "oven",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "pan",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "prep",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "serves": "roughly a hundred cookies"
+  }
+}

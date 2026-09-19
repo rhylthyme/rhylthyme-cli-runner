@@ -1,0 +1,295 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "meta-llama/llama-4-maverick",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/baseline/cache",
+    "limit": null,
+    "only": [
+      "event-theater-load-in-soundcheck"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 1,
+      "input_tokens": 4241,
+      "output_tokens": 2023,
+      "cost_usd": 0.0021163040000000003,
+      "fix_iterations": 0
+    },
+    "generated_at": "2026-09-19T19:27:49+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.85,
+    "steps_f1": 0.9189189189189189,
+    "durations_accuracy": 1.0,
+    "resources_precision": 0.7142857142857143,
+    "resources_recall": 0.7142857142857143,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.7894736842105263,
+    "relationships_recall": 0.6818181818181818,
+    "relationships_f1": 0.7317073170731707,
+    "structure_rand_index": 0.9117647058823529,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.10526315789473684
+  },
+  "programs": [
+    {
+      "slug": "event-theater-load-in-soundcheck",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.85,
+        "steps_f1": 0.9189189189189189,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.7142857142857143,
+        "resources_recall": 0.7142857142857143,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.7894736842105263,
+        "relationships_recall": 0.6818181818181818,
+        "relationships_f1": 0.7317073170731707,
+        "structure_rand_index": 0.9117647058823529,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.10526315789473684
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.85,
+        "f1": 0.9189189189189189,
+        "tp": 17,
+        "n_gold": 20,
+        "n_pred": 17
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 17,
+        "total": 17
+      },
+      "resources": {
+        "precision": 0.7142857142857143,
+        "recall": 0.7142857142857143,
+        "f1": 0.7142857142857143,
+        "tp": 5,
+        "n_gold": 7,
+        "n_pred": 7
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.7894736842105263,
+        "recall": 0.6818181818181818,
+        "f1": 0.7317073170731707,
+        "tp": 15,
+        "n_gold": 22,
+        "n_pred": 19
+      },
+      "structure": {
+        "rand_index": 0.9117647058823529,
+        "agreements": 124,
+        "pairs": 136,
+        "n_steps": 17
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 28200.0,
+        "pred_makespan": 31800.0,
+        "makespan_ok": false,
+        "gold_critical_path": [
+          "lx-truck-in",
+          "backline-truck-in",
+          "set-monitor-world",
+          "ring-out-wedges",
+          "soundcheck",
+          "band-dinner",
+          "clean-house",
+          "doors",
+          "show",
+          "strike-lx"
+        ],
+        "pred_critical_path": [
+          "lighting_truck_in",
+          "backline_truck_in",
+          "set_monitor_world",
+          "ring_out_wedges",
+          "soundcheck",
+          "band_dinner",
+          "clean_house",
+          "doors",
+          "show",
+          "strike_rig"
+        ],
+        "js_critical_path": [
+          "lighting_truck_in",
+          "backline_truck_in",
+          "set_monitor_world",
+          "ring_out_wedges",
+          "soundcheck",
+          "band_dinner",
+          "clean_house",
+          "doors",
+          "show",
+          "backline_out"
+        ],
+        "js_makespan": 31800,
+        "critical_overlap": 1.0,
+        "critical_ok": true,
+        "passed": false
+      },
+      "unsupported_rate": 0.10526315789473684,
+      "unsupported_steps": [
+        "rig_bars",
+        "focus"
+      ],
+      "matching": [
+        {
+          "gold": "lx-truck-in",
+          "predicted": "lighting_truck_in",
+          "by": "name"
+        },
+        {
+          "gold": "backline-truck-in",
+          "predicted": "backline_truck_in",
+          "by": "name"
+        },
+        {
+          "gold": "clear-dock",
+          "predicted": "clear_dock",
+          "by": "name"
+        },
+        {
+          "gold": "lx-cue-build",
+          "predicted": "build_cues",
+          "by": "name"
+        },
+        {
+          "gold": "strike-lx",
+          "predicted": "strike_rig",
+          "by": "name"
+        },
+        {
+          "gold": "fly-pa",
+          "predicted": "fly_pa",
+          "by": "name"
+        },
+        {
+          "gold": "ring-out-house",
+          "predicted": "ring_out_house",
+          "by": "name"
+        },
+        {
+          "gold": "set-monitor-world",
+          "predicted": "set_monitor_world",
+          "by": "name"
+        },
+        {
+          "gold": "ring-out-wedges",
+          "predicted": "ring_out_wedges",
+          "by": "name"
+        },
+        {
+          "gold": "backline-up",
+          "predicted": "backline_up",
+          "by": "name"
+        },
+        {
+          "gold": "soundcheck",
+          "predicted": "soundcheck",
+          "by": "name"
+        },
+        {
+          "gold": "band-dinner",
+          "predicted": "band_dinner",
+          "by": "name"
+        },
+        {
+          "gold": "show",
+          "predicted": "show",
+          "by": "name"
+        },
+        {
+          "gold": "backline-out",
+          "predicted": "backline_out",
+          "by": "name"
+        },
+        {
+          "gold": "set-front-of-house",
+          "predicted": "set_front_of_house",
+          "by": "name"
+        },
+        {
+          "gold": "clean-house",
+          "predicted": "clean_house",
+          "by": "name"
+        },
+        {
+          "gold": "doors",
+          "predicted": "doors",
+          "by": "name"
+        },
+        {
+          "gold": "rig-lx",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "lx-focus",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "stage-sweep",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "rig_bars",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "focus",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "meta-llama/llama-4-maverick",
+        "pattern": "baseline",
+        "calls": 1,
+        "input_tokens": 4241,
+        "output_tokens": 2023,
+        "cost_usd": 0.0021163040000000003,
+        "cache_keys": [
+          "da63fe19f12e4903155a73ff2083e64de6c9fa5f66fa6857efba65c5c26727a4"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/baseline/per-program/event-theater-load-in-soundcheck/responses/event-theater-load-in-soundcheck.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/baseline/per-program/event-theater-load-in-soundcheck/predicted/event-theater-load-in-soundcheck.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Load-In Schedule \u2014 The Lyric for one-nighter, touring band, house crew of eight, following the source text below",
+            "finish_at": "doors",
+            "constraints": "one loading dock, one stage, one lighting desk, one PA, one monitor world, one green room",
+            "vertical": "events"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

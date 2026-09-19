@@ -1,0 +1,271 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "streaking-three-cultures-selective-media",
+  "name": "Streaking Three Cultures onto Selective Media",
+  "description": "Three overnight broths are streaked onto selective agar. Plates 1 and 2 incubate overnight on the shared shelf; plate 3 is held at room temperature until shelf space is available, then incubates for 6 h. All readings are completed and supervisor sign-off precedes subculture/purity work. The purity plate is incubated for 8 h, then a smear is prepared, Gram stained, and read.",
+  "environmentType": "laboratory",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "tech-bench",
+      "name": "Technician bench and microscopy",
+      "steps": [
+        {
+          "stepId": "setup_bench",
+          "name": "Wipe bench with 70% ethanol and light burner",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "label_plates",
+          "name": "Label three selective plates",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "setup_bench"
+          }
+        },
+        {
+          "stepId": "streak_isolates",
+          "name": "Streak isolate for single colonies in four quadrants",
+          "task": "loop_station",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "replicates": {
+            "count": 3,
+            "mode": "serial"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "label_plates"
+          }
+        },
+        {
+          "stepId": "incubate_overnight",
+          "name": "Invert and incubate plates 1 and 2 overnight",
+          "task": "incubator_shelf",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 57600,
+            "maxSeconds": 72000,
+            "defaultSeconds": 64800
+          },
+          "replicates": {
+            "count": 2,
+            "mode": "parallel"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "streak_isolates",
+            "instances": "all"
+          }
+        },
+        {
+          "stepId": "read_overnight_plates",
+          "name": "Read overnight plate and record selective growth",
+          "task": "microscope",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "incubate_overnight",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "read_plate3",
+          "name": "Read plate 3 at the end of its run",
+          "task": "microscope",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "read_overnight_plates",
+                "instances": "all"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "plate3_incubate"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "supervisor_signoff",
+          "name": "Supervisor signs off the readings",
+          "task": "supervisor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "read_plate3"
+          }
+        },
+        {
+          "stepId": "subculture_pick_1_2",
+          "name": "Pick a well-separated colony into fresh broth",
+          "task": "loop_station",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "replicates": {
+            "count": 2,
+            "mode": "serial"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "supervisor_signoff"
+          }
+        },
+        {
+          "stepId": "streak_purity",
+          "name": "Streak purity plate for single colonies",
+          "task": "loop_station",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "subculture_pick_1_2",
+            "instances": "all"
+          }
+        },
+        {
+          "stepId": "incubate_purity",
+          "name": "Incubate purity plate at 37 C for 8 h",
+          "task": "incubator_shelf",
+          "duration": {
+            "type": "fixed",
+            "seconds": 28800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "streak_purity"
+          }
+        },
+        {
+          "stepId": "make_smear",
+          "name": "Make smear from picked colony and heat-fix",
+          "task": "loop_station",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "incubate_purity"
+          }
+        },
+        {
+          "stepId": "gram_stain",
+          "name": "Gram stain smear on rack",
+          "task": "staining_rack",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "make_smear"
+          }
+        },
+        {
+          "stepId": "read_stain",
+          "name": "Read stain under oil immersion and record morphology",
+          "task": "microscope",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "gram_stain"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "plate3-line",
+      "name": "Plate 3 room-temperature hold and shelf-limited incubation",
+      "steps": [
+        {
+          "stepId": "hold_plate3",
+          "name": "Hold plate 3 at room temperature until plate 1 comes out",
+          "task": "bench",
+          "duration": {
+            "type": "indefinite",
+            "defaultSeconds": 64800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "streak_isolates",
+            "instances": "all"
+          }
+        },
+        {
+          "stepId": "plate3_incubate",
+          "name": "Incubate plate 3 at 37 C for 6 h once shelf is free",
+          "task": "incubator_shelf",
+          "duration": {
+            "type": "fixed",
+            "seconds": 21600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "hold_plate3"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "bench",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "loop_station",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "incubator_shelf",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "microscope",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "staining_rack",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "supervisor",
+      "maxConcurrent": 1
+    }
+  ]
+}

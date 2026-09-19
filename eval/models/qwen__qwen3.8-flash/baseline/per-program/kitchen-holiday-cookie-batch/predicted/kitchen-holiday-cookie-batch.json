@@ -1,0 +1,426 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "holiday-cookie-batch-three-doughs-one-oven",
+  "name": "Holiday Cookie Batch: Three Doughs, One Oven",
+  "description": "One baker makes three holiday cookie doughs in sequence on one stand mixer, bakes them serially in one oven, and uses two sheet pans that must cool 20 minutes before being touched again.",
+  "environmentType": "kitchen",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "baker",
+      "name": "Baker / stand-mixer active work",
+      "steps": [
+        {
+          "stepId": "mixSugarDough",
+          "name": "Cream butter and sugar; mix sugar-cookie dough",
+          "task": "mixer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 720
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "mixChocolateChipDough",
+          "name": "Wash bowl; mix chocolate-chip dough",
+          "task": "mixer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 720
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "mixSugarDough"
+          }
+        },
+        {
+          "stepId": "mixGingerbreadDough",
+          "name": "Wash bowl; mix gingerbread dough",
+          "task": "mixer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "mixChocolateChipDough"
+          }
+        },
+        {
+          "stepId": "scoopChocolateChipDough",
+          "name": "Scoop chocolate-chip dough onto first pan",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 360
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "mixGingerbreadDough"
+          }
+        },
+        {
+          "stepId": "rollCutSugarDough",
+          "name": "Roll and cut chilled sugar dough onto second pan",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 840
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "scoopChocolateChipDough"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "chillSugarDough"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "rollCutGingerbreadDough",
+          "name": "Roll and cut chilled gingerbread dough",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1080
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "rollCutSugarDough"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "chillGingerbreadDough"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "iceGingerbreadCookies",
+          "name": "Ice the gingerbread cookies when cold",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1500
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "rollCutGingerbreadDough"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "coolGingerbreadCookies"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "boxAllCookies",
+          "name": "Box everything",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "iceGingerbreadCookies"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "coolChocolateCookies"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "coolSugarCookies"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "chill-sugar",
+      "name": "Sugar dough chilling",
+      "steps": [
+        {
+          "stepId": "chillSugarDough",
+          "name": "Chill sugar-cookie dough",
+          "task": "chill",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "mixSugarDough"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "chill-gingerbread",
+      "name": "Gingerbread dough chilling",
+      "steps": [
+        {
+          "stepId": "chillGingerbreadDough",
+          "name": "Chill gingerbread dough",
+          "task": "chill",
+          "duration": {
+            "type": "fixed",
+            "seconds": 7200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "mixGingerbreadDough"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "oven",
+      "name": "Oven",
+      "steps": [
+        {
+          "stepId": "preheatOven",
+          "name": "Preheat oven to 350°F",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 1800
+          }
+        },
+        {
+          "stepId": "bakeChocolateChipCookies",
+          "name": "Bake chocolate-chip cookies",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 660
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "preheatOven"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "scoopChocolateChipDough"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "bakeSugarCookies",
+          "name": "Bake sugar cookies",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 540
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "bakeChocolateChipCookies"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "rollCutSugarDough"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "bakeGingerbreadCookies",
+          "name": "Bake gingerbread cookies",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "bakeSugarCookies"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "rollCutGingerbreadDough"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "coolPanAfterChocolate"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "rack",
+      "name": "Rack / cookie cooling",
+      "steps": [
+        {
+          "stepId": "coolChocolateCookies",
+          "name": "Cool chocolate-chip cookies on rack",
+          "task": "rack",
+          "duration": {
+            "type": "fixed",
+            "seconds": 720
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bakeChocolateChipCookies"
+          }
+        },
+        {
+          "stepId": "coolSugarCookies",
+          "name": "Cool sugar cookies on rack",
+          "task": "rack",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "coolChocolateCookies"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "bakeSugarCookies"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "coolGingerbreadCookies",
+          "name": "Cool gingerbread cookies on rack",
+          "task": "rack",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "coolSugarCookies"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "bakeGingerbreadCookies"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "pan-a",
+      "name": "Sheet pan A cooling",
+      "steps": [
+        {
+          "stepId": "coolPanAfterChocolate",
+          "name": "Cool first sheet pan before reloading",
+          "task": "pan",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bakeChocolateChipCookies"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "pan-b",
+      "name": "Sheet pan B cooling",
+      "steps": [
+        {
+          "stepId": "coolPanAfterSugar",
+          "name": "Cool second sheet pan before anything else touches it",
+          "task": "pan",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bakeSugarCookies"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "mixer",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "baker",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "chill",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "oven",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "rack",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "pan",
+      "maxConcurrent": 2
+    }
+  ],
+  "metadata": {
+    "serves": "about 100 cookies",
+    "attribution": "User-provided source text"
+  }
+}

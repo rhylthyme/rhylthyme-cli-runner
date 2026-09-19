@@ -1,0 +1,405 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "partner-upper-body-superset",
+  "name": "Partner Upper-Body Superset Session",
+  "environmentType": "gym",
+  "actors": 2,
+  "tracks": [
+    {
+      "trackId": "partner-a",
+      "name": "Partner A",
+      "steps": [
+        {
+          "stepId": "erg-warm-up",
+          "name": "Easy rowing on ergs",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "5 minutes of easy rowing on the ergs",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "arm-circles",
+          "name": "Arm circles and band pull-aparts",
+          "task": "hands",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "erg-warm-up"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "3 minutes of arm circles and band pull-aparts",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "bench-press",
+          "name": "Bench presses",
+          "task": "bench_and_barbell",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "arm-circles"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "a set of 8 bench presses, which takes about 40 seconds",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "dumbbell-row-partner-a",
+          "name": "Dumbbell rows",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "dumbbell-row"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "8 per side, also about 40 seconds",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "rest-after-superset-a",
+          "name": "Rest after Superset A",
+          "task": "rest",
+          "duration": {
+            "type": "fixed",
+            "seconds": 90
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "dumbbell-row-partner-a"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "rest 90 seconds before the next round",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "overhead-press",
+          "name": "Overhead presses with dumbbells",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 45
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest-after-superset-a"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "8 strict overhead presses with the dumbbells, about 45 seconds",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "pull-ups-partner-a",
+          "name": "Pull-ups",
+          "task": "pull_up_bar",
+          "duration": {
+            "type": "fixed",
+            "seconds": 30
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "pull-ups"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "a set of pull-ups, 6 to 10 reps, about 30 seconds",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "rest-after-superset-b-round-1",
+          "name": "Rest between rounds of Superset B",
+          "task": "rest",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "pull-ups-partner-a"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Rest 2 minutes between rounds",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "stretching",
+          "name": "Stretching",
+          "task": "hands",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest-after-superset-b-round-1"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "5 minutes of stretching",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "partner-b",
+      "name": "Partner B",
+      "steps": [
+        {
+          "stepId": "erg-warm-up-partner-b",
+          "name": "Easy rowing on ergs",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "5 minutes of easy rowing on the ergs",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "arm-circles-partner-b",
+          "name": "Arm circles and band pull-aparts",
+          "task": "hands",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "erg-warm-up-partner-b"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "3 minutes of arm circles and band pull-aparts",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "dumbbell-row",
+          "name": "Dumbbell rows",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "arm-circles-partner-b"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "8 per side, also about 40 seconds",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "bench-press-partner-b",
+          "name": "Bench presses",
+          "task": "bench_and_barbell",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bench-press"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "a set of 8 bench presses, which takes about 40 seconds",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "rest-after-superset-a-partner-b",
+          "name": "Rest after Superset A",
+          "task": "rest",
+          "duration": {
+            "type": "fixed",
+            "seconds": 90
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "dumbbell-row-partner-a"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "rest 90 seconds before the next round",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "pull-ups",
+          "name": "Pull-ups",
+          "task": "pull_up_bar",
+          "duration": {
+            "type": "fixed",
+            "seconds": 30
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest-after-superset-a-partner-b"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "a set of pull-ups, 6 to 10 reps, about 30 seconds",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "overhead-press-partner-b",
+          "name": "Overhead presses with dumbbells",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 45
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "pull-ups"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "8 strict overhead presses with the dumbbells, about 45 seconds",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "rest-after-superset-b-round-1-partner-b",
+          "name": "Rest between rounds of Superset B",
+          "task": "rest",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "overhead-press-partner-b"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Rest 2 minutes between rounds",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "stretching-partner-b",
+          "name": "Stretching",
+          "task": "hands",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest-after-superset-b-round-1-partner-b"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "5 minutes of stretching",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "erg",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "bench_and_barbell",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "dumbbells",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "pull_up_bar",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "hands",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "rest",
+      "maxConcurrent": 2
+    }
+  ]
+}

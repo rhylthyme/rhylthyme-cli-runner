@@ -1,0 +1,283 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "openai/gpt-5.6-luna",
+    "pattern": "four-turn",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/openai__gpt-5.6-luna/four-turn/cache",
+    "limit": null,
+    "only": [
+      "kitchen-weekend-brunch"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 64000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 4,
+      "input_tokens": 24233,
+      "output_tokens": 7476,
+      "cost_usd": 0.0138178,
+      "fix_iterations": 0
+    },
+    "generated_at": "2026-09-19T19:28:39+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 1.0,
+    "steps_f1": 1.0,
+    "durations_accuracy": 0.8461538461538461,
+    "resources_precision": 0.6,
+    "resources_recall": 0.75,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.6875,
+    "relationships_recall": 0.6875,
+    "relationships_f1": 0.6875,
+    "structure_rand_index": 1.0,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.07142857142857142
+  },
+  "programs": [
+    {
+      "slug": "kitchen-weekend-brunch",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 1.0,
+        "steps_f1": 1.0,
+        "durations_accuracy": 0.8461538461538461,
+        "resources_precision": 0.6,
+        "resources_recall": 0.75,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.6875,
+        "relationships_recall": 0.6875,
+        "relationships_f1": 0.6875,
+        "structure_rand_index": 1.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.07142857142857142
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 13,
+        "n_gold": 13,
+        "n_pred": 13
+      },
+      "durations": {
+        "accuracy": 0.8461538461538461,
+        "correct": 11,
+        "total": 13
+      },
+      "resources": {
+        "precision": 0.6,
+        "recall": 0.75,
+        "f1": 0.6666666666666665,
+        "tp": 3,
+        "n_gold": 4,
+        "n_pred": 5
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.6875,
+        "recall": 0.6875,
+        "f1": 0.6875,
+        "tp": 11,
+        "n_gold": 16,
+        "n_pred": 16
+      },
+      "structure": {
+        "rand_index": 1.0,
+        "agreements": 78,
+        "pairs": 78,
+        "n_steps": 13
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 2820.0,
+        "pred_makespan": 3120.0,
+        "makespan_ok": false,
+        "gold_critical_path": [
+          "preheat-oven",
+          "bake-bacon",
+          "rest-batter",
+          "heat-griddle",
+          "cook-pancakes",
+          "serve"
+        ],
+        "pred_critical_path": [
+          "preheat-oven",
+          "bake-bacon",
+          "drain-bacon",
+          "hold-bacon-warm",
+          "serve-brunch"
+        ],
+        "js_critical_path": [
+          "preheat-oven",
+          "bake-bacon",
+          "drain-bacon",
+          "hold-bacon-warm",
+          "serve-brunch"
+        ],
+        "js_makespan": 3120,
+        "critical_overlap": 0.5,
+        "critical_ok": true,
+        "passed": false
+      },
+      "unsupported_rate": 0.07142857142857142,
+      "unsupported_steps": [
+        "hold-bacon-warm"
+      ],
+      "matching": [
+        {
+          "gold": "preheat-oven",
+          "predicted": "preheat-oven",
+          "by": "name"
+        },
+        {
+          "gold": "bake-bacon",
+          "predicted": "bake-bacon",
+          "by": "span"
+        },
+        {
+          "gold": "drain-bacon",
+          "predicted": "drain-bacon",
+          "by": "span"
+        },
+        {
+          "gold": "mix-dry",
+          "predicted": "whisk-pancake-dry-ingredients",
+          "by": "span"
+        },
+        {
+          "gold": "mix-batter",
+          "predicted": "mix-pancake-batter",
+          "by": "span"
+        },
+        {
+          "gold": "rest-batter",
+          "predicted": "rest-pancake-batter",
+          "by": "span"
+        },
+        {
+          "gold": "heat-griddle",
+          "predicted": "heat-griddle",
+          "by": "span"
+        },
+        {
+          "gold": "cook-pancakes",
+          "predicted": "cook-pancakes",
+          "by": "span"
+        },
+        {
+          "gold": "prep-fruit",
+          "predicted": "prep-fruit-salad",
+          "by": "span"
+        },
+        {
+          "gold": "chill-fruit",
+          "predicted": "chill-fruit-salad",
+          "by": "span"
+        },
+        {
+          "gold": "grind-coffee",
+          "predicted": "set-up-coffee",
+          "by": "span"
+        },
+        {
+          "gold": "brew-coffee",
+          "predicted": "brew-coffee",
+          "by": "span"
+        },
+        {
+          "gold": "serve",
+          "predicted": "serve-brunch",
+          "by": "span"
+        },
+        {
+          "gold": null,
+          "predicted": "hold-bacon-warm",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "openai/gpt-5.6-luna",
+        "pattern": "four-turn",
+        "calls": 4,
+        "input_tokens": 24233,
+        "output_tokens": 7476,
+        "cost_usd": 0.0138178,
+        "cache_keys": [
+          "3f0151699e5e0d41deba0ee0c81a8458d2c016e915e0ae6cde4ee7e8d09ae8eb",
+          "0ddc9477e8ef51b242909de86cb5f56678bc43bdcb992342dbb96a4935b6fe25",
+          "94205766978091f48cbaf1ec1dfa60dc9ce0c6fedc0462872820213833eef4ff",
+          "e17a7b7b72c3e6e7852c6e45693b85aa52f059da31421be827099dfcf73cd6ca"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/openai__gpt-5.6-luna/four-turn/per-program/kitchen-weekend-brunch/responses/kitchen-weekend-brunch.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/openai__gpt-5.6-luna/four-turn/per-program/kitchen-weekend-brunch/predicted/kitchen-weekend-brunch.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 13,
+        "unsupported_step_ids": [
+          "preheat-oven"
+        ],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Saturday Brunch for Four for 4 people",
+            "finish_at": "10:00",
+            "constraints": "one oven, two burners, one cook, about 45 minutes",
+            "vertical": "kitchen",
+            "turn": "T1",
+            "kind": "recipe",
+            "constraintsLine": "Resource limits: one oven, two burners, one cook, about 45 minutes.",
+            "deadlineLine": "Everything must be finished by 10:00.",
+            "source": "Source text (read all of it):\n<<<\nSaturday Brunch for Four\n\nEverything on the table at ten. The bacon cooks in the oven so the stove is free for pancakes; the fruit salad and the coffee fill the gaps. One person can do this in about 45 minutes.\n\nBacon\nLay a pound of bacon on a rack over a sheet pan and bake at 400\u00b0F for 20 minutes, until crisp, turning the pan once halfway. Drain on paper towels for 2 minutes; it stays warm for a while.\n\nPancakes\nWhisk together two cups of flour, two tablespoons of sugar, a tablespoon of baking powder and a teaspoon of salt; 5 minutes. In a jug beat two eggs with a cup and a half of milk and three tablespoons of melted butter, then stir the wet into the dry until just combined, another 5 minutes; lumps are fine. Let the batter rest for 10 minutes while the bacon cooks. Heat a griddle over medium heat for 5 minutes. Cook the pancakes in batches, a quarter cup each, about 2 minutes per side, 15 minutes for the whole batch.\n\nFruit salad\nHalve a pint of strawberries, cube a small melon and a mango, and add a cup of blueberries; this takes about 10 minutes. Squeeze half a lime over the top and chill for at least 15 minutes.\n\nCoffee\nGrind the beans and set up the pot, 3 minutes, then brew a full pot, which takes 8 minutes, timed to finish as the pancakes come off the griddle.\n\nServe\nBring everything out together while the pancakes are hot; 2 minutes.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Saturday Brunch for Four for 4 people",
+            "finish_at": "10:00",
+            "constraints": "one oven, two burners, one cook, about 45 minutes",
+            "vertical": "kitchen",
+            "turn": "T2",
+            "kind": "recipe"
+          },
+          "T3 extraction": {
+            "goal": "Saturday Brunch for Four for 4 people",
+            "finish_at": "10:00",
+            "constraints": "one oven, two burners, one cook, about 45 minutes",
+            "vertical": "kitchen",
+            "turn": "T3",
+            "kind": "recipe",
+            "environment": "a kitchen where you have: one oven, two burners, one cook, about 45 minutes",
+            "deadline": "10:00",
+            "source": "Source text (read all of it):\n<<<\nSaturday Brunch for Four\n\nEverything on the table at ten. The bacon cooks in the oven so the stove is free for pancakes; the fruit salad and the coffee fill the gaps. One person can do this in about 45 minutes.\n\nBacon\nLay a pound of bacon on a rack over a sheet pan and bake at 400\u00b0F for 20 minutes, until crisp, turning the pan once halfway. Drain on paper towels for 2 minutes; it stays warm for a while.\n\nPancakes\nWhisk together two cups of flour, two tablespoons of sugar, a tablespoon of baking powder and a teaspoon of salt; 5 minutes. In a jug beat two eggs with a cup and a half of milk and three tablespoons of melted butter, then stir the wet into the dry until just combined, another 5 minutes; lumps are fine. Let the batter rest for 10 minutes while the bacon cooks. Heat a griddle over medium heat for 5 minutes. Cook the pancakes in batches, a quarter cup each, about 2 minutes per side, 15 minutes for the whole batch.\n\nFruit salad\nHalve a pint of strawberries, cube a small melon and a mango, and add a cup of blueberries; this takes about 10 minutes. Squeeze half a lime over the top and chill for at least 15 minutes.\n\nCoffee\nGrind the beans and set up the pot, 3 minutes, then brew a full pot, which takes 8 minutes, timed to finish as the pancakes come off the griddle.\n\nServe\nBring everything out together while the pancakes are hot; 2 minutes.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Saturday Brunch for Four for 4 people",
+            "finish_at": "10:00",
+            "constraints": "one oven, two burners, one cook, about 45 minutes",
+            "vertical": "kitchen",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or cook_recipe",
+            "finishAtArg": " with finishAt=\"10:00\""
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

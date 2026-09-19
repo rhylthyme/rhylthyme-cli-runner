@@ -1,0 +1,484 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "backyard-barbecue-smoker-grill",
+  "name": "Backyard Barbecue: Smoker and Grill",
+  "description": "Two cooks, one offset smoker, one kettle grill, one side burner, and a cooler-holding schedule for about twelve people.",
+  "environmentType": "kitchen",
+  "actors": 2,
+  "tracks": [
+    {
+      "trackId": "offset-smoker-pork",
+      "name": "Offset smoker and pork shoulder",
+      "steps": [
+        {
+          "stepId": "light-smoker",
+          "name": "Light and heat the offset smoker",
+          "task": "offset_smoker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Light the smoker and bring it to 250°F; 45 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "smoke-unwrapped",
+          "name": "Smoke the shoulder unwrapped",
+          "task": "offset_smoker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 21600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "light-smoker"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "trim-rub-shoulder"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "smoke it unwrapped for 6 hours, until the bark is dark and set",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "wrap-shoulder",
+          "name": "Wrap the shoulder in butcher paper",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "smoke-unwrapped"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Wrap it tightly in butcher paper; 10 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "smoke-wrapped",
+          "name": "Smoke the shoulder wrapped until probe-soft",
+          "task": "offset_smoker",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 10800,
+            "maxSeconds": 14400,
+            "defaultSeconds": 10800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wrap-shoulder"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Back on the smoker, wrapped, until the thickest part probes soft — usually another 3 hours, sometimes four",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "hold-in-cooler",
+          "name": "Hold the wrapped shoulder in the cooler",
+          "task": "cooler",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 3600,
+            "maxSeconds": 10800,
+            "defaultSeconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "smoke-wrapped"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Hold it wrapped in a cooler for one to three hours",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "pull-pork",
+          "name": "Pull the pork by hand",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "hold-in-cooler"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Pull the meat by hand; 30 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "shoulder-prep",
+      "name": "Shoulder trimming and seasoning",
+      "steps": [
+        {
+          "stepId": "trim-rub-shoulder",
+          "name": "Trim and season the pork shoulder",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1500
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "trim the shoulder and rub it heavily with salt, pepper and paprika; 25 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "side-burner-beans",
+      "name": "Beans on the side burner",
+      "steps": [
+        {
+          "stepId": "fry-bacon-onion",
+          "name": "Fry the bacon and onion for the beans",
+          "task": "side_burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 720
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "hold-in-cooler",
+            "event": "start"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "fry the bacon and onion in the pot on the side burner for 12 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "warm-beans",
+          "name": "Add the remaining beans ingredients and warm on the side burner until service",
+          "task": "side_burner",
+          "duration": {
+            "type": "indefinite",
+            "defaultSeconds": 7200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "fry-bacon-onion"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "then add the beans, molasses and a ladle of drippings and let them tick over on the lowest flame until you serve",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "slaw-and-refrigerator",
+      "name": "Slaw prep, dressing, and rest",
+      "steps": [
+        {
+          "stepId": "shred-slaw-veg",
+          "name": "Shred the cabbage and carrot",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "hold-in-cooler",
+            "event": "start"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Shred the cabbage and carrot; 20 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "whisk-dressing",
+          "name": "Whisk the buttermilk dressing",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "shred-slaw-veg"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Whisk the buttermilk dressing; 8 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "dress-slaw",
+          "name": "Dress the slaw before chilling",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "whisk-dressing"
+          },
+          "metadata": {
+            "sourceSpan": null,
+            "inferred": true
+          }
+        },
+        {
+          "stepId": "chill-slaw",
+          "name": "Chill the dressed slaw so the cabbage softens",
+          "task": "refrigerator",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 2700,
+            "maxSeconds": 7200,
+            "defaultSeconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "dress-slaw"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Dress the slaw and put it in the refrigerator for at least 45 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "kettle-grill-table",
+      "name": "Kettle grill, buns, and table call",
+      "steps": [
+        {
+          "stepId": "light-kettle",
+          "name": "Light the kettle and get a clean bed of coals",
+          "task": "kettle_grill",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1500
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "hold-in-cooler",
+            "event": "start",
+            "offsetSeconds": 1680
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Light the kettle an hour before you eat; 25 minutes to a clean bed of coals",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "grill-sausages",
+          "name": "Grill the sausages",
+          "task": "kettle_grill",
+          "duration": {
+            "type": "fixed",
+            "seconds": 840
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "light-kettle"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Grill the sausages for 14 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "grill-corn",
+          "name": "Grill the corn",
+          "task": "kettle_grill",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "grill-sausages"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Grill the corn for 10 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "toast-buns",
+          "name": "Toast the buns",
+          "task": "kettle_grill",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "grill-corn"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Toast the buns for 3 minutes, last, so they stay warm",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "set-table",
+          "name": "Set out plates, pickles, and sauce",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "toast-buns"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Set out plates, pickles and sauce once the buns are off; 10 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "call-guests",
+          "name": "Call everyone over and lay it all out",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "set-table"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "pull-pork"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "chill-slaw"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "fry-bacon-onion"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Call everyone over when both cooks say it is ready; 5 minutes to lay it all out",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "offset_smoker",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "kettle_grill",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "side_burner",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "cooler",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "refrigerator",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "prep",
+      "maxConcurrent": 2
+    }
+  ],
+  "metadata": {
+    "serves": "12",
+    "sourceUrl": "",
+    "attribution": "User-provided recipe text"
+  }
+}

@@ -1,0 +1,315 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "openai/gpt-5.6-luna",
+    "pattern": "four-turn",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/openai__gpt-5.6-luna/four-turn/cache",
+    "limit": null,
+    "only": [
+      "lab-microbiology-streak-and-incubate"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 64000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 4,
+      "input_tokens": 26294,
+      "output_tokens": 9183,
+      "cost_usd": 0.016278400000000002,
+      "fix_iterations": 0
+    },
+    "generated_at": "2026-09-19T19:33:47+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.9444444444444444,
+    "steps_f1": 0.9714285714285714,
+    "durations_accuracy": 0.9411764705882353,
+    "resources_precision": 0.42857142857142855,
+    "resources_recall": 0.6,
+    "actors_accuracy": 0.0,
+    "relationships_precision": 0.7058823529411765,
+    "relationships_recall": 0.631578947368421,
+    "relationships_f1": 0.6666666666666667,
+    "structure_rand_index": 0.8382352941176471,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.05555555555555555
+  },
+  "programs": [
+    {
+      "slug": "lab-microbiology-streak-and-incubate",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.9444444444444444,
+        "steps_f1": 0.9714285714285714,
+        "durations_accuracy": 0.9411764705882353,
+        "resources_precision": 0.42857142857142855,
+        "resources_recall": 0.6,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.7058823529411765,
+        "relationships_recall": 0.631578947368421,
+        "relationships_f1": 0.6666666666666667,
+        "structure_rand_index": 0.8382352941176471,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.05555555555555555
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.9444444444444444,
+        "f1": 0.9714285714285714,
+        "tp": 17,
+        "n_gold": 18,
+        "n_pred": 17
+      },
+      "durations": {
+        "accuracy": 0.9411764705882353,
+        "correct": 16,
+        "total": 17
+      },
+      "resources": {
+        "precision": 0.42857142857142855,
+        "recall": 0.6,
+        "f1": 0.5,
+        "tp": 3,
+        "n_gold": 5,
+        "n_pred": 7
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.7058823529411765,
+        "recall": 0.631578947368421,
+        "f1": 0.6666666666666667,
+        "tp": 12,
+        "n_gold": 19,
+        "n_pred": 17
+      },
+      "structure": {
+        "rand_index": 0.8382352941176471,
+        "agreements": 114,
+        "pairs": 136,
+        "n_steps": 17
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 98400.0,
+        "pred_makespan": 113400.0,
+        "makespan_ok": false,
+        "gold_critical_path": [
+          "sterilise-bench",
+          "label-plates",
+          "streak-1",
+          "streak-2",
+          "incubate-2",
+          "read-2",
+          "pick-colony",
+          "streak-purity-plate",
+          "incubate-purity-plate"
+        ],
+        "pred_critical_path": [
+          "supervisor-signoff-readings",
+          "subculture-plates-1-and-2",
+          "streak-purity-plate",
+          "incubate-purity-plate"
+        ],
+        "js_critical_path": [
+          "setup-bench-and-burner",
+          "label-selective-plates",
+          "streak-isolate-1",
+          "streak-isolate-2",
+          "streak-isolate-3",
+          "hold-plate-3-at-room-temperature",
+          "incubate-plate-3",
+          "read-plate-3",
+          "supervisor-signoff-readings",
+          "subculture-plates-1-and-2",
+          "streak-purity-plate",
+          "incubate-purity-plate"
+        ],
+        "js_makespan": 113400,
+        "critical_overlap": 0.3333333333333333,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.05555555555555555,
+      "unsupported_steps": [
+        "supervisor-signoff-readings"
+      ],
+      "matching": [
+        {
+          "gold": "sterilise-bench",
+          "predicted": "setup-bench-and-burner",
+          "by": "span"
+        },
+        {
+          "gold": "label-plates",
+          "predicted": "label-selective-plates",
+          "by": "span"
+        },
+        {
+          "gold": "streak-1",
+          "predicted": "streak-isolate-1",
+          "by": "span"
+        },
+        {
+          "gold": "incubate-1",
+          "predicted": "incubate-plates-1-and-2",
+          "by": "span"
+        },
+        {
+          "gold": "read-1",
+          "predicted": "read-plate-1",
+          "by": "span"
+        },
+        {
+          "gold": "streak-2",
+          "predicted": "streak-isolate-2",
+          "by": "span"
+        },
+        {
+          "gold": "read-2",
+          "predicted": "read-plate-2",
+          "by": "span"
+        },
+        {
+          "gold": "streak-3",
+          "predicted": "streak-isolate-3",
+          "by": "span"
+        },
+        {
+          "gold": "hold-3",
+          "predicted": "hold-plate-3-at-room-temperature",
+          "by": "span"
+        },
+        {
+          "gold": "incubate-3",
+          "predicted": "incubate-plate-3",
+          "by": "span"
+        },
+        {
+          "gold": "read-3",
+          "predicted": "read-plate-3",
+          "by": "span"
+        },
+        {
+          "gold": "pick-colony",
+          "predicted": "subculture-plates-1-and-2",
+          "by": "span"
+        },
+        {
+          "gold": "streak-purity-plate",
+          "predicted": "streak-purity-plate",
+          "by": "span"
+        },
+        {
+          "gold": "incubate-purity-plate",
+          "predicted": "incubate-purity-plate",
+          "by": "span"
+        },
+        {
+          "gold": "make-smear",
+          "predicted": "make-and-heat-fix-smear",
+          "by": "span"
+        },
+        {
+          "gold": "gram-stain",
+          "predicted": "gram-stain-smear",
+          "by": "span"
+        },
+        {
+          "gold": "read-stain",
+          "predicted": "read-stain",
+          "by": "span"
+        },
+        {
+          "gold": "incubate-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "supervisor-signoff-readings",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "openai/gpt-5.6-luna",
+        "pattern": "four-turn",
+        "calls": 4,
+        "input_tokens": 26294,
+        "output_tokens": 9183,
+        "cost_usd": 0.016278400000000002,
+        "cache_keys": [
+          "f0911cb89782c7eb9bc0351e06c946a29cd16512d67083409f3b316f886a80e8",
+          "6f9242662c28e4b4275cea605d3478630c6f76ee21602ecbeeecf11a5b5c98da",
+          "b371a54861d7ced8541579080bbce9b67417a0e33e4eb2733042b3edd4f88cca",
+          "96409d6c00605e76f2d9ac7c17ce4f16e2be03f4151a246ce48adae6549c30ee"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/openai__gpt-5.6-luna/four-turn/per-program/lab-microbiology-streak-and-incubate/responses/lab-microbiology-streak-and-incubate.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/openai__gpt-5.6-luna/four-turn/per-program/lab-microbiology-streak-and-incubate/predicted/lab-microbiology-streak-and-incubate.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 17,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Streaking Three Cultures onto Selective Media for three isolates, one purity plate",
+            "finish_at": null,
+            "constraints": "one loop station at the burner, one 37 \u00b0C incubator shelf holding two plates, one staining rack, one microscope, one technician, a supervisor signs off the readings",
+            "vertical": "lab",
+            "turn": "T1",
+            "kind": "protocol",
+            "constraintsLine": "Resource limits: one loop station at the burner, one 37 \u00b0C incubator shelf holding two plates, one staining rack, one microscope, one technician, a supervisor signs off the readings.",
+            "deadlineLine": "No finishing time was given; finish as early as the work allows.",
+            "source": "Source text (read all of it):\n<<<\nStreaking Three Cultures onto Selective Media\n\nThree overnight broths are streaked for single colonies on selective agar, incubated at 37 \u00b0C and read the next morning. The bench has one Bunsen burner with a single loop station, one 37 \u00b0C incubator with room for two plates on the free shelf, one staining rack and one microscope. One technician works the bench; a supervisor reads the plates before anything is subcultured.\n\nSetup\n1. Wipe the bench with 70 % ethanol and light the burner; 10 minutes.\n2. Label three selective plates with the isolate number, the medium and the date; 10 minutes.\n\nStreaking\n3. Streak isolate 1 for single colonies in four quadrants, flaming the loop between each; 10 minutes.\n4. Streak isolate 2 the same way; 10 minutes.\n5. Streak isolate 3 the same way; 10 minutes.\n6. Invert plates 1 and 2 and put them on the incubator shelf overnight, 16 to 20 hours.\n7. Only two plates fit on the shelf, so hold plate 3 at room temperature on the bench until plate 1 comes out.\n8. Incubate plate 3 at 37 \u00b0C for 6 hours once the shelf is free.\n\nReading\n9. Read plate 1 in the morning: count the colonies, note the colour and record the selective growth; 15 minutes.\n10. Read plate 2 the same way; 15 minutes.\n11. Read plate 3 at the end of its run; 15 minutes.\n\nSubculture and stain\n12. Pick a single well-separated colony from each of plates 1 and 2 into fresh broth; 10 minutes at the loop station.\n13. Do not streak the purity plate until the supervisor has signed off the readings. Streaking it takes 15 minutes.\n14. Incubate the purity plate at 37 \u00b0C for 8 hours.\n15. Make a smear from the picked colony and heat-fix it; 10 minutes.\n16. Gram stain the smear on the rack: crystal violet, iodine, decolourise, safranin; 15 minutes.\n17. Read the stain under oil immersion and record the morphology; 15 minutes.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Streaking Three Cultures onto Selective Media for three isolates, one purity plate",
+            "finish_at": null,
+            "constraints": "one loop station at the burner, one 37 \u00b0C incubator shelf holding two plates, one staining rack, one microscope, one technician, a supervisor signs off the readings",
+            "vertical": "lab",
+            "turn": "T2",
+            "kind": "protocol"
+          },
+          "T3 extraction": {
+            "goal": "Streaking Three Cultures onto Selective Media for three isolates, one purity plate",
+            "finish_at": null,
+            "constraints": "one loop station at the burner, one 37 \u00b0C incubator shelf holding two plates, one staining rack, one microscope, one technician, a supervisor signs off the readings",
+            "vertical": "lab",
+            "turn": "T3",
+            "kind": "protocol",
+            "environment": "a lab where you have: one loop station at the burner, one 37 \u00b0C incubator shelf holding two plates, one staining rack, one microscope, one technician, a supervisor signs off the readings",
+            "deadline": "the earliest time the work allows",
+            "source": "Source text (read all of it):\n<<<\nStreaking Three Cultures onto Selective Media\n\nThree overnight broths are streaked for single colonies on selective agar, incubated at 37 \u00b0C and read the next morning. The bench has one Bunsen burner with a single loop station, one 37 \u00b0C incubator with room for two plates on the free shelf, one staining rack and one microscope. One technician works the bench; a supervisor reads the plates before anything is subcultured.\n\nSetup\n1. Wipe the bench with 70 % ethanol and light the burner; 10 minutes.\n2. Label three selective plates with the isolate number, the medium and the date; 10 minutes.\n\nStreaking\n3. Streak isolate 1 for single colonies in four quadrants, flaming the loop between each; 10 minutes.\n4. Streak isolate 2 the same way; 10 minutes.\n5. Streak isolate 3 the same way; 10 minutes.\n6. Invert plates 1 and 2 and put them on the incubator shelf overnight, 16 to 20 hours.\n7. Only two plates fit on the shelf, so hold plate 3 at room temperature on the bench until plate 1 comes out.\n8. Incubate plate 3 at 37 \u00b0C for 6 hours once the shelf is free.\n\nReading\n9. Read plate 1 in the morning: count the colonies, note the colour and record the selective growth; 15 minutes.\n10. Read plate 2 the same way; 15 minutes.\n11. Read plate 3 at the end of its run; 15 minutes.\n\nSubculture and stain\n12. Pick a single well-separated colony from each of plates 1 and 2 into fresh broth; 10 minutes at the loop station.\n13. Do not streak the purity plate until the supervisor has signed off the readings. Streaking it takes 15 minutes.\n14. Incubate the purity plate at 37 \u00b0C for 8 hours.\n15. Make a smear from the picked colony and heat-fix it; 10 minutes.\n16. Gram stain the smear on the rack: crystal violet, iodine, decolourise, safranin; 15 minutes.\n17. Read the stain under oil immersion and record the morphology; 15 minutes.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Streaking Three Cultures onto Selective Media for three isolates, one purity plate",
+            "finish_at": null,
+            "constraints": "one loop station at the burner, one 37 \u00b0C incubator shelf holding two plates, one staining rack, one microscope, one technician, a supervisor signs off the readings",
+            "vertical": "lab",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or run_protocol",
+            "finishAtArg": ""
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

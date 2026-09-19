@@ -186,7 +186,14 @@ def main() -> None:
     # done: the money is counted, the program is run again.
     done = set()
     for e in ledger["entries"]:
-        rf = args.out / e["model"].replace("/", "__") / e["pattern"] / "per-program" / e["slug"] / "results.json"
+        rf = (
+            args.out
+            / e["model"].replace("/", "__")
+            / e["pattern"]
+            / "per-program"
+            / e["slug"]
+            / "results.json"
+        )
         if not infra_error(rf):
             done.add((e["model"], e["pattern"], e["slug"]))
     print(
@@ -288,7 +295,9 @@ def main() -> None:
                 "seconds": round(time.time() - started, 1),
             }
             if infra_error(results_file):
-                entry["infra_error"] = True  # spent money is counted; the program is retried
+                entry["infra_error"] = (
+                    True  # spent money is counted; the program is retried
+                )
             with lock:
                 ledger["entries"].append(entry)
                 args.ledger.write_text(json.dumps(ledger, indent=1) + "\n")
@@ -358,7 +367,12 @@ def main() -> None:
         if not programs:
             continue
         merged = {
-            "meta": dict(meta or {}, merged_from="per-program", programs=len(programs), infra_skipped=skipped),
+            "meta": dict(
+                meta or {},
+                merged_from="per-program",
+                programs=len(programs),
+                infra_skipped=skipped,
+            ),
             "programs": programs,
         }
         (cell / "results.json").write_text(json.dumps(merged, indent=1) + "\n")

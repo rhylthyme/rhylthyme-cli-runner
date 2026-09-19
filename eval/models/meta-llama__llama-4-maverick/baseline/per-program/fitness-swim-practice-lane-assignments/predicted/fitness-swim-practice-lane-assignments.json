@@ -1,0 +1,312 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "thursday-am-practice",
+  "name": "Thursday AM Practice Plan",
+  "environmentType": "general",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "coach",
+      "name": "Coach Activities",
+      "steps": [
+        {
+          "stepId": "briefing",
+          "name": "Brief Squad",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "watch-warm-up",
+          "name": "Watch Warm-up",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "briefing"
+          }
+        },
+        {
+          "stepId": "whiteboard-talk",
+          "name": "Whiteboard Talk",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "watch-warm-up"
+          }
+        },
+        {
+          "stepId": "time-sprints",
+          "name": "Time Sprints",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "sprint-lane3"
+          }
+        },
+        {
+          "stepId": "debrief",
+          "name": "Debrief",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "time-sprints"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "lane1",
+      "name": "Lane 1 (Sprint)",
+      "steps": [
+        {
+          "stepId": "warm-up",
+          "name": "Warm-up",
+          "task": "lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "briefing"
+          }
+        },
+        {
+          "stepId": "kick-set",
+          "name": "Kick Set",
+          "task": "lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "whiteboard-talk"
+          }
+        },
+        {
+          "stepId": "main-set-lane1",
+          "name": "Main Set",
+          "task": "lane",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 1800,
+            "maxSeconds": 3000,
+            "defaultSeconds": 2400
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "kick-set"
+          }
+        },
+        {
+          "stepId": "sprint-lane1",
+          "name": "Sprint Set",
+          "task": "blocks",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "main-set-lane1"
+          }
+        },
+        {
+          "stepId": "cooldown",
+          "name": "Cooldown",
+          "task": "lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "sprint-lane3"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "lane2",
+      "name": "Lane 2 (Middle Distance)",
+      "steps": [
+        {
+          "stepId": "warm-up-lane2",
+          "name": "Warm-up",
+          "task": "lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "briefing"
+          }
+        },
+        {
+          "stepId": "kick-set-lane2",
+          "name": "Kick Set",
+          "task": "lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "whiteboard-talk"
+          }
+        },
+        {
+          "stepId": "main-set-lane2",
+          "name": "Main Set",
+          "task": "lane",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 1800,
+            "maxSeconds": 3000,
+            "defaultSeconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "kick-set-lane2"
+          }
+        },
+        {
+          "stepId": "sprint-lane2",
+          "name": "Sprint Set",
+          "task": "blocks",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "sprint-lane1"
+          }
+        },
+        {
+          "stepId": "cooldown-lane2",
+          "name": "Cooldown",
+          "task": "lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "sprint-lane3"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "lane3",
+      "name": "Lane 3 (Distance)",
+      "steps": [
+        {
+          "stepId": "warm-up-lane3",
+          "name": "Warm-up",
+          "task": "lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "briefing"
+          }
+        },
+        {
+          "stepId": "kick-set-lane3",
+          "name": "Kick Set",
+          "task": "lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "whiteboard-talk"
+          }
+        },
+        {
+          "stepId": "main-set-lane3",
+          "name": "Main Set",
+          "task": "lane",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 1800,
+            "maxSeconds": 3000,
+            "defaultSeconds": 3000
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "kick-set-lane3"
+          }
+        },
+        {
+          "stepId": "sprint-lane3",
+          "name": "Sprint Set",
+          "task": "blocks",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "sprint-lane2"
+          }
+        },
+        {
+          "stepId": "cooldown-lane3",
+          "name": "Cooldown",
+          "task": "lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "sprint-lane3"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "coach",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "lane",
+      "maxConcurrent": 3
+    },
+    {
+      "task": "blocks",
+      "maxConcurrent": 1
+    }
+  ]
+}

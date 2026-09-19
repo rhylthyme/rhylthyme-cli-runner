@@ -1,0 +1,315 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "openai/gpt-5.6-luna",
+    "pattern": "four-turn",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/openai__gpt-5.6-luna/four-turn/cache",
+    "limit": null,
+    "only": [
+      "kitchen-backyard-barbecue-smoker-grill"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 64000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 4,
+      "input_tokens": 25708,
+      "output_tokens": 9388,
+      "cost_usd": 0.0164072,
+      "fix_iterations": 0
+    },
+    "generated_at": "2026-09-19T19:17:38+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 1.0,
+    "steps_f1": 1.0,
+    "durations_accuracy": 1.0,
+    "resources_precision": 0.5714285714285714,
+    "resources_recall": 0.6666666666666666,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.6190476190476191,
+    "relationships_recall": 0.6842105263157895,
+    "relationships_f1": 0.6500000000000001,
+    "structure_rand_index": 0.9803921568627451,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.05263157894736842
+  },
+  "programs": [
+    {
+      "slug": "kitchen-backyard-barbecue-smoker-grill",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 1.0,
+        "steps_f1": 1.0,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.5714285714285714,
+        "resources_recall": 0.6666666666666666,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.6190476190476191,
+        "relationships_recall": 0.6842105263157895,
+        "relationships_f1": 0.6500000000000001,
+        "structure_rand_index": 0.9803921568627451,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.05263157894736842
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 18,
+        "n_gold": 18,
+        "n_pred": 18
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 18,
+        "total": 18
+      },
+      "resources": {
+        "precision": 0.5714285714285714,
+        "recall": 0.6666666666666666,
+        "f1": 0.6153846153846153,
+        "tp": 4,
+        "n_gold": 6,
+        "n_pred": 7
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.6190476190476191,
+        "recall": 0.6842105263157895,
+        "f1": 0.6500000000000001,
+        "tp": 13,
+        "n_gold": 19,
+        "n_pred": 21
+      },
+      "structure": {
+        "rand_index": 0.9803921568627451,
+        "agreements": 150,
+        "pairs": 153,
+        "n_steps": 18
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 43320.0,
+        "pred_makespan": 43620.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "light-smoker",
+          "smoke-unwrapped",
+          "wrap-pork",
+          "smoke-wrapped",
+          "rest-in-cooler",
+          "light-kettle",
+          "grill-sausages",
+          "grill-corn",
+          "toast-buns",
+          "set-table",
+          "call-everyone"
+        ],
+        "pred_critical_path": [
+          "heat-smoker",
+          "smoke-pork-unwrapped",
+          "wrap-pork",
+          "smoke-pork-wrapped",
+          "hold-pork-cooler",
+          "fry-beans-base",
+          "simmer-beans"
+        ],
+        "js_critical_path": [
+          "heat-smoker",
+          "smoke-pork-unwrapped",
+          "wrap-pork",
+          "smoke-pork-wrapped",
+          "hold-pork-cooler",
+          "fry-beans-base",
+          "simmer-beans"
+        ],
+        "js_makespan": 43620,
+        "critical_overlap": 0.45454545454545453,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.05263157894736842,
+      "unsupported_steps": [
+        "hold-grill-coals"
+      ],
+      "matching": [
+        {
+          "gold": "trim-and-rub",
+          "predicted": "trim-rub-pork",
+          "by": "span"
+        },
+        {
+          "gold": "light-smoker",
+          "predicted": "heat-smoker",
+          "by": "span"
+        },
+        {
+          "gold": "smoke-unwrapped",
+          "predicted": "smoke-pork-unwrapped",
+          "by": "span"
+        },
+        {
+          "gold": "wrap-pork",
+          "predicted": "wrap-pork",
+          "by": "span"
+        },
+        {
+          "gold": "smoke-wrapped",
+          "predicted": "smoke-pork-wrapped",
+          "by": "span"
+        },
+        {
+          "gold": "rest-in-cooler",
+          "predicted": "hold-pork-cooler",
+          "by": "span"
+        },
+        {
+          "gold": "pull-pork",
+          "predicted": "pull-pork",
+          "by": "span"
+        },
+        {
+          "gold": "fry-bacon-onion",
+          "predicted": "fry-beans-base",
+          "by": "span"
+        },
+        {
+          "gold": "simmer-beans",
+          "predicted": "simmer-beans",
+          "by": "span"
+        },
+        {
+          "gold": "shred-cabbage",
+          "predicted": "shred-slaw",
+          "by": "span"
+        },
+        {
+          "gold": "whisk-slaw-dressing",
+          "predicted": "whisk-slaw-dressing",
+          "by": "span"
+        },
+        {
+          "gold": "chill-slaw",
+          "predicted": "chill-slaw",
+          "by": "span"
+        },
+        {
+          "gold": "light-kettle",
+          "predicted": "light-kettle",
+          "by": "span"
+        },
+        {
+          "gold": "grill-sausages",
+          "predicted": "grill-sausages",
+          "by": "span"
+        },
+        {
+          "gold": "grill-corn",
+          "predicted": "grill-corn",
+          "by": "span"
+        },
+        {
+          "gold": "toast-buns",
+          "predicted": "toast-buns",
+          "by": "span"
+        },
+        {
+          "gold": "set-table",
+          "predicted": "set-table",
+          "by": "span"
+        },
+        {
+          "gold": "call-everyone",
+          "predicted": "lay-out-barbecue",
+          "by": "span"
+        },
+        {
+          "gold": null,
+          "predicted": "hold-grill-coals",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "openai/gpt-5.6-luna",
+        "pattern": "four-turn",
+        "calls": 4,
+        "input_tokens": 25708,
+        "output_tokens": 9388,
+        "cost_usd": 0.0164072,
+        "cache_keys": [
+          "49431d1070bcb9b50901f48d55b474af64d3a57ada4b0b34098ad2ce5d7a147c",
+          "a22b84030da947786e4e72833afa1a212ab5c965983b568f0f5260e490cc0091",
+          "95c95dc0fa08c85b8cbbb60a3f5d4f9953c6ea4c3280412c37dd590a146ba58b",
+          "60168f5cc2b39725d3a486a93df5d0246fe8bc6ae1298785d33f350aa9643932"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/openai__gpt-5.6-luna/four-turn/per-program/kitchen-backyard-barbecue-smoker-grill/responses/kitchen-backyard-barbecue-smoker-grill.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/openai__gpt-5.6-luna/four-turn/per-program/kitchen-backyard-barbecue-smoker-grill/predicted/kitchen-backyard-barbecue-smoker-grill.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 18,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Backyard Barbecue: Smoker and Grill for a shoulder, sausages and sides for about twelve",
+            "finish_at": null,
+            "constraints": "one offset smoker, one kettle grill, one side burner, one cooler for holding, two cooks",
+            "vertical": "kitchen",
+            "turn": "T1",
+            "kind": "recipe",
+            "constraintsLine": "Resource limits: one offset smoker, one kettle grill, one side burner, one cooler for holding, two cooks.",
+            "deadlineLine": "No finishing time was given; finish as early as the work allows.",
+            "source": "Source text (read all of it):\n<<<\nBackyard Barbecue: Smoker and Grill\n\nTwo cooks, one offset smoker, one kettle grill, one side burner and a cooler for holding. The pork owns the smoker all day; everything else happens in the last two hours.\n\nPork shoulder\nLight the smoker and bring it to 250\u00b0F; 45 minutes. While it comes up, trim the shoulder and rub it heavily with salt, pepper and paprika; 25 minutes. Put the shoulder on once the smoker holds temperature and smoke it unwrapped for 6 hours, until the bark is dark and set. Wrap it tightly in butcher paper; 10 minutes. Back on the smoker, wrapped, until the thickest part probes soft \u2014 usually another 3 hours, sometimes four. Hold it wrapped in a cooler for one to three hours; it will not get cold and it only gets better. Pull the meat by hand; 30 minutes.\n\nBeans\nWhen the pork goes into the cooler, fry the bacon and onion in the pot on the side burner for 12 minutes, then add the beans, molasses and a ladle of drippings and let them tick over on the lowest flame until you serve.\n\nSlaw\nStart the slaw at the same time. Shred the cabbage and carrot; 20 minutes. Whisk the buttermilk dressing; 8 minutes. Dress the slaw and put it in the refrigerator for at least 45 minutes so the cabbage softens.\n\nGrill\nLight the kettle an hour before you eat; 25 minutes to a clean bed of coals. Grill the sausages for 14 minutes. Grill the corn for 10 minutes. Toast the buns for 3 minutes, last, so they stay warm.\n\nTable\nSet out plates, pickles and sauce once the buns are off; 10 minutes. Call everyone over when both cooks say it is ready; 5 minutes to lay it all out.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Backyard Barbecue: Smoker and Grill for a shoulder, sausages and sides for about twelve",
+            "finish_at": null,
+            "constraints": "one offset smoker, one kettle grill, one side burner, one cooler for holding, two cooks",
+            "vertical": "kitchen",
+            "turn": "T2",
+            "kind": "recipe"
+          },
+          "T3 extraction": {
+            "goal": "Backyard Barbecue: Smoker and Grill for a shoulder, sausages and sides for about twelve",
+            "finish_at": null,
+            "constraints": "one offset smoker, one kettle grill, one side burner, one cooler for holding, two cooks",
+            "vertical": "kitchen",
+            "turn": "T3",
+            "kind": "recipe",
+            "environment": "a kitchen where you have: one offset smoker, one kettle grill, one side burner, one cooler for holding, two cooks",
+            "deadline": "the earliest time the work allows",
+            "source": "Source text (read all of it):\n<<<\nBackyard Barbecue: Smoker and Grill\n\nTwo cooks, one offset smoker, one kettle grill, one side burner and a cooler for holding. The pork owns the smoker all day; everything else happens in the last two hours.\n\nPork shoulder\nLight the smoker and bring it to 250\u00b0F; 45 minutes. While it comes up, trim the shoulder and rub it heavily with salt, pepper and paprika; 25 minutes. Put the shoulder on once the smoker holds temperature and smoke it unwrapped for 6 hours, until the bark is dark and set. Wrap it tightly in butcher paper; 10 minutes. Back on the smoker, wrapped, until the thickest part probes soft \u2014 usually another 3 hours, sometimes four. Hold it wrapped in a cooler for one to three hours; it will not get cold and it only gets better. Pull the meat by hand; 30 minutes.\n\nBeans\nWhen the pork goes into the cooler, fry the bacon and onion in the pot on the side burner for 12 minutes, then add the beans, molasses and a ladle of drippings and let them tick over on the lowest flame until you serve.\n\nSlaw\nStart the slaw at the same time. Shred the cabbage and carrot; 20 minutes. Whisk the buttermilk dressing; 8 minutes. Dress the slaw and put it in the refrigerator for at least 45 minutes so the cabbage softens.\n\nGrill\nLight the kettle an hour before you eat; 25 minutes to a clean bed of coals. Grill the sausages for 14 minutes. Grill the corn for 10 minutes. Toast the buns for 3 minutes, last, so they stay warm.\n\nTable\nSet out plates, pickles and sauce once the buns are off; 10 minutes. Call everyone over when both cooks say it is ready; 5 minutes to lay it all out.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Backyard Barbecue: Smoker and Grill for a shoulder, sausages and sides for about twelve",
+            "finish_at": null,
+            "constraints": "one offset smoker, one kettle grill, one side burner, one cooler for holding, two cooks",
+            "vertical": "kitchen",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or cook_recipe",
+            "finishAtArg": ""
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

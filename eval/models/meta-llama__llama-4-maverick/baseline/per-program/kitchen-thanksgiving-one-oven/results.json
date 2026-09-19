@@ -1,0 +1,356 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "meta-llama/llama-4-maverick",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/baseline/cache",
+    "limit": null,
+    "only": [
+      "kitchen-thanksgiving-one-oven"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 1,
+      "input_tokens": 4344,
+      "output_tokens": 2150,
+      "cost_usd": 0.0022184719999999995,
+      "fix_iterations": 0
+    },
+    "generated_at": "2026-09-19T19:48:24+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.4166666666666667,
+    "steps_f1": 0.5882352941176471,
+    "durations_accuracy": 1.0,
+    "resources_precision": 0.3333333333333333,
+    "resources_recall": 0.3333333333333333,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.6,
+    "relationships_recall": 0.21428571428571427,
+    "relationships_f1": 0.3157894736842105,
+    "structure_rand_index": 1.0,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.5
+  },
+  "programs": [
+    {
+      "slug": "kitchen-thanksgiving-one-oven",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.4166666666666667,
+        "steps_f1": 0.5882352941176471,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.3333333333333333,
+        "resources_recall": 0.3333333333333333,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.6,
+        "relationships_recall": 0.21428571428571427,
+        "relationships_f1": 0.3157894736842105,
+        "structure_rand_index": 1.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.5
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.4166666666666667,
+        "f1": 0.5882352941176471,
+        "tp": 10,
+        "n_gold": 24,
+        "n_pred": 10
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 10,
+        "total": 10
+      },
+      "resources": {
+        "precision": 0.3333333333333333,
+        "recall": 0.3333333333333333,
+        "f1": 0.3333333333333333,
+        "tp": 1,
+        "n_gold": 3,
+        "n_pred": 3
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.6,
+        "recall": 0.21428571428571427,
+        "f1": 0.3157894736842105,
+        "tp": 6,
+        "n_gold": 28,
+        "n_pred": 10
+      },
+      "structure": {
+        "rand_index": 1.0,
+        "agreements": 45,
+        "pairs": 45,
+        "n_steps": 10
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 18480.0,
+        "pred_makespan": 19680.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "temper-turkey",
+          "season-turkey",
+          "roast-turkey",
+          "bake-stuffing",
+          "bake-casserole",
+          "warm-rolls",
+          "serve"
+        ],
+        "pred_critical_path": [
+          "s1",
+          "s2",
+          "s3",
+          "s4",
+          "s10",
+          "s15",
+          "s19",
+          "s20"
+        ],
+        "js_critical_path": [
+          "s1",
+          "s2",
+          "s3",
+          "s4",
+          "s10",
+          "s15",
+          "s19",
+          "s20"
+        ],
+        "js_makespan": 19680,
+        "critical_overlap": 0.42857142857142855,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.5,
+      "unsupported_steps": [
+        "s1",
+        "s2",
+        "s5",
+        "s7",
+        "s9",
+        "s11",
+        "s14",
+        "s15",
+        "s19",
+        "s20"
+      ],
+      "matching": [
+        {
+          "gold": "season-turkey",
+          "predicted": "s3",
+          "by": "name"
+        },
+        {
+          "gold": "roast-turkey",
+          "predicted": "s4",
+          "by": "name"
+        },
+        {
+          "gold": "carve-turkey",
+          "predicted": "s6",
+          "by": "name"
+        },
+        {
+          "gold": "cook-vegetables",
+          "predicted": "s8",
+          "by": "name"
+        },
+        {
+          "gold": "bake-stuffing",
+          "predicted": "s10",
+          "by": "name"
+        },
+        {
+          "gold": "blanch-beans",
+          "predicted": "s12",
+          "by": "name"
+        },
+        {
+          "gold": "cook-mushrooms",
+          "predicted": "s13",
+          "by": "name"
+        },
+        {
+          "gold": "peel-potatoes",
+          "predicted": "s16",
+          "by": "name"
+        },
+        {
+          "gold": "boil-potatoes",
+          "predicted": "s17",
+          "by": "name"
+        },
+        {
+          "gold": "mash-potatoes",
+          "predicted": "s18",
+          "by": "name"
+        },
+        {
+          "gold": "preheat-oven",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "temper-turkey",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "rest-turkey",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "make-roux",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "simmer-gravy",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "hold-gravy",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cube-bread",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "assemble-stuffing",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "simmer-sauce",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "assemble-casserole",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "bake-casserole",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "hold-potatoes",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "warm-rolls",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "serve",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "s1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "s2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "s5",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "s7",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "s9",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "s11",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "s14",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "s15",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "s19",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "s20",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "meta-llama/llama-4-maverick",
+        "pattern": "baseline",
+        "calls": 1,
+        "input_tokens": 4344,
+        "output_tokens": 2150,
+        "cost_usd": 0.0022184719999999995,
+        "cache_keys": [
+          "03187dc1828985ce20d8d6207e39605e962227bb84ed534aeaea71a338ae6609"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/baseline/per-program/kitchen-thanksgiving-one-oven/responses/kitchen-thanksgiving-one-oven.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/baseline/per-program/kitchen-thanksgiving-one-oven/predicted/kitchen-thanksgiving-one-oven.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Thanksgiving for Eight with One Oven for 8 people, following the source text below",
+            "finish_at": "18:00",
+            "constraints": "one oven, four burners, two cooks, all dishes finish together",
+            "vertical": "kitchen"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

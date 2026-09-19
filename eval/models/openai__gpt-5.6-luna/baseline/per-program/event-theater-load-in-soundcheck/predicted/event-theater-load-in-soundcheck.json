@@ -1,0 +1,367 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "the-lyric-one-nighter-load-in",
+  "name": "Load-In Schedule — The Lyric",
+  "description": "One-nighter touring band load-in, soundcheck, doors, show, and post-show load-out for an eight-person house crew.",
+  "environmentType": "event",
+  "actors": 8,
+  "tracks": [
+    {
+      "trackId": "dock",
+      "name": "Loading Dock",
+      "steps": [
+        {
+          "stepId": "lighting-truck-in",
+          "name": "Lighting truck in: unload bars, fixtures, and cable",
+          "task": "dock",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "backline-truck-in",
+          "name": "Backline truck in",
+          "task": "dock",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "lighting-truck-in"
+          }
+        },
+        {
+          "stepId": "clear-dock",
+          "name": "Clear dock and remove empties",
+          "task": "dock",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "backline-truck-in"
+          }
+        },
+        {
+          "stepId": "backline-out",
+          "name": "Backline truck out after show",
+          "task": "dock",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "show",
+            "offsetSeconds": 900
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "lighting",
+      "name": "Lighting",
+      "steps": [
+        {
+          "stepId": "rig-lighting",
+          "name": "Rig lighting bars and fixtures on stage",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "lighting-truck-in"
+          }
+        },
+        {
+          "stepId": "focus-lighting",
+          "name": "Focus lighting from desk",
+          "task": "lightingDesk",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rig-lighting"
+          }
+        },
+        {
+          "stepId": "build-lighting-cues",
+          "name": "Build lighting cues",
+          "task": "lightingDesk",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 1800,
+            "maxSeconds": 5400,
+            "defaultSeconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "focus-lighting"
+          }
+        },
+        {
+          "stepId": "strike-lighting",
+          "name": "Strike lighting rig after show",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "show"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "pa",
+      "name": "PA",
+      "steps": [
+        {
+          "stepId": "fly-pa",
+          "name": "Fly PA",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 4500
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rig-lighting"
+          }
+        },
+        {
+          "stepId": "ring-house",
+          "name": "Ring out house",
+          "task": "pa",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "fly-pa"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "monitors",
+      "name": "Monitors",
+      "steps": [
+        {
+          "stepId": "set-monitor-world",
+          "name": "Set monitor world",
+          "task": "monitorWorld",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "backline-truck-in"
+          }
+        },
+        {
+          "stepId": "ring-wedges",
+          "name": "Ring out wedges",
+          "task": "monitorWorld",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "set-monitor-world"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "band",
+      "name": "Band and Soundcheck",
+      "steps": [
+        {
+          "stepId": "backline-up",
+          "name": "Put backline up on stage",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "clear-dock"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "fly-pa"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "soundcheck",
+          "name": "Soundcheck, drums first",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "backline-up"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "ring-house"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "ring-wedges"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "band-dinner",
+          "name": "Band dinner in green room",
+          "task": "greenRoom",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "soundcheck"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "house",
+      "name": "House Operations",
+      "steps": [
+        {
+          "stepId": "front-of-house",
+          "name": "Set front of house: merch, bars, and ushers",
+          "task": "house",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 7200
+          }
+        },
+        {
+          "stepId": "clean-house",
+          "name": "Clean the house",
+          "task": "house",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "band-dinner"
+          }
+        },
+        {
+          "stepId": "doors",
+          "name": "Doors and walk-up",
+          "task": "doors",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "clean-house"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "show",
+      "name": "Show",
+      "steps": [
+        {
+          "stepId": "show",
+          "name": "Show on stage",
+          "task": "stage",
+          "duration": {
+            "type": "indefinite",
+            "defaultSeconds": 7200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "doors"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "dock",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "stage",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "lightingDesk",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "pa",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "monitorWorld",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "greenRoom",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "house",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "doors",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "venue": "The Lyric",
+    "eventType": "one-nighter",
+    "crewCall": "08:00",
+    "crewSize": 8,
+    "sourceUrl": "",
+    "attribution": "User-provided source text: Load-In Schedule — The Lyric, one-nighter"
+  }
+}

@@ -1,0 +1,330 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "streak-three-cultures-selective-media",
+  "name": "Streaking Three Cultures onto Selective Media",
+  "description": "Schedule for streaking three overnight cultures, incubating plates, reading growth, obtaining supervisor sign-off, subculturing isolates 1 and 2, and completing purity-plate and Gram-stain work.",
+  "environmentType": "laboratory",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "setup-and-streaking",
+      "name": "Setup and streaking",
+      "steps": [
+        {
+          "stepId": "wipe-and-light-burner",
+          "name": "Wipe bench with 70% ethanol and light burner",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "label-selective-plates",
+          "name": "Label three selective plates",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wipe-and-light-burner"
+          }
+        },
+        {
+          "stepId": "streak-isolates",
+          "name": "Streak isolates 1–3 for single colonies in four quadrants",
+          "task": "loopStation",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "replicates": {
+            "count": 3,
+            "mode": "serial"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "label-selective-plates"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "plates-one-and-two",
+      "name": "Plates 1 and 2 incubation",
+      "steps": [
+        {
+          "stepId": "incubate-plates-one-two",
+          "name": "Invert and incubate plates 1 and 2 at 37 °C",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 57600
+          },
+          "replicates": {
+            "count": 2,
+            "mode": "parallel"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "streak-isolates",
+            "instances": "all"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "plate-three",
+      "name": "Plate 3 holding and incubation",
+      "steps": [
+        {
+          "stepId": "hold-plate-three-at-room-temperature",
+          "name": "Hold plate 3 at room temperature until the incubator shelf is free",
+          "task": "benchHold",
+          "duration": {
+            "type": "fixed",
+            "seconds": 57600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "streak-isolates",
+            "instances": "all"
+          }
+        },
+        {
+          "stepId": "incubate-plate-three",
+          "name": "Invert and incubate plate 3 at 37 °C",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 21600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "hold-plate-three-at-room-temperature"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "reading-and-signoff",
+      "name": "Plate reading and supervisor sign-off",
+      "steps": [
+        {
+          "stepId": "read-plates-one-two",
+          "name": "Read plates 1 and 2: count colonies, note colour, and record selective growth",
+          "task": "microscope",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "replicates": {
+            "count": 2,
+            "mode": "serial"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "incubate-plates-one-two",
+            "instances": "all"
+          }
+        },
+        {
+          "stepId": "read-plate-three",
+          "name": "Read plate 3: count colonies, note colour, and record selective growth",
+          "task": "microscope",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "read-plates-one-two",
+                "instances": "all"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "incubate-plate-three"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "supervisor-signoff",
+          "name": "Supervisor signs off the plate readings",
+          "task": "supervisor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "read-plate-three"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "subculture-and-stain",
+      "name": "Subculture, purity plate, and Gram stain",
+      "steps": [
+        {
+          "stepId": "pick-colonies-into-fresh-broth",
+          "name": "Pick single colonies from plates 1 and 2 into fresh broth",
+          "task": "loopStation",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "replicates": {
+            "count": 2,
+            "mode": "serial"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "supervisor-signoff"
+          }
+        },
+        {
+          "stepId": "streak-purity-plate",
+          "name": "Streak one purity plate",
+          "task": "loopStation",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "pick-colonies-into-fresh-broth",
+            "instances": "all"
+          }
+        },
+        {
+          "stepId": "incubate-purity-plate",
+          "name": "Incubate purity plate at 37 °C",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 28800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "streak-purity-plate"
+          }
+        },
+        {
+          "stepId": "make-and-heat-fix-smear",
+          "name": "Make smear from picked colony and heat-fix",
+          "task": "stainingRack",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "incubate-purity-plate"
+          }
+        },
+        {
+          "stepId": "gram-stain-smear",
+          "name": "Gram stain smear on rack",
+          "task": "stainingRack",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "make-and-heat-fix-smear"
+          }
+        },
+        {
+          "stepId": "read-stain",
+          "name": "Read stain under oil immersion and record morphology",
+          "task": "microscope",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "gram-stain-smear"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "burner",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "bench",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "loopStation",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "incubator",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "benchHold",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "stainingRack",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "microscope",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "supervisor",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "sourceUrl": "",
+    "attribution": "User-provided source text",
+    "serves": "",
+    "materials": [
+      {
+        "name": "overnight broths",
+        "measure": "3"
+      },
+      {
+        "name": "selective agar plates",
+        "measure": "3"
+      },
+      {
+        "name": "purity plate",
+        "measure": "1"
+      },
+      {
+        "name": "fresh broth tubes",
+        "measure": "2"
+      },
+      {
+        "name": "70% ethanol",
+        "measure": "as needed"
+      },
+      {
+        "name": "Gram-stain reagents",
+        "measure": "crystal violet, iodine, decolouriser, safranin"
+      }
+    ]
+  }
+}

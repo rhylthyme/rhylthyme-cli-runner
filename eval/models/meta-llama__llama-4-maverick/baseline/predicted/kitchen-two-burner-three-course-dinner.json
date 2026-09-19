@@ -1,0 +1,327 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "three-course-dinner-six",
+  "name": "Three-Course Dinner for Six",
+  "environmentType": "kitchen",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "mise-en-place",
+      "name": "Mise en Place",
+      "steps": [
+        {
+          "stepId": "prep",
+          "name": "Mise en place",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2400
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "main-course",
+      "name": "Braised Short Ribs",
+      "steps": [
+        {
+          "stepId": "heat-oven",
+          "name": "Heat oven",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep"
+          }
+        },
+        {
+          "stepId": "sear-ribs",
+          "name": "Sear short ribs",
+          "task": "stovetop",
+          "duration": {
+            "type": "fixed",
+            "seconds": 720
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "heat-oven"
+          }
+        },
+        {
+          "stepId": "soften-mirepoix",
+          "name": "Soften mirepoix and reduce wine",
+          "task": "stovetop",
+          "duration": {
+            "type": "fixed",
+            "seconds": 780
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "sear-ribs"
+          }
+        },
+        {
+          "stepId": "braise",
+          "name": "Braise short ribs",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 10800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "soften-mirepoix"
+          }
+        },
+        {
+          "stepId": "rest",
+          "name": "Rest ribs",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "braise"
+          }
+        },
+        {
+          "stepId": "reduce-braising-liquid",
+          "name": "Skim fat and reduce braising liquid",
+          "task": "stovetop",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "starter",
+      "name": "Leek and Potato Soup",
+      "steps": [
+        {
+          "stepId": "sweat-leeks",
+          "name": "Sweat leeks",
+          "task": "stovetop",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 8400
+          }
+        },
+        {
+          "stepId": "simmer-soup",
+          "name": "Simmer soup",
+          "task": "stovetop",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "sweat-leeks"
+          }
+        },
+        {
+          "stepId": "blend-soup",
+          "name": "Blend soup",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "simmer-soup"
+          }
+        },
+        {
+          "stepId": "hold-soup",
+          "name": "Hold soup warm",
+          "task": "stovetop",
+          "duration": {
+            "type": "indefinite",
+            "defaultSeconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "blend-soup"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "dessert",
+      "name": "Apple Tart",
+      "steps": [
+        {
+          "stepId": "prepare-tart-shell",
+          "name": "Prepare tart shell",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep"
+          }
+        },
+        {
+          "stepId": "chill-shell",
+          "name": "Chill tart shell",
+          "task": "prep",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 1800,
+            "maxSeconds": 7200,
+            "defaultSeconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prepare-tart-shell"
+          }
+        },
+        {
+          "stepId": "arrange-apples",
+          "name": "Arrange apples",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "chill-shell"
+          }
+        },
+        {
+          "stepId": "bake-tart",
+          "name": "Bake tart",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "service",
+      "name": "Service",
+      "steps": [
+        {
+          "stepId": "serve-soup",
+          "name": "Serve soup",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 24300
+          }
+        },
+        {
+          "stepId": "clear-soup",
+          "name": "Clear soup bowls",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "serve-soup"
+          }
+        },
+        {
+          "stepId": "plate-ribs",
+          "name": "Plate ribs",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "clear-soup"
+          }
+        },
+        {
+          "stepId": "serve-ribs",
+          "name": "Serve ribs",
+          "task": "prep",
+          "duration": {
+            "type": "indefinite",
+            "defaultSeconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "plate-ribs"
+          }
+        },
+        {
+          "stepId": "clear-ribs",
+          "name": "Clear main plates",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "serve-ribs"
+          }
+        },
+        {
+          "stepId": "serve-tart",
+          "name": "Serve tart",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "clear-ribs"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "oven",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "stovetop",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "prep",
+      "maxConcurrent": 1
+    }
+  ]
+}

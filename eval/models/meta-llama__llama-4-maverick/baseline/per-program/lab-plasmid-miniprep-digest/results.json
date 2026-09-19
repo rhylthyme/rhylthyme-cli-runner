@@ -1,0 +1,154 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "meta-llama/llama-4-maverick",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/baseline/cache",
+    "limit": null,
+    "only": [
+      "lab-plasmid-miniprep-digest"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 3,
+      "input_tokens": 19933,
+      "output_tokens": 5623,
+      "cost_usd": 0.0074136,
+      "fix_iterations": 2
+    },
+    "generated_at": "2026-09-19T19:49:11+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 0.0,
+    "steps_recall": 0.0,
+    "steps_f1": 0.0,
+    "durations_accuracy": 0.0,
+    "resources_precision": 0.0,
+    "resources_recall": 0.0,
+    "actors_accuracy": 0.0,
+    "relationships_precision": 0.0,
+    "relationships_recall": 0.0,
+    "relationships_f1": 0.0,
+    "structure_rand_index": 0.0,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.0
+  },
+  "programs": [
+    {
+      "slug": "lab-plasmid-miniprep-digest",
+      "headline": {
+        "steps_precision": 0.0,
+        "steps_recall": 0.0,
+        "steps_f1": 0.0,
+        "durations_accuracy": 0.0,
+        "resources_precision": 0.0,
+        "resources_recall": 0.0,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.0,
+        "relationships_recall": 0.0,
+        "relationships_f1": 0.0,
+        "structure_rand_index": 0.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.0
+      },
+      "steps": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 22,
+        "n_pred": 0
+      },
+      "durations": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 22
+      },
+      "resources": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 9,
+        "n_pred": 0
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 24,
+        "n_pred": 0
+      },
+      "structure": {
+        "rand_index": 0.0,
+        "agreements": 0,
+        "pairs": 0,
+        "n_steps": 0
+      },
+      "end_to_end": {
+        "python_valid": false,
+        "python_errors": [],
+        "js_status": "skipped",
+        "js_valid": null,
+        "js_errors": [],
+        "gold_makespan": 0.0,
+        "pred_makespan": 0.0,
+        "makespan_ok": false,
+        "gold_critical_path": [],
+        "pred_critical_path": [],
+        "js_critical_path": null,
+        "js_makespan": null,
+        "critical_overlap": 0.0,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.0,
+      "unsupported_steps": [],
+      "matching": [],
+      "extras": {
+        "model": "meta-llama/llama-4-maverick",
+        "pattern": "baseline",
+        "calls": 3,
+        "input_tokens": 19933,
+        "output_tokens": 5623,
+        "cost_usd": 0.0074136,
+        "cache_keys": [
+          "f04e204202294614204fa8e77c860149794cba4547360a9db9255070fd9571c3",
+          "9fccab31d20db28e6d2b0556c309fd41f2281479b47a868d3abc2c781c21a729",
+          "7de08fa76df234fb85ed986ebb7755a019f24b1e2133a2aa6134b0f311f4e524"
+        ],
+        "fix_iterations": 2,
+        "validation_errors": [
+          "Track 'Restriction Digest': Steps 'Incubate at 37 \u00b0C' and 'Prepare ladder and loading dye' overlap by 3000 seconds. Step 'Incubate at 37 \u00b0C' ends at 6060s, but step 'Prepare ladder and loading dye' starts at 3060s."
+        ],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/baseline/per-program/lab-plasmid-miniprep-digest/responses/lab-plasmid-miniprep-digest.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/meta-llama__llama-4-maverick/baseline/per-program/lab-plasmid-miniprep-digest/predicted/lab-plasmid-miniprep-digest.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Plasmid Miniprep, Restriction Digest and Gel Check for one 5 mL culture, one digest, following the source text below",
+            "finish_at": null,
+            "constraints": "one microcentrifuge, one 37 \u00b0C heat block, one 65 \u00b0C heat block, one gel rig, one operator",
+            "vertical": "lab"
+          }
+        }
+      },
+      "error": "program failed validation after 2 fix iteration(s): Track 'Restriction Digest': Steps 'Incubate at 37 \u00b0C' and 'Prepare ladder and loading dye' overlap by 3000 seconds. Step 'Incubate at 37 \u00b0C' ends at 6060s, but step 'Prepare ladder and loading dye' starts at 3060s."
+    }
+  ],
+  "missing": [
+    "lab-plasmid-miniprep-digest"
+  ]
+}

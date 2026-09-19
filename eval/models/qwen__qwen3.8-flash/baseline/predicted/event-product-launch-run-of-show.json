@@ -1,0 +1,458 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "product-launch-evening-run-of-show",
+  "name": "Product Launch Evening Run of Show",
+  "description": "Event run-of-show from crew call (17:00). Doors open at 18:00, the program closes by 19:57 at the latest, and the final reception/reset wrap completes no later than 21:00.",
+  "environmentType": "event",
+  "tracks": [
+    {
+      "trackId": "av-technician",
+      "name": "AV & stage technician",
+      "steps": [
+        {
+          "stepId": "av_line_check",
+          "name": "Full line check: projector, clicker, microphones",
+          "task": "projector",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "av_welcome_playlist",
+          "name": "Welcome playlist in the hall",
+          "task": "pa",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "av_line_check"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "producer_call_doors"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "av_keynote_deck",
+          "name": "Bring up CEO keynote deck",
+          "task": "projector",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "av_welcome_playlist"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "host_opening"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "av_product_video",
+          "name": "Play product video from booth",
+          "task": "projector",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "av_keynote_deck"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "ceo_keynote"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "av_stage_strike",
+          "name": "Strike the stage",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "av_product_video"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "foh_hall_clear"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "producer",
+      "name": "Producer / show caller",
+      "steps": [
+        {
+          "stepId": "producer_rehearsal",
+          "name": "Rehearse keynote transitions on stage",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "av_line_check"
+          }
+        },
+        {
+          "stepId": "producer_call_doors",
+          "name": "Final pre-door checks and call doors open",
+          "task": "producer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "producer_rehearsal"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "front-of-house",
+      "name": "Front of house",
+      "steps": [
+        {
+          "stepId": "foh_setup",
+          "name": "Set up registration desk and badges",
+          "task": "front_of_house",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "foh_walkthrough",
+          "name": "Walkthrough of foyer and seating",
+          "task": "front_of_house",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "foh_setup"
+          }
+        },
+        {
+          "stepId": "open_doors_register",
+          "name": "Open doors and register guests",
+          "task": "front_of_house",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "foh_walkthrough"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "producer_call_doors"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "catering_setup"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "foh_usher_to_seats",
+          "name": "Usher guests to their seats",
+          "task": "front_of_house",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "open_doors_register"
+          }
+        },
+        {
+          "stepId": "foh_hall_clear",
+          "name": "Hall egress and confirm hall is clear",
+          "task": "front_of_house",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "foh_usher_to_seats"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "host_close"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "foh_registration_breakdown",
+          "name": "Break down registration desk",
+          "task": "front_of_house",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "foh_hall_clear"
+          }
+        },
+        {
+          "stepId": "foh_final_wrap",
+          "name": "Clear reception area and final venue wrap",
+          "task": "front_of_house",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1080
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "foh_registration_breakdown"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "catering_reception_circulate"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "av_stage_strike"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "catering",
+      "name": "Catering & bar",
+      "steps": [
+        {
+          "stepId": "catering_setup",
+          "name": "Set up bar and canapé stations in foyer",
+          "task": "catering",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "catering_serve_drinks",
+          "name": "Bar serves drinks during registration",
+          "task": "catering",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "catering_setup"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "producer_call_doors"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "catering_reception_circulate",
+          "name": "Reception: bar reopens and canapés are circulated",
+          "task": "catering",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "catering_serve_drinks"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "host_close"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "main-program-stage",
+      "name": "Main program on stage",
+      "steps": [
+        {
+          "stepId": "host_opening",
+          "name": "Host opens the program",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "foh_usher_to_seats"
+          }
+        },
+        {
+          "stepId": "ceo_keynote",
+          "name": "CEO keynote",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "host_opening"
+          }
+        },
+        {
+          "stepId": "product_demo",
+          "name": "Product lead live demo",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1500
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "ceo_keynote"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "av_product_video"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "q_and_a",
+          "name": "Moderated Q&A",
+          "task": "stage",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 900,
+            "maxSeconds": 1500,
+            "defaultSeconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "product_demo"
+          }
+        },
+        {
+          "stepId": "host_close",
+          "name": "Host closes program and invites reception",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "q_and_a"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "stage",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "projector",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "pa",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "producer",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "front_of_house",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "catering",
+      "maxConcurrent": 1
+    }
+  ]
+}

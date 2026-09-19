@@ -1,0 +1,614 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "hiit-circuit-card",
+  "name": "HIIT Circuit Card Workout",
+  "environmentType": "gym",
+  "actors": 3,
+  "tracks": [
+    {
+      "trackId": "athlete-a",
+      "name": "Athlete A",
+      "steps": [
+        {
+          "stepId": "warm-up-a",
+          "name": "Warm-up",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Five minutes on the floor together",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "round-1-a",
+          "name": "Use the rower",
+          "task": "rower",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warm-up-a"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Rower: damper on five, pull hard",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "rest-1-a",
+          "name": "Rest",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "round-1-a"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Sixty seconds of rest on the floor after every station",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "round-2-a",
+          "name": "Use the kettlebell",
+          "task": "kettlebell",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest-1-a"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Kettlebell swings: one bell, hips not arms",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "rest-2-a",
+          "name": "Rest",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "round-2-a"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Sixty seconds of rest on the floor after every station",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "round-3-a",
+          "name": "Use the box",
+          "task": "box",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest-2-a"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Box step-overs: alternate the lead leg",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "rest-3-a",
+          "name": "Rest",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "round-3-a"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Sixty seconds of rest on the floor after every station",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "round-4-a",
+          "name": "Use the sled",
+          "task": "sled",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest-3-a"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Sled push: the length of the turf and back",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "cooldown-a",
+          "name": "Cooldown",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "round-4-a"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Ten minutes on the floor when all three of you have finished the fourth station",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "athlete-b",
+      "name": "Athlete B",
+      "steps": [
+        {
+          "stepId": "warm-up-b",
+          "name": "Warm-up",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Five minutes on the floor together",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "round-1-b",
+          "name": "Use the kettlebell",
+          "task": "kettlebell",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warm-up-b"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Kettlebell swings: one bell, hips not arms",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "rest-1-b",
+          "name": "Rest",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "round-1-b"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Sixty seconds of rest on the floor after every station",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "round-2-b",
+          "name": "Use the box",
+          "task": "box",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest-1-b"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Box step-overs: alternate the lead leg",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "rest-2-b",
+          "name": "Rest",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "round-2-b"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Sixty seconds of rest on the floor after every station",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "round-3-b",
+          "name": "Use the sled",
+          "task": "sled",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest-2-b"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Sled push: the length of the turf and back",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "rest-3-b",
+          "name": "Rest",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "round-3-b"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Sixty seconds of rest on the floor after every station",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "round-4-b",
+          "name": "Use the rower",
+          "task": "rower",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest-3-b"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Rower: damper on five, pull hard",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "cooldown-b",
+          "name": "Cooldown",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "round-4-b"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "round-4-a"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "round-4-c"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Ten minutes on the floor when all three of you have finished the fourth station",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "athlete-c",
+      "name": "Athlete C",
+      "steps": [
+        {
+          "stepId": "warm-up-c",
+          "name": "Warm-up",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Five minutes on the floor together",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "round-1-c",
+          "name": "Use the box",
+          "task": "box",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warm-up-c"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Box step-overs: alternate the lead leg",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "rest-1-c",
+          "name": "Rest",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "round-1-c"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Sixty seconds of rest on the floor after every station",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "round-2-c",
+          "name": "Use the sled",
+          "task": "sled",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest-1-c"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Sled push: the length of the turf and back",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "rest-2-c",
+          "name": "Rest",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "round-2-c"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Sixty seconds of rest on the floor after every station",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "round-3-c",
+          "name": "Use the rower",
+          "task": "rower",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest-2-c"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Rower: damper on five, pull hard",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "rest-3-c",
+          "name": "Rest",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "round-3-c"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Sixty seconds of rest on the floor after every station",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "round-4-c",
+          "name": "Use the kettlebell",
+          "task": "kettlebell",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest-3-c"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Kettlebell swings: one bell, hips not arms",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "cooldown-c",
+          "name": "Cooldown",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "round-4-a"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "round-4-b"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "round-4-c"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Ten minutes on the floor when all three of you have finished the fourth station",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "rower",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "kettlebell",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "box",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "sled",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "floor",
+      "maxConcurrent": 3
+    }
+  ]
+}

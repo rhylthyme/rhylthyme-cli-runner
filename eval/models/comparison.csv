@@ -7,6 +7,12 @@ n_programs,metric,model,prompt,value
 7,Steps F1,deepseek-flash,four-turn,0.9304
 7,Steps F1,gemini-3.1-flash-lite,baseline,0.481
 7,Steps F1,gemini-3.1-flash-lite,four-turn,0.7492
+7,Steps F1,meta-llama/llama-4-maverick,baseline,0.5227
+7,Steps F1,meta-llama/llama-4-maverick,four-turn,0.8773
+7,Steps F1,openai/gpt-5.6-luna,baseline,0.5212
+7,Steps F1,openai/gpt-5.6-luna,four-turn,0.9178
+7,Steps F1,qwen/qwen3.8-flash,baseline,0.3747
+7,Steps F1,qwen/qwen3.8-flash,four-turn,0.9249
 7,Durations accuracy,claude-haiku-4-5,baseline,0.9857
 7,Durations accuracy,claude-haiku-4-5,four-turn,0.9201
 7,Durations accuracy,claude-sonnet-5,baseline,0.9857
@@ -15,6 +21,12 @@ n_programs,metric,model,prompt,value
 7,Durations accuracy,deepseek-flash,four-turn,0.9276
 7,Durations accuracy,gemini-3.1-flash-lite,baseline,0.9031
 7,Durations accuracy,gemini-3.1-flash-lite,four-turn,0.9498
+7,Durations accuracy,meta-llama/llama-4-maverick,baseline,0.989
+7,Durations accuracy,meta-llama/llama-4-maverick,four-turn,0.9689
+7,Durations accuracy,openai/gpt-5.6-luna,baseline,0.8018
+7,Durations accuracy,openai/gpt-5.6-luna,four-turn,0.8691
+7,Durations accuracy,qwen/qwen3.8-flash,baseline,0.8413
+7,Durations accuracy,qwen/qwen3.8-flash,four-turn,0.9486
 7,Relationships F1,claude-haiku-4-5,baseline,0.3001
 7,Relationships F1,claude-haiku-4-5,four-turn,0.6362
 7,Relationships F1,claude-sonnet-5,baseline,0.2717
@@ -23,6 +35,12 @@ n_programs,metric,model,prompt,value
 7,Relationships F1,deepseek-flash,four-turn,0.5377
 7,Relationships F1,gemini-3.1-flash-lite,baseline,0.2565
 7,Relationships F1,gemini-3.1-flash-lite,four-turn,0.4717
+7,Relationships F1,meta-llama/llama-4-maverick,baseline,0.2852
+7,Relationships F1,meta-llama/llama-4-maverick,four-turn,0.5821
+7,Relationships F1,openai/gpt-5.6-luna,baseline,0.2147
+7,Relationships F1,openai/gpt-5.6-luna,four-turn,0.6066
+7,Relationships F1,qwen/qwen3.8-flash,baseline,0.1852
+7,Relationships F1,qwen/qwen3.8-flash,four-turn,0.6397
 7,Resources recall,claude-haiku-4-5,baseline,0.5976
 7,Resources recall,claude-haiku-4-5,four-turn,0.7214
 7,Resources recall,claude-sonnet-5,baseline,0.6048
@@ -31,6 +49,12 @@ n_programs,metric,model,prompt,value
 7,Resources recall,deepseek-flash,four-turn,0.72
 7,Resources recall,gemini-3.1-flash-lite,baseline,0.4595
 7,Resources recall,gemini-3.1-flash-lite,four-turn,0.5905
+7,Resources recall,meta-llama/llama-4-maverick,baseline,0.7214
+7,Resources recall,meta-llama/llama-4-maverick,four-turn,0.5
+7,Resources recall,openai/gpt-5.6-luna,baseline,0.5571
+7,Resources recall,openai/gpt-5.6-luna,four-turn,0.7286
+7,Resources recall,qwen/qwen3.8-flash,baseline,0.7286
+7,Resources recall,qwen/qwen3.8-flash,four-turn,0.581
 7,Track structure (Rand),claude-haiku-4-5,baseline,0.8901
 7,Track structure (Rand),claude-haiku-4-5,four-turn,0.9106
 7,Track structure (Rand),claude-sonnet-5,baseline,0.8098
@@ -39,6 +63,12 @@ n_programs,metric,model,prompt,value
 7,Track structure (Rand),deepseek-flash,four-turn,0.8709
 7,Track structure (Rand),gemini-3.1-flash-lite,baseline,0.8353
 7,Track structure (Rand),gemini-3.1-flash-lite,four-turn,0.7922
+7,Track structure (Rand),meta-llama/llama-4-maverick,baseline,0.9306
+7,Track structure (Rand),meta-llama/llama-4-maverick,four-turn,0.9624
+7,Track structure (Rand),openai/gpt-5.6-luna,baseline,0.7488
+7,Track structure (Rand),openai/gpt-5.6-luna,four-turn,0.8152
+7,Track structure (Rand),qwen/qwen3.8-flash,baseline,0.8199
+7,Track structure (Rand),qwen/qwen3.8-flash,four-turn,0.7306
 7,Unsupported steps,claude-haiku-4-5,baseline,0.5955
 7,Unsupported steps,claude-haiku-4-5,four-turn,0.0169
 7,Unsupported steps,claude-sonnet-5,baseline,0.5224
@@ -47,6 +77,12 @@ n_programs,metric,model,prompt,value
 7,Unsupported steps,deepseek-flash,four-turn,0.0459
 7,Unsupported steps,gemini-3.1-flash-lite,baseline,0.503
 7,Unsupported steps,gemini-3.1-flash-lite,four-turn,0.0476
+7,Unsupported steps,meta-llama/llama-4-maverick,baseline,0.5479
+7,Unsupported steps,meta-llama/llama-4-maverick,four-turn,0.0
+7,Unsupported steps,openai/gpt-5.6-luna,baseline,0.6027
+7,Unsupported steps,openai/gpt-5.6-luna,four-turn,0.0279
+7,Unsupported steps,qwen/qwen3.8-flash,baseline,0.7155
+7,Unsupported steps,qwen/qwen3.8-flash,four-turn,0.0451
 7,End-to-end pass,claude-haiku-4-5,baseline,0.2857
 7,End-to-end pass,claude-haiku-4-5,four-turn,0.4286
 7,End-to-end pass,claude-sonnet-5,baseline,0.4286
@@ -55,6 +91,12 @@ n_programs,metric,model,prompt,value
 7,End-to-end pass,deepseek-flash,four-turn,0.4286
 7,End-to-end pass,gemini-3.1-flash-lite,baseline,0.0
 7,End-to-end pass,gemini-3.1-flash-lite,four-turn,0.1429
+7,End-to-end pass,meta-llama/llama-4-maverick,baseline,0.1429
+7,End-to-end pass,meta-llama/llama-4-maverick,four-turn,0.4286
+7,End-to-end pass,openai/gpt-5.6-luna,baseline,0.2857
+7,End-to-end pass,openai/gpt-5.6-luna,four-turn,0.4286
+7,End-to-end pass,qwen/qwen3.8-flash,baseline,0.2857
+7,End-to-end pass,qwen/qwen3.8-flash,four-turn,0.4286
 7,Produced a program,claude-haiku-4-5,baseline,1.0
 7,Produced a program,claude-haiku-4-5,four-turn,1.0
 7,Produced a program,claude-sonnet-5,baseline,1.0
@@ -63,6 +105,12 @@ n_programs,metric,model,prompt,value
 7,Produced a program,deepseek-flash,four-turn,0.7143
 7,Produced a program,gemini-3.1-flash-lite,baseline,1.0
 7,Produced a program,gemini-3.1-flash-lite,four-turn,1.0
+7,Produced a program,meta-llama/llama-4-maverick,baseline,1.0
+7,Produced a program,meta-llama/llama-4-maverick,four-turn,0.7143
+7,Produced a program,openai/gpt-5.6-luna,baseline,1.0
+7,Produced a program,openai/gpt-5.6-luna,four-turn,1.0
+7,Produced a program,qwen/qwen3.8-flash,baseline,1.0
+7,Produced a program,qwen/qwen3.8-flash,four-turn,1.0
 7,Cost per program (USD),claude-haiku-4-5,baseline,0.0463
 7,Cost per program (USD),claude-haiku-4-5,four-turn,0.0913
 7,Cost per program (USD),claude-sonnet-5,baseline,0.2552
@@ -71,6 +119,12 @@ n_programs,metric,model,prompt,value
 7,Cost per program (USD),deepseek-flash,four-turn,0.0814
 7,Cost per program (USD),gemini-3.1-flash-lite,baseline,0.0056
 7,Cost per program (USD),gemini-3.1-flash-lite,four-turn,0.0181
+7,Cost per program (USD),meta-llama/llama-4-maverick,baseline,0.0055
+7,Cost per program (USD),meta-llama/llama-4-maverick,four-turn,0.0123
+7,Cost per program (USD),openai/gpt-5.6-luna,baseline,0.0074
+7,Cost per program (USD),openai/gpt-5.6-luna,four-turn,0.0184
+7,Cost per program (USD),qwen/qwen3.8-flash,baseline,0.0225
+7,Cost per program (USD),qwen/qwen3.8-flash,four-turn,0.0405
 7,Output tokens per program,claude-haiku-4-5,baseline,6491.7143
 7,Output tokens per program,claude-haiku-4-5,four-turn,10683.1429
 7,Output tokens per program,claude-sonnet-5,baseline,22573.0
@@ -79,6 +133,12 @@ n_programs,metric,model,prompt,value
 7,Output tokens per program,deepseek-flash,four-turn,55536.1429
 7,Output tokens per program,gemini-3.1-flash-lite,baseline,2214.1429
 7,Output tokens per program,gemini-3.1-flash-lite,four-turn,6132.1429
+7,Output tokens per program,meta-llama/llama-4-maverick,baseline,5563.1429
+7,Output tokens per program,meta-llama/llama-4-maverick,four-turn,8220.1429
+7,Output tokens per program,openai/gpt-5.6-luna,baseline,5259.1429
+7,Output tokens per program,openai/gpt-5.6-luna,four-turn,10631.5714
+7,Output tokens per program,qwen/qwen3.8-flash,baseline,46228.4286
+7,Output tokens per program,qwen/qwen3.8-flash,four-turn,76400.4286
 7,Validator fix rounds,claude-haiku-4-5,baseline,0.8571
 7,Validator fix rounds,claude-haiku-4-5,four-turn,0.4286
 7,Validator fix rounds,claude-sonnet-5,baseline,1.0
@@ -87,113 +147,339 @@ n_programs,metric,model,prompt,value
 7,Validator fix rounds,deepseek-flash,four-turn,1.7143
 7,Validator fix rounds,gemini-3.1-flash-lite,baseline,0.7143
 7,Validator fix rounds,gemini-3.1-flash-lite,four-turn,0.7143
+7,Validator fix rounds,meta-llama/llama-4-maverick,baseline,0.7143
+7,Validator fix rounds,meta-llama/llama-4-maverick,four-turn,0.8571
+7,Validator fix rounds,openai/gpt-5.6-luna,baseline,0.1429
+7,Validator fix rounds,openai/gpt-5.6-luna,four-turn,0.1429
+7,Validator fix rounds,qwen/qwen3.8-flash,baseline,0.1429
+7,Validator fix rounds,qwen/qwen3.8-flash,four-turn,0.1429
 16,Steps F1,claude-haiku-4-5,baseline,0.5024
 16,Steps F1,claude-haiku-4-5,four-turn,0.919
 16,Steps F1,deepseek-flash,baseline,0.3906
 16,Steps F1,deepseek-flash,four-turn,0.8819
 16,Steps F1,gemini-3.1-flash-lite,baseline,0.5226
 16,Steps F1,gemini-3.1-flash-lite,four-turn,0.7549
+16,Steps F1,meta-llama/llama-4-maverick,baseline,0.5716
+16,Steps F1,meta-llama/llama-4-maverick,four-turn,0.848
+16,Steps F1,openai/gpt-5.6-luna,baseline,0.525
+16,Steps F1,openai/gpt-5.6-luna,four-turn,0.9204
+16,Steps F1,qwen/qwen3.8-flash,baseline,0.3195
+16,Steps F1,qwen/qwen3.8-flash,four-turn,0.9105
 16,Durations accuracy,claude-haiku-4-5,baseline,0.8635
 16,Durations accuracy,claude-haiku-4-5,four-turn,0.9266
 16,Durations accuracy,deepseek-flash,baseline,0.9
 16,Durations accuracy,deepseek-flash,four-turn,0.9576
 16,Durations accuracy,gemini-3.1-flash-lite,baseline,0.9385
 16,Durations accuracy,gemini-3.1-flash-lite,four-turn,0.9028
+16,Durations accuracy,meta-llama/llama-4-maverick,baseline,0.958
+16,Durations accuracy,meta-llama/llama-4-maverick,four-turn,0.9627
+16,Durations accuracy,openai/gpt-5.6-luna,baseline,0.8183
+16,Durations accuracy,openai/gpt-5.6-luna,four-turn,0.9291
+16,Durations accuracy,qwen/qwen3.8-flash,baseline,0.8681
+16,Durations accuracy,qwen/qwen3.8-flash,four-turn,0.9573
 16,Relationships F1,claude-haiku-4-5,baseline,0.2506
 16,Relationships F1,claude-haiku-4-5,four-turn,0.6323
 16,Relationships F1,deepseek-flash,baseline,0.1425
 16,Relationships F1,deepseek-flash,four-turn,0.5653
 16,Relationships F1,gemini-3.1-flash-lite,baseline,0.2662
 16,Relationships F1,gemini-3.1-flash-lite,four-turn,0.4828
+16,Relationships F1,meta-llama/llama-4-maverick,baseline,0.301
+16,Relationships F1,meta-llama/llama-4-maverick,four-turn,0.5682
+16,Relationships F1,openai/gpt-5.6-luna,baseline,0.2257
+16,Relationships F1,openai/gpt-5.6-luna,four-turn,0.6601
+16,Relationships F1,qwen/qwen3.8-flash,baseline,0.1156
+16,Relationships F1,qwen/qwen3.8-flash,four-turn,0.5696
 16,Resources recall,claude-haiku-4-5,baseline,0.5466
 16,Resources recall,claude-haiku-4-5,four-turn,0.5266
 16,Resources recall,deepseek-flash,baseline,0.601
 16,Resources recall,deepseek-flash,four-turn,0.6624
 16,Resources recall,gemini-3.1-flash-lite,baseline,0.4713
 16,Resources recall,gemini-3.1-flash-lite,four-turn,0.5329
+16,Resources recall,meta-llama/llama-4-maverick,baseline,0.5916
+16,Resources recall,meta-llama/llama-4-maverick,four-turn,0.4297
+16,Resources recall,openai/gpt-5.6-luna,baseline,0.542
+16,Resources recall,openai/gpt-5.6-luna,four-turn,0.6446
+16,Resources recall,qwen/qwen3.8-flash,baseline,0.557
+16,Resources recall,qwen/qwen3.8-flash,four-turn,0.5045
 16,Track structure (Rand),claude-haiku-4-5,baseline,0.799
 16,Track structure (Rand),claude-haiku-4-5,four-turn,0.9195
 16,Track structure (Rand),deepseek-flash,baseline,0.8749
 16,Track structure (Rand),deepseek-flash,four-turn,0.886
 16,Track structure (Rand),gemini-3.1-flash-lite,baseline,0.8268
 16,Track structure (Rand),gemini-3.1-flash-lite,four-turn,0.7783
+16,Track structure (Rand),meta-llama/llama-4-maverick,baseline,0.8973
+16,Track structure (Rand),meta-llama/llama-4-maverick,four-turn,0.8957
+16,Track structure (Rand),openai/gpt-5.6-luna,baseline,0.7095
+16,Track structure (Rand),openai/gpt-5.6-luna,four-turn,0.8641
+16,Track structure (Rand),qwen/qwen3.8-flash,baseline,0.7462
+16,Track structure (Rand),qwen/qwen3.8-flash,four-turn,0.7735
 16,Unsupported steps,claude-haiku-4-5,baseline,0.6088
 16,Unsupported steps,claude-haiku-4-5,four-turn,0.0096
 16,Unsupported steps,deepseek-flash,baseline,0.7192
 16,Unsupported steps,deepseek-flash,four-turn,0.0502
 16,Unsupported steps,gemini-3.1-flash-lite,baseline,0.471
 16,Unsupported steps,gemini-3.1-flash-lite,four-turn,0.0825
+16,Unsupported steps,meta-llama/llama-4-maverick,baseline,0.5015
+16,Unsupported steps,meta-llama/llama-4-maverick,four-turn,0.0115
+16,Unsupported steps,openai/gpt-5.6-luna,baseline,0.5595
+16,Unsupported steps,openai/gpt-5.6-luna,four-turn,0.0192
+16,Unsupported steps,qwen/qwen3.8-flash,baseline,0.7667
+16,Unsupported steps,qwen/qwen3.8-flash,four-turn,0.0406
 16,End-to-end pass,claude-haiku-4-5,baseline,0.125
 16,End-to-end pass,claude-haiku-4-5,four-turn,0.5625
 16,End-to-end pass,deepseek-flash,baseline,0.1875
 16,End-to-end pass,deepseek-flash,four-turn,0.4375
 16,End-to-end pass,gemini-3.1-flash-lite,baseline,0.125
 16,End-to-end pass,gemini-3.1-flash-lite,four-turn,0.3125
+16,End-to-end pass,meta-llama/llama-4-maverick,baseline,0.0625
+16,End-to-end pass,meta-llama/llama-4-maverick,four-turn,0.375
+16,End-to-end pass,openai/gpt-5.6-luna,baseline,0.1875
+16,End-to-end pass,openai/gpt-5.6-luna,four-turn,0.5625
+16,End-to-end pass,qwen/qwen3.8-flash,baseline,0.125
+16,End-to-end pass,qwen/qwen3.8-flash,four-turn,0.625
 16,Produced a program,claude-haiku-4-5,baseline,1.0
 16,Produced a program,claude-haiku-4-5,four-turn,1.0
 16,Produced a program,deepseek-flash,baseline,0.625
 16,Produced a program,deepseek-flash,four-turn,0.625
 16,Produced a program,gemini-3.1-flash-lite,baseline,1.0
 16,Produced a program,gemini-3.1-flash-lite,four-turn,0.9375
+16,Produced a program,meta-llama/llama-4-maverick,baseline,0.9375
+16,Produced a program,meta-llama/llama-4-maverick,four-turn,0.8125
+16,Produced a program,openai/gpt-5.6-luna,baseline,1.0
+16,Produced a program,openai/gpt-5.6-luna,four-turn,1.0
+16,Produced a program,qwen/qwen3.8-flash,baseline,1.0
+16,Produced a program,qwen/qwen3.8-flash,four-turn,1.0
 16,Cost per program (USD),claude-haiku-4-5,baseline,0.0443
 16,Cost per program (USD),claude-haiku-4-5,four-turn,0.0881
 16,Cost per program (USD),deepseek-flash,baseline,0.0475
 16,Cost per program (USD),deepseek-flash,four-turn,0.0786
 16,Cost per program (USD),gemini-3.1-flash-lite,baseline,0.006
 16,Cost per program (USD),gemini-3.1-flash-lite,four-turn,0.0194
+16,Cost per program (USD),meta-llama/llama-4-maverick,baseline,0.0057
+16,Cost per program (USD),meta-llama/llama-4-maverick,four-turn,0.0118
+16,Cost per program (USD),openai/gpt-5.6-luna,baseline,0.0072
+16,Cost per program (USD),openai/gpt-5.6-luna,four-turn,0.0175
+16,Cost per program (USD),qwen/qwen3.8-flash,baseline,0.0214
+16,Cost per program (USD),qwen/qwen3.8-flash,four-turn,0.0398
 16,Output tokens per program,claude-haiku-4-5,baseline,6003.0625
 16,Output tokens per program,claude-haiku-4-5,four-turn,10062.8125
 16,Output tokens per program,deepseek-flash,baseline,36559.6875
 16,Output tokens per program,deepseek-flash,four-turn,53268.375
 16,Output tokens per program,gemini-3.1-flash-lite,baseline,2407.125
 16,Output tokens per program,gemini-3.1-flash-lite,four-turn,6636.5
+16,Output tokens per program,meta-llama/llama-4-maverick,baseline,5208.625
+16,Output tokens per program,meta-llama/llama-4-maverick,four-turn,7906.6875
+16,Output tokens per program,openai/gpt-5.6-luna,baseline,5065.5625
+16,Output tokens per program,openai/gpt-5.6-luna,four-turn,9948.1875
+16,Output tokens per program,qwen/qwen3.8-flash,baseline,43927.8125
+16,Output tokens per program,qwen/qwen3.8-flash,four-turn,75227.4375
 16,Validator fix rounds,claude-haiku-4-5,baseline,1.0
 16,Validator fix rounds,claude-haiku-4-5,four-turn,0.4375
 16,Validator fix rounds,deepseek-flash,baseline,1.5625
 16,Validator fix rounds,deepseek-flash,four-turn,1.5625
 16,Validator fix rounds,gemini-3.1-flash-lite,baseline,0.8125
 16,Validator fix rounds,gemini-3.1-flash-lite,four-turn,0.875
+16,Validator fix rounds,meta-llama/llama-4-maverick,baseline,0.9375
+16,Validator fix rounds,meta-llama/llama-4-maverick,four-turn,0.6875
+16,Validator fix rounds,openai/gpt-5.6-luna,baseline,0.1875
+16,Validator fix rounds,openai/gpt-5.6-luna,four-turn,0.125
+16,Validator fix rounds,qwen/qwen3.8-flash,baseline,0.0625
+16,Validator fix rounds,qwen/qwen3.8-flash,four-turn,0.0625
 20,Steps F1,claude-haiku-4-5,baseline,0.4972
 20,Steps F1,claude-haiku-4-5,four-turn,0.9159
 20,Steps F1,gemini-3.1-flash-lite,baseline,0.5298
 20,Steps F1,gemini-3.1-flash-lite,four-turn,0.7984
+20,Steps F1,meta-llama/llama-4-maverick,baseline,0.5855
+20,Steps F1,meta-llama/llama-4-maverick,four-turn,0.8749
+20,Steps F1,openai/gpt-5.6-luna,baseline,0.5569
+20,Steps F1,openai/gpt-5.6-luna,four-turn,0.926
+20,Steps F1,qwen/qwen3.8-flash,baseline,0.3268
+20,Steps F1,qwen/qwen3.8-flash,four-turn,0.9105
 20,Durations accuracy,claude-haiku-4-5,baseline,0.8754
 20,Durations accuracy,claude-haiku-4-5,four-turn,0.9194
 20,Durations accuracy,gemini-3.1-flash-lite,baseline,0.9482
 20,Durations accuracy,gemini-3.1-flash-lite,four-turn,0.9102
+20,Durations accuracy,meta-llama/llama-4-maverick,baseline,0.9571
+20,Durations accuracy,meta-llama/llama-4-maverick,four-turn,0.9506
+20,Durations accuracy,openai/gpt-5.6-luna,baseline,0.838
+20,Durations accuracy,openai/gpt-5.6-luna,four-turn,0.9323
+20,Durations accuracy,qwen/qwen3.8-flash,baseline,0.8278
+20,Durations accuracy,qwen/qwen3.8-flash,four-turn,0.9315
 20,Relationships F1,claude-haiku-4-5,baseline,0.227
 20,Relationships F1,claude-haiku-4-5,four-turn,0.6175
 20,Relationships F1,gemini-3.1-flash-lite,baseline,0.2564
 20,Relationships F1,gemini-3.1-flash-lite,four-turn,0.5166
+20,Relationships F1,meta-llama/llama-4-maverick,baseline,0.2995
+20,Relationships F1,meta-llama/llama-4-maverick,four-turn,0.5887
+20,Relationships F1,openai/gpt-5.6-luna,baseline,0.2392
+20,Relationships F1,openai/gpt-5.6-luna,four-turn,0.6533
+20,Relationships F1,qwen/qwen3.8-flash,baseline,0.111
+20,Relationships F1,qwen/qwen3.8-flash,four-turn,0.5642
 20,Resources recall,claude-haiku-4-5,baseline,0.5914
 20,Resources recall,claude-haiku-4-5,four-turn,0.556
 20,Resources recall,gemini-3.1-flash-lite,baseline,0.5109
 20,Resources recall,gemini-3.1-flash-lite,four-turn,0.5698
+20,Resources recall,meta-llama/llama-4-maverick,baseline,0.5717
+20,Resources recall,meta-llama/llama-4-maverick,four-turn,0.4658
+20,Resources recall,openai/gpt-5.6-luna,baseline,0.5627
+20,Resources recall,openai/gpt-5.6-luna,four-turn,0.6553
+20,Resources recall,qwen/qwen3.8-flash,baseline,0.5491
+20,Resources recall,qwen/qwen3.8-flash,four-turn,0.5313
 20,Track structure (Rand),claude-haiku-4-5,baseline,0.832
 20,Track structure (Rand),claude-haiku-4-5,four-turn,0.92
 20,Track structure (Rand),gemini-3.1-flash-lite,baseline,0.8178
 20,Track structure (Rand),gemini-3.1-flash-lite,four-turn,0.7775
+20,Track structure (Rand),meta-llama/llama-4-maverick,baseline,0.9144
+20,Track structure (Rand),meta-llama/llama-4-maverick,four-turn,0.9036
+20,Track structure (Rand),openai/gpt-5.6-luna,baseline,0.7467
+20,Track structure (Rand),openai/gpt-5.6-luna,four-turn,0.8778
+20,Track structure (Rand),qwen/qwen3.8-flash,baseline,0.7164
+20,Track structure (Rand),qwen/qwen3.8-flash,four-turn,0.7841
 20,Unsupported steps,claude-haiku-4-5,baseline,0.6282
 20,Unsupported steps,claude-haiku-4-5,four-turn,0.0076
 20,Unsupported steps,gemini-3.1-flash-lite,baseline,0.4825
 20,Unsupported steps,gemini-3.1-flash-lite,four-turn,0.0676
+20,Unsupported steps,meta-llama/llama-4-maverick,baseline,0.4955
+20,Unsupported steps,meta-llama/llama-4-maverick,four-turn,0.0182
+20,Unsupported steps,openai/gpt-5.6-luna,baseline,0.5475
+20,Unsupported steps,openai/gpt-5.6-luna,four-turn,0.0275
+20,Unsupported steps,qwen/qwen3.8-flash,baseline,0.7651
+20,Unsupported steps,qwen/qwen3.8-flash,four-turn,0.045
 20,End-to-end pass,claude-haiku-4-5,baseline,0.1
 20,End-to-end pass,claude-haiku-4-5,four-turn,0.65
 20,End-to-end pass,gemini-3.1-flash-lite,baseline,0.15
 20,End-to-end pass,gemini-3.1-flash-lite,four-turn,0.4
+20,End-to-end pass,meta-llama/llama-4-maverick,baseline,0.05
+20,End-to-end pass,meta-llama/llama-4-maverick,four-turn,0.45
+20,End-to-end pass,openai/gpt-5.6-luna,baseline,0.15
+20,End-to-end pass,openai/gpt-5.6-luna,four-turn,0.55
+20,End-to-end pass,qwen/qwen3.8-flash,baseline,0.1
+20,End-to-end pass,qwen/qwen3.8-flash,four-turn,0.65
 20,Produced a program,claude-haiku-4-5,baseline,1.0
 20,Produced a program,claude-haiku-4-5,four-turn,1.0
 20,Produced a program,gemini-3.1-flash-lite,baseline,0.95
 20,Produced a program,gemini-3.1-flash-lite,four-turn,0.95
+20,Produced a program,meta-llama/llama-4-maverick,baseline,0.9
+20,Produced a program,meta-llama/llama-4-maverick,four-turn,0.85
+20,Produced a program,openai/gpt-5.6-luna,baseline,1.0
+20,Produced a program,openai/gpt-5.6-luna,four-turn,1.0
+20,Produced a program,qwen/qwen3.8-flash,baseline,1.0
+20,Produced a program,qwen/qwen3.8-flash,four-turn,1.0
 20,Cost per program (USD),claude-haiku-4-5,baseline,0.046
 20,Cost per program (USD),claude-haiku-4-5,four-turn,0.0909
 20,Cost per program (USD),gemini-3.1-flash-lite,baseline,0.0069
 20,Cost per program (USD),gemini-3.1-flash-lite,four-turn,0.0191
+20,Cost per program (USD),meta-llama/llama-4-maverick,baseline,0.0057
+20,Cost per program (USD),meta-llama/llama-4-maverick,four-turn,0.012
+20,Cost per program (USD),openai/gpt-5.6-luna,baseline,0.0072
+20,Cost per program (USD),openai/gpt-5.6-luna,four-turn,0.0184
+20,Cost per program (USD),qwen/qwen3.8-flash,baseline,0.0217
+20,Cost per program (USD),qwen/qwen3.8-flash,four-turn,0.0397
 20,Output tokens per program,claude-haiku-4-5,baseline,6211.05
 20,Output tokens per program,claude-haiku-4-5,four-turn,10295.65
 20,Output tokens per program,gemini-3.1-flash-lite,baseline,2760.4
 20,Output tokens per program,gemini-3.1-flash-lite,four-turn,6545.35
+20,Output tokens per program,meta-llama/llama-4-maverick,baseline,5141.45
+20,Output tokens per program,meta-llama/llama-4-maverick,four-turn,8023.75
+20,Output tokens per program,openai/gpt-5.6-luna,baseline,5102.8
+20,Output tokens per program,openai/gpt-5.6-luna,four-turn,10354.85
+20,Output tokens per program,qwen/qwen3.8-flash,baseline,44579.45
+20,Output tokens per program,qwen/qwen3.8-flash,four-turn,74962.25
 20,Validator fix rounds,claude-haiku-4-5,baseline,1.05
 20,Validator fix rounds,claude-haiku-4-5,four-turn,0.55
 20,Validator fix rounds,gemini-3.1-flash-lite,baseline,1.0
 20,Validator fix rounds,gemini-3.1-flash-lite,four-turn,0.8
+20,Validator fix rounds,meta-llama/llama-4-maverick,baseline,1.05
+20,Validator fix rounds,meta-llama/llama-4-maverick,four-turn,0.7
+20,Validator fix rounds,openai/gpt-5.6-luna,baseline,0.2
+20,Validator fix rounds,openai/gpt-5.6-luna,four-turn,0.25
+20,Validator fix rounds,qwen/qwen3.8-flash,baseline,0.1
+20,Validator fix rounds,qwen/qwen3.8-flash,four-turn,0.05
+24,Steps F1,claude-haiku-4-5,baseline,0.5028
+24,Steps F1,claude-haiku-4-5,four-turn,0.9236
+24,Steps F1,meta-llama/llama-4-maverick,baseline,0.607
+24,Steps F1,meta-llama/llama-4-maverick,four-turn,0.8782
+24,Steps F1,openai/gpt-5.6-luna,baseline,0.5639
+24,Steps F1,openai/gpt-5.6-luna,four-turn,0.9345
+24,Steps F1,qwen/qwen3.8-flash,baseline,0.3664
+24,Steps F1,qwen/qwen3.8-flash,four-turn,0.92
+24,Durations accuracy,claude-haiku-4-5,baseline,0.8916
+24,Durations accuracy,claude-haiku-4-5,four-turn,0.919
+24,Durations accuracy,meta-llama/llama-4-maverick,baseline,0.9573
+24,Durations accuracy,meta-llama/llama-4-maverick,four-turn,0.9489
+24,Durations accuracy,openai/gpt-5.6-luna,baseline,0.8598
+24,Durations accuracy,openai/gpt-5.6-luna,four-turn,0.9105
+24,Durations accuracy,qwen/qwen3.8-flash,baseline,0.8487
+24,Durations accuracy,qwen/qwen3.8-flash,four-turn,0.9257
+24,Relationships F1,claude-haiku-4-5,baseline,0.2275
+24,Relationships F1,claude-haiku-4-5,four-turn,0.6298
+24,Relationships F1,meta-llama/llama-4-maverick,baseline,0.3075
+24,Relationships F1,meta-llama/llama-4-maverick,four-turn,0.5903
+24,Relationships F1,openai/gpt-5.6-luna,baseline,0.2499
+24,Relationships F1,openai/gpt-5.6-luna,four-turn,0.6644
+24,Relationships F1,qwen/qwen3.8-flash,baseline,0.1345
+24,Relationships F1,qwen/qwen3.8-flash,four-turn,0.5791
+24,Resources recall,claude-haiku-4-5,baseline,0.565
+24,Resources recall,claude-haiku-4-5,four-turn,0.5606
+24,Resources recall,meta-llama/llama-4-maverick,baseline,0.5132
+24,Resources recall,meta-llama/llama-4-maverick,four-turn,0.496
+24,Resources recall,openai/gpt-5.6-luna,baseline,0.5592
+24,Resources recall,openai/gpt-5.6-luna,four-turn,0.6884
+24,Resources recall,qwen/qwen3.8-flash,baseline,0.5721
+24,Resources recall,qwen/qwen3.8-flash,four-turn,0.5643
+24,Track structure (Rand),claude-haiku-4-5,baseline,0.8383
+24,Track structure (Rand),claude-haiku-4-5,four-turn,0.9251
+24,Track structure (Rand),meta-llama/llama-4-maverick,baseline,0.9191
+24,Track structure (Rand),meta-llama/llama-4-maverick,four-turn,0.9058
+24,Track structure (Rand),openai/gpt-5.6-luna,baseline,0.779
+24,Track structure (Rand),openai/gpt-5.6-luna,four-turn,0.8847
+24,Track structure (Rand),qwen/qwen3.8-flash,baseline,0.7566
+24,Track structure (Rand),qwen/qwen3.8-flash,four-turn,0.8011
+24,Unsupported steps,claude-haiku-4-5,baseline,0.6226
+24,Unsupported steps,claude-haiku-4-5,four-turn,0.0064
+24,Unsupported steps,meta-llama/llama-4-maverick,baseline,0.478
+24,Unsupported steps,meta-llama/llama-4-maverick,four-turn,0.0155
+24,Unsupported steps,openai/gpt-5.6-luna,baseline,0.5476
+24,Unsupported steps,openai/gpt-5.6-luna,four-turn,0.0295
+24,Unsupported steps,qwen/qwen3.8-flash,baseline,0.7384
+24,Unsupported steps,qwen/qwen3.8-flash,four-turn,0.0445
+24,End-to-end pass,claude-haiku-4-5,baseline,0.0833
+24,End-to-end pass,claude-haiku-4-5,four-turn,0.625
+24,End-to-end pass,meta-llama/llama-4-maverick,baseline,0.0417
+24,End-to-end pass,meta-llama/llama-4-maverick,four-turn,0.375
+24,End-to-end pass,openai/gpt-5.6-luna,baseline,0.125
+24,End-to-end pass,openai/gpt-5.6-luna,four-turn,0.5417
+24,End-to-end pass,qwen/qwen3.8-flash,baseline,0.1667
+24,End-to-end pass,qwen/qwen3.8-flash,four-turn,0.6667
+24,Produced a program,claude-haiku-4-5,baseline,0.9583
+24,Produced a program,claude-haiku-4-5,four-turn,1.0
+24,Produced a program,meta-llama/llama-4-maverick,baseline,0.9167
+24,Produced a program,meta-llama/llama-4-maverick,four-turn,0.8333
+24,Produced a program,openai/gpt-5.6-luna,baseline,1.0
+24,Produced a program,openai/gpt-5.6-luna,four-turn,1.0
+24,Produced a program,qwen/qwen3.8-flash,baseline,1.0
+24,Produced a program,qwen/qwen3.8-flash,four-turn,1.0
+24,Cost per program (USD),claude-haiku-4-5,baseline,0.0457
+24,Cost per program (USD),claude-haiku-4-5,four-turn,0.0917
+24,Cost per program (USD),meta-llama/llama-4-maverick,baseline,0.0054
+24,Cost per program (USD),meta-llama/llama-4-maverick,four-turn,0.0123
+24,Cost per program (USD),openai/gpt-5.6-luna,baseline,0.0073
+24,Cost per program (USD),openai/gpt-5.6-luna,four-turn,0.0179
+24,Cost per program (USD),qwen/qwen3.8-flash,baseline,0.0222
+24,Cost per program (USD),qwen/qwen3.8-flash,four-turn,0.0384
+24,Output tokens per program,claude-haiku-4-5,baseline,6154.875
+24,Output tokens per program,claude-haiku-4-5,four-turn,10259.7917
+24,Output tokens per program,meta-llama/llama-4-maverick,baseline,4905.25
+24,Output tokens per program,meta-llama/llama-4-maverick,four-turn,8092.1667
+24,Output tokens per program,openai/gpt-5.6-luna,baseline,5159.9167
+24,Output tokens per program,openai/gpt-5.6-luna,four-turn,10047.2917
+24,Output tokens per program,qwen/qwen3.8-flash,baseline,45695.1667
+24,Output tokens per program,qwen/qwen3.8-flash,four-turn,72170.4583
+24,Validator fix rounds,claude-haiku-4-5,baseline,1.0417
+24,Validator fix rounds,claude-haiku-4-5,four-turn,0.625
+24,Validator fix rounds,meta-llama/llama-4-maverick,baseline,0.9583
+24,Validator fix rounds,meta-llama/llama-4-maverick,four-turn,0.8333
+24,Validator fix rounds,openai/gpt-5.6-luna,baseline,0.2083
+24,Validator fix rounds,openai/gpt-5.6-luna,four-turn,0.2083
+24,Validator fix rounds,qwen/qwen3.8-flash,baseline,0.125
+24,Validator fix rounds,qwen/qwen3.8-flash,four-turn,0.0417

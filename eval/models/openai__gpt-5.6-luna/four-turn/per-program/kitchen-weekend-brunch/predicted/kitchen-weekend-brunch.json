@@ -1,0 +1,362 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "saturday-brunch-for-four",
+  "name": "Saturday Brunch for Four",
+  "description": "Prepare bacon, pancakes, fruit salad, and coffee for four, serving everything together at 10:00.",
+  "environmentType": "kitchen",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "bacon",
+      "name": "Bacon",
+      "steps": [
+        {
+          "stepId": "preheat-oven",
+          "name": "Preheat the oven to 400°F",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": null,
+            "inferred": true
+          }
+        },
+        {
+          "stepId": "bake-bacon",
+          "name": "Bake the bacon",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "preheat-oven"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "bake at 400°F for 20 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "drain-bacon",
+          "name": "Drain the bacon",
+          "task": "counter",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bake-bacon"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Drain on paper towels for 2 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "hold-bacon-warm",
+          "name": "Hold the drained bacon warm until serving",
+          "task": "counter",
+          "duration": {
+            "type": "indefinite",
+            "defaultSeconds": 780
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "drain-bacon"
+          },
+          "metadata": {
+            "sourceSpan": null,
+            "inferred": true
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "pancakes",
+      "name": "Pancakes",
+      "steps": [
+        {
+          "stepId": "whisk-pancake-dry-ingredients",
+          "name": "Whisk the dry pancake ingredients",
+          "task": "hands",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Whisk together two cups of flour, two tablespoons of sugar, a tablespoon of baking powder and a teaspoon of salt; 5 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "mix-pancake-batter",
+          "name": "Beat the wet ingredients and combine the batter",
+          "task": "hands",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "whisk-pancake-dry-ingredients"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "In a jug beat two eggs with a cup and a half of milk and three tablespoons of melted butter, then stir the wet into the dry until just combined, another 5 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "rest-pancake-batter",
+          "name": "Rest the pancake batter",
+          "task": "counter",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "mix-pancake-batter"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Let the batter rest for 10 minutes while the bacon cooks",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "heat-griddle",
+          "name": "Heat the griddle",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest-pancake-batter"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Heat a griddle over medium heat for 5 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "cook-pancakes",
+          "name": "Cook the pancakes in batches",
+          "task": "burner",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 840,
+            "maxSeconds": 960,
+            "defaultSeconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "heat-griddle"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Cook the pancakes in batches, a quarter cup each, about 2 minutes per side, 15 minutes for the whole batch",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "fruit-salad",
+      "name": "Fruit Salad",
+      "steps": [
+        {
+          "stepId": "prep-fruit-salad",
+          "name": "Prepare the fruit salad",
+          "task": "hands",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 300
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Halve a pint of strawberries, cube a small melon and a mango, and add a cup of blueberries; this takes about 10 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "chill-fruit-salad",
+          "name": "Chill the fruit salad",
+          "task": "refrigerator",
+          "duration": {
+            "type": "indefinite",
+            "defaultSeconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep-fruit-salad"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "chill for at least 15 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "coffee",
+      "name": "Coffee",
+      "steps": [
+        {
+          "stepId": "set-up-coffee",
+          "name": "Grind the beans and set up the coffee pot",
+          "task": "hands",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 1920
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Grind the beans and set up the pot, 3 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "brew-coffee",
+          "name": "Brew a full pot of coffee",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "set-up-coffee",
+            "offsetSeconds": 420
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "brew a full pot, which takes 8 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "service",
+      "name": "Serve",
+      "steps": [
+        {
+          "stepId": "serve-brunch",
+          "name": "Bring everything out together",
+          "task": "hands",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "hold-bacon-warm"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "cook-pancakes"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "chill-fruit-salad"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "brew-coffee"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Bring everything out together while the pancakes are hot; 2 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "oven",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "burner",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "hands",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "counter",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "refrigerator",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "serves": "4",
+    "deadline": "10:00",
+    "source": "Saturday Brunch for Four",
+    "sourceUrl": "",
+    "attribution": ""
+  }
+}

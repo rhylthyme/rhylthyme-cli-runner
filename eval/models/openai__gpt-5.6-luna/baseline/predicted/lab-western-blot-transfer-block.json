@@ -1,0 +1,394 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "western-blot-sds-page-wet-transfer-overnight-primary",
+  "name": "Western Blot: SDS-PAGE, Wet Transfer and Overnight Primary",
+  "description": "One 10-lane precast gel, wet transfer to one PVDF membrane, overnight primary antibody incubation, secondary probing and chemiluminescent detection.",
+  "environmentType": "laboratory",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "sample-and-gel",
+      "name": "Sample preparation and SDS-PAGE",
+      "steps": [
+        {
+          "stepId": "thaw-normalize-lysates",
+          "name": "Thaw lysates on ice and normalize to 2 mg/mL",
+          "task": "sample_prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "denature-samples",
+          "name": "Add 4× Laemmli buffer and denature at 95 °C",
+          "task": "heat_block",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "thaw-normalize-lysates"
+          }
+        },
+        {
+          "stepId": "spin-condensate",
+          "name": "Spin tubes to collect condensate",
+          "task": "microcentrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "denature-samples"
+          }
+        },
+        {
+          "stepId": "assemble-gel-tank",
+          "name": "Assemble tank, seat the precast gel and fill with running buffer",
+          "task": "gel_tank",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "spin-condensate"
+          }
+        },
+        {
+          "stepId": "load-gel",
+          "name": "Load 20 µg per lane and 5 µL protein ladder",
+          "task": "gel_tank",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "assemble-gel-tank"
+          }
+        },
+        {
+          "stepId": "run-sds-page",
+          "name": "Run gel at 120 V until dye front reaches the foot",
+          "task": "gel_tank",
+          "duration": {
+            "type": "fixed",
+            "seconds": 4500
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "load-gel"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "transfer-buffer-and-membrane-prep",
+      "name": "Transfer preparation",
+      "steps": [
+        {
+          "stepId": "chill-transfer-buffer",
+          "name": "Place 1 L transfer buffer in the cold room",
+          "task": "cold_room",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 2520
+          }
+        },
+        {
+          "stepId": "wet-pvdf-membrane",
+          "name": "Wet PVDF membrane in methanol and equilibrate in transfer buffer",
+          "task": "transfer_prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "run-sds-page",
+            "event": "start",
+            "offsetSeconds": 3600
+          }
+        },
+        {
+          "stepId": "soak-transfer-pads",
+          "name": "Soak fibre pads and filter paper in cold transfer buffer",
+          "task": "transfer_prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wet-pvdf-membrane"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "wet-transfer-and-primary",
+      "name": "Wet transfer, blocking and overnight primary",
+      "steps": [
+        {
+          "stepId": "build-transfer-sandwich",
+          "name": "Prise gel from cassette and build bubble-free transfer sandwich",
+          "task": "transfer_tank",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "run-sds-page",
+                "offsetSeconds": 300
+              },
+              {
+                "type": "afterStep",
+                "stepId": "chill-transfer-buffer"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "soak-transfer-pads"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "wet-transfer",
+          "name": "Transfer at 100 V with an ice pack",
+          "task": "transfer_tank",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "build-transfer-sandwich"
+          }
+        },
+        {
+          "stepId": "ponceau-stain-rinse",
+          "name": "Stain membrane with Ponceau S, photograph and rinse",
+          "task": "tray",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wet-transfer"
+          }
+        },
+        {
+          "stepId": "block-membrane",
+          "name": "Block in 5% milk at room temperature",
+          "task": "rocker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "ponceau-stain-rinse"
+          }
+        },
+        {
+          "stepId": "primary-antibody",
+          "name": "Incubate with primary antibody overnight in the cold room",
+          "task": "cold_room",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 43200,
+            "maxSeconds": 64800,
+            "defaultSeconds": 43200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "block-membrane"
+          }
+        },
+        {
+          "stepId": "wash-after-primary",
+          "name": "Wash membrane three times for 10 minutes",
+          "task": "rocker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "primary-antibody"
+          }
+        },
+        {
+          "stepId": "secondary-antibody",
+          "name": "Incubate with HRP-conjugated secondary antibody",
+          "task": "rocker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-after-primary"
+          }
+        },
+        {
+          "stepId": "wash-after-secondary",
+          "name": "Wash membrane three times for 10 minutes",
+          "task": "rocker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "secondary-antibody"
+          }
+        },
+        {
+          "stepId": "apply-ecl",
+          "name": "Drain membrane, apply ECL substrate and allow it to react",
+          "task": "tray",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "wash-after-secondary"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "mix-ecl-substrate"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "image-blot",
+          "name": "Image the blot with 10 minutes of exposures",
+          "task": "chemiluminescence_imager",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "apply-ecl"
+          }
+        },
+        {
+          "stepId": "quantify-bands",
+          "name": "Quantify bands against the loading control",
+          "task": "analysis",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "image-blot"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "ecl-preparation",
+      "name": "ECL preparation",
+      "steps": [
+        {
+          "stepId": "mix-ecl-substrate",
+          "name": "Mix ECL substrate",
+          "task": "ecl_prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "secondary-antibody",
+            "event": "start",
+            "offsetSeconds": 3000
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "sample_prep",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "heat_block",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "microcentrifuge",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "gel_tank",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "cold_room",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "transfer_prep",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "transfer_tank",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "tray",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "rocker",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "ecl_prep",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "chemiluminescence_imager",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "analysis",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "sourceUrl": "",
+    "attribution": "User-provided source text",
+    "samples": "One 10-lane gel",
+    "membranes": "One PVDF membrane",
+    "notes": "One operator is declared via actors: 1. Primary incubation is variable from 12 to 18 hours with a 12-hour planning default."
+  }
+}

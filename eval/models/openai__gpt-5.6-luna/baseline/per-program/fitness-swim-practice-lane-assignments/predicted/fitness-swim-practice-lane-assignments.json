@@ -1,0 +1,293 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "thursday-am-three-lane-squad-practice",
+  "name": "Thursday AM — Three-Lane Squad Practice",
+  "description": "Three-lane swim practice for one squad of twelve, with one coach, one set of starting blocks, and a 150-minute pool-time limit.",
+  "environmentType": "gym",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "coach",
+      "name": "Coach deck",
+      "steps": [
+        {
+          "stepId": "brief-squad",
+          "name": "Brief squad on deck",
+          "task": "coach-deck",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "watch-warmup",
+          "name": "Watch warm-up and correct technique",
+          "task": "coach-deck",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "brief-squad"
+          }
+        },
+        {
+          "stepId": "whiteboard-main-set",
+          "name": "Call lanes to wall and explain main set",
+          "task": "coach-deck",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "watch-warmup"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "warmup",
+                "instances": "all"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "time-sprints",
+          "name": "Time sprint set from deck",
+          "task": "coach-deck",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "main-lane-1"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "main-lane-2"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "main-lane-3"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "debrief",
+          "name": "Debrief: splits, corrections, and Saturday meet",
+          "task": "coach-deck",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "time-sprints"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "cooldown",
+                "instances": "all"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "shared-lane-work",
+      "name": "Shared three-lane work",
+      "steps": [
+        {
+          "stepId": "warmup",
+          "name": "Warm-up: 800 easy mixed stroke",
+          "task": "pool-lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "replicates": {
+            "count": 3,
+            "mode": "parallel"
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 300
+          }
+        },
+        {
+          "stepId": "kick-set",
+          "name": "Kick set: boards in lanes 1–2, vertical kick in lane 3",
+          "task": "pool-lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "replicates": {
+            "count": 3,
+            "mode": "parallel"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "whiteboard-main-set"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "lane-1",
+      "name": "Lane 1 — Sprint group",
+      "steps": [
+        {
+          "stepId": "main-lane-1",
+          "name": "Lane 1 main set",
+          "task": "pool-lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2400
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "kick-set",
+            "instances": "all"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "lane-2",
+      "name": "Lane 2 — Middle-distance group",
+      "steps": [
+        {
+          "stepId": "main-lane-2",
+          "name": "Lane 2 main set",
+          "task": "pool-lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "kick-set",
+            "instances": "all"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "lane-3",
+      "name": "Lane 3 — Distance group",
+      "steps": [
+        {
+          "stepId": "main-lane-3",
+          "name": "Lane 3 main set",
+          "task": "pool-lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3000
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "kick-set",
+            "instances": "all"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "sprints-and-cooldown",
+      "name": "Starting-block sprint rotation and cooldown",
+      "steps": [
+        {
+          "stepId": "sprint-set",
+          "name": "Sprint set: lane 1, then lane 2, then lane 3",
+          "task": "starting-blocks",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "replicates": {
+            "count": 3,
+            "mode": "serial"
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "main-lane-1"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "main-lane-2"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "main-lane-3"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "cooldown",
+          "name": "Three-lane cooldown: 300 easy backstroke and breaststroke",
+          "task": "pool-lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "replicates": {
+            "count": 3,
+            "mode": "parallel"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "sprint-set",
+            "instances": "all"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "coach-deck",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "pool-lane",
+      "maxConcurrent": 3
+    },
+    {
+      "task": "starting-blocks",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "session": "Thursday AM",
+    "squadSize": 12,
+    "laneCount": 3,
+    "poolTimeLimitSeconds": 9000,
+    "sourceUrl": "",
+    "attribution": ""
+  }
+}

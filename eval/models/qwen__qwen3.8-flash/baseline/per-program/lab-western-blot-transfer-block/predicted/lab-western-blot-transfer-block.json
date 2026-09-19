@@ -1,0 +1,419 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "western-blot-sds-page-wet-transfer-overnight-primary",
+  "name": "Western Blot: SDS-PAGE, Wet Transfer and Overnight Primary",
+  "description": "Schedule one 10-lane precast gel, wet PVDF transfer, overnight primary, and chemiluminescence detection.",
+  "environmentType": "laboratory",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "sample-prep",
+      "name": "Sample Preparation",
+      "steps": [
+        {
+          "stepId": "sample-thaw",
+          "name": "Thaw lysates on ice and normalise to 2 mg/mL",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "sample-denature",
+          "name": "Add 4x Laemmli buffer and denature at 95 C",
+          "task": "heatBlock",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "sample-thaw"
+          }
+        },
+        {
+          "stepId": "sample-spin",
+          "name": "Spin tubes to collect condensate",
+          "task": "microcentrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "sample-denature"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "gel-electrophoresis",
+      "name": "Gel Electrophoresis",
+      "steps": [
+        {
+          "stepId": "gel-assemble",
+          "name": "Assemble gel tank, seat precast gel, and fill running buffer",
+          "task": "gelTank",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "sample-spin"
+          }
+        },
+        {
+          "stepId": "gel-load",
+          "name": "Load protein ladder and 20 ug per lane",
+          "task": "gelTank",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "replicates": {
+            "count": 10,
+            "mode": "serial"
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "gel-assemble"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "sample-spin"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "gel-run",
+          "name": "Run SDS-PAGE at 120 V",
+          "task": "gelTank",
+          "duration": {
+            "type": "fixed",
+            "seconds": 4500
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "gel-load",
+            "instances": "all"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "transfer-prep",
+      "name": "Transfer Preparation",
+      "steps": [
+        {
+          "stepId": "transfer-chill",
+          "name": "Chill 1 L transfer buffer in the cold room one hour before use",
+          "task": "coldRoom",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "gel-load",
+            "instances": "all"
+          }
+        },
+        {
+          "stepId": "transfer-membrane",
+          "name": "Wet PVDF membrane in methanol and equilibrate in transfer buffer",
+          "task": "tray",
+          "duration": {
+            "type": "fixed",
+            "seconds": 330
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "transfer-chill"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "gel-run",
+                "event": "start",
+                "offsetSeconds": 3600
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "transfer-pads",
+          "name": "Soak fibre pads and filter paper in cold transfer buffer",
+          "task": "tray",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "transfer-membrane"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "blotting-probing",
+      "name": "Blotting, Blocking, Probing and Washing",
+      "steps": [
+        {
+          "stepId": "blot-build",
+          "name": "Prise gel from cassette and build transfer sandwich",
+          "task": "tray",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "gel-run",
+                "offsetSeconds": 300
+              },
+              {
+                "type": "afterStep",
+                "stepId": "transfer-pads"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "blot-transfer",
+          "name": "Wet transfer at 100 V with ice pack",
+          "task": "wetTransferTank",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "blot-build"
+          }
+        },
+        {
+          "stepId": "blot-stain",
+          "name": "Stain with Ponceau S, photograph, and rinse off",
+          "task": "tray",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "blot-transfer"
+          }
+        },
+        {
+          "stepId": "blot-block",
+          "name": "Block membrane in 5% milk on orbital rocker",
+          "task": "rocker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "blot-stain"
+          }
+        },
+        {
+          "stepId": "blot-primary",
+          "name": "Probe with primary antibody overnight in the cold room",
+          "task": "coldRoom",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 43200,
+            "maxSeconds": 64800,
+            "defaultSeconds": 50400
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "blot-block"
+          }
+        },
+        {
+          "stepId": "blot-wash-1",
+          "name": "Wash three times for 10 minutes each on the rocker",
+          "task": "rocker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "replicates": {
+            "count": 3,
+            "mode": "serial"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "blot-primary"
+          }
+        },
+        {
+          "stepId": "blot-secondary",
+          "name": "Probe with HRP-conjugated secondary antibody on the rocker",
+          "task": "rocker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "blot-wash-1",
+            "instances": "all"
+          }
+        },
+        {
+          "stepId": "blot-wash-2",
+          "name": "Wash three times for 10 minutes each on the rocker",
+          "task": "rocker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "replicates": {
+            "count": 3,
+            "mode": "serial"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "blot-secondary"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "detection",
+      "name": "Detection and Quantification",
+      "steps": [
+        {
+          "stepId": "detection-ecl",
+          "name": "Mix ECL substrate 50 minutes into the secondary incubation",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "blot-secondary",
+            "event": "start",
+            "offsetSeconds": 3000
+          }
+        },
+        {
+          "stepId": "detection-apply",
+          "name": "Drain membrane, apply substrate, and let it develop",
+          "task": "tray",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "blot-wash-2",
+                "instances": "all"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "detection-ecl"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "detection-image",
+          "name": "Image chemiluminescent blot",
+          "task": "imager",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "detection-apply"
+          }
+        },
+        {
+          "stepId": "detection-quantify",
+          "name": "Quantify bands against the loading control",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "detection-image"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "operator",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "heatBlock",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "microcentrifuge",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "gelTank",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "coldRoom",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "tray",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "wetTransferTank",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "rocker",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "imager",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "gelLanes": 10,
+    "membraneCount": 1,
+    "sourceUrl": "",
+    "attribution": "Provided Western Blot source text"
+  }
+}

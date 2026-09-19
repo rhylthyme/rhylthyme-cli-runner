@@ -1,0 +1,318 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "hek293-passaging",
+  "name": "Passaging Two Flasks of Adherent HEK293 Cells",
+  "environmentType": "laboratory",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "prep",
+      "name": "Preparation",
+      "steps": [
+        {
+          "stepId": "prep_cabinet",
+          "name": "Prepare cabinet",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "check_flasks",
+          "name": "Check flasks",
+          "task": "microscope",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep_cabinet"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "flask_a",
+      "name": "Flask A Processing",
+      "steps": [
+        {
+          "stepId": "aspirate_a",
+          "name": "Aspirate and rinse Flask A",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "check_flasks"
+          }
+        },
+        {
+          "stepId": "trypsinise_a",
+          "name": "Trypsinise Flask A",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "aspirate_a"
+          }
+        },
+        {
+          "stepId": "neutralise_a",
+          "name": "Neutralise Flask A",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "trypsinise_a"
+          }
+        },
+        {
+          "stepId": "spin_a",
+          "name": "Spin Flask A",
+          "task": "centrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "neutralise_a"
+          }
+        },
+        {
+          "stepId": "resuspend_a",
+          "name": "Resuspend Flask A pellet",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "spin_a"
+          }
+        },
+        {
+          "stepId": "count_a",
+          "name": "Count Flask A cells",
+          "task": "microscope",
+          "duration": {
+            "type": "fixed",
+            "seconds": 360
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "resuspend_a"
+          }
+        },
+        {
+          "stepId": "seed_a",
+          "name": "Seed new flasks from Flask A",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": 360
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "count_a"
+          }
+        },
+        {
+          "stepId": "incubate_a",
+          "name": "Incubate new flasks from Flask A",
+          "task": "incubator",
+          "duration": {
+            "type": "indefinite",
+            "defaultSeconds": 57600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "seed_a"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "flask_b",
+      "name": "Flask B Processing",
+      "steps": [
+        {
+          "stepId": "aspirate_b",
+          "name": "Aspirate and rinse Flask B",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "aspirate_a"
+          }
+        },
+        {
+          "stepId": "trypsinise_b",
+          "name": "Trypsinise Flask B",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "aspirate_b"
+          }
+        },
+        {
+          "stepId": "neutralise_b",
+          "name": "Neutralise Flask B",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "neutralise_a"
+          }
+        },
+        {
+          "stepId": "spin_b",
+          "name": "Spin Flask B",
+          "task": "centrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "neutralise_b"
+          }
+        },
+        {
+          "stepId": "resuspend_b",
+          "name": "Resuspend Flask B pellet",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "spin_b"
+          }
+        },
+        {
+          "stepId": "count_b",
+          "name": "Count Flask B cells",
+          "task": "microscope",
+          "duration": {
+            "type": "fixed",
+            "seconds": 360
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "count_a"
+          }
+        },
+        {
+          "stepId": "seed_b",
+          "name": "Seed new flasks from Flask B",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": 360
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "count_b"
+          }
+        },
+        {
+          "stepId": "incubate_b",
+          "name": "Incubate new flasks from Flask B",
+          "task": "incubator",
+          "duration": {
+            "type": "indefinite",
+            "defaultSeconds": 57600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "seed_b"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "finishing",
+      "name": "Finishing",
+      "steps": [
+        {
+          "stepId": "finish_cabinet",
+          "name": "Finish cabinet work",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "seed_b"
+          }
+        },
+        {
+          "stepId": "log_culture",
+          "name": "Log culture details",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "finish_cabinet"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "cabinet",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "water_bath",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "incubator",
+      "maxConcurrent": 4
+    },
+    {
+      "task": "centrifuge",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "microscope",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "bench",
+      "maxConcurrent": 1
+    }
+  ]
+}
