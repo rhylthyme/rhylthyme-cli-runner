@@ -54,6 +54,16 @@ PRICES_PER_MTOK: Dict[str, tuple] = {
     "gemini-3.5-flash-lite": (0.30, 2.50),
     "gemini-3.1-flash-lite": (0.25, 1.50),
     "gemini-2.5-flash-lite": (0.10, 0.40),
+    # OpenAI list price (developers.openai.com/api/docs/pricing, 2026-09-19).
+    "gpt-5.6-luna": (0.20, 1.20),
+    # Through OpenRouter, from its public /api/v1/models listing on
+    # 2026-09-19. Reasoning tokens are billed as output.
+    "openai/gpt-5.6-luna": (0.20, 1.20),
+    "qwen/qwen3.8-flash": (0.15, 0.47),
+    "qwen/qwen3-235b-a22b-2507": (0.0875, 0.35),
+    "meta-llama/llama-4-maverick": (0.188, 0.652),
+    "meta-llama/llama-4-scout": (0.10, 0.30),
+    "meta-llama/llama-3.3-70b-instruct": (0.10, 0.32),
 }
 
 
@@ -213,6 +223,7 @@ OPENAI_COMPAT_PROVIDERS = [
         "https://generativelanguage.googleapis.com/v1beta/openai",
         "GEMINI_API_KEY",
     ),
+    ("gpt-", "https://api.openai.com/v1", "OPENAI_API_KEY"),
 ]
 OPENROUTER = ("https://openrouter.ai/api/v1", "OPENROUTER_API_KEY")
 
@@ -270,7 +281,12 @@ class OpenAICompatClient:
             {
                 "model": model,
                 "messages": chat,
-                "max_tokens": max_tokens,
+                # OpenAI's current models reject `max_tokens`.
+                (
+                    "max_completion_tokens"
+                    if "api.openai.com" in self.base_url
+                    else "max_tokens"
+                ): max_tokens,
                 "stream": False,
             }
         ).encode("utf-8")

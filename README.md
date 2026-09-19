@@ -616,6 +616,20 @@ could cross `--cap`. The ledger is cumulative across models and
 invocations, and the script refuses a model with no known price (it would
 be recorded as $0 and the cap would never trip).
 
+One OpenRouter key reaches OpenAI, Qwen and Meta models (ids with a vendor
+prefix). Run the cheapest first and raise the cumulative cap as you go, so
+no single model can spend the whole allowance. Reasoning models need a
+higher per-call output ceiling than the default 16,000 tokens:
+
+```bash
+export OPENROUTER_API_KEY=...
+L=eval/models/spend-ledger-openrouter.json
+python eval/run_model_comparison.py --ledger $L --model meta-llama/llama-4-maverick --cap 0.80 --first-guess 0.05
+python eval/run_model_comparison.py --ledger $L --model qwen/qwen3.8-flash --cap 2.00 --first-guess 0.08 --max-tokens 64000
+python eval/run_model_comparison.py --ledger $L --model openai/gpt-5.6-luna --cap 4.50 --first-guess 0.15 --max-tokens 64000
+python eval/compare_models.py
+```
+
 ```bash
 export DEEPSEEK_API_KEY=...
 python eval/run_model_comparison.py --model deepseek-flash --cap 6.70 --dry-run

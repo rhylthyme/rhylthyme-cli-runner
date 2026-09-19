@@ -208,3 +208,67 @@ def test_capped_driver_refuses_an_unpriced_model(clean_env):
     )
     assert proc.returncode != 0
     assert "No price known" in proc.stderr + proc.stdout
+
+
+def test_openai_direct_uses_max_completion_tokens_and_openrouter_ids_route(
+    clean_env, monkeypatch
+):
+    assert llm.provider_for("gpt-5.6-luna") == (
+        "https://api.openai.com/v1",
+        "OPENAI_API_KEY",
+    )
+    for model in (
+        "openai/gpt-5.6-luna",
+        "qwen/qwen3.8-flash",
+        "meta-llama/llama-4-maverick",
+    ):
+        assert llm.provider_for(model) == llm.OPENROUTER
+        assert llm.price_for(model) is not None, model
+    fake = FakeChat()
+    try:
+        llm.OpenAICompatClient(fake.url, "k").complete(
+            [{"role": "user", "content": "x"}], model="m", max_tokens=9
+        )
+        client = llm.OpenAICompatClient(fake.url, "k")
+        client.base_url = fake.url  # same server, but pretend it is OpenAI's host
+        monkeypatch.setattr(client, "base_url", fake.url + "/api.openai.com")
+        client.complete(
+            [{"role": "user", "content": "x"}], model="gpt-5.6-luna", max_tokens=9
+        )
+    finally:
+        fake.close()
+    assert (
+        "max_tokens" in fake.requests[0]["body"]
+        and "max_completion_tokens" not in fake.requests[0]["body"]
+    )
+    assert (
+        fake.requests[1]["body"].get("max_completion_tokens") == 9
+        and "max_tokens" not in fake.requests[1]["body"]
+    )
+
+
+def test_driver_flattens_vendor_prefixed_model_ids(clean_env, tmp_path, monkeypatch):
+    monkeypatch.setenv("OPENROUTER_API_KEY", "unused")
+    proc = subprocess.run(
+        [
+            sys.executable,
+            str(ROOT / "eval" / "run_model_comparison.py"),
+            "--model",
+            "qwen/qwen3.8-flash",
+            "--cap",
+            "1",
+            "--out",
+            str(tmp_path),
+            "--ledger",
+            str(tmp_path / "ledger.json"),
+            "--max-tokens",
+            "64000",
+            "--max-programs",
+            "2",
+            "--dry-run",
+        ],
+        capture_output=True,
+        text=True,
+    )
+    assert proc.returncode == 0, proc.stderr
+    assert proc.stdout.count("would run") == 4

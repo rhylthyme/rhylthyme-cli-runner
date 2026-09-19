@@ -47,6 +47,11 @@ ALWAYS = {
 }
 
 
+def short(model: str) -> str:
+    """Column label: drop the vendor prefix."""
+    return model.split("/")[-1].replace("claude-", "")
+
+
 def programs_of(path: Path) -> dict:
     data = json.loads(path.read_text())
     results = data.get("results", data)
@@ -71,7 +76,10 @@ def main() -> None:
         ("claude-haiku-4-5", "four-turn"): programs_of(HERE / "four-turn.json"),
     }
     for results in sorted(OUT.glob("*/*/results.json")):
-        cells[(results.parent.parent.name, results.parent.name)] = programs_of(results)
+        # Directory names flatten "vendor/model" to "vendor__model".
+        cells[(results.parent.parent.name.replace("__", "/"), results.parent.name)] = (
+            programs_of(results)
+        )
 
     order = sorted(
         cells, key=lambda k: (k[0] != "claude-haiku-4-5", k[0], k[1] != "baseline")
@@ -102,16 +110,13 @@ def main() -> None:
         cols = [c for c in order if c[0] in chosen]
         domains = sorted({s.split("-")[0] for s in slugs})
         out = [
-            f"## {len(slugs)} programs: "
-            + ", ".join(m.replace("claude-", "") for m in chosen),
+            f"## {len(slugs)} programs: " + ", ".join(short(m) for m in chosen),
             "",
             "Domains: "
             + ", ".join(f"{d} {sum(s.startswith(d) for s in slugs)}" for d in domains)
             + ".",
             "",
-            "| Metric | "
-            + " | ".join(f"{m.replace('claude-', '')} {p}" for m, p in cols)
-            + " |",
+            "| Metric | " + " | ".join(f"{short(m)} {p}" for m, p in cols) + " |",
             "|---|" + "---|" * len(cols),
         ]
         for key, label, fn in METRICS:
@@ -130,9 +135,7 @@ def main() -> None:
             "",
             "End-to-end by program, four-turn prompt:",
             "",
-            "| Program | "
-            + " | ".join(m.replace("claude-", "") for m, _ in four)
-            + " |",
+            "| Program | " + " | ".join(short(m) for m, _ in four) + " |",
             "|---|" + "---|" * len(four),
         ]
         for s in slugs:
@@ -162,7 +165,7 @@ def main() -> None:
         "it actually charged about a third of that off-peak).",
         "",
         "Programs run per model: "
-        + ", ".join(f"{m.replace('claude-', '')} {len(coverage[m])}" for m in models)
+        + ", ".join(f"{short(m)} {len(coverage[m])}" for m in models)
         + ".",
         "",
     ]

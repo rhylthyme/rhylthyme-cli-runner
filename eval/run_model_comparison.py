@@ -109,6 +109,13 @@ def main() -> None:
         help="Only the first N programs of the domain round-robin order.",
     )
     ap.add_argument(
+        "--max-tokens",
+        type=int,
+        default=None,
+        help="Per-call output ceiling passed to eval-prompts (its default is 16000). Reasoning "
+        "models count their reasoning against it: DeepSeek and Sonnet lost programs at 16000.",
+    )
+    ap.add_argument(
         "--first-guess",
         type=float,
         default=None,
@@ -146,6 +153,8 @@ def main() -> None:
             "Add it to PRICES_PER_MTOK in eval/llm.py, or set RHYLTHYME_EVAL_PRICE_IN and RHYLTHYME_EVAL_PRICE_OUT (USD per million tokens)."
         )
     args.out.mkdir(parents=True, exist_ok=True)
+    # "vendor/model" ids (OpenRouter) must not nest directories.
+    model_dir = args.model.replace("/", "__")
     ledger = load_ledger(args.ledger)
     slugs = gold_slugs()
     done = {(e["model"], e["pattern"], e["slug"]) for e in ledger["entries"]}
@@ -224,7 +233,7 @@ def main() -> None:
         started = time.time()
         procs = {}
         for pattern in todo:
-            cell = args.out / args.model / pattern
+            cell = args.out / model_dir / pattern
             cmd = [
                 sys.executable,
                 "-m",
@@ -244,6 +253,7 @@ def main() -> None:
                 str(cell / "cache"),
                 "--format",
                 "json",
+                *(["--max-tokens", str(args.max_tokens)] if args.max_tokens else []),
             ]
             procs[pattern] = subprocess.Popen(
                 cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
@@ -252,7 +262,7 @@ def main() -> None:
         for pattern, proc in procs.items():
             _out, err = proc.communicate()
             results_file = (
-                args.out / args.model / pattern / "per-program" / slug / "results.json"
+                args.out / model_dir / pattern / "per-program" / slug / "results.json"
             )
             if not results_file.exists():
                 print(f"FAILED {pattern}/{slug}: {err.strip()[-400:]}")
@@ -283,7 +293,7 @@ def main() -> None:
         return
     # Consolidate each cell from its cache: no model calls, no cost.
     for pattern in [p.strip() for p in args.patterns.split(",") if p.strip()]:
-        cell = args.out / args.model / pattern
+        cell = args.out / model_dir / pattern
         ran = [
             e["slug"]
             for e in ledger["entries"]
@@ -308,6 +318,7 @@ def main() -> None:
                 str(cell),
                 "--format",
                 "json",
+                *(["--max-tokens", str(args.max_tokens)] if args.max_tokens else []),
             ]
         )
         ok = (cell / "results.json").exists()
