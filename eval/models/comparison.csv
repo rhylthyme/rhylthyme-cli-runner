@@ -1,0 +1,12 @@
+metric,claude-haiku-4-5|baseline,claude-haiku-4-5|four-turn,claude-sonnet-5|baseline,claude-sonnet-5|four-turn
+Steps F1,0.5627,0.9108,0.5838,0.9018
+Durations accuracy,0.9857,0.9201,0.9857,0.9359
+Relationships F1,0.3001,0.6362,0.2717,0.5509
+Resources recall,0.5976,0.7214,0.6048,0.6222
+Track structure (Rand),0.8901,0.9106,0.8098,0.8148
+Unsupported steps,0.5955,0.0169,0.5224,0.045
+End-to-end pass,0.2857,0.4286,0.4286,0.5714
+Produced a program,1.0,1.0,1.0,0.8571
+Cost per program (USD),0.0463,0.0913,0.2552,0.5078
+Output tokens per program,6491.7143,10683.1429,22573.0,39552.7143
+Validator fix rounds,0.8571,0.4286,1.0,0.8571

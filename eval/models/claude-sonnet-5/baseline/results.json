@@ -1,0 +1,2329 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "claude-sonnet-5",
+    "pattern": "baseline",
+    "from_cache": true,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/baseline/cache",
+    "limit": null,
+    "only": [
+      "event-conference-session-av-checks",
+      "fitness-hiit-circuit-intervals",
+      "kitchen-backyard-barbecue-smoker-grill",
+      "lab-cell-passaging-hood-incubator",
+      "event-product-launch-run-of-show",
+      "fitness-partner-upper-body-supersets",
+      "kitchen-country-loaf-bread-bake"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 7,
+      "calls": 14,
+      "input_tokens": 103065,
+      "output_tokens": 158011,
+      "cost_usd": 1.78624,
+      "fix_iterations": 7
+    },
+    "generated_at": "2026-09-19T03:28:48+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.44913076341647773,
+    "steps_f1": 0.583767098942691,
+    "durations_accuracy": 0.9857142857142858,
+    "resources_precision": 0.5908163265306123,
+    "resources_recall": 0.6047619047619047,
+    "actors_accuracy": 0.8571428571428571,
+    "relationships_precision": 0.4317460317460317,
+    "relationships_recall": 0.21866329363120118,
+    "relationships_f1": 0.2717285290233859,
+    "structure_rand_index": 0.8098124098124098,
+    "end_to_end_pass": 0.42857142857142855,
+    "unsupported_rate": 0.5224338624338624
+  },
+  "programs": [
+    {
+      "slug": "event-conference-session-av-checks",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.55,
+        "steps_f1": 0.7096774193548387,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.8,
+        "resources_recall": 0.6666666666666666,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.5,
+        "relationships_recall": 0.3,
+        "relationships_f1": 0.37499999999999994,
+        "structure_rand_index": 0.9636363636363636,
+        "end_to_end_pass": 1.0,
+        "unsupported_rate": 0.45
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.55,
+        "f1": 0.7096774193548387,
+        "tp": 11,
+        "n_gold": 20,
+        "n_pred": 11
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 11,
+        "total": 11
+      },
+      "resources": {
+        "precision": 0.8,
+        "recall": 0.6666666666666666,
+        "f1": 0.7272727272727272,
+        "tp": 4,
+        "n_gold": 6,
+        "n_pred": 5
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.5,
+        "recall": 0.3,
+        "f1": 0.37499999999999994,
+        "tp": 6,
+        "n_gold": 20,
+        "n_pred": 12
+      },
+      "structure": {
+        "rand_index": 0.9636363636363636,
+        "agreements": 53,
+        "pairs": 55,
+        "n_steps": 11
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 15240.0,
+        "pred_makespan": 14940.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "line-check",
+          "projector-test",
+          "mic-check",
+          "load-deck-one",
+          "chair-opens",
+          "talk-one",
+          "qa-one",
+          "load-deck-two",
+          "changeover-one",
+          "talk-two",
+          "qa-two",
+          "serve-coffee",
+          "clear-foyer",
+          "changeover-two",
+          "talk-three",
+          "qa-three",
+          "chair-closes",
+          "strike-av"
+        ],
+        "pred_critical_path": [
+          "line_check",
+          "test_projector",
+          "check_lapel",
+          "load_deck1",
+          "chair_open",
+          "talk1",
+          "q1",
+          "changeover1",
+          "talk2",
+          "q2",
+          "coffee_out",
+          "clear_foyer",
+          "changeover2",
+          "talk3",
+          "q3",
+          "chair_close",
+          "strike_av"
+        ],
+        "js_critical_path": [
+          "line_check",
+          "test_projector",
+          "check_lapel",
+          "load_deck1",
+          "chair_open",
+          "talk1",
+          "q1",
+          "changeover1",
+          "talk2",
+          "q2",
+          "coffee_out",
+          "clear_foyer",
+          "changeover2",
+          "talk3",
+          "q3",
+          "chair_close",
+          "strike_av"
+        ],
+        "js_makespan": 14940,
+        "critical_overlap": 0.5555555555555556,
+        "critical_ok": true,
+        "passed": true
+      },
+      "unsupported_rate": 0.45,
+      "unsupported_steps": [
+        "check_lapel",
+        "load_deck1",
+        "load_deck3",
+        "chair_open",
+        "changeover1",
+        "changeover2",
+        "q3",
+        "coffee_setup",
+        "coffee_out"
+      ],
+      "matching": [
+        {
+          "gold": "line-check",
+          "predicted": "line_check",
+          "by": "name"
+        },
+        {
+          "gold": "projector-test",
+          "predicted": "test_projector",
+          "by": "name"
+        },
+        {
+          "gold": "strike-av",
+          "predicted": "strike_av",
+          "by": "name"
+        },
+        {
+          "gold": "load-deck-two",
+          "predicted": "load_deck2",
+          "by": "name"
+        },
+        {
+          "gold": "talk-one",
+          "predicted": "talk1",
+          "by": "name"
+        },
+        {
+          "gold": "qa-one",
+          "predicted": "q1",
+          "by": "name"
+        },
+        {
+          "gold": "talk-two",
+          "predicted": "talk2",
+          "by": "name"
+        },
+        {
+          "gold": "qa-two",
+          "predicted": "q2",
+          "by": "name"
+        },
+        {
+          "gold": "talk-three",
+          "predicted": "talk3",
+          "by": "name"
+        },
+        {
+          "gold": "chair-closes",
+          "predicted": "chair_close",
+          "by": "name"
+        },
+        {
+          "gold": "clear-foyer",
+          "predicted": "clear_foyer",
+          "by": "name"
+        },
+        {
+          "gold": "mic-check",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "load-deck-one",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "load-deck-three",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "chair-opens",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "changeover-one",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "changeover-two",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "qa-three",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "set-coffee",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "serve-coffee",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "check_lapel",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "load_deck1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "load_deck3",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "chair_open",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "changeover1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "changeover2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "q3",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "coffee_setup",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "coffee_out",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "claude-sonnet-5",
+        "pattern": "baseline",
+        "calls": 2,
+        "input_tokens": 15804,
+        "output_tokens": 19656,
+        "cost_usd": 0.228168,
+        "cache_keys": [
+          "fbd62e75759b30dcc1a05c20714cf54a12721e94ead8a24f12853f8c4eeca377",
+          "7fcc44609b44bea98104e7f6365087899df845500c2e8581fedb9324abe8e4f6"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/baseline/responses/event-conference-session-av-checks.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/baseline/predicted/event-conference-session-av-checks.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Session Chair's Sheet \u2014 Room 2B for one room, three speakers, following the source text below",
+            "finish_at": "coffee break at 10:30",
+            "constraints": "one projector, one lapel microphone pack, one AV desk, one lectern, one foyer for catering",
+            "vertical": "events"
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "event-product-launch-run-of-show",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.5555555555555556,
+        "steps_f1": 0.7142857142857143,
+        "durations_accuracy": 0.9,
+        "resources_precision": 0.25,
+        "resources_recall": 0.16666666666666666,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.2,
+        "relationships_recall": 0.1111111111111111,
+        "relationships_f1": 0.14285714285714285,
+        "structure_rand_index": 0.9777777777777777,
+        "end_to_end_pass": 1.0,
+        "unsupported_rate": 0.4444444444444444
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.5555555555555556,
+        "f1": 0.7142857142857143,
+        "tp": 10,
+        "n_gold": 18,
+        "n_pred": 10
+      },
+      "durations": {
+        "accuracy": 0.9,
+        "correct": 9,
+        "total": 10
+      },
+      "resources": {
+        "precision": 0.25,
+        "recall": 0.16666666666666666,
+        "f1": 0.2,
+        "tp": 1,
+        "n_gold": 6,
+        "n_pred": 4
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.2,
+        "recall": 0.1111111111111111,
+        "f1": 0.14285714285714285,
+        "tp": 2,
+        "n_gold": 18,
+        "n_pred": 10
+      },
+      "structure": {
+        "rand_index": 0.9777777777777777,
+        "agreements": 44,
+        "pairs": 45,
+        "n_steps": 10
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 13020.0,
+        "pred_makespan": 13020.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "setup-registration",
+          "walkthrough",
+          "doors-open",
+          "usher-to-seats",
+          "host-welcome",
+          "ceo-keynote",
+          "product-video",
+          "product-demo",
+          "qa",
+          "host-close",
+          "breakdown-desk",
+          "strike-stage"
+        ],
+        "pred_critical_path": [
+          "foh-setup",
+          "foh-walkthrough",
+          "guest-registration",
+          "foh-usher",
+          "host-welcome",
+          "ceo-keynote",
+          "product-video",
+          "live-demo",
+          "qna",
+          "host-close",
+          "reception-canapes"
+        ],
+        "js_critical_path": [
+          "foh-setup",
+          "foh-walkthrough",
+          "guest-registration",
+          "foh-usher",
+          "host-welcome",
+          "ceo-keynote",
+          "product-video",
+          "live-demo",
+          "qna",
+          "host-close",
+          "reception-canapes"
+        ],
+        "js_makespan": 13020,
+        "critical_overlap": 0.5,
+        "critical_ok": true,
+        "passed": true
+      },
+      "unsupported_rate": 0.4444444444444444,
+      "unsupported_steps": [
+        "av-linecheck",
+        "av-playlist",
+        "foh-setup",
+        "guest-registration",
+        "foh-usher",
+        "cater-setup",
+        "reception-canapes",
+        "live-demo"
+      ],
+      "matching": [
+        {
+          "gold": "rehearsal",
+          "predicted": "rehearsal",
+          "by": "name"
+        },
+        {
+          "gold": "strike-stage",
+          "predicted": "av-strike",
+          "by": "name"
+        },
+        {
+          "gold": "walkthrough",
+          "predicted": "foh-walkthrough",
+          "by": "name"
+        },
+        {
+          "gold": "breakdown-desk",
+          "predicted": "foh-breakdown",
+          "by": "name"
+        },
+        {
+          "gold": "host-welcome",
+          "predicted": "host-welcome",
+          "by": "name"
+        },
+        {
+          "gold": "ceo-keynote",
+          "predicted": "ceo-keynote",
+          "by": "name"
+        },
+        {
+          "gold": "product-video",
+          "predicted": "product-video",
+          "by": "name"
+        },
+        {
+          "gold": "qa",
+          "predicted": "qna",
+          "by": "name"
+        },
+        {
+          "gold": "host-close",
+          "predicted": "host-close",
+          "by": "name"
+        },
+        {
+          "gold": "bar-service",
+          "predicted": "bar-service",
+          "by": "name"
+        },
+        {
+          "gold": "line-check",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "welcome-playlist",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "setup-registration",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "doors-open",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "usher-to-seats",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "product-demo",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "set-bar",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "reception",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "av-linecheck",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "av-playlist",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "foh-setup",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "guest-registration",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "foh-usher",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "cater-setup",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "reception-canapes",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "live-demo",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "claude-sonnet-5",
+        "pattern": "baseline",
+        "calls": 2,
+        "input_tokens": 14291,
+        "output_tokens": 25029,
+        "cost_usd": 0.278872,
+        "cache_keys": [
+          "70f96a168cdbd9eca8b314de82c762b5508f9093c1759240106112f738b22c0e",
+          "1a273efbf1478436ab5f864a29ad2648ed8ba339e2b9db957704a7d9750073b9"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/baseline/responses/event-product-launch-run-of-show.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/baseline/predicted/event-product-launch-run-of-show.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Product Launch Evening: Run of Show for 200 guests, following the source text below",
+            "finish_at": "21:00",
+            "constraints": "one stage, one projector, crew call 17:00, doors 18:00, program over by 20:00, venue resets at 21:00",
+            "vertical": "events"
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "fitness-hiit-circuit-intervals",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.07407407407407407,
+        "steps_f1": 0.13793103448275862,
+        "durations_accuracy": 1.0,
+        "resources_precision": 1.0,
+        "resources_recall": 1.0,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.25,
+        "relationships_recall": 0.024390243902439025,
+        "relationships_f1": 0.04444444444444444,
+        "structure_rand_index": 0.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.92
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.07407407407407407,
+        "f1": 0.13793103448275862,
+        "tp": 2,
+        "n_gold": 27,
+        "n_pred": 2
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 2,
+        "total": 2
+      },
+      "resources": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 5,
+        "n_gold": 5,
+        "n_pred": 5
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.25,
+        "recall": 0.024390243902439025,
+        "f1": 0.04444444444444444,
+        "tp": 1,
+        "n_gold": 41,
+        "n_pred": 4
+      },
+      "structure": {
+        "rand_index": 0.0,
+        "agreements": 0,
+        "pairs": 1,
+        "n_steps": 2
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 1320.0,
+        "pred_makespan": 1320.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "a-warmup",
+          "a-rower-r1",
+          "a-rest-r1",
+          "a-kettlebell-r2",
+          "a-rest-r2",
+          "a-box-r3",
+          "a-rest-r3",
+          "a-sled-r4",
+          "a-cooldown"
+        ],
+        "pred_critical_path": [
+          "warmup-a",
+          "a-r1",
+          "a-rest1",
+          "a-r2",
+          "a-rest2",
+          "a-r3",
+          "a-rest3",
+          "a-r4",
+          "cooldown"
+        ],
+        "js_critical_path": [
+          "warmup-a",
+          "a-r1",
+          "a-rest1",
+          "a-r2",
+          "a-rest2",
+          "a-r3",
+          "a-rest3",
+          "a-r4",
+          "cooldown"
+        ],
+        "js_makespan": 1320,
+        "critical_overlap": 0.2222222222222222,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.92,
+      "unsupported_steps": [
+        "a-r1",
+        "a-rest1",
+        "a-r2",
+        "a-rest2",
+        "a-r3",
+        "a-rest3",
+        "a-r4",
+        "warmup-b",
+        "b-r1",
+        "b-rest1",
+        "b-r2",
+        "b-rest2",
+        "b-r3",
+        "b-rest3",
+        "b-r4",
+        "warmup-c",
+        "c-r1",
+        "c-rest1",
+        "c-r2",
+        "c-rest2",
+        "c-r3",
+        "c-rest3",
+        "c-r4"
+      ],
+      "matching": [
+        {
+          "gold": "a-warmup",
+          "predicted": "warmup-a",
+          "by": "name"
+        },
+        {
+          "gold": "a-cooldown",
+          "predicted": "cooldown",
+          "by": "name"
+        },
+        {
+          "gold": "a-rower-r1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-rest-r1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-kettlebell-r2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-rest-r2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-box-r3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-rest-r3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-sled-r4",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-warmup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-kettlebell-r1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rest-r1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-box-r2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rest-r2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-sled-r3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rest-r3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rower-r4",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-cooldown",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-warmup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-box-r1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-rest-r1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-sled-r2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-rest-r2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-rower-r3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-rest-r3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-kettlebell-r4",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-cooldown",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "a-r1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "a-rest1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "a-r2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "a-rest2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "a-r3",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "a-rest3",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "a-r4",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "warmup-b",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-r1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-rest1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-r2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-rest2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-r3",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-rest3",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-r4",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "warmup-c",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "c-r1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "c-rest1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "c-r2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "c-rest2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "c-r3",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "c-rest3",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "c-r4",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "claude-sonnet-5",
+        "pattern": "baseline",
+        "calls": 1,
+        "input_tokens": 6354,
+        "output_tokens": 6199,
+        "cost_usd": 0.074698,
+        "cache_keys": [
+          "29d3624cf78ec0a3e8c56be99adad13473337222b33a0a858e9e52de69b32611"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/baseline/responses/fitness-hiit-circuit-intervals.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/baseline/predicted/fitness-hiit-circuit-intervals.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "HIIT Circuit Card \u2014 three athletes, four stations for 3 athletes, 4 rounds, following the source text below",
+            "finish_at": null,
+            "constraints": "one rower, one kettlebell, one box, one sled, three athletes on the floor",
+            "vertical": "gym"
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "fitness-partner-upper-body-supersets",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.39285714285714285,
+        "steps_f1": 0.5641025641025641,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.2857142857142857,
+        "resources_recall": 0.4,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.3333333333333333,
+        "relationships_recall": 0.18421052631578946,
+        "relationships_f1": 0.23728813559322035,
+        "structure_rand_index": 1.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.5925925925925926
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.39285714285714285,
+        "f1": 0.5641025641025641,
+        "tp": 11,
+        "n_gold": 28,
+        "n_pred": 11
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 11,
+        "total": 11
+      },
+      "resources": {
+        "precision": 0.2857142857142857,
+        "recall": 0.4,
+        "f1": 0.3333333333333333,
+        "tp": 2,
+        "n_gold": 5,
+        "n_pred": 7
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.3333333333333333,
+        "recall": 0.18421052631578946,
+        "f1": 0.23728813559322035,
+        "tp": 7,
+        "n_gold": 38,
+        "n_pred": 21
+      },
+      "structure": {
+        "rand_index": 1.0,
+        "agreements": 55,
+        "pairs": 55,
+        "n_steps": 11
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 1405.0,
+        "pred_makespan": 1420.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "a-warmup-row",
+          "a-mobility",
+          "a-bench-1",
+          "a-row-1",
+          "a-rest-a1",
+          "a-bench-2",
+          "a-row-2",
+          "a-rest-a2",
+          "a-press-1",
+          "b-press-1",
+          "b-rest-b1",
+          "b-pullups-2",
+          "b-press-2",
+          "a-cooldown"
+        ],
+        "pred_critical_path": [
+          "a-warm-row",
+          "a-warm-mobility",
+          "a-bench-r1",
+          "a-row-r1",
+          "a-rest-r1",
+          "a-bench-r2",
+          "a-row-r2",
+          "a-rest-r2",
+          "a-ohp-r1",
+          "b-ohp-r1",
+          "a-rest-b1",
+          "a-ohp-r2",
+          "b-ohp-r2",
+          "cooldown-stretch"
+        ],
+        "js_critical_path": [
+          "a-warm-row",
+          "a-warm-mobility",
+          "a-bench-r1",
+          "a-row-r1",
+          "a-rest-r1",
+          "a-bench-r2",
+          "a-row-r2",
+          "a-rest-r2",
+          "a-ohp-r1",
+          "b-ohp-r1",
+          "a-rest-b1",
+          "a-ohp-r2",
+          "b-ohp-r2",
+          "cooldown-stretch"
+        ],
+        "js_makespan": 1420,
+        "critical_overlap": 0.42857142857142855,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.5925925925925926,
+      "unsupported_steps": [
+        "a-warm-row",
+        "a-rest-r1",
+        "a-rest-r2",
+        "b-warm-row",
+        "b-warm-mobility",
+        "b-row-r1",
+        "b-bench-r1",
+        "b-rest-r1",
+        "b-row-r2",
+        "b-bench-r2",
+        "b-rest-r2",
+        "b-pullup-r1",
+        "b-ohp-r1",
+        "b-pullup-r2",
+        "b-ohp-r2",
+        "cooldown-stretch"
+      ],
+      "matching": [
+        {
+          "gold": "a-mobility",
+          "predicted": "a-warm-mobility",
+          "by": "name"
+        },
+        {
+          "gold": "a-bench-1",
+          "predicted": "a-bench-r1",
+          "by": "name"
+        },
+        {
+          "gold": "a-row-1",
+          "predicted": "a-row-r1",
+          "by": "name"
+        },
+        {
+          "gold": "a-bench-2",
+          "predicted": "a-bench-r2",
+          "by": "name"
+        },
+        {
+          "gold": "a-row-2",
+          "predicted": "a-row-r2",
+          "by": "name"
+        },
+        {
+          "gold": "a-press-1",
+          "predicted": "a-ohp-r1",
+          "by": "name"
+        },
+        {
+          "gold": "a-pullups-1",
+          "predicted": "a-pullup-r1",
+          "by": "name"
+        },
+        {
+          "gold": "a-rest-b1",
+          "predicted": "a-rest-b1",
+          "by": "name"
+        },
+        {
+          "gold": "a-press-2",
+          "predicted": "a-ohp-r2",
+          "by": "name"
+        },
+        {
+          "gold": "a-pullups-2",
+          "predicted": "a-pullup-r2",
+          "by": "name"
+        },
+        {
+          "gold": "b-rest-b1",
+          "predicted": "b-rest-b1",
+          "by": "name"
+        },
+        {
+          "gold": "a-warmup-row",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-rest-a1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-rest-a2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-cooldown",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-warmup-row",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-mobility",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-row-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-bench-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rest-a1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-row-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-bench-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rest-a2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-pullups-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-press-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-pullups-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-press-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-cooldown",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "a-warm-row",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "a-rest-r1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "a-rest-r2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-warm-row",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-warm-mobility",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-row-r1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-bench-r1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-rest-r1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-row-r2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-bench-r2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-rest-r2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-pullup-r1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-ohp-r1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-pullup-r2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-ohp-r2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "cooldown-stretch",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "claude-sonnet-5",
+        "pattern": "baseline",
+        "calls": 2,
+        "input_tokens": 15051,
+        "output_tokens": 23498,
+        "cost_usd": 0.265082,
+        "cache_keys": [
+          "7598c7680f867c49d35a0b909c7131258c7049a13f7c3d127fab6ffb6d35d519",
+          "3e40b0a3f335af411742af7f54a0071727944af883343b9cd8296b71941109fd"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/baseline/responses/fitness-partner-upper-body-supersets.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/baseline/predicted/fitness-partner-upper-body-supersets.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Partner Upper-Body Superset Session for 2 lifters, following the source text below",
+            "finish_at": null,
+            "constraints": "one bench and barbell, one pair of dumbbells, one pull-up bar, two ergs, about 25 minutes",
+            "vertical": "gym"
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "kitchen-backyard-barbecue-smoker-grill",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.8333333333333334,
+        "steps_f1": 0.9090909090909091,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.3333333333333333,
+        "resources_recall": 0.3333333333333333,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.5555555555555556,
+        "relationships_recall": 0.5263157894736842,
+        "relationships_f1": 0.5405405405405405,
+        "structure_rand_index": 1.0,
+        "end_to_end_pass": 1.0,
+        "unsupported_rate": 0.16666666666666666
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.8333333333333334,
+        "f1": 0.9090909090909091,
+        "tp": 15,
+        "n_gold": 18,
+        "n_pred": 15
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 15,
+        "total": 15
+      },
+      "resources": {
+        "precision": 0.3333333333333333,
+        "recall": 0.3333333333333333,
+        "f1": 0.3333333333333333,
+        "tp": 2,
+        "n_gold": 6,
+        "n_pred": 6
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.5555555555555556,
+        "recall": 0.5263157894736842,
+        "f1": 0.5405405405405405,
+        "tp": 10,
+        "n_gold": 19,
+        "n_pred": 18
+      },
+      "structure": {
+        "rand_index": 1.0,
+        "agreements": 105,
+        "pairs": 105,
+        "n_steps": 15
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 43320.0,
+        "pred_makespan": 47400.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "light-smoker",
+          "smoke-unwrapped",
+          "wrap-pork",
+          "smoke-wrapped",
+          "rest-in-cooler",
+          "light-kettle",
+          "grill-sausages",
+          "grill-corn",
+          "toast-buns",
+          "set-table",
+          "call-everyone"
+        ],
+        "pred_critical_path": [
+          "light-kettle",
+          "grill-sausages",
+          "grill-corn",
+          "toast-buns",
+          "table-set",
+          "call-everyone"
+        ],
+        "js_critical_path": [
+          "light-kettle",
+          "grill-sausages",
+          "grill-corn",
+          "toast-buns",
+          "table-set",
+          "call-everyone"
+        ],
+        "js_makespan": 47400,
+        "critical_overlap": 0.5454545454545454,
+        "critical_ok": true,
+        "passed": true
+      },
+      "unsupported_rate": 0.16666666666666666,
+      "unsupported_steps": [
+        "wrap-paper",
+        "cooler-hold",
+        "dress-refrigerate"
+      ],
+      "matching": [
+        {
+          "gold": "trim-and-rub",
+          "predicted": "trim-rub",
+          "by": "name"
+        },
+        {
+          "gold": "light-smoker",
+          "predicted": "light-smoker",
+          "by": "name"
+        },
+        {
+          "gold": "smoke-unwrapped",
+          "predicted": "smoke-unwrapped",
+          "by": "name"
+        },
+        {
+          "gold": "smoke-wrapped",
+          "predicted": "smoke-wrapped",
+          "by": "name"
+        },
+        {
+          "gold": "pull-pork",
+          "predicted": "pull-pork",
+          "by": "name"
+        },
+        {
+          "gold": "fry-bacon-onion",
+          "predicted": "fry-bacon-onion",
+          "by": "name"
+        },
+        {
+          "gold": "simmer-beans",
+          "predicted": "simmer-beans",
+          "by": "name"
+        },
+        {
+          "gold": "shred-cabbage",
+          "predicted": "shred-cabbage",
+          "by": "name"
+        },
+        {
+          "gold": "whisk-slaw-dressing",
+          "predicted": "whisk-dressing",
+          "by": "name"
+        },
+        {
+          "gold": "light-kettle",
+          "predicted": "light-kettle",
+          "by": "name"
+        },
+        {
+          "gold": "grill-sausages",
+          "predicted": "grill-sausages",
+          "by": "name"
+        },
+        {
+          "gold": "grill-corn",
+          "predicted": "grill-corn",
+          "by": "name"
+        },
+        {
+          "gold": "toast-buns",
+          "predicted": "toast-buns",
+          "by": "name"
+        },
+        {
+          "gold": "set-table",
+          "predicted": "table-set",
+          "by": "name"
+        },
+        {
+          "gold": "call-everyone",
+          "predicted": "call-everyone",
+          "by": "name"
+        },
+        {
+          "gold": "wrap-pork",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "rest-in-cooler",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "chill-slaw",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "wrap-paper",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "cooler-hold",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "dress-refrigerate",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "claude-sonnet-5",
+        "pattern": "baseline",
+        "calls": 2,
+        "input_tokens": 16450,
+        "output_tokens": 14644,
+        "cost_usd": 0.17934,
+        "cache_keys": [
+          "0a254a5b9243f51f8b44486295c4f7c6399d121caa74015cae8910baa52bd110",
+          "cb033163e7a82472a9c3e446b47ff96c1e53414f70bc2e9bd25bb3f6ced0fc43"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/baseline/responses/kitchen-backyard-barbecue-smoker-grill.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/baseline/predicted/kitchen-backyard-barbecue-smoker-grill.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Backyard Barbecue: Smoker and Grill for a shoulder, sausages and sides for about twelve, following the source text below",
+            "finish_at": null,
+            "constraints": "one offset smoker, one kettle grill, one side burner, one cooler for holding, two cooks",
+            "vertical": "kitchen"
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "kitchen-country-loaf-bread-bake",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.5,
+        "steps_f1": 0.6666666666666666,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.6666666666666666,
+        "resources_recall": 1.0,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.5833333333333334,
+        "relationships_recall": 0.2692307692307692,
+        "relationships_f1": 0.3684210526315789,
+        "structure_rand_index": 0.7272727272727273,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.5
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.5,
+        "f1": 0.6666666666666666,
+        "tp": 12,
+        "n_gold": 24,
+        "n_pred": 12
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 12,
+        "total": 12
+      },
+      "resources": {
+        "precision": 0.6666666666666666,
+        "recall": 1.0,
+        "f1": 0.8,
+        "tp": 4,
+        "n_gold": 4,
+        "n_pred": 6
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.5833333333333334,
+        "recall": 0.2692307692307692,
+        "f1": 0.3684210526315789,
+        "tp": 7,
+        "n_gold": 26,
+        "n_pred": 12
+      },
+      "structure": {
+        "rand_index": 0.7272727272727273,
+        "agreements": 48,
+        "pairs": 66,
+        "n_steps": 12
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 88560.0,
+        "pred_makespan": 94680.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "mix-levain",
+          "ripen-levain",
+          "mix-dough",
+          "bulk-ferment",
+          "divide-preshape",
+          "bench-rest",
+          "shape-boules",
+          "retard",
+          "score-load-first",
+          "bake-first-covered",
+          "bake-first-uncovered",
+          "reheat-dutch-oven",
+          "score-load-second",
+          "bake-second-covered",
+          "bake-second-uncovered",
+          "cool-second"
+        ],
+        "pred_critical_path": [
+          "weigh-ingredients",
+          "lev-mix",
+          "lev-ripen",
+          "mix-in",
+          "fold-1",
+          "fold-2",
+          "fold-3",
+          "bulk-rest",
+          "preshape",
+          "bench-rest",
+          "shape-boules",
+          "retard",
+          "preheat-oven-dutchoven",
+          "score-lower1",
+          "bake-cover1",
+          "bake-uncover1",
+          "reheat-dutchoven",
+          "score-lower2",
+          "bake-cover2",
+          "bake-uncover2",
+          "cool2"
+        ],
+        "js_critical_path": [
+          "weigh-ingredients",
+          "lev-mix",
+          "lev-ripen",
+          "mix-in",
+          "fold-1",
+          "fold-2",
+          "fold-3",
+          "bulk-rest",
+          "preshape",
+          "bench-rest",
+          "shape-boules",
+          "retard",
+          "preheat-oven-dutchoven",
+          "score-lower1",
+          "bake-cover1",
+          "bake-uncover1",
+          "reheat-dutchoven",
+          "score-lower2",
+          "bake-cover2",
+          "bake-uncover2",
+          "cool2"
+        ],
+        "js_makespan": 94680,
+        "critical_overlap": 0.375,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.5,
+      "unsupported_steps": [
+        "lev-mix",
+        "lev-ripen",
+        "mix-in",
+        "bulk-rest",
+        "preshape",
+        "preheat-oven-dutchoven",
+        "score-lower1",
+        "bake-uncover1",
+        "score-lower2",
+        "bake-uncover2",
+        "cool1",
+        "cool2"
+      ],
+      "matching": [
+        {
+          "gold": "weigh-ingredients",
+          "predicted": "weigh-ingredients",
+          "by": "name"
+        },
+        {
+          "gold": "mix-flour-water",
+          "predicted": "whisk-flour-water",
+          "by": "name"
+        },
+        {
+          "gold": "autolyse",
+          "predicted": "autolyse",
+          "by": "name"
+        },
+        {
+          "gold": "bench-rest",
+          "predicted": "bench-rest",
+          "by": "name"
+        },
+        {
+          "gold": "shape-boules",
+          "predicted": "shape-boules",
+          "by": "name"
+        },
+        {
+          "gold": "retard",
+          "predicted": "retard",
+          "by": "name"
+        },
+        {
+          "gold": "fold-1",
+          "predicted": "fold-1",
+          "by": "name"
+        },
+        {
+          "gold": "fold-2",
+          "predicted": "fold-2",
+          "by": "name"
+        },
+        {
+          "gold": "fold-3",
+          "predicted": "fold-3",
+          "by": "name"
+        },
+        {
+          "gold": "bake-first-covered",
+          "predicted": "bake-cover1",
+          "by": "name"
+        },
+        {
+          "gold": "reheat-dutch-oven",
+          "predicted": "reheat-dutchoven",
+          "by": "name"
+        },
+        {
+          "gold": "bake-second-covered",
+          "predicted": "bake-cover2",
+          "by": "name"
+        },
+        {
+          "gold": "mix-levain",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "ripen-levain",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "mix-dough",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "bulk-ferment",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "divide-preshape",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "heat-dutch-oven",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "score-load-first",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "bake-first-uncovered",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "score-load-second",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "bake-second-uncovered",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cool-second",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cool-first",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "lev-mix",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "lev-ripen",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "mix-in",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "bulk-rest",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "preshape",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "preheat-oven-dutchoven",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "score-lower1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "bake-uncover1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "score-lower2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "bake-uncover2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "cool1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "cool2",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "claude-sonnet-5",
+        "pattern": "baseline",
+        "calls": 3,
+        "input_tokens": 21486,
+        "output_tokens": 42026,
+        "cost_usd": 0.463232,
+        "cache_keys": [
+          "3b989e4684fb98d61fbf7ee4f78cdcce403a5b8ed7ef4085841931558a468b75",
+          "10d607bf80c3f1c65867d0dc00b2464d0ee3c85d163c1614f43b607ef9e6cab3",
+          "8411bb32d120d4981699c6c6172aafd33711f4cb87f67b3b9560c949c6db137d"
+        ],
+        "fix_iterations": 2,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/baseline/responses/kitchen-country-loaf-bread-bake.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/baseline/predicted/kitchen-country-loaf-bread-bake.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Country Loaf: Two Boules, One Dutch Oven for one batch, two 900 g boules, following the source text below",
+            "finish_at": null,
+            "constraints": "one oven, one dutch oven, one refrigerator, one baker, the two loaves bake one after the other",
+            "vertical": "kitchen"
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "lab-cell-passaging-hood-incubator",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.23809523809523808,
+        "steps_f1": 0.3846153846153846,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.8,
+        "resources_recall": 0.6666666666666666,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.6,
+        "relationships_recall": 0.11538461538461539,
+        "relationships_f1": 0.1935483870967742,
+        "structure_rand_index": 1.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.5833333333333334
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.23809523809523808,
+        "f1": 0.3846153846153846,
+        "tp": 5,
+        "n_gold": 21,
+        "n_pred": 5
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 5,
+        "total": 5
+      },
+      "resources": {
+        "precision": 0.8,
+        "recall": 0.6666666666666666,
+        "f1": 0.7272727272727272,
+        "tp": 4,
+        "n_gold": 6,
+        "n_pred": 5
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.6,
+        "recall": 0.11538461538461539,
+        "f1": 0.1935483870967742,
+        "tp": 3,
+        "n_gold": 26,
+        "n_pred": 5
+      },
+      "structure": {
+        "rand_index": 1.0,
+        "agreements": 10,
+        "pairs": 10,
+        "n_steps": 5
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 76260.0,
+        "pred_makespan": 60900.0,
+        "makespan_ok": false,
+        "gold_critical_path": [
+          "warm-reagents",
+          "a-rinse",
+          "a-trypsinise",
+          "a-neutralise",
+          "a-spin",
+          "a-resuspend",
+          "a-count",
+          "b-count",
+          "b-seed",
+          "b-settle"
+        ],
+        "pred_critical_path": [
+          "prep-wipe",
+          "prep-check",
+          "rinse",
+          "trypsinize",
+          "neutralize",
+          "spin",
+          "resuspend",
+          "count",
+          "seed",
+          "overnight"
+        ],
+        "js_critical_path": [
+          "prep-wipe",
+          "prep-check",
+          "rinse-r1",
+          "rinse-r2",
+          "trypsinize-r2",
+          "neutralize-r2",
+          "spin-r2",
+          "resuspend-r2",
+          "count-r2",
+          "seed-r2",
+          "overnight-r2"
+        ],
+        "js_makespan": 61140,
+        "critical_overlap": 0.4,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.5833333333333334,
+      "unsupported_steps": [
+        "prep-wipe",
+        "prep-check",
+        "trypsinize",
+        "neutralize",
+        "overnight",
+        "cabinet-wipe-final",
+        "log-entry"
+      ],
+      "matching": [
+        {
+          "gold": "a-rinse",
+          "predicted": "rinse",
+          "by": "name"
+        },
+        {
+          "gold": "a-spin",
+          "predicted": "spin",
+          "by": "name"
+        },
+        {
+          "gold": "a-resuspend",
+          "predicted": "resuspend",
+          "by": "name"
+        },
+        {
+          "gold": "a-count",
+          "predicted": "count",
+          "by": "name"
+        },
+        {
+          "gold": "a-seed",
+          "predicted": "seed",
+          "by": "name"
+        },
+        {
+          "gold": "warm-reagents",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "clean-cabinet",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "inspect-flasks",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-trypsinise",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-neutralise",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-settle",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rinse",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-trypsinise",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-neutralise",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-spin",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-resuspend",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-count",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-seed",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-settle",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "clean-down",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "log-passage",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "prep-wipe",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "prep-check",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "trypsinize",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "neutralize",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "overnight",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "cabinet-wipe-final",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "log-entry",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "claude-sonnet-5",
+        "pattern": "baseline",
+        "calls": 2,
+        "input_tokens": 13629,
+        "output_tokens": 26959,
+        "cost_usd": 0.296848,
+        "cache_keys": [
+          "756594c61aa0115d95888e3f24c3085430b09af631a0fb74ccf6e2488bd9fc92",
+          "13e9d746742287e50636e43832347c014e4489405e299729181f210f87a7531d"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/baseline/responses/lab-cell-passaging-hood-incubator.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/baseline/predicted/lab-cell-passaging-hood-incubator.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Passaging Two Flasks of Adherent HEK293 Cells for two T75 flasks split 1:6 into four, following the source text below",
+            "finish_at": null,
+            "constraints": "one biosafety cabinet, one 37 \u00b0C water bath, one CO\u2082 incubator, one benchtop centrifuge, one microscope with haemocytometer, one operator",
+            "vertical": "lab"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

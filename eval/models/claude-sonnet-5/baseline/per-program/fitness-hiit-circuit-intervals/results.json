@@ -1,0 +1,453 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "claude-sonnet-5",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/baseline/cache",
+    "limit": null,
+    "only": [
+      "fitness-hiit-circuit-intervals"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 1,
+      "input_tokens": 6354,
+      "output_tokens": 6199,
+      "cost_usd": 0.074698,
+      "fix_iterations": 0
+    },
+    "generated_at": "2026-09-19T02:31:09+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.07407407407407407,
+    "steps_f1": 0.13793103448275862,
+    "durations_accuracy": 1.0,
+    "resources_precision": 1.0,
+    "resources_recall": 1.0,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.25,
+    "relationships_recall": 0.024390243902439025,
+    "relationships_f1": 0.04444444444444444,
+    "structure_rand_index": 0.0,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.92
+  },
+  "programs": [
+    {
+      "slug": "fitness-hiit-circuit-intervals",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.07407407407407407,
+        "steps_f1": 0.13793103448275862,
+        "durations_accuracy": 1.0,
+        "resources_precision": 1.0,
+        "resources_recall": 1.0,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.25,
+        "relationships_recall": 0.024390243902439025,
+        "relationships_f1": 0.04444444444444444,
+        "structure_rand_index": 0.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.92
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.07407407407407407,
+        "f1": 0.13793103448275862,
+        "tp": 2,
+        "n_gold": 27,
+        "n_pred": 2
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 2,
+        "total": 2
+      },
+      "resources": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 5,
+        "n_gold": 5,
+        "n_pred": 5
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.25,
+        "recall": 0.024390243902439025,
+        "f1": 0.04444444444444444,
+        "tp": 1,
+        "n_gold": 41,
+        "n_pred": 4
+      },
+      "structure": {
+        "rand_index": 0.0,
+        "agreements": 0,
+        "pairs": 1,
+        "n_steps": 2
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 1320.0,
+        "pred_makespan": 1320.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "a-warmup",
+          "a-rower-r1",
+          "a-rest-r1",
+          "a-kettlebell-r2",
+          "a-rest-r2",
+          "a-box-r3",
+          "a-rest-r3",
+          "a-sled-r4",
+          "a-cooldown"
+        ],
+        "pred_critical_path": [
+          "warmup-a",
+          "a-r1",
+          "a-rest1",
+          "a-r2",
+          "a-rest2",
+          "a-r3",
+          "a-rest3",
+          "a-r4",
+          "cooldown"
+        ],
+        "js_critical_path": [
+          "warmup-a",
+          "a-r1",
+          "a-rest1",
+          "a-r2",
+          "a-rest2",
+          "a-r3",
+          "a-rest3",
+          "a-r4",
+          "cooldown"
+        ],
+        "js_makespan": 1320,
+        "critical_overlap": 0.2222222222222222,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.92,
+      "unsupported_steps": [
+        "a-r1",
+        "a-rest1",
+        "a-r2",
+        "a-rest2",
+        "a-r3",
+        "a-rest3",
+        "a-r4",
+        "warmup-b",
+        "b-r1",
+        "b-rest1",
+        "b-r2",
+        "b-rest2",
+        "b-r3",
+        "b-rest3",
+        "b-r4",
+        "warmup-c",
+        "c-r1",
+        "c-rest1",
+        "c-r2",
+        "c-rest2",
+        "c-r3",
+        "c-rest3",
+        "c-r4"
+      ],
+      "matching": [
+        {
+          "gold": "a-warmup",
+          "predicted": "warmup-a",
+          "by": "name"
+        },
+        {
+          "gold": "a-cooldown",
+          "predicted": "cooldown",
+          "by": "name"
+        },
+        {
+          "gold": "a-rower-r1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-rest-r1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-kettlebell-r2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-rest-r2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-box-r3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-rest-r3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-sled-r4",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-warmup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-kettlebell-r1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rest-r1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-box-r2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rest-r2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-sled-r3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rest-r3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rower-r4",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-cooldown",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-warmup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-box-r1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-rest-r1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-sled-r2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-rest-r2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-rower-r3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-rest-r3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-kettlebell-r4",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-cooldown",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "a-r1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "a-rest1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "a-r2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "a-rest2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "a-r3",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "a-rest3",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "a-r4",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "warmup-b",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-r1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-rest1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-r2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-rest2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-r3",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-rest3",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-r4",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "warmup-c",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "c-r1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "c-rest1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "c-r2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "c-rest2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "c-r3",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "c-rest3",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "c-r4",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "claude-sonnet-5",
+        "pattern": "baseline",
+        "calls": 1,
+        "input_tokens": 6354,
+        "output_tokens": 6199,
+        "cost_usd": 0.074698,
+        "cache_keys": [
+          "29d3624cf78ec0a3e8c56be99adad13473337222b33a0a858e9e52de69b32611"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/baseline/per-program/fitness-hiit-circuit-intervals/responses/fitness-hiit-circuit-intervals.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/baseline/per-program/fitness-hiit-circuit-intervals/predicted/fitness-hiit-circuit-intervals.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "HIIT Circuit Card \u2014 three athletes, four stations for 3 athletes, 4 rounds, following the source text below",
+            "finish_at": null,
+            "constraints": "one rower, one kettlebell, one box, one sled, three athletes on the floor",
+            "vertical": "gym"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

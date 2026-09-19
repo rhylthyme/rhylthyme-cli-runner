@@ -1,0 +1,635 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "hek293-two-flask-passage",
+  "name": "Passaging Two Flasks of Adherent HEK293 Cells (1:6 split into four)",
+  "environmentType": "laboratory",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "prep",
+      "name": "Cabinet & microscope preparation",
+      "steps": [
+        {
+          "stepId": "prep-wipe-cabinet",
+          "name": "Wipe down cabinet, lay out pipettes/tubes, run blower",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Wipe down the cabinet, lay out pipettes and tubes, and let the blower run; 10 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "prep-check-flasks-microscope",
+          "name": "Check both flasks on the microscope",
+          "task": "microscope",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep-wipe-cabinet"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Check both flasks on the microscope for confluence and contamination; 10 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "reagents",
+      "name": "Reagent pre-warming (water bath)",
+      "steps": [
+        {
+          "stepId": "prewarm-reagents",
+          "name": "Pre-warm medium, PBS and trypsin-EDTA in the 37 C water bath",
+          "task": "water-bath",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 900,
+            "maxSeconds": 1800,
+            "defaultSeconds": 1200
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": null,
+            "inferred": true
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "flaskA",
+      "name": "Flask A",
+      "steps": [
+        {
+          "stepId": "flaskA-aspirate-rinse",
+          "name": "Flask A: aspirate medium and rinse with PBS",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "prep-check-flasks-microscope"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "prewarm-reagents"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Aspirate the spent medium and rinse the monolayer with 5 mL of PBS; 4 minutes in the cabinet.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "flaskA-add-trypsin",
+          "name": "Flask A: add trypsin-EDTA and rock flask",
+          "task": "cabinet",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 60,
+            "maxSeconds": 180,
+            "defaultSeconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "flaskA-aspirate-rinse"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Add 2 mL of trypsin-EDTA, rock the flask",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "flaskA-incubate-trypsin",
+          "name": "Flask A: incubate with trypsin",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "flaskA-add-trypsin"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "return it to the incubator for 5 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "flaskA-neutralise",
+          "name": "Flask A: knock, check detachment, neutralise",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "flaskA-incubate-trypsin"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "flaskB-aspirate-rinse"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Knock the flask, check detachment and neutralise with 8 mL of medium; 5 minutes in the cabinet.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "flaskA-transfer-tube",
+          "name": "Flask A: transfer suspension to 15 mL tube",
+          "task": "cabinet",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 60,
+            "maxSeconds": 180,
+            "defaultSeconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "flaskA-neutralise"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Transfer the suspension to a 15 mL tube",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "flaskA-centrifuge",
+          "name": "Flask A: spin at 300 x g",
+          "task": "centrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "flaskA-transfer-tube"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "spin at 300 × g for 5 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "flaskA-resuspend",
+          "name": "Flask A: aspirate supernatant and resuspend pellet",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "flaskA-centrifuge"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "flaskB-neutralise"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Aspirate the supernatant and resuspend the pellet in 10 mL of fresh medium; 4 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "flaskA-count-cells",
+          "name": "Flask A: count cells on haemocytometer",
+          "task": "microscope",
+          "duration": {
+            "type": "fixed",
+            "seconds": 360
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "flaskA-resuspend"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Count the cells on the haemocytometer; 6 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "flaskA-seed-flasks",
+          "name": "Flask A: seed two new flasks at 1:6 and label",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": 360
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "flaskA-count-cells"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "flaskB-resuspend"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Seed two new T75 flasks at 1:6 and label them; 6 minutes in the cabinet.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "flaskA-settle-overnight",
+          "name": "Flask A pair: settle overnight in incubator",
+          "task": "incubator",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 57600,
+            "maxSeconds": 72000,
+            "defaultSeconds": 57600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "flaskA-seed-flasks"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "leave them to settle overnight, at least 16 hours.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "flaskB",
+      "name": "Flask B",
+      "steps": [
+        {
+          "stepId": "flaskB-aspirate-rinse",
+          "name": "Flask B: aspirate and rinse with PBS",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "flaskA-add-trypsin"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Start flask B the moment flask A leaves the cabinet: aspirate and rinse with 5 mL of PBS; 4 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "flaskB-trypsinise",
+          "name": "Flask B: trypsinise in incubator",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "flaskB-aspirate-rinse"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Trypsinise flask B in the incubator for 5 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "flaskB-neutralise",
+          "name": "Flask B: neutralise",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "flaskA-transfer-tube"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "flaskB-trypsinise"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Neutralise flask B as soon as flask A is out of the cabinet again; 5 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "flaskB-centrifuge",
+          "name": "Flask B: spin at 300 x g",
+          "task": "centrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "flaskA-centrifuge"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "flaskB-neutralise"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Spin flask B at 300 × g for 5 minutes once the centrifuge is free.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "flaskB-resuspend",
+          "name": "Flask B: resuspend pellet in fresh medium",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "flaskB-centrifuge"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "flaskA-resuspend"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Resuspend the flask B pellet in 10 mL of fresh medium; 4 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "flaskB-count-cells",
+          "name": "Flask B: count cells on haemocytometer",
+          "task": "microscope",
+          "duration": {
+            "type": "fixed",
+            "seconds": 360
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "flaskA-count-cells"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "flaskB-resuspend"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Count flask B on the haemocytometer once flask A has been counted; 6 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "flaskB-seed-flasks",
+          "name": "Flask B: seed two more flasks at 1:6 and label",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": 360
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "flaskB-count-cells"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "flaskA-seed-flasks"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Seed two more T75 flasks at 1:6 and label them; 6 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "flaskB-settle-overnight",
+          "name": "Flask B pair: settle overnight in incubator",
+          "task": "incubator",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 57600,
+            "maxSeconds": 72000,
+            "defaultSeconds": 57600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "flaskB-seed-flasks"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Return them to the incubator to settle overnight alongside the first pair.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "finish",
+      "name": "Finishing",
+      "steps": [
+        {
+          "stepId": "finish-wipe-cabinet",
+          "name": "Wipe cabinet down, discard waste, blower to standby",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "flaskA-seed-flasks"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "flaskB-seed-flasks"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Wipe the cabinet down, discard the waste and switch the blower to standby; 10 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "finish-write-log",
+          "name": "Write passage number, split ratio and counts into culture log",
+          "task": "log",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "finish-wipe-cabinet"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Write the passage number, the split ratio and the counts into the culture log; 5 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "cabinet",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "microscope",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "incubator",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "centrifuge",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "water-bath",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "log",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "sourceUrl": "",
+    "attribution": "",
+    "notes": "Two T75 flasks split 1:6 into four; one operator, cabinet/centrifuge/microscope/incubator/water-bath shared. Finishes as early as work allows; overnight settle (>=16h) for both flask pairs dominates the makespan."
+  }
+}

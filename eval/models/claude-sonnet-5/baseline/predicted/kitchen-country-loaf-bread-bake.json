@@ -1,0 +1,433 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "country-loaf-two-boules-one-dutch-oven",
+  "name": "Country Loaf: Two Boules, One Dutch Oven",
+  "description": "One batch of dough, two 900 g boules, retarded overnight and baked one after the other in a single dutch oven. One oven, one dutch oven, one refrigerator, one baker.",
+  "environmentType": "kitchen",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "levain",
+      "name": "Levain",
+      "steps": [
+        {
+          "stepId": "lev-mix",
+          "name": "Mix levain (starter, flour, water)",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "weigh-ingredients"
+          }
+        },
+        {
+          "stepId": "lev-ripen",
+          "name": "Leave levain to ripen (domed, sweet)",
+          "task": "counter",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 14400,
+            "maxSeconds": 21600,
+            "defaultSeconds": 18000
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "lev-mix"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "dough",
+      "name": "Dough",
+      "steps": [
+        {
+          "stepId": "weigh-ingredients",
+          "name": "Weigh flour, water and salt for the whole bake",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "whisk-flour-water",
+          "name": "Whisk 900g flour into 680g water",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 1800
+          }
+        },
+        {
+          "stepId": "autolyse",
+          "name": "Autolyse",
+          "task": "counter",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "whisk-flour-water"
+          }
+        },
+        {
+          "stepId": "mix-in",
+          "name": "Squeeze in ripe levain and salt, work by hand",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "autolyse"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "lev-ripen"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "fold-1",
+          "name": "Fold 1",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "mix-in",
+            "offsetSeconds": 1800
+          }
+        },
+        {
+          "stepId": "fold-2",
+          "name": "Fold 2",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "fold-1",
+            "offsetSeconds": 1680
+          }
+        },
+        {
+          "stepId": "fold-3",
+          "name": "Fold 3",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "fold-2",
+            "offsetSeconds": 1680
+          }
+        },
+        {
+          "stepId": "bulk-rest",
+          "name": "Bulk ferment at 24°C until risen by half",
+          "task": "counter",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 10800,
+            "maxSeconds": 18000,
+            "defaultSeconds": 14400
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "fold-3"
+          }
+        },
+        {
+          "stepId": "preshape",
+          "name": "Divide dough in two and preshape loose rounds",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bulk-rest"
+          }
+        },
+        {
+          "stepId": "bench-rest",
+          "name": "Bench rest",
+          "task": "counter",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1500
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "preshape"
+          }
+        },
+        {
+          "stepId": "shape-boules",
+          "name": "Shape boules tightly into floured bannetons",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bench-rest"
+          }
+        },
+        {
+          "stepId": "retard",
+          "name": "Retard boules in the refrigerator",
+          "task": "refrigerator",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 36000,
+            "maxSeconds": 50400,
+            "defaultSeconds": 43200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "shape-boules"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "bake",
+      "name": "Bake",
+      "steps": [
+        {
+          "stepId": "preheat-oven-dutchoven",
+          "name": "Preheat oven and dutch oven to 250°C",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "retard",
+            "event": "start",
+            "offsetSeconds": 40500
+          }
+        },
+        {
+          "stepId": "score-lower1",
+          "name": "Score and lower first loaf",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "preheat-oven-dutchoven"
+          }
+        },
+        {
+          "stepId": "bake-cover1",
+          "name": "Bake first loaf covered",
+          "task": "dutchOven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "score-lower1"
+          }
+        },
+        {
+          "stepId": "bake-uncover1",
+          "name": "Bake first loaf uncovered until dark",
+          "task": "dutchOven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bake-cover1"
+          }
+        },
+        {
+          "stepId": "reheat-dutchoven",
+          "name": "Re-heat the empty dutch oven",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bake-uncover1"
+          }
+        },
+        {
+          "stepId": "score-lower2",
+          "name": "Score and lower second loaf",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "reheat-dutchoven"
+          }
+        },
+        {
+          "stepId": "bake-cover2",
+          "name": "Bake second loaf covered",
+          "task": "dutchOven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "score-lower2"
+          }
+        },
+        {
+          "stepId": "bake-uncover2",
+          "name": "Bake second loaf uncovered until dark",
+          "task": "dutchOven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bake-cover2"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "cool-loaf1",
+      "name": "Cool loaf 1",
+      "steps": [
+        {
+          "stepId": "cool1",
+          "name": "Cool first loaf on rack (at least 1 hour)",
+          "task": "rack",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 3600,
+            "maxSeconds": 7200,
+            "defaultSeconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bake-uncover1"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "cool-loaf2",
+      "name": "Cool loaf 2",
+      "steps": [
+        {
+          "stepId": "cool2",
+          "name": "Cool second loaf on rack beside the first",
+          "task": "rack",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 3600,
+            "maxSeconds": 7200,
+            "defaultSeconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bake-uncover2"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "baker",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "counter",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "refrigerator",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "oven",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "dutchOven",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "rack",
+      "maxConcurrent": 2
+    }
+  ],
+  "metadata": {
+    "ingredients": [
+      {
+        "name": "ripe starter",
+        "measure": "50 g"
+      },
+      {
+        "name": "flour (levain)",
+        "measure": "100 g"
+      },
+      {
+        "name": "water (levain)",
+        "measure": "100 g"
+      },
+      {
+        "name": "bread flour (dough)",
+        "measure": "900 g"
+      },
+      {
+        "name": "water (dough)",
+        "measure": "680 g"
+      },
+      {
+        "name": "salt",
+        "measure": "20 g"
+      }
+    ],
+    "serves": "2 boules (approx. 900 g each)",
+    "sourceUrl": "",
+    "attribution": ""
+  }
+}

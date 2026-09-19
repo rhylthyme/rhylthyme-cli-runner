@@ -1,0 +1,332 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "claude-sonnet-5",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/baseline/cache",
+    "limit": null,
+    "only": [
+      "lab-cell-passaging-hood-incubator"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 2,
+      "input_tokens": 13629,
+      "output_tokens": 26959,
+      "cost_usd": 0.296848,
+      "fix_iterations": 1
+    },
+    "generated_at": "2026-09-19T02:49:57+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.23809523809523808,
+    "steps_f1": 0.3846153846153846,
+    "durations_accuracy": 1.0,
+    "resources_precision": 0.8,
+    "resources_recall": 0.6666666666666666,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.6,
+    "relationships_recall": 0.11538461538461539,
+    "relationships_f1": 0.1935483870967742,
+    "structure_rand_index": 1.0,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.5833333333333334
+  },
+  "programs": [
+    {
+      "slug": "lab-cell-passaging-hood-incubator",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.23809523809523808,
+        "steps_f1": 0.3846153846153846,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.8,
+        "resources_recall": 0.6666666666666666,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.6,
+        "relationships_recall": 0.11538461538461539,
+        "relationships_f1": 0.1935483870967742,
+        "structure_rand_index": 1.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.5833333333333334
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.23809523809523808,
+        "f1": 0.3846153846153846,
+        "tp": 5,
+        "n_gold": 21,
+        "n_pred": 5
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 5,
+        "total": 5
+      },
+      "resources": {
+        "precision": 0.8,
+        "recall": 0.6666666666666666,
+        "f1": 0.7272727272727272,
+        "tp": 4,
+        "n_gold": 6,
+        "n_pred": 5
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.6,
+        "recall": 0.11538461538461539,
+        "f1": 0.1935483870967742,
+        "tp": 3,
+        "n_gold": 26,
+        "n_pred": 5
+      },
+      "structure": {
+        "rand_index": 1.0,
+        "agreements": 10,
+        "pairs": 10,
+        "n_steps": 5
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 76260.0,
+        "pred_makespan": 60900.0,
+        "makespan_ok": false,
+        "gold_critical_path": [
+          "warm-reagents",
+          "a-rinse",
+          "a-trypsinise",
+          "a-neutralise",
+          "a-spin",
+          "a-resuspend",
+          "a-count",
+          "b-count",
+          "b-seed",
+          "b-settle"
+        ],
+        "pred_critical_path": [
+          "prep-wipe",
+          "prep-check",
+          "rinse",
+          "trypsinize",
+          "neutralize",
+          "spin",
+          "resuspend",
+          "count",
+          "seed",
+          "overnight"
+        ],
+        "js_critical_path": [
+          "prep-wipe",
+          "prep-check",
+          "rinse-r1",
+          "rinse-r2",
+          "trypsinize-r2",
+          "neutralize-r2",
+          "spin-r2",
+          "resuspend-r2",
+          "count-r2",
+          "seed-r2",
+          "overnight-r2"
+        ],
+        "js_makespan": 61140,
+        "critical_overlap": 0.4,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.5833333333333334,
+      "unsupported_steps": [
+        "prep-wipe",
+        "prep-check",
+        "trypsinize",
+        "neutralize",
+        "overnight",
+        "cabinet-wipe-final",
+        "log-entry"
+      ],
+      "matching": [
+        {
+          "gold": "a-rinse",
+          "predicted": "rinse",
+          "by": "name"
+        },
+        {
+          "gold": "a-spin",
+          "predicted": "spin",
+          "by": "name"
+        },
+        {
+          "gold": "a-resuspend",
+          "predicted": "resuspend",
+          "by": "name"
+        },
+        {
+          "gold": "a-count",
+          "predicted": "count",
+          "by": "name"
+        },
+        {
+          "gold": "a-seed",
+          "predicted": "seed",
+          "by": "name"
+        },
+        {
+          "gold": "warm-reagents",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "clean-cabinet",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "inspect-flasks",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-trypsinise",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-neutralise",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-settle",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rinse",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-trypsinise",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-neutralise",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-spin",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-resuspend",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-count",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-seed",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-settle",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "clean-down",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "log-passage",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "prep-wipe",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "prep-check",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "trypsinize",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "neutralize",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "overnight",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "cabinet-wipe-final",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "log-entry",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "claude-sonnet-5",
+        "pattern": "baseline",
+        "calls": 2,
+        "input_tokens": 13629,
+        "output_tokens": 26959,
+        "cost_usd": 0.296848,
+        "cache_keys": [
+          "756594c61aa0115d95888e3f24c3085430b09af631a0fb74ccf6e2488bd9fc92",
+          "13e9d746742287e50636e43832347c014e4489405e299729181f210f87a7531d"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/baseline/per-program/lab-cell-passaging-hood-incubator/responses/lab-cell-passaging-hood-incubator.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/baseline/per-program/lab-cell-passaging-hood-incubator/predicted/lab-cell-passaging-hood-incubator.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Passaging Two Flasks of Adherent HEK293 Cells for two T75 flasks split 1:6 into four, following the source text below",
+            "finish_at": null,
+            "constraints": "one biosafety cabinet, one 37 \u00b0C water bath, one CO\u2082 incubator, one benchtop centrifuge, one microscope with haemocytometer, one operator",
+            "vertical": "lab"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

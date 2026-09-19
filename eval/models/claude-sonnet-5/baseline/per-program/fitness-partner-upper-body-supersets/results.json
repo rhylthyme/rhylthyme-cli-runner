@@ -1,0 +1,432 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "claude-sonnet-5",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/baseline/cache",
+    "limit": null,
+    "only": [
+      "fitness-partner-upper-body-supersets"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 2,
+      "input_tokens": 15051,
+      "output_tokens": 23498,
+      "cost_usd": 0.265082,
+      "fix_iterations": 1
+    },
+    "generated_at": "2026-09-19T03:09:53+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.39285714285714285,
+    "steps_f1": 0.5641025641025641,
+    "durations_accuracy": 1.0,
+    "resources_precision": 0.2857142857142857,
+    "resources_recall": 0.4,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.3333333333333333,
+    "relationships_recall": 0.18421052631578946,
+    "relationships_f1": 0.23728813559322035,
+    "structure_rand_index": 1.0,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.5925925925925926
+  },
+  "programs": [
+    {
+      "slug": "fitness-partner-upper-body-supersets",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.39285714285714285,
+        "steps_f1": 0.5641025641025641,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.2857142857142857,
+        "resources_recall": 0.4,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.3333333333333333,
+        "relationships_recall": 0.18421052631578946,
+        "relationships_f1": 0.23728813559322035,
+        "structure_rand_index": 1.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.5925925925925926
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.39285714285714285,
+        "f1": 0.5641025641025641,
+        "tp": 11,
+        "n_gold": 28,
+        "n_pred": 11
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 11,
+        "total": 11
+      },
+      "resources": {
+        "precision": 0.2857142857142857,
+        "recall": 0.4,
+        "f1": 0.3333333333333333,
+        "tp": 2,
+        "n_gold": 5,
+        "n_pred": 7
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.3333333333333333,
+        "recall": 0.18421052631578946,
+        "f1": 0.23728813559322035,
+        "tp": 7,
+        "n_gold": 38,
+        "n_pred": 21
+      },
+      "structure": {
+        "rand_index": 1.0,
+        "agreements": 55,
+        "pairs": 55,
+        "n_steps": 11
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 1405.0,
+        "pred_makespan": 1420.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "a-warmup-row",
+          "a-mobility",
+          "a-bench-1",
+          "a-row-1",
+          "a-rest-a1",
+          "a-bench-2",
+          "a-row-2",
+          "a-rest-a2",
+          "a-press-1",
+          "b-press-1",
+          "b-rest-b1",
+          "b-pullups-2",
+          "b-press-2",
+          "a-cooldown"
+        ],
+        "pred_critical_path": [
+          "a-warm-row",
+          "a-warm-mobility",
+          "a-bench-r1",
+          "a-row-r1",
+          "a-rest-r1",
+          "a-bench-r2",
+          "a-row-r2",
+          "a-rest-r2",
+          "a-ohp-r1",
+          "b-ohp-r1",
+          "a-rest-b1",
+          "a-ohp-r2",
+          "b-ohp-r2",
+          "cooldown-stretch"
+        ],
+        "js_critical_path": [
+          "a-warm-row",
+          "a-warm-mobility",
+          "a-bench-r1",
+          "a-row-r1",
+          "a-rest-r1",
+          "a-bench-r2",
+          "a-row-r2",
+          "a-rest-r2",
+          "a-ohp-r1",
+          "b-ohp-r1",
+          "a-rest-b1",
+          "a-ohp-r2",
+          "b-ohp-r2",
+          "cooldown-stretch"
+        ],
+        "js_makespan": 1420,
+        "critical_overlap": 0.42857142857142855,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.5925925925925926,
+      "unsupported_steps": [
+        "a-warm-row",
+        "a-rest-r1",
+        "a-rest-r2",
+        "b-warm-row",
+        "b-warm-mobility",
+        "b-row-r1",
+        "b-bench-r1",
+        "b-rest-r1",
+        "b-row-r2",
+        "b-bench-r2",
+        "b-rest-r2",
+        "b-pullup-r1",
+        "b-ohp-r1",
+        "b-pullup-r2",
+        "b-ohp-r2",
+        "cooldown-stretch"
+      ],
+      "matching": [
+        {
+          "gold": "a-mobility",
+          "predicted": "a-warm-mobility",
+          "by": "name"
+        },
+        {
+          "gold": "a-bench-1",
+          "predicted": "a-bench-r1",
+          "by": "name"
+        },
+        {
+          "gold": "a-row-1",
+          "predicted": "a-row-r1",
+          "by": "name"
+        },
+        {
+          "gold": "a-bench-2",
+          "predicted": "a-bench-r2",
+          "by": "name"
+        },
+        {
+          "gold": "a-row-2",
+          "predicted": "a-row-r2",
+          "by": "name"
+        },
+        {
+          "gold": "a-press-1",
+          "predicted": "a-ohp-r1",
+          "by": "name"
+        },
+        {
+          "gold": "a-pullups-1",
+          "predicted": "a-pullup-r1",
+          "by": "name"
+        },
+        {
+          "gold": "a-rest-b1",
+          "predicted": "a-rest-b1",
+          "by": "name"
+        },
+        {
+          "gold": "a-press-2",
+          "predicted": "a-ohp-r2",
+          "by": "name"
+        },
+        {
+          "gold": "a-pullups-2",
+          "predicted": "a-pullup-r2",
+          "by": "name"
+        },
+        {
+          "gold": "b-rest-b1",
+          "predicted": "b-rest-b1",
+          "by": "name"
+        },
+        {
+          "gold": "a-warmup-row",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-rest-a1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-rest-a2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-cooldown",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-warmup-row",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-mobility",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-row-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-bench-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rest-a1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-row-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-bench-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rest-a2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-pullups-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-press-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-pullups-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-press-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-cooldown",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "a-warm-row",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "a-rest-r1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "a-rest-r2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-warm-row",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-warm-mobility",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-row-r1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-bench-r1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-rest-r1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-row-r2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-bench-r2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-rest-r2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-pullup-r1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-ohp-r1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-pullup-r2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-ohp-r2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "cooldown-stretch",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "claude-sonnet-5",
+        "pattern": "baseline",
+        "calls": 2,
+        "input_tokens": 15051,
+        "output_tokens": 23498,
+        "cost_usd": 0.265082,
+        "cache_keys": [
+          "7598c7680f867c49d35a0b909c7131258c7049a13f7c3d127fab6ffb6d35d519",
+          "3e40b0a3f335af411742af7f54a0071727944af883343b9cd8296b71941109fd"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/baseline/per-program/fitness-partner-upper-body-supersets/responses/fitness-partner-upper-body-supersets.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/baseline/per-program/fitness-partner-upper-body-supersets/predicted/fitness-partner-upper-body-supersets.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Partner Upper-Body Superset Session for 2 lifters, following the source text below",
+            "finish_at": null,
+            "constraints": "one bench and barbell, one pair of dumbbells, one pull-up bar, two ergs, about 25 minutes",
+            "vertical": "gym"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

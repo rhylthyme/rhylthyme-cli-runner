@@ -1,0 +1,2085 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "claude-sonnet-5",
+    "pattern": "four-turn",
+    "from_cache": true,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/four-turn/cache",
+    "limit": null,
+    "only": [
+      "event-conference-session-av-checks",
+      "fitness-hiit-circuit-intervals",
+      "kitchen-backyard-barbecue-smoker-grill",
+      "lab-cell-passaging-hood-incubator",
+      "event-product-launch-run-of-show",
+      "fitness-partner-upper-body-supersets",
+      "kitchen-country-loaf-bread-bake"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 7,
+      "calls": 34,
+      "input_tokens": 393101,
+      "output_tokens": 276869,
+      "cost_usd": 3.5548919999999997,
+      "fix_iterations": 6
+    },
+    "generated_at": "2026-09-19T03:28:47+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 0.7776801310635897,
+    "steps_recall": 0.7702191987906274,
+    "steps_f1": 0.7729295883448708,
+    "durations_accuracy": 0.8022408963585433,
+    "resources_precision": 0.5217687074829932,
+    "resources_recall": 0.5333333333333333,
+    "actors_accuracy": 0.5714285714285714,
+    "relationships_precision": 0.45503547378547377,
+    "relationships_recall": 0.4988217103107989,
+    "relationships_f1": 0.4722180895389792,
+    "structure_rand_index": 0.6983726026295686,
+    "end_to_end_pass": 0.5714285714285714,
+    "unsupported_rate": 0.03855404467476251
+  },
+  "programs": [
+    {
+      "slug": "event-conference-session-av-checks",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 1.0,
+        "steps_f1": 1.0,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.6666666666666666,
+        "resources_recall": 0.6666666666666666,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.6818181818181818,
+        "relationships_recall": 0.75,
+        "relationships_f1": 0.7142857142857143,
+        "structure_rand_index": 0.5684210526315789,
+        "end_to_end_pass": 1.0,
+        "unsupported_rate": 0.047619047619047616
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 20,
+        "n_gold": 20,
+        "n_pred": 20
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 20,
+        "total": 20
+      },
+      "resources": {
+        "precision": 0.6666666666666666,
+        "recall": 0.6666666666666666,
+        "f1": 0.6666666666666666,
+        "tp": 4,
+        "n_gold": 6,
+        "n_pred": 6
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.6818181818181818,
+        "recall": 0.75,
+        "f1": 0.7142857142857143,
+        "tp": 15,
+        "n_gold": 20,
+        "n_pred": 22
+      },
+      "structure": {
+        "rand_index": 0.5684210526315789,
+        "agreements": 108,
+        "pairs": 190,
+        "n_steps": 20
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 15240.0,
+        "pred_makespan": 15540.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "line-check",
+          "projector-test",
+          "mic-check",
+          "load-deck-one",
+          "chair-opens",
+          "talk-one",
+          "qa-one",
+          "load-deck-two",
+          "changeover-one",
+          "talk-two",
+          "qa-two",
+          "serve-coffee",
+          "clear-foyer",
+          "changeover-two",
+          "talk-three",
+          "qa-three",
+          "chair-closes",
+          "strike-av"
+        ],
+        "pred_critical_path": [
+          "av-line-check",
+          "projector-warmup",
+          "test-projector",
+          "check-lapel-pack",
+          "load-first-deck",
+          "chair-opens-room",
+          "first-talk",
+          "questions-after-first-talk",
+          "load-second-deck",
+          "changeover-to-second-speaker",
+          "second-talk",
+          "questions-after-second-talk",
+          "coffee-to-foyer",
+          "clear-foyer",
+          "changeover-to-third-speaker",
+          "third-talk",
+          "questions-after-third-talk",
+          "chair-closes-session",
+          "strike-av-desk"
+        ],
+        "js_critical_path": [
+          "av-line-check",
+          "projector-warmup",
+          "test-projector",
+          "check-lapel-pack",
+          "load-first-deck",
+          "chair-opens-room",
+          "first-talk",
+          "questions-after-first-talk",
+          "load-second-deck",
+          "changeover-to-second-speaker",
+          "second-talk",
+          "questions-after-second-talk",
+          "coffee-to-foyer",
+          "clear-foyer",
+          "changeover-to-third-speaker",
+          "third-talk",
+          "questions-after-third-talk",
+          "chair-closes-session",
+          "strike-av-desk"
+        ],
+        "js_makespan": 15540,
+        "critical_overlap": 1.0,
+        "critical_ok": true,
+        "passed": true
+      },
+      "unsupported_rate": 0.047619047619047616,
+      "unsupported_steps": [
+        "projector-warmup"
+      ],
+      "matching": [
+        {
+          "gold": "line-check",
+          "predicted": "av-line-check",
+          "by": "span"
+        },
+        {
+          "gold": "projector-test",
+          "predicted": "test-projector",
+          "by": "span"
+        },
+        {
+          "gold": "mic-check",
+          "predicted": "check-lapel-pack",
+          "by": "span"
+        },
+        {
+          "gold": "strike-av",
+          "predicted": "strike-av-desk",
+          "by": "span"
+        },
+        {
+          "gold": "load-deck-one",
+          "predicted": "load-first-deck",
+          "by": "span"
+        },
+        {
+          "gold": "load-deck-two",
+          "predicted": "load-second-deck",
+          "by": "span"
+        },
+        {
+          "gold": "load-deck-three",
+          "predicted": "load-third-deck",
+          "by": "span"
+        },
+        {
+          "gold": "chair-opens",
+          "predicted": "chair-opens-room",
+          "by": "span"
+        },
+        {
+          "gold": "talk-one",
+          "predicted": "first-talk",
+          "by": "span"
+        },
+        {
+          "gold": "qa-one",
+          "predicted": "questions-after-first-talk",
+          "by": "span"
+        },
+        {
+          "gold": "changeover-one",
+          "predicted": "changeover-to-second-speaker",
+          "by": "span"
+        },
+        {
+          "gold": "talk-two",
+          "predicted": "second-talk",
+          "by": "span"
+        },
+        {
+          "gold": "qa-two",
+          "predicted": "questions-after-second-talk",
+          "by": "span"
+        },
+        {
+          "gold": "changeover-two",
+          "predicted": "changeover-to-third-speaker",
+          "by": "span"
+        },
+        {
+          "gold": "talk-three",
+          "predicted": "third-talk",
+          "by": "span"
+        },
+        {
+          "gold": "qa-three",
+          "predicted": "questions-after-third-talk",
+          "by": "span"
+        },
+        {
+          "gold": "chair-closes",
+          "predicted": "chair-closes-session",
+          "by": "span"
+        },
+        {
+          "gold": "set-coffee",
+          "predicted": "set-coffee-station",
+          "by": "span"
+        },
+        {
+          "gold": "serve-coffee",
+          "predicted": "coffee-to-foyer",
+          "by": "span"
+        },
+        {
+          "gold": "clear-foyer",
+          "predicted": "clear-foyer",
+          "by": "span"
+        },
+        {
+          "gold": null,
+          "predicted": "projector-warmup",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "claude-sonnet-5",
+        "pattern": "four-turn",
+        "calls": 4,
+        "input_tokens": 40699,
+        "output_tokens": 28218,
+        "cost_usd": 0.363578,
+        "cache_keys": [
+          "1f4984fc86801eec6111ca7e09f2aac5747466bfe7c9cfd6d4da7fa2722965d0",
+          "e64c841b74ff9ea06646c32b5d1bc6816ca47ee423a7af9a44fa20c0b982071a",
+          "c6db914a72207480372ba03ac9657704d39f74e8dd3a34eddd091d8dd019802f",
+          "1fe8140db03993cf1086dcd9477743d1c49f9e6f8270a3df5c2fa2bfd531f6a1"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/four-turn/responses/event-conference-session-av-checks.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/four-turn/predicted/event-conference-session-av-checks.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 20,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Session Chair's Sheet \u2014 Room 2B for one room, three speakers",
+            "finish_at": "coffee break at 10:30",
+            "constraints": "one projector, one lapel microphone pack, one AV desk, one lectern, one foyer for catering",
+            "vertical": "events",
+            "turn": "T1",
+            "kind": "run-of-show",
+            "constraintsLine": "Resource limits: one projector, one lapel microphone pack, one AV desk, one lectern, one foyer for catering.",
+            "deadlineLine": "Everything must be finished by coffee break at 10:30.",
+            "source": "Source text (read all of it):\n<<<\nSession Chair's Sheet \u2014 Room 2B, Thursday morning\n\nOne room, one projector, one lapel pack, one AV desk, one chair. Three talks, thirty minutes each, with questions after every one. The chair calls each speaker to the lectern; nothing starts until they do.\n\nBefore the room opens\nLine check at the AV desk: laptop, HDMI, house sound, record feed. 30 minutes.\nTest the projector once the desk is up: resolution, keystone, the cue slide. 15 minutes.\nCheck the lapel pack after the projector: battery, gain, a walk to the back row. 10 minutes.\n\nSlides\nLoad the first deck once the lapel pack is checked; 10 minutes, and leave it on the cue slide.\nLoad the second deck as soon as the first talk's questions are over; 5 minutes.\nLoad the third deck while the coffee is going out; 5 minutes.\n\nThe session\nChair opens the room, housekeeping and fire exits; 5 minutes.\nFirst talk when the chair calls the first speaker: 30 minutes.\nQuestions after the first talk: five to ten minutes, seven is the plan.\nChangeover to the second speaker: unclip the pack, clip it on, 5 minutes.\nSecond talk when the chair calls the second speaker: 30 minutes.\nQuestions after the second talk: five to ten minutes, seven is the plan.\nChangeover to the third speaker once the coffee is cleared from the foyer; 5 minutes.\nThird talk when the chair calls the third speaker: 30 minutes.\nQuestions after the third talk: five to fifteen minutes, ten is the plan.\nChair closes the session; 5 minutes.\n\nCatering\nSet the coffee station in the service corridor from ninety minutes in; 30 minutes.\nCoffee goes out to the foyer when the second talk's questions end; 20 minutes.\nClear the foyer; 10 minutes.\n\nStrike\nStrike the AV desk when the chair closes; 20 minutes, cables coiled, record feed off.\n\nNotes\nThe projector is the contended thing, not the room: a deck cannot be loaded while a talk is on it, so every load sits in a gap. The lapel pack is the other one, and it is the reason changeovers are real steps rather than slack. Question time is the only elastic in the morning; if the first two run long the chair trims the third.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Session Chair's Sheet \u2014 Room 2B for one room, three speakers",
+            "finish_at": "coffee break at 10:30",
+            "constraints": "one projector, one lapel microphone pack, one AV desk, one lectern, one foyer for catering",
+            "vertical": "events",
+            "turn": "T2",
+            "kind": "run-of-show"
+          },
+          "T3 extraction": {
+            "goal": "Session Chair's Sheet \u2014 Room 2B for one room, three speakers",
+            "finish_at": "coffee break at 10:30",
+            "constraints": "one projector, one lapel microphone pack, one AV desk, one lectern, one foyer for catering",
+            "vertical": "events",
+            "turn": "T3",
+            "kind": "run-of-show",
+            "environment": "a venue where you have: one projector, one lapel microphone pack, one AV desk, one lectern, one foyer for catering",
+            "deadline": "coffee break at 10:30",
+            "source": "Source text (read all of it):\n<<<\nSession Chair's Sheet \u2014 Room 2B, Thursday morning\n\nOne room, one projector, one lapel pack, one AV desk, one chair. Three talks, thirty minutes each, with questions after every one. The chair calls each speaker to the lectern; nothing starts until they do.\n\nBefore the room opens\nLine check at the AV desk: laptop, HDMI, house sound, record feed. 30 minutes.\nTest the projector once the desk is up: resolution, keystone, the cue slide. 15 minutes.\nCheck the lapel pack after the projector: battery, gain, a walk to the back row. 10 minutes.\n\nSlides\nLoad the first deck once the lapel pack is checked; 10 minutes, and leave it on the cue slide.\nLoad the second deck as soon as the first talk's questions are over; 5 minutes.\nLoad the third deck while the coffee is going out; 5 minutes.\n\nThe session\nChair opens the room, housekeeping and fire exits; 5 minutes.\nFirst talk when the chair calls the first speaker: 30 minutes.\nQuestions after the first talk: five to ten minutes, seven is the plan.\nChangeover to the second speaker: unclip the pack, clip it on, 5 minutes.\nSecond talk when the chair calls the second speaker: 30 minutes.\nQuestions after the second talk: five to ten minutes, seven is the plan.\nChangeover to the third speaker once the coffee is cleared from the foyer; 5 minutes.\nThird talk when the chair calls the third speaker: 30 minutes.\nQuestions after the third talk: five to fifteen minutes, ten is the plan.\nChair closes the session; 5 minutes.\n\nCatering\nSet the coffee station in the service corridor from ninety minutes in; 30 minutes.\nCoffee goes out to the foyer when the second talk's questions end; 20 minutes.\nClear the foyer; 10 minutes.\n\nStrike\nStrike the AV desk when the chair closes; 20 minutes, cables coiled, record feed off.\n\nNotes\nThe projector is the contended thing, not the room: a deck cannot be loaded while a talk is on it, so every load sits in a gap. The lapel pack is the other one, and it is the reason changeovers are real steps rather than slack. Question time is the only elastic in the morning; if the first two run long the chair trims the third.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Session Chair's Sheet \u2014 Room 2B for one room, three speakers",
+            "finish_at": "coffee break at 10:30",
+            "constraints": "one projector, one lapel microphone pack, one AV desk, one lectern, one foyer for catering",
+            "vertical": "events",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or plan_event",
+            "finishAtArg": " with finishAt=\"coffee break at 10:30\""
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "event-product-launch-run-of-show",
+      "headline": {
+        "steps_precision": 0.9444444444444444,
+        "steps_recall": 0.9444444444444444,
+        "steps_f1": 0.9444444444444444,
+        "durations_accuracy": 0.8823529411764706,
+        "resources_precision": 0.2,
+        "resources_recall": 0.16666666666666666,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.5,
+        "relationships_recall": 0.6111111111111112,
+        "relationships_f1": 0.55,
+        "structure_rand_index": 0.9779411764705882,
+        "end_to_end_pass": 1.0,
+        "unsupported_rate": 0.05263157894736842
+      },
+      "steps": {
+        "precision": 0.9444444444444444,
+        "recall": 0.9444444444444444,
+        "f1": 0.9444444444444444,
+        "tp": 17,
+        "n_gold": 18,
+        "n_pred": 18
+      },
+      "durations": {
+        "accuracy": 0.8823529411764706,
+        "correct": 15,
+        "total": 17
+      },
+      "resources": {
+        "precision": 0.2,
+        "recall": 0.16666666666666666,
+        "f1": 0.1818181818181818,
+        "tp": 1,
+        "n_gold": 6,
+        "n_pred": 5
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.5,
+        "recall": 0.6111111111111112,
+        "f1": 0.55,
+        "tp": 11,
+        "n_gold": 18,
+        "n_pred": 22
+      },
+      "structure": {
+        "rand_index": 0.9779411764705882,
+        "agreements": 133,
+        "pairs": 136,
+        "n_steps": 17
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 13020.0,
+        "pred_makespan": 13020.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "setup-registration",
+          "walkthrough",
+          "doors-open",
+          "usher-to-seats",
+          "host-welcome",
+          "ceo-keynote",
+          "product-video",
+          "product-demo",
+          "qa",
+          "host-close",
+          "breakdown-desk",
+          "strike-stage"
+        ],
+        "pred_critical_path": [
+          "registration-desk-setup",
+          "foyer-walkthrough",
+          "guest-registration",
+          "usher-to-seats",
+          "host-welcome",
+          "ceo-keynote",
+          "product-video",
+          "live-demo",
+          "moderated-qa",
+          "host-close",
+          "reception-canapes"
+        ],
+        "js_critical_path": [
+          "registration-desk-setup",
+          "foyer-walkthrough",
+          "guest-registration",
+          "usher-to-seats",
+          "host-welcome",
+          "ceo-keynote",
+          "product-video",
+          "live-demo",
+          "moderated-qa",
+          "host-close",
+          "reception-canapes"
+        ],
+        "js_makespan": 13020,
+        "critical_overlap": 0.75,
+        "critical_ok": true,
+        "passed": true
+      },
+      "unsupported_rate": 0.05263157894736842,
+      "unsupported_steps": [
+        "cue-deck-and-video"
+      ],
+      "matching": [
+        {
+          "gold": "line-check",
+          "predicted": "av-line-check",
+          "by": "span"
+        },
+        {
+          "gold": "rehearsal",
+          "predicted": "keynote-rehearsal",
+          "by": "span"
+        },
+        {
+          "gold": "welcome-playlist",
+          "predicted": "welcome-playlist",
+          "by": "span"
+        },
+        {
+          "gold": "strike-stage",
+          "predicted": "stage-strike",
+          "by": "span"
+        },
+        {
+          "gold": "setup-registration",
+          "predicted": "registration-desk-setup",
+          "by": "span"
+        },
+        {
+          "gold": "walkthrough",
+          "predicted": "foyer-walkthrough",
+          "by": "span"
+        },
+        {
+          "gold": "usher-to-seats",
+          "predicted": "usher-to-seats",
+          "by": "span"
+        },
+        {
+          "gold": "breakdown-desk",
+          "predicted": "registration-desk-breakdown",
+          "by": "span"
+        },
+        {
+          "gold": "host-welcome",
+          "predicted": "host-welcome",
+          "by": "span"
+        },
+        {
+          "gold": "ceo-keynote",
+          "predicted": "ceo-keynote",
+          "by": "span"
+        },
+        {
+          "gold": "product-video",
+          "predicted": "product-video",
+          "by": "span"
+        },
+        {
+          "gold": "product-demo",
+          "predicted": "live-demo",
+          "by": "span"
+        },
+        {
+          "gold": "qa",
+          "predicted": "moderated-qa",
+          "by": "span"
+        },
+        {
+          "gold": "host-close",
+          "predicted": "host-close",
+          "by": "span"
+        },
+        {
+          "gold": "set-bar",
+          "predicted": "bar-canape-setup",
+          "by": "span"
+        },
+        {
+          "gold": "bar-service",
+          "predicted": "bar-service-doors",
+          "by": "span"
+        },
+        {
+          "gold": "reception",
+          "predicted": "reception-canapes",
+          "by": "span"
+        },
+        {
+          "gold": "doors-open",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "cue-deck-and-video",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "guest-registration",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "claude-sonnet-5",
+        "pattern": "four-turn",
+        "calls": 4,
+        "input_tokens": 41018,
+        "output_tokens": 26425,
+        "cost_usd": 0.346286,
+        "cache_keys": [
+          "a2649bb0bcb7dcc3a24735c529085c0eec107607b5e0e146bccab6859ecca088",
+          "e3b9de89903560588a059fafe30d90509c4667a2ba156ad3acfd27518a6c77ca",
+          "b8d8655b6d1f7a9f6f8a1a74412f3d5c3b0bf74b49879af393daef7d7e4fd1d5",
+          "ccf13287fc41d63ee1c09df029cd5400b851deb2adfee7b2fa04032689af47fe"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/four-turn/responses/event-product-launch-run-of-show.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/four-turn/predicted/event-product-launch-run-of-show.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 18,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Product Launch Evening: Run of Show for 200 guests",
+            "finish_at": "21:00",
+            "constraints": "one stage, one projector, crew call 17:00, doors 18:00, program over by 20:00, venue resets at 21:00",
+            "vertical": "events",
+            "turn": "T1",
+            "kind": "run-of-show",
+            "constraintsLine": "Resource limits: one stage, one projector, crew call 17:00, doors 18:00, program over by 20:00, venue resets at 21:00.",
+            "deadlineLine": "Everything must be finished by 21:00.",
+            "source": "Source text (read all of it):\n<<<\nProduct Launch Evening: Run of Show\n\nVenue: the main hall, 200 seats, one stage with a single projector and a two-microphone PA, and a foyer with a bar. Crew: one producer calling the show, one AV technician, two front-of-house staff and the caterers. Crew call is 5:00 pm, doors are scheduled for 6:00 pm, and the program must be over by 8:00 pm so the reception can run before the venue resets at 9:00 pm.\n\nPre-show\nThe AV technician runs a full line check of the projector, clicker and both microphones; allow 30 minutes. The producer then walks the CEO and the product lead through the stage for a 20-minute rehearsal of the keynote transitions. Meanwhile front-of-house sets up the registration desk and lays out name badges, which takes 45 minutes, then does a 15-minute walkthrough of the foyer and the seating. Catering sets the bar and the canap\u00e9 stations in the foyer over 60 minutes.\n\nDoors\nDoors open on the producer's call, not before front-of-house confirms the walkthrough is done. Guests arrive and register over 30 minutes while a welcome playlist runs in the hall and the bar serves drinks. When registration closes, front-of-house ushers guests to their seats, which takes 5 minutes.\n\nProgram\nThe host opens the program as soon as the hall is seated and welcomes the audience for 5 minutes. The CEO keynote begins on the host's cue and runs 20 minutes; the AV technician brings up the deck. Straight after the keynote the technician plays a 2-minute product video from the booth, and the product lead follows with a 25-minute live demo. A moderated Q&A follows for about 20 minutes, no less than 15 and no more than 25; the moderator closes it when the questions run dry or the clock says so. When the moderator hands back, the host closes the program in 5 minutes and invites everyone to the reception.\n\nReception\nThe foyer bar reopens as soon as the host closes, and catering circulates canap\u00e9s for 45 minutes. Front-of-house breaks down the registration desk once the last guests have left the hall, about 15 minutes, and the AV technician strikes the stage over 30 minutes after the hall is clear.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Product Launch Evening: Run of Show for 200 guests",
+            "finish_at": "21:00",
+            "constraints": "one stage, one projector, crew call 17:00, doors 18:00, program over by 20:00, venue resets at 21:00",
+            "vertical": "events",
+            "turn": "T2",
+            "kind": "run-of-show"
+          },
+          "T3 extraction": {
+            "goal": "Product Launch Evening: Run of Show for 200 guests",
+            "finish_at": "21:00",
+            "constraints": "one stage, one projector, crew call 17:00, doors 18:00, program over by 20:00, venue resets at 21:00",
+            "vertical": "events",
+            "turn": "T3",
+            "kind": "run-of-show",
+            "environment": "a venue where you have: one stage, one projector, crew call 17:00, doors 18:00, program over by 20:00, venue resets at 21:00",
+            "deadline": "21:00",
+            "source": "Source text (read all of it):\n<<<\nProduct Launch Evening: Run of Show\n\nVenue: the main hall, 200 seats, one stage with a single projector and a two-microphone PA, and a foyer with a bar. Crew: one producer calling the show, one AV technician, two front-of-house staff and the caterers. Crew call is 5:00 pm, doors are scheduled for 6:00 pm, and the program must be over by 8:00 pm so the reception can run before the venue resets at 9:00 pm.\n\nPre-show\nThe AV technician runs a full line check of the projector, clicker and both microphones; allow 30 minutes. The producer then walks the CEO and the product lead through the stage for a 20-minute rehearsal of the keynote transitions. Meanwhile front-of-house sets up the registration desk and lays out name badges, which takes 45 minutes, then does a 15-minute walkthrough of the foyer and the seating. Catering sets the bar and the canap\u00e9 stations in the foyer over 60 minutes.\n\nDoors\nDoors open on the producer's call, not before front-of-house confirms the walkthrough is done. Guests arrive and register over 30 minutes while a welcome playlist runs in the hall and the bar serves drinks. When registration closes, front-of-house ushers guests to their seats, which takes 5 minutes.\n\nProgram\nThe host opens the program as soon as the hall is seated and welcomes the audience for 5 minutes. The CEO keynote begins on the host's cue and runs 20 minutes; the AV technician brings up the deck. Straight after the keynote the technician plays a 2-minute product video from the booth, and the product lead follows with a 25-minute live demo. A moderated Q&A follows for about 20 minutes, no less than 15 and no more than 25; the moderator closes it when the questions run dry or the clock says so. When the moderator hands back, the host closes the program in 5 minutes and invites everyone to the reception.\n\nReception\nThe foyer bar reopens as soon as the host closes, and catering circulates canap\u00e9s for 45 minutes. Front-of-house breaks down the registration desk once the last guests have left the hall, about 15 minutes, and the AV technician strikes the stage over 30 minutes after the hall is clear.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Product Launch Evening: Run of Show for 200 guests",
+            "finish_at": "21:00",
+            "constraints": "one stage, one projector, crew call 17:00, doors 18:00, program over by 20:00, venue resets at 21:00",
+            "vertical": "events",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or plan_event",
+            "finishAtArg": " with finishAt=\"21:00\""
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "fitness-hiit-circuit-intervals",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.8518518518518519,
+        "steps_f1": 0.92,
+        "durations_accuracy": 1.0,
+        "resources_precision": 1.0,
+        "resources_recall": 1.0,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.4074074074074074,
+        "relationships_recall": 0.2682926829268293,
+        "relationships_f1": 0.3235294117647059,
+        "structure_rand_index": 0.6363636363636364,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.041666666666666664
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.8518518518518519,
+        "f1": 0.92,
+        "tp": 23,
+        "n_gold": 27,
+        "n_pred": 23
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 23,
+        "total": 23
+      },
+      "resources": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 5,
+        "n_gold": 5,
+        "n_pred": 5
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.4074074074074074,
+        "recall": 0.2682926829268293,
+        "f1": 0.3235294117647059,
+        "tp": 11,
+        "n_gold": 41,
+        "n_pred": 27
+      },
+      "structure": {
+        "rand_index": 0.6363636363636364,
+        "agreements": 161,
+        "pairs": 253,
+        "n_steps": 23
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 1320.0,
+        "pred_makespan": 1350.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "a-warmup",
+          "a-rower-r1",
+          "a-rest-r1",
+          "a-kettlebell-r2",
+          "a-rest-r2",
+          "a-box-r3",
+          "a-rest-r3",
+          "a-sled-r4",
+          "a-cooldown"
+        ],
+        "pred_critical_path": [
+          "warm-up-floor",
+          "round1-c-box",
+          "rest-c-round1",
+          "round2-c-sled",
+          "sled-reset",
+          "round3-b-sled",
+          "rest-b-round3",
+          "round4-b-rower",
+          "cooldown-floor"
+        ],
+        "js_critical_path": [
+          "warm-up-floor",
+          "round1-c-box",
+          "rest-c-round1",
+          "round2-c-sled",
+          "sled-reset",
+          "round3-b-sled",
+          "rest-b-round3",
+          "round4-b-rower",
+          "cooldown-floor"
+        ],
+        "js_makespan": 1350,
+        "critical_overlap": 0.2222222222222222,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.041666666666666664,
+      "unsupported_steps": [
+        "sled-reset"
+      ],
+      "matching": [
+        {
+          "gold": "a-warmup",
+          "predicted": "warm-up-floor",
+          "by": "span"
+        },
+        {
+          "gold": "a-rower-r1",
+          "predicted": "round1-b-kettlebell",
+          "by": "span"
+        },
+        {
+          "gold": "a-rest-r1",
+          "predicted": "rest-a-round1",
+          "by": "span"
+        },
+        {
+          "gold": "a-kettlebell-r2",
+          "predicted": "round2-a-kettlebell",
+          "by": "span"
+        },
+        {
+          "gold": "a-rest-r2",
+          "predicted": "rest-a-round2",
+          "by": "span"
+        },
+        {
+          "gold": "a-box-r3",
+          "predicted": "round3-c-rower",
+          "by": "span"
+        },
+        {
+          "gold": "a-rest-r3",
+          "predicted": "rest-a-round3",
+          "by": "span"
+        },
+        {
+          "gold": "a-sled-r4",
+          "predicted": "round4-c-kettlebell",
+          "by": "span"
+        },
+        {
+          "gold": "a-cooldown",
+          "predicted": "cooldown-floor",
+          "by": "span"
+        },
+        {
+          "gold": "b-kettlebell-r1",
+          "predicted": "round1-a-rower",
+          "by": "span"
+        },
+        {
+          "gold": "b-rest-r1",
+          "predicted": "rest-b-round1",
+          "by": "span"
+        },
+        {
+          "gold": "b-box-r2",
+          "predicted": "round2-c-sled",
+          "by": "span"
+        },
+        {
+          "gold": "b-rest-r2",
+          "predicted": "rest-b-round2",
+          "by": "span"
+        },
+        {
+          "gold": "b-sled-r3",
+          "predicted": "round3-b-sled",
+          "by": "span"
+        },
+        {
+          "gold": "b-rest-r3",
+          "predicted": "rest-b-round3",
+          "by": "span"
+        },
+        {
+          "gold": "b-rower-r4",
+          "predicted": "round4-b-rower",
+          "by": "span"
+        },
+        {
+          "gold": "c-box-r1",
+          "predicted": "round1-c-box",
+          "by": "span"
+        },
+        {
+          "gold": "c-rest-r1",
+          "predicted": "rest-c-round1",
+          "by": "span"
+        },
+        {
+          "gold": "c-sled-r2",
+          "predicted": "round2-b-box",
+          "by": "span"
+        },
+        {
+          "gold": "c-rest-r2",
+          "predicted": "rest-c-round2",
+          "by": "span"
+        },
+        {
+          "gold": "c-rower-r3",
+          "predicted": "round3-a-box",
+          "by": "span"
+        },
+        {
+          "gold": "c-rest-r3",
+          "predicted": "rest-c-round3",
+          "by": "span"
+        },
+        {
+          "gold": "c-kettlebell-r4",
+          "predicted": "round4-a-sled",
+          "by": "span"
+        },
+        {
+          "gold": "b-warmup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-cooldown",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-warmup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-cooldown",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "sled-reset",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "claude-sonnet-5",
+        "pattern": "four-turn",
+        "calls": 5,
+        "input_tokens": 58006,
+        "output_tokens": 29290,
+        "cost_usd": 0.408912,
+        "cache_keys": [
+          "1a752d8f7d9a8e6b13f52ab5b882b67c81ad59de084ab47b995dd3a2e0026c22",
+          "4b25ff09ea52c5f5c88b6eed200255bc591da1c8ef0a9c653d736ee5b4fc3b2c",
+          "ef667fa49391ffbcf5e7701e06636e3c8b5de25b67d17dacd3f22cf99e60438e",
+          "dfe0a8e7da3cd3f1e7fa0f4152b45ea94e89d71d58f93abc153ba5ffe6424ea0",
+          "dbca7c62c0e90b01d2c0b2c357f694c150592138529dc7d0723a94af46e9d465"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/four-turn/responses/fitness-hiit-circuit-intervals.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/four-turn/predicted/fitness-hiit-circuit-intervals.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 23,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "HIIT Circuit Card \u2014 three athletes, four stations for 3 athletes, 4 rounds",
+            "finish_at": null,
+            "constraints": "one rower, one kettlebell, one box, one sled, three athletes on the floor",
+            "vertical": "gym",
+            "turn": "T1",
+            "kind": "workout",
+            "constraintsLine": "Resource limits: one rower, one kettlebell, one box, one sled, three athletes on the floor.",
+            "deadlineLine": "No finishing time was given; finish as early as the work allows.",
+            "source": "Source text (read all of it):\n<<<\nHIIT Circuit Card \u2014 three athletes, four stations\n\nSmall group session, forty-five minutes on the clock including the warm-up and the stretch. There is one rower, one kettlebell, one box and one sled in the corner of the gym, and three of you. That means one station sits empty every round, and it means nobody ever waits on equipment if the rotation is respected.\n\nThe rule\nSixty seconds of work, all out, then sixty seconds of rest. Nobody starts a station until the athlete ahead of them has left it. If you are early, stand at the station and breathe; do not start.\n\nWarm-up\nFive minutes on the floor together: skipping, hip openers, shoulder pass-throughs, two sets of ten air squats. All three of you start at the same time and finish at the same time.\n\nThe stations\nRower: damper on five, pull hard, do not chase the split on the last ten seconds.\nKettlebell swings: one bell, hips not arms, chest tall at the top.\nBox step-overs: alternate the lead leg, full extension at the top, no rebound.\nSled push: the length of the turf and back, low hands, short steps.\n\nThe rotation\nRound 1: A on the rower, B on the kettlebell, C on the box.\nRound 2: A on the kettlebell, B on the box, C on the sled.\nRound 3: A on the box, B on the sled, C on the rower.\nRound 4: A on the sled, B on the rower, C on the kettlebell.\n\nRest\nSixty seconds of rest on the floor after every station. Walk it off, do not sit down, do not lean on the next piece of equipment while somebody is still using it. There is no rest after the fourth station: that one runs straight into the cooldown.\n\nCooldown\nTen minutes on the floor when all three of you have finished the fourth station: easy bike or a walk, then quads, hips and thoracic spine. Nobody leaves early; the cooldown starts together.\n\nCoach's note\nThe sled is the one that wrecks the rotation if somebody drags it. It is the longest reset and it is at the far end of the turf, so the athlete coming off the sled is the one most likely to hold up the person behind them. Watch that hand-off.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "HIIT Circuit Card \u2014 three athletes, four stations for 3 athletes, 4 rounds",
+            "finish_at": null,
+            "constraints": "one rower, one kettlebell, one box, one sled, three athletes on the floor",
+            "vertical": "gym",
+            "turn": "T2",
+            "kind": "workout"
+          },
+          "T3 extraction": {
+            "goal": "HIIT Circuit Card \u2014 three athletes, four stations for 3 athletes, 4 rounds",
+            "finish_at": null,
+            "constraints": "one rower, one kettlebell, one box, one sled, three athletes on the floor",
+            "vertical": "gym",
+            "turn": "T3",
+            "kind": "workout",
+            "environment": "a gym where you have: one rower, one kettlebell, one box, one sled, three athletes on the floor",
+            "deadline": "the earliest time the work allows",
+            "source": "Source text (read all of it):\n<<<\nHIIT Circuit Card \u2014 three athletes, four stations\n\nSmall group session, forty-five minutes on the clock including the warm-up and the stretch. There is one rower, one kettlebell, one box and one sled in the corner of the gym, and three of you. That means one station sits empty every round, and it means nobody ever waits on equipment if the rotation is respected.\n\nThe rule\nSixty seconds of work, all out, then sixty seconds of rest. Nobody starts a station until the athlete ahead of them has left it. If you are early, stand at the station and breathe; do not start.\n\nWarm-up\nFive minutes on the floor together: skipping, hip openers, shoulder pass-throughs, two sets of ten air squats. All three of you start at the same time and finish at the same time.\n\nThe stations\nRower: damper on five, pull hard, do not chase the split on the last ten seconds.\nKettlebell swings: one bell, hips not arms, chest tall at the top.\nBox step-overs: alternate the lead leg, full extension at the top, no rebound.\nSled push: the length of the turf and back, low hands, short steps.\n\nThe rotation\nRound 1: A on the rower, B on the kettlebell, C on the box.\nRound 2: A on the kettlebell, B on the box, C on the sled.\nRound 3: A on the box, B on the sled, C on the rower.\nRound 4: A on the sled, B on the rower, C on the kettlebell.\n\nRest\nSixty seconds of rest on the floor after every station. Walk it off, do not sit down, do not lean on the next piece of equipment while somebody is still using it. There is no rest after the fourth station: that one runs straight into the cooldown.\n\nCooldown\nTen minutes on the floor when all three of you have finished the fourth station: easy bike or a walk, then quads, hips and thoracic spine. Nobody leaves early; the cooldown starts together.\n\nCoach's note\nThe sled is the one that wrecks the rotation if somebody drags it. It is the longest reset and it is at the far end of the turf, so the athlete coming off the sled is the one most likely to hold up the person behind them. Watch that hand-off.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "HIIT Circuit Card \u2014 three athletes, four stations for 3 athletes, 4 rounds",
+            "finish_at": null,
+            "constraints": "one rower, one kettlebell, one box, one sled, three athletes on the floor",
+            "vertical": "gym",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or start_workout",
+            "finishAtArg": ""
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "fitness-partner-upper-body-supersets",
+      "headline": {
+        "steps_precision": 0.6428571428571429,
+        "steps_recall": 0.6428571428571429,
+        "steps_f1": 0.6428571428571429,
+        "durations_accuracy": 0.8888888888888888,
+        "resources_precision": 0.2857142857142857,
+        "resources_recall": 0.4,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.275,
+        "relationships_recall": 0.2894736842105263,
+        "relationships_f1": 0.28205128205128205,
+        "structure_rand_index": 0.7058823529411765,
+        "end_to_end_pass": 1.0,
+        "unsupported_rate": 0.034482758620689655
+      },
+      "steps": {
+        "precision": 0.6428571428571429,
+        "recall": 0.6428571428571429,
+        "f1": 0.6428571428571429,
+        "tp": 18,
+        "n_gold": 28,
+        "n_pred": 28
+      },
+      "durations": {
+        "accuracy": 0.8888888888888888,
+        "correct": 16,
+        "total": 18
+      },
+      "resources": {
+        "precision": 0.2857142857142857,
+        "recall": 0.4,
+        "f1": 0.3333333333333333,
+        "tp": 2,
+        "n_gold": 5,
+        "n_pred": 7
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.275,
+        "recall": 0.2894736842105263,
+        "f1": 0.28205128205128205,
+        "tp": 11,
+        "n_gold": 38,
+        "n_pred": 40
+      },
+      "structure": {
+        "rand_index": 0.7058823529411765,
+        "agreements": 108,
+        "pairs": 153,
+        "n_steps": 18
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 1405.0,
+        "pred_makespan": 1440.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "a-warmup-row",
+          "a-mobility",
+          "a-bench-1",
+          "a-row-1",
+          "a-rest-a1",
+          "a-bench-2",
+          "a-row-2",
+          "a-rest-a2",
+          "a-press-1",
+          "b-press-1",
+          "b-rest-b1",
+          "b-pullups-2",
+          "b-press-2",
+          "a-cooldown"
+        ],
+        "pred_critical_path": [
+          "warmup-row-a",
+          "warmup-mobility-a",
+          "load-barbell",
+          "bench-press-a-r1",
+          "dumbbell-row-a-r1",
+          "rest-b-r1",
+          "dumbbell-row-b-r2",
+          "dumbbell-row-a-r2",
+          "rest-a-r2",
+          "overhead-press-a-r1",
+          "overhead-press-b-r1",
+          "rest-a-b1",
+          "overhead-press-a-r2",
+          "overhead-press-b-r2",
+          "cooldown-stretch-a"
+        ],
+        "js_critical_path": [
+          "warmup-row-a",
+          "warmup-mobility-a",
+          "load-barbell",
+          "bench-press-a-r1",
+          "dumbbell-row-a-r1",
+          "rest-b-r1",
+          "dumbbell-row-b-r2",
+          "dumbbell-row-a-r2",
+          "rest-a-r2",
+          "overhead-press-a-r1",
+          "overhead-press-b-r1",
+          "rest-a-b1",
+          "overhead-press-a-r2",
+          "overhead-press-b-r2",
+          "cooldown-stretch-a"
+        ],
+        "js_makespan": 1440,
+        "critical_overlap": 0.6428571428571429,
+        "critical_ok": true,
+        "passed": true
+      },
+      "unsupported_rate": 0.034482758620689655,
+      "unsupported_steps": [
+        "load-barbell"
+      ],
+      "matching": [
+        {
+          "gold": "a-warmup-row",
+          "predicted": "warmup-row-a",
+          "by": "span"
+        },
+        {
+          "gold": "a-mobility",
+          "predicted": "warmup-mobility-a",
+          "by": "span"
+        },
+        {
+          "gold": "a-bench-1",
+          "predicted": "bench-press-a-r1",
+          "by": "span"
+        },
+        {
+          "gold": "a-row-1",
+          "predicted": "dumbbell-row-a-r1",
+          "by": "span"
+        },
+        {
+          "gold": "a-rest-a1",
+          "predicted": "rest-a-r1",
+          "by": "span"
+        },
+        {
+          "gold": "a-rest-a2",
+          "predicted": "rest-b-r1",
+          "by": "span"
+        },
+        {
+          "gold": "a-press-1",
+          "predicted": "overhead-press-a-r1",
+          "by": "span"
+        },
+        {
+          "gold": "a-rest-b1",
+          "predicted": "rest-a-b1",
+          "by": "span"
+        },
+        {
+          "gold": "a-cooldown",
+          "predicted": "cooldown-stretch-a",
+          "by": "span"
+        },
+        {
+          "gold": "b-warmup-row",
+          "predicted": "warmup-row-b",
+          "by": "span"
+        },
+        {
+          "gold": "b-mobility",
+          "predicted": "warmup-mobility-b",
+          "by": "span"
+        },
+        {
+          "gold": "b-row-1",
+          "predicted": "dumbbell-row-b-r1",
+          "by": "span"
+        },
+        {
+          "gold": "b-bench-1",
+          "predicted": "bench-press-b-r1",
+          "by": "span"
+        },
+        {
+          "gold": "b-pullups-1",
+          "predicted": "pullup-b-r1",
+          "by": "span"
+        },
+        {
+          "gold": "b-press-1",
+          "predicted": "pullup-a-r1",
+          "by": "span"
+        },
+        {
+          "gold": "b-rest-b1",
+          "predicted": "overhead-press-a-r2",
+          "by": "span"
+        },
+        {
+          "gold": "b-press-2",
+          "predicted": "overhead-press-b-r1",
+          "by": "span"
+        },
+        {
+          "gold": "b-cooldown",
+          "predicted": "cooldown-stretch-b",
+          "by": "span"
+        },
+        {
+          "gold": "a-bench-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-row-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-pullups-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-press-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-pullups-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rest-a1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-row-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-bench-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rest-a2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-pullups-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "load-barbell",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "bench-press-a-r2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "dumbbell-row-a-r2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "rest-a-r2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "pullup-a-r2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "dumbbell-row-b-r2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "bench-press-b-r2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "rest-b-r2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "rest-b-b1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "pullup-b-r2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "overhead-press-b-r2",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "claude-sonnet-5",
+        "pattern": "four-turn",
+        "calls": 6,
+        "input_tokens": 79926,
+        "output_tokens": 52662,
+        "cost_usd": 0.686472,
+        "cache_keys": [
+          "f7f8474e5136149e2438950bd5467247f2644ad63cb3b14f59f37b39683b6313",
+          "291a64b6afc4a51d8376d3bf7223f1ded5e285853b0ed77f5895b569046e171d",
+          "908f92ef24251af8a46aba63fe5236e5d8fed00222184547ea9f3463d274f78b",
+          "3610be6f8b824114c514dd6c0e71b701488b60c3d3b380c58fefc20b4950a40a",
+          "2fa519aa7b5492b3c33191c0b526eee868508584f301c3f90821e7dfdae1eab3",
+          "54ed43ab3b3f482139232b80a4468f7b78de3873b85ef95222e6b984bc1bd352"
+        ],
+        "fix_iterations": 2,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/four-turn/responses/fitness-partner-upper-body-supersets.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/four-turn/predicted/fitness-partner-upper-body-supersets.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 28,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Partner Upper-Body Superset Session for 2 lifters",
+            "finish_at": null,
+            "constraints": "one bench and barbell, one pair of dumbbells, one pull-up bar, two ergs, about 25 minutes",
+            "vertical": "gym",
+            "turn": "T1",
+            "kind": "workout",
+            "constraintsLine": "Resource limits: one bench and barbell, one pair of dumbbells, one pull-up bar, two ergs, about 25 minutes.",
+            "deadlineLine": "No finishing time was given; finish as early as the work allows.",
+            "source": "Source text (read all of it):\n<<<\nPartner Upper-Body Superset Session\n\nTwo lifters, one flat bench with a barbell, one pair of dumbbells, one pull-up bar and two rowing ergs. The whole session should take about 25 minutes. You work as a pair: while Partner A is on the first exercise of a superset, Partner B is on the second, and then you swap; nobody waits for equipment if you keep the order.\n\nWarm-up\nBoth partners start together with 5 minutes of easy rowing on the ergs, followed by 3 minutes of arm circles and band pull-aparts.\n\nSuperset A: bench press and dumbbell row (2 rounds)\nPartner A loads the bar and does a set of 8 bench presses, which takes about 40 seconds. Partner B starts on the dumbbell row at the same time, 8 per side, also about 40 seconds. Then swap: A goes to the rows once B has finished with the dumbbells, and B takes the bench as soon as A racks the bar. After both exercises, rest 90 seconds before the next round. Do 2 rounds, resting after each.\n\nSuperset B: overhead press and pull-ups (2 rounds)\nMove straight on after the last rest. Partner A does 8 strict overhead presses with the dumbbells, about 45 seconds, while Partner B does a set of pull-ups, 6 to 10 reps, about 30 seconds. Swap when both are done: A moves to the pull-up bar, and B takes the dumbbells when A sets them down. Rest 2 minutes between rounds; there is no rest after the second round.\n\nCool-down\nFinish together with 5 minutes of stretching: doorway chest stretch, lat stretch on the pull-up bar, and slow shoulder rolls.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Partner Upper-Body Superset Session for 2 lifters",
+            "finish_at": null,
+            "constraints": "one bench and barbell, one pair of dumbbells, one pull-up bar, two ergs, about 25 minutes",
+            "vertical": "gym",
+            "turn": "T2",
+            "kind": "workout"
+          },
+          "T3 extraction": {
+            "goal": "Partner Upper-Body Superset Session for 2 lifters",
+            "finish_at": null,
+            "constraints": "one bench and barbell, one pair of dumbbells, one pull-up bar, two ergs, about 25 minutes",
+            "vertical": "gym",
+            "turn": "T3",
+            "kind": "workout",
+            "environment": "a gym where you have: one bench and barbell, one pair of dumbbells, one pull-up bar, two ergs, about 25 minutes",
+            "deadline": "the earliest time the work allows",
+            "source": "Source text (read all of it):\n<<<\nPartner Upper-Body Superset Session\n\nTwo lifters, one flat bench with a barbell, one pair of dumbbells, one pull-up bar and two rowing ergs. The whole session should take about 25 minutes. You work as a pair: while Partner A is on the first exercise of a superset, Partner B is on the second, and then you swap; nobody waits for equipment if you keep the order.\n\nWarm-up\nBoth partners start together with 5 minutes of easy rowing on the ergs, followed by 3 minutes of arm circles and band pull-aparts.\n\nSuperset A: bench press and dumbbell row (2 rounds)\nPartner A loads the bar and does a set of 8 bench presses, which takes about 40 seconds. Partner B starts on the dumbbell row at the same time, 8 per side, also about 40 seconds. Then swap: A goes to the rows once B has finished with the dumbbells, and B takes the bench as soon as A racks the bar. After both exercises, rest 90 seconds before the next round. Do 2 rounds, resting after each.\n\nSuperset B: overhead press and pull-ups (2 rounds)\nMove straight on after the last rest. Partner A does 8 strict overhead presses with the dumbbells, about 45 seconds, while Partner B does a set of pull-ups, 6 to 10 reps, about 30 seconds. Swap when both are done: A moves to the pull-up bar, and B takes the dumbbells when A sets them down. Rest 2 minutes between rounds; there is no rest after the second round.\n\nCool-down\nFinish together with 5 minutes of stretching: doorway chest stretch, lat stretch on the pull-up bar, and slow shoulder rolls.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Partner Upper-Body Superset Session for 2 lifters",
+            "finish_at": null,
+            "constraints": "one bench and barbell, one pair of dumbbells, one pull-up bar, two ergs, about 25 minutes",
+            "vertical": "gym",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or start_workout",
+            "finishAtArg": ""
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "kitchen-backyard-barbecue-smoker-grill",
+      "headline": {
+        "steps_precision": 0.9473684210526315,
+        "steps_recall": 1.0,
+        "steps_f1": 0.972972972972973,
+        "durations_accuracy": 0.9444444444444444,
+        "resources_precision": 0.6666666666666666,
+        "resources_recall": 0.6666666666666666,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.7272727272727273,
+        "relationships_recall": 0.8421052631578947,
+        "relationships_f1": 0.7804878048780488,
+        "structure_rand_index": 1.0,
+        "end_to_end_pass": 1.0,
+        "unsupported_rate": 0.05
+      },
+      "steps": {
+        "precision": 0.9473684210526315,
+        "recall": 1.0,
+        "f1": 0.972972972972973,
+        "tp": 18,
+        "n_gold": 18,
+        "n_pred": 19
+      },
+      "durations": {
+        "accuracy": 0.9444444444444444,
+        "correct": 17,
+        "total": 18
+      },
+      "resources": {
+        "precision": 0.6666666666666666,
+        "recall": 0.6666666666666666,
+        "f1": 0.6666666666666666,
+        "tp": 4,
+        "n_gold": 6,
+        "n_pred": 6
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.7272727272727273,
+        "recall": 0.8421052631578947,
+        "f1": 0.7804878048780488,
+        "tp": 16,
+        "n_gold": 19,
+        "n_pred": 22
+      },
+      "structure": {
+        "rand_index": 1.0,
+        "agreements": 153,
+        "pairs": 153,
+        "n_steps": 18
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 43320.0,
+        "pred_makespan": 46800.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "light-smoker",
+          "smoke-unwrapped",
+          "wrap-pork",
+          "smoke-wrapped",
+          "rest-in-cooler",
+          "light-kettle",
+          "grill-sausages",
+          "grill-corn",
+          "toast-buns",
+          "set-table",
+          "call-everyone"
+        ],
+        "pred_critical_path": [
+          "light-kettle",
+          "grill-sausages",
+          "grill-corn",
+          "toast-buns",
+          "set-table",
+          "call-everyone-serve"
+        ],
+        "js_critical_path": [
+          "light-kettle",
+          "grill-sausages",
+          "grill-corn",
+          "toast-buns",
+          "set-table",
+          "call-everyone-serve"
+        ],
+        "js_makespan": 46800,
+        "critical_overlap": 0.5454545454545454,
+        "critical_ok": true,
+        "passed": true
+      },
+      "unsupported_rate": 0.05,
+      "unsupported_steps": [
+        "light-burner"
+      ],
+      "matching": [
+        {
+          "gold": "trim-and-rub",
+          "predicted": "trim-rub-shoulder",
+          "by": "span"
+        },
+        {
+          "gold": "light-smoker",
+          "predicted": "light-smoker",
+          "by": "span"
+        },
+        {
+          "gold": "smoke-unwrapped",
+          "predicted": "smoke-unwrapped",
+          "by": "span"
+        },
+        {
+          "gold": "wrap-pork",
+          "predicted": "wrap-shoulder",
+          "by": "span"
+        },
+        {
+          "gold": "smoke-wrapped",
+          "predicted": "smoke-wrapped",
+          "by": "span"
+        },
+        {
+          "gold": "rest-in-cooler",
+          "predicted": "hold-cooler",
+          "by": "span"
+        },
+        {
+          "gold": "pull-pork",
+          "predicted": "pull-pork",
+          "by": "span"
+        },
+        {
+          "gold": "fry-bacon-onion",
+          "predicted": "fry-bacon-onion",
+          "by": "span"
+        },
+        {
+          "gold": "simmer-beans",
+          "predicted": "simmer-beans",
+          "by": "span"
+        },
+        {
+          "gold": "shred-cabbage",
+          "predicted": "shred-cabbage-carrot",
+          "by": "span"
+        },
+        {
+          "gold": "whisk-slaw-dressing",
+          "predicted": "whisk-dressing",
+          "by": "span"
+        },
+        {
+          "gold": "chill-slaw",
+          "predicted": "dress-slaw",
+          "by": "span"
+        },
+        {
+          "gold": "light-kettle",
+          "predicted": "light-kettle",
+          "by": "span"
+        },
+        {
+          "gold": "grill-sausages",
+          "predicted": "grill-sausages",
+          "by": "span"
+        },
+        {
+          "gold": "grill-corn",
+          "predicted": "grill-corn",
+          "by": "span"
+        },
+        {
+          "gold": "toast-buns",
+          "predicted": "toast-buns",
+          "by": "span"
+        },
+        {
+          "gold": "set-table",
+          "predicted": "set-table",
+          "by": "span"
+        },
+        {
+          "gold": "call-everyone",
+          "predicted": "call-everyone-serve",
+          "by": "span"
+        },
+        {
+          "gold": null,
+          "predicted": "light-burner",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "refrigerate-slaw",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "claude-sonnet-5",
+        "pattern": "four-turn",
+        "calls": 4,
+        "input_tokens": 40010,
+        "output_tokens": 26256,
+        "cost_usd": 0.34258,
+        "cache_keys": [
+          "b79aeb917f5580c0c6e100ddc4a3fcc11883a8e17a09f13a3b7da08c82ba4e89",
+          "58db5640310e7fd26a803b8890d51786cd4eddb4a68d6889bc44974c080f4be0",
+          "0408b80597ede0b72c6dbc7213e7c3233dcd2e34aa80de9f8e0b2896da12512a",
+          "9cd6fc0335e67edbe4a59cfdded1414e6e05bf78260824d119d2f9098c5de15d"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/four-turn/responses/kitchen-backyard-barbecue-smoker-grill.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/four-turn/predicted/kitchen-backyard-barbecue-smoker-grill.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 19,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Backyard Barbecue: Smoker and Grill for a shoulder, sausages and sides for about twelve",
+            "finish_at": null,
+            "constraints": "one offset smoker, one kettle grill, one side burner, one cooler for holding, two cooks",
+            "vertical": "kitchen",
+            "turn": "T1",
+            "kind": "recipe",
+            "constraintsLine": "Resource limits: one offset smoker, one kettle grill, one side burner, one cooler for holding, two cooks.",
+            "deadlineLine": "No finishing time was given; finish as early as the work allows.",
+            "source": "Source text (read all of it):\n<<<\nBackyard Barbecue: Smoker and Grill\n\nTwo cooks, one offset smoker, one kettle grill, one side burner and a cooler for holding. The pork owns the smoker all day; everything else happens in the last two hours.\n\nPork shoulder\nLight the smoker and bring it to 250\u00b0F; 45 minutes. While it comes up, trim the shoulder and rub it heavily with salt, pepper and paprika; 25 minutes. Put the shoulder on once the smoker holds temperature and smoke it unwrapped for 6 hours, until the bark is dark and set. Wrap it tightly in butcher paper; 10 minutes. Back on the smoker, wrapped, until the thickest part probes soft \u2014 usually another 3 hours, sometimes four. Hold it wrapped in a cooler for one to three hours; it will not get cold and it only gets better. Pull the meat by hand; 30 minutes.\n\nBeans\nWhen the pork goes into the cooler, fry the bacon and onion in the pot on the side burner for 12 minutes, then add the beans, molasses and a ladle of drippings and let them tick over on the lowest flame until you serve.\n\nSlaw\nStart the slaw at the same time. Shred the cabbage and carrot; 20 minutes. Whisk the buttermilk dressing; 8 minutes. Dress the slaw and put it in the refrigerator for at least 45 minutes so the cabbage softens.\n\nGrill\nLight the kettle an hour before you eat; 25 minutes to a clean bed of coals. Grill the sausages for 14 minutes. Grill the corn for 10 minutes. Toast the buns for 3 minutes, last, so they stay warm.\n\nTable\nSet out plates, pickles and sauce once the buns are off; 10 minutes. Call everyone over when both cooks say it is ready; 5 minutes to lay it all out.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Backyard Barbecue: Smoker and Grill for a shoulder, sausages and sides for about twelve",
+            "finish_at": null,
+            "constraints": "one offset smoker, one kettle grill, one side burner, one cooler for holding, two cooks",
+            "vertical": "kitchen",
+            "turn": "T2",
+            "kind": "recipe"
+          },
+          "T3 extraction": {
+            "goal": "Backyard Barbecue: Smoker and Grill for a shoulder, sausages and sides for about twelve",
+            "finish_at": null,
+            "constraints": "one offset smoker, one kettle grill, one side burner, one cooler for holding, two cooks",
+            "vertical": "kitchen",
+            "turn": "T3",
+            "kind": "recipe",
+            "environment": "a kitchen where you have: one offset smoker, one kettle grill, one side burner, one cooler for holding, two cooks",
+            "deadline": "the earliest time the work allows",
+            "source": "Source text (read all of it):\n<<<\nBackyard Barbecue: Smoker and Grill\n\nTwo cooks, one offset smoker, one kettle grill, one side burner and a cooler for holding. The pork owns the smoker all day; everything else happens in the last two hours.\n\nPork shoulder\nLight the smoker and bring it to 250\u00b0F; 45 minutes. While it comes up, trim the shoulder and rub it heavily with salt, pepper and paprika; 25 minutes. Put the shoulder on once the smoker holds temperature and smoke it unwrapped for 6 hours, until the bark is dark and set. Wrap it tightly in butcher paper; 10 minutes. Back on the smoker, wrapped, until the thickest part probes soft \u2014 usually another 3 hours, sometimes four. Hold it wrapped in a cooler for one to three hours; it will not get cold and it only gets better. Pull the meat by hand; 30 minutes.\n\nBeans\nWhen the pork goes into the cooler, fry the bacon and onion in the pot on the side burner for 12 minutes, then add the beans, molasses and a ladle of drippings and let them tick over on the lowest flame until you serve.\n\nSlaw\nStart the slaw at the same time. Shred the cabbage and carrot; 20 minutes. Whisk the buttermilk dressing; 8 minutes. Dress the slaw and put it in the refrigerator for at least 45 minutes so the cabbage softens.\n\nGrill\nLight the kettle an hour before you eat; 25 minutes to a clean bed of coals. Grill the sausages for 14 minutes. Grill the corn for 10 minutes. Toast the buns for 3 minutes, last, so they stay warm.\n\nTable\nSet out plates, pickles and sauce once the buns are off; 10 minutes. Call everyone over when both cooks say it is ready; 5 minutes to lay it all out.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Backyard Barbecue: Smoker and Grill for a shoulder, sausages and sides for about twelve",
+            "finish_at": null,
+            "constraints": "one offset smoker, one kettle grill, one side burner, one cooler for holding, two cooks",
+            "vertical": "kitchen",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or cook_recipe",
+            "finishAtArg": ""
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "kitchen-country-loaf-bread-bake",
+      "headline": {
+        "steps_precision": 0.0,
+        "steps_recall": 0.0,
+        "steps_f1": 0.0,
+        "durations_accuracy": 0.0,
+        "resources_precision": 0.0,
+        "resources_recall": 0.0,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.0,
+        "relationships_recall": 0.0,
+        "relationships_f1": 0.0,
+        "structure_rand_index": 0.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.0
+      },
+      "steps": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 24,
+        "n_pred": 0
+      },
+      "durations": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 24
+      },
+      "resources": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 4,
+        "n_pred": 0
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 26,
+        "n_pred": 0
+      },
+      "structure": {
+        "rand_index": 0.0,
+        "agreements": 0,
+        "pairs": 0,
+        "n_steps": 0
+      },
+      "end_to_end": {
+        "python_valid": false,
+        "python_errors": [],
+        "js_status": "skipped",
+        "js_valid": null,
+        "js_errors": [],
+        "gold_makespan": 0.0,
+        "pred_makespan": 0.0,
+        "makespan_ok": false,
+        "gold_critical_path": [],
+        "pred_critical_path": [],
+        "js_critical_path": null,
+        "js_makespan": null,
+        "critical_overlap": 0.0,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.0,
+      "unsupported_steps": [],
+      "matching": [],
+      "extras": {
+        "model": "claude-sonnet-5",
+        "pattern": "four-turn",
+        "calls": 6,
+        "input_tokens": 74361,
+        "output_tokens": 66530,
+        "cost_usd": 0.814022,
+        "cache_keys": [
+          "392b898898bc3cfc1f4bdf5693b09d3e12f0defd3846c740af1570ac444a2733",
+          "58dc154843b97ee0291396697807a06d3b0e60de1756669f0c3ccb987597f43c",
+          "c1f559e0d4b0e599148fdd293e218746e011f06192edfc15ac7b98458963a311",
+          "677a231d4dee33aafd8ebf9e42161d84482650238f75ffb743e500847d32980b",
+          "b516e9eed4ffd521478360a34923b0e0bf9dc804980683834eeac91094db1d68",
+          "753def6424ade06082dcadfb24f0d65987de6692f9b4b642fcdac30a87e2e209"
+        ],
+        "fix_iterations": 2,
+        "validation_errors": [
+          "no JSON object with a `tracks` array was found in the reply"
+        ],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/four-turn/responses/kitchen-country-loaf-bread-bake.json",
+        "predicted_path": null,
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 24,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Country Loaf: Two Boules, One Dutch Oven for one batch, two 900 g boules",
+            "finish_at": null,
+            "constraints": "one oven, one dutch oven, one refrigerator, one baker, the two loaves bake one after the other",
+            "vertical": "kitchen",
+            "turn": "T1",
+            "kind": "recipe",
+            "constraintsLine": "Resource limits: one oven, one dutch oven, one refrigerator, one baker, the two loaves bake one after the other.",
+            "deadlineLine": "No finishing time was given; finish as early as the work allows.",
+            "source": "Source text (read all of it):\n<<<\nCountry Loaf: Two Boules, One Dutch Oven\n\nOne batch of dough, two loaves, and a single dutch oven that has to bake them one after the other. One oven, one baker, one refrigerator. Times count from eight in the morning; the loaves come out of the fridge the next day.\n\nLevain\nMix 50 g of ripe starter with 100 g of flour and 100 g of water in a jar; 5 minutes. Leave the jar at room temperature until it domes and smells sweet, 4 to 6 hours.\n\nDough\nWeigh the flour, water and salt for the whole bake first thing; 10 minutes. At half past eight, whisk 900 g of flour into 680 g of water; 5 minutes. Let it autolyse for 1 hour. When the levain is ripe, squeeze it into the autolysed dough with 20 g of salt and work it by hand for 10 minutes. Bulk ferment at 24\u00b0C until the dough has risen by half, 3 to 5 hours. Fold the dough in the bowl half an hour after mixing, again half an hour later, and a third time after another half hour; each fold takes 2 minutes.\n\nDivide and shape\nTip the dough out, cut it in two and preshape each piece into a loose round; 10 minutes. Let the rounds rest on the bench for 25 minutes. Shape both boules tightly and settle them into floured bannetons; 10 minutes. Retard them in the refrigerator, 10 to 14 hours.\n\nBake\nThree quarters of an hour before the dough comes out, put the dutch oven in the oven and heat both to 250\u00b0C. Score the first loaf and lower it in; 3 minutes. Bake the first loaf covered for 20 minutes, then uncover it and bake for another 20 minutes until the crust is dark. Cool it on a rack for at least an hour before cutting. Re-heat the empty dutch oven for 10 minutes. Score the second loaf and lower it in; 3 minutes. Bake the second loaf covered for 20 minutes, then uncover it for a final 20 minutes. Cool the second loaf on the rack beside the first.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Country Loaf: Two Boules, One Dutch Oven for one batch, two 900 g boules",
+            "finish_at": null,
+            "constraints": "one oven, one dutch oven, one refrigerator, one baker, the two loaves bake one after the other",
+            "vertical": "kitchen",
+            "turn": "T2",
+            "kind": "recipe"
+          },
+          "T3 extraction": {
+            "goal": "Country Loaf: Two Boules, One Dutch Oven for one batch, two 900 g boules",
+            "finish_at": null,
+            "constraints": "one oven, one dutch oven, one refrigerator, one baker, the two loaves bake one after the other",
+            "vertical": "kitchen",
+            "turn": "T3",
+            "kind": "recipe",
+            "environment": "a kitchen where you have: one oven, one dutch oven, one refrigerator, one baker, the two loaves bake one after the other",
+            "deadline": "the earliest time the work allows",
+            "source": "Source text (read all of it):\n<<<\nCountry Loaf: Two Boules, One Dutch Oven\n\nOne batch of dough, two loaves, and a single dutch oven that has to bake them one after the other. One oven, one baker, one refrigerator. Times count from eight in the morning; the loaves come out of the fridge the next day.\n\nLevain\nMix 50 g of ripe starter with 100 g of flour and 100 g of water in a jar; 5 minutes. Leave the jar at room temperature until it domes and smells sweet, 4 to 6 hours.\n\nDough\nWeigh the flour, water and salt for the whole bake first thing; 10 minutes. At half past eight, whisk 900 g of flour into 680 g of water; 5 minutes. Let it autolyse for 1 hour. When the levain is ripe, squeeze it into the autolysed dough with 20 g of salt and work it by hand for 10 minutes. Bulk ferment at 24\u00b0C until the dough has risen by half, 3 to 5 hours. Fold the dough in the bowl half an hour after mixing, again half an hour later, and a third time after another half hour; each fold takes 2 minutes.\n\nDivide and shape\nTip the dough out, cut it in two and preshape each piece into a loose round; 10 minutes. Let the rounds rest on the bench for 25 minutes. Shape both boules tightly and settle them into floured bannetons; 10 minutes. Retard them in the refrigerator, 10 to 14 hours.\n\nBake\nThree quarters of an hour before the dough comes out, put the dutch oven in the oven and heat both to 250\u00b0C. Score the first loaf and lower it in; 3 minutes. Bake the first loaf covered for 20 minutes, then uncover it and bake for another 20 minutes until the crust is dark. Cool it on a rack for at least an hour before cutting. Re-heat the empty dutch oven for 10 minutes. Score the second loaf and lower it in; 3 minutes. Bake the second loaf covered for 20 minutes, then uncover it for a final 20 minutes. Cool the second loaf on the rack beside the first.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Country Loaf: Two Boules, One Dutch Oven for one batch, two 900 g boules",
+            "finish_at": null,
+            "constraints": "one oven, one dutch oven, one refrigerator, one baker, the two loaves bake one after the other",
+            "vertical": "kitchen",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or cook_recipe",
+            "finishAtArg": ""
+          }
+        }
+      },
+      "error": "no JSON object with a `tracks` array was found in the reply"
+    },
+    {
+      "slug": "lab-cell-passaging-hood-incubator",
+      "headline": {
+        "steps_precision": 0.9090909090909091,
+        "steps_recall": 0.9523809523809523,
+        "steps_f1": 0.9302325581395349,
+        "durations_accuracy": 0.9,
+        "resources_precision": 0.8333333333333334,
+        "resources_recall": 0.8333333333333334,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.59375,
+        "relationships_recall": 0.7307692307692307,
+        "relationships_f1": 0.6551724137931033,
+        "structure_rand_index": 1.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.043478260869565216
+      },
+      "steps": {
+        "precision": 0.9090909090909091,
+        "recall": 0.9523809523809523,
+        "f1": 0.9302325581395349,
+        "tp": 20,
+        "n_gold": 21,
+        "n_pred": 22
+      },
+      "durations": {
+        "accuracy": 0.9,
+        "correct": 18,
+        "total": 20
+      },
+      "resources": {
+        "precision": 0.8333333333333334,
+        "recall": 0.8333333333333334,
+        "f1": 0.8333333333333334,
+        "tp": 5,
+        "n_gold": 6,
+        "n_pred": 6
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.59375,
+        "recall": 0.7307692307692307,
+        "f1": 0.6551724137931033,
+        "tp": 19,
+        "n_gold": 26,
+        "n_pred": 32
+      },
+      "structure": {
+        "rand_index": 1.0,
+        "agreements": 190,
+        "pairs": 190,
+        "n_steps": 20
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 76260.0,
+        "pred_makespan": 61500.0,
+        "makespan_ok": false,
+        "gold_critical_path": [
+          "warm-reagents",
+          "a-rinse",
+          "a-trypsinise",
+          "a-neutralise",
+          "a-spin",
+          "a-resuspend",
+          "a-count",
+          "b-count",
+          "b-seed",
+          "b-settle"
+        ],
+        "pred_critical_path": [
+          "prep-wipe-cabinet",
+          "prep-check-flasks-microscope",
+          "flaskA-aspirate-rinse",
+          "flaskA-add-trypsin",
+          "flaskA-incubate-trypsin",
+          "flaskA-neutralise",
+          "flaskA-transfer-tube",
+          "flaskA-centrifuge",
+          "flaskA-resuspend",
+          "flaskA-count-cells",
+          "flaskB-count-cells",
+          "flaskB-seed-flasks",
+          "flaskB-settle-overnight"
+        ],
+        "js_critical_path": [
+          "prep-wipe-cabinet",
+          "prep-check-flasks-microscope",
+          "flaskA-aspirate-rinse",
+          "flaskA-add-trypsin",
+          "flaskA-incubate-trypsin",
+          "flaskA-neutralise",
+          "flaskA-transfer-tube",
+          "flaskA-centrifuge",
+          "flaskA-resuspend",
+          "flaskA-count-cells",
+          "flaskB-count-cells",
+          "flaskB-seed-flasks",
+          "flaskB-settle-overnight"
+        ],
+        "js_makespan": 61500,
+        "critical_overlap": 0.9,
+        "critical_ok": true,
+        "passed": false
+      },
+      "unsupported_rate": 0.043478260869565216,
+      "unsupported_steps": [
+        "prewarm-reagents"
+      ],
+      "matching": [
+        {
+          "gold": "clean-cabinet",
+          "predicted": "prep-wipe-cabinet",
+          "by": "span"
+        },
+        {
+          "gold": "inspect-flasks",
+          "predicted": "prep-check-flasks-microscope",
+          "by": "span"
+        },
+        {
+          "gold": "a-rinse",
+          "predicted": "flaskA-aspirate-rinse",
+          "by": "span"
+        },
+        {
+          "gold": "a-trypsinise",
+          "predicted": "flaskA-add-trypsin",
+          "by": "span"
+        },
+        {
+          "gold": "a-neutralise",
+          "predicted": "flaskA-neutralise",
+          "by": "span"
+        },
+        {
+          "gold": "a-spin",
+          "predicted": "flaskA-transfer-tube",
+          "by": "span"
+        },
+        {
+          "gold": "a-resuspend",
+          "predicted": "flaskA-resuspend",
+          "by": "span"
+        },
+        {
+          "gold": "a-count",
+          "predicted": "flaskA-count-cells",
+          "by": "span"
+        },
+        {
+          "gold": "a-seed",
+          "predicted": "flaskA-seed-flasks",
+          "by": "span"
+        },
+        {
+          "gold": "a-settle",
+          "predicted": "flaskA-settle-overnight",
+          "by": "span"
+        },
+        {
+          "gold": "b-rinse",
+          "predicted": "flaskB-aspirate-rinse",
+          "by": "span"
+        },
+        {
+          "gold": "b-trypsinise",
+          "predicted": "flaskB-trypsinise",
+          "by": "span"
+        },
+        {
+          "gold": "b-neutralise",
+          "predicted": "flaskB-neutralise",
+          "by": "span"
+        },
+        {
+          "gold": "b-spin",
+          "predicted": "flaskB-centrifuge",
+          "by": "span"
+        },
+        {
+          "gold": "b-resuspend",
+          "predicted": "flaskB-resuspend",
+          "by": "span"
+        },
+        {
+          "gold": "b-count",
+          "predicted": "flaskB-count-cells",
+          "by": "span"
+        },
+        {
+          "gold": "b-seed",
+          "predicted": "flaskB-seed-flasks",
+          "by": "span"
+        },
+        {
+          "gold": "b-settle",
+          "predicted": "flaskB-settle-overnight",
+          "by": "span"
+        },
+        {
+          "gold": "clean-down",
+          "predicted": "finish-wipe-cabinet",
+          "by": "span"
+        },
+        {
+          "gold": "log-passage",
+          "predicted": "finish-write-log",
+          "by": "span"
+        },
+        {
+          "gold": "warm-reagents",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "prewarm-reagents",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "flaskA-incubate-trypsin",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "flaskA-centrifuge",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "claude-sonnet-5",
+        "pattern": "four-turn",
+        "calls": 5,
+        "input_tokens": 59081,
+        "output_tokens": 47488,
+        "cost_usd": 0.593042,
+        "cache_keys": [
+          "bbea897b2225809fc7fa27fb83369bd3e18d78da3c02444c9fcb408969ea8b56",
+          "c669cbbe91ca909a7a98622a79b3dfd78c412b978fba788d553ba588ab13a428",
+          "eaabb7f7225f2fb26a5cdac44ecbce2af2a65ee3ffcd15ccbf1a72d454c7c93d",
+          "6aaf3de0a54fa552ea9d4818672f8350e7a656ba1500be52f10043aeb974f2a2",
+          "1d2df645b6177de9fbd6b3eef910606f856ceabc97d9e22012e4baaeac6be5af"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/four-turn/responses/lab-cell-passaging-hood-incubator.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/four-turn/predicted/lab-cell-passaging-hood-incubator.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 22,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Passaging Two Flasks of Adherent HEK293 Cells for two T75 flasks split 1:6 into four",
+            "finish_at": null,
+            "constraints": "one biosafety cabinet, one 37 \u00b0C water bath, one CO\u2082 incubator, one benchtop centrifuge, one microscope with haemocytometer, one operator",
+            "vertical": "lab",
+            "turn": "T1",
+            "kind": "protocol",
+            "constraintsLine": "Resource limits: one biosafety cabinet, one 37 \u00b0C water bath, one CO\u2082 incubator, one benchtop centrifuge, one microscope with haemocytometer, one operator.",
+            "deadlineLine": "No finishing time was given; finish as early as the work allows.",
+            "source": "Source text (read all of it):\n<<<\nPassaging Two Flasks of Adherent HEK293 Cells\n\nTwo T75 flasks at about 90 % confluence are split 1:6 into four new flasks. The room has one biosafety cabinet, one 37 \u00b0C water bath, one CO\u2082 incubator, one benchtop centrifuge and one microscope with a haemocytometer. Only one flask can be open in the cabinet at a time, so the two flasks queue for it while the centrifuge and the microscope stay free. Work with pre-warmed medium, PBS and trypsin-EDTA throughout; nothing cold touches the cells. One operator.\n\nPreparation\n1. Wipe down the cabinet, lay out pipettes and tubes, and let the blower run; 10 minutes.\n2. Check both flasks on the microscope for confluence and contamination; 10 minutes.\n\nFlask A\n3. Aspirate the spent medium and rinse the monolayer with 5 mL of PBS; 4 minutes in the cabinet.\n4. Add 2 mL of trypsin-EDTA, rock the flask and return it to the incubator for 5 minutes.\n5. Knock the flask, check detachment and neutralise with 8 mL of medium; 5 minutes in the cabinet.\n6. Transfer the suspension to a 15 mL tube and spin at 300 \u00d7 g for 5 minutes.\n7. Aspirate the supernatant and resuspend the pellet in 10 mL of fresh medium; 4 minutes.\n8. Count the cells on the haemocytometer; 6 minutes.\n9. Seed two new T75 flasks at 1:6 and label them; 6 minutes in the cabinet.\n10. Return the new flasks to the incubator and leave them to settle overnight, at least 16 hours.\n\nFlask B\n11. Start flask B the moment flask A leaves the cabinet: aspirate and rinse with 5 mL of PBS; 4 minutes.\n12. Trypsinise flask B in the incubator for 5 minutes.\n13. Neutralise flask B as soon as flask A is out of the cabinet again; 5 minutes.\n14. Spin flask B at 300 \u00d7 g for 5 minutes once the centrifuge is free.\n15. Resuspend the flask B pellet in 10 mL of fresh medium; 4 minutes.\n16. Count flask B on the haemocytometer once flask A has been counted; 6 minutes.\n17. Seed two more T75 flasks at 1:6 and label them; 6 minutes.\n18. Return them to the incubator to settle overnight alongside the first pair.\n\nFinishing\n19. Wipe the cabinet down, discard the waste and switch the blower to standby; 10 minutes.\n20. Write the passage number, the split ratio and the counts into the culture log; 5 minutes.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Passaging Two Flasks of Adherent HEK293 Cells for two T75 flasks split 1:6 into four",
+            "finish_at": null,
+            "constraints": "one biosafety cabinet, one 37 \u00b0C water bath, one CO\u2082 incubator, one benchtop centrifuge, one microscope with haemocytometer, one operator",
+            "vertical": "lab",
+            "turn": "T2",
+            "kind": "protocol"
+          },
+          "T3 extraction": {
+            "goal": "Passaging Two Flasks of Adherent HEK293 Cells for two T75 flasks split 1:6 into four",
+            "finish_at": null,
+            "constraints": "one biosafety cabinet, one 37 \u00b0C water bath, one CO\u2082 incubator, one benchtop centrifuge, one microscope with haemocytometer, one operator",
+            "vertical": "lab",
+            "turn": "T3",
+            "kind": "protocol",
+            "environment": "a lab where you have: one biosafety cabinet, one 37 \u00b0C water bath, one CO\u2082 incubator, one benchtop centrifuge, one microscope with haemocytometer, one operator",
+            "deadline": "the earliest time the work allows",
+            "source": "Source text (read all of it):\n<<<\nPassaging Two Flasks of Adherent HEK293 Cells\n\nTwo T75 flasks at about 90 % confluence are split 1:6 into four new flasks. The room has one biosafety cabinet, one 37 \u00b0C water bath, one CO\u2082 incubator, one benchtop centrifuge and one microscope with a haemocytometer. Only one flask can be open in the cabinet at a time, so the two flasks queue for it while the centrifuge and the microscope stay free. Work with pre-warmed medium, PBS and trypsin-EDTA throughout; nothing cold touches the cells. One operator.\n\nPreparation\n1. Wipe down the cabinet, lay out pipettes and tubes, and let the blower run; 10 minutes.\n2. Check both flasks on the microscope for confluence and contamination; 10 minutes.\n\nFlask A\n3. Aspirate the spent medium and rinse the monolayer with 5 mL of PBS; 4 minutes in the cabinet.\n4. Add 2 mL of trypsin-EDTA, rock the flask and return it to the incubator for 5 minutes.\n5. Knock the flask, check detachment and neutralise with 8 mL of medium; 5 minutes in the cabinet.\n6. Transfer the suspension to a 15 mL tube and spin at 300 \u00d7 g for 5 minutes.\n7. Aspirate the supernatant and resuspend the pellet in 10 mL of fresh medium; 4 minutes.\n8. Count the cells on the haemocytometer; 6 minutes.\n9. Seed two new T75 flasks at 1:6 and label them; 6 minutes in the cabinet.\n10. Return the new flasks to the incubator and leave them to settle overnight, at least 16 hours.\n\nFlask B\n11. Start flask B the moment flask A leaves the cabinet: aspirate and rinse with 5 mL of PBS; 4 minutes.\n12. Trypsinise flask B in the incubator for 5 minutes.\n13. Neutralise flask B as soon as flask A is out of the cabinet again; 5 minutes.\n14. Spin flask B at 300 \u00d7 g for 5 minutes once the centrifuge is free.\n15. Resuspend the flask B pellet in 10 mL of fresh medium; 4 minutes.\n16. Count flask B on the haemocytometer once flask A has been counted; 6 minutes.\n17. Seed two more T75 flasks at 1:6 and label them; 6 minutes.\n18. Return them to the incubator to settle overnight alongside the first pair.\n\nFinishing\n19. Wipe the cabinet down, discard the waste and switch the blower to standby; 10 minutes.\n20. Write the passage number, the split ratio and the counts into the culture log; 5 minutes.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Passaging Two Flasks of Adherent HEK293 Cells for two T75 flasks split 1:6 into four",
+            "finish_at": null,
+            "constraints": "one biosafety cabinet, one 37 \u00b0C water bath, one CO\u2082 incubator, one benchtop centrifuge, one microscope with haemocytometer, one operator",
+            "vertical": "lab",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or run_protocol",
+            "finishAtArg": ""
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": [
+    "kitchen-country-loaf-bread-bake"
+  ]
+}

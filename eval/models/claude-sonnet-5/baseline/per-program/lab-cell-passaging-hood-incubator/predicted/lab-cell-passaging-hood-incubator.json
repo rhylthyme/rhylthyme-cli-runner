@@ -1,0 +1,223 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "hek293-double-flask-passage",
+  "name": "Passaging Two Flasks of Adherent HEK293 Cells (1:6 split into four)",
+  "description": "Two T75 flasks at ~90% confluence are split 1:6 into four new T75 flasks. One biosafety cabinet is shared between the two flasks; the water bath keeps reagents pre-warmed throughout. One operator.",
+  "environmentType": "laboratory",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "prep",
+      "name": "Preparation",
+      "steps": [
+        {
+          "stepId": "prep-wipe",
+          "name": "Wipe cabinet, lay out pipettes/tubes, run blower",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": "10m"
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "prep-check",
+          "name": "Check both flasks on microscope for confluence/contamination",
+          "task": "microscope",
+          "duration": {
+            "type": "fixed",
+            "seconds": "10m"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep-wipe"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "flask-processing",
+      "name": "Flask processing (Flask A & B)",
+      "steps": [
+        {
+          "stepId": "rinse",
+          "name": "Aspirate spent medium, rinse monolayer with PBS",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": "4m"
+          },
+          "replicates": {
+            "count": 2,
+            "mode": "serial"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep-check"
+          }
+        },
+        {
+          "stepId": "trypsinize",
+          "name": "Add trypsin-EDTA, rock, incubate to detach cells",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": "5m"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rinse",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "neutralize",
+          "name": "Knock flask, check detachment, neutralise with medium",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": "5m"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "trypsinize",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "spin",
+          "name": "Transfer suspension to tube, spin at 300 x g",
+          "task": "centrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": "5m"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "neutralize",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "resuspend",
+          "name": "Aspirate supernatant, resuspend pellet in fresh medium",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": "4m"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "spin",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "count",
+          "name": "Count cells on haemocytometer",
+          "task": "microscope",
+          "duration": {
+            "type": "fixed",
+            "seconds": "6m"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "resuspend",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "seed",
+          "name": "Seed two new T75 flasks at 1:6, label",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": "6m"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "count",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "overnight",
+          "name": "Return new flasks to incubator, settle overnight",
+          "task": "incubator",
+          "duration": {
+            "type": "variable",
+            "minSeconds": "16h",
+            "maxSeconds": "20h",
+            "defaultSeconds": "16h"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "seed",
+            "instances": "each"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "finishing",
+      "name": "Finishing",
+      "steps": [
+        {
+          "stepId": "cabinet-wipe-final",
+          "name": "Wipe cabinet down, discard waste, blower to standby",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": "10m"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "seed",
+            "instances": "all"
+          }
+        },
+        {
+          "stepId": "log-entry",
+          "name": "Write passage number, split ratio and counts into culture log",
+          "task": "log",
+          "duration": {
+            "type": "fixed",
+            "seconds": "5m"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cabinet-wipe-final"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "cabinet",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "incubator",
+      "maxConcurrent": 4
+    },
+    {
+      "task": "centrifuge",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "microscope",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "log",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "serves": "4 x T75 flasks (from 2 x T75 flasks, 1:6 split)",
+    "attribution": "Adapted from standard HEK293 adherent passaging SOP"
+  }
+}

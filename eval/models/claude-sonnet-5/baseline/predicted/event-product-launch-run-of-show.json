@@ -1,0 +1,295 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "product-launch-evening",
+  "name": "Product Launch Evening: Run of Show",
+  "description": "Run-of-show for a 200-guest product launch: pre-show prep, doors, program (keynote, video, demo, Q&A), and reception/strike. Crew call 17:00, doors 18:00, program over by 20:00, venue clear by 21:00.",
+  "environmentType": "event",
+  "actors": 5,
+  "tracks": [
+    {
+      "trackId": "av",
+      "name": "AV Technician",
+      "steps": [
+        {
+          "stepId": "av-linecheck",
+          "name": "Full line check: projector, clicker, both mics",
+          "task": "av",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "av-playlist",
+          "name": "Run welcome playlist in hall during registration",
+          "task": "av",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "foh-walkthrough"
+          }
+        },
+        {
+          "stepId": "av-strike",
+          "name": "Strike the stage",
+          "task": "av",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "host-close"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "rehearsal",
+      "name": "Stage Rehearsal",
+      "steps": [
+        {
+          "stepId": "rehearsal",
+          "name": "CEO and product lead rehearse keynote transitions",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "av-linecheck"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "foh",
+      "name": "Front of House",
+      "steps": [
+        {
+          "stepId": "foh-setup",
+          "name": "Set up registration desk and name badges",
+          "task": "foh",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "foh-walkthrough",
+          "name": "Walkthrough of foyer and seating",
+          "task": "foh",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "foh-setup"
+          }
+        },
+        {
+          "stepId": "guest-registration",
+          "name": "Guests arrive and register (doors open)",
+          "task": "foh",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "foh-walkthrough"
+          }
+        },
+        {
+          "stepId": "foh-usher",
+          "name": "Usher guests to their seats",
+          "task": "foh",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "guest-registration"
+          }
+        },
+        {
+          "stepId": "foh-breakdown",
+          "name": "Break down registration desk",
+          "task": "foh",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "host-close"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "catering",
+      "name": "Catering",
+      "steps": [
+        {
+          "stepId": "cater-setup",
+          "name": "Set bar and canape stations",
+          "task": "catering",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "bar-service",
+          "name": "Bar serves drinks during registration",
+          "task": "catering",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cater-setup"
+          }
+        },
+        {
+          "stepId": "reception-canapes",
+          "name": "Bar reopens, catering circulates canapes",
+          "task": "catering",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "host-close"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "program",
+      "name": "Main Program (Stage)",
+      "steps": [
+        {
+          "stepId": "host-welcome",
+          "name": "Host welcomes the audience",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "foh-usher"
+          }
+        },
+        {
+          "stepId": "ceo-keynote",
+          "name": "CEO keynote",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "host-welcome"
+          }
+        },
+        {
+          "stepId": "product-video",
+          "name": "Product video plays from the booth",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "ceo-keynote"
+          }
+        },
+        {
+          "stepId": "live-demo",
+          "name": "Product lead live demo",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1500
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "product-video"
+          }
+        },
+        {
+          "stepId": "qna",
+          "name": "Moderated Q&A",
+          "task": "stage",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 900,
+            "maxSeconds": 1500,
+            "defaultSeconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "live-demo"
+          }
+        },
+        {
+          "stepId": "host-close",
+          "name": "Host closes program and invites guests to reception",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "qna"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "av",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "stage",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "foh",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "catering",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "attribution": "Product Launch Evening run-of-show, 200 guests",
+    "sourceUrl": ""
+  }
+}

@@ -1,0 +1,144 @@
+{
+ "entries": [
+  {
+   "model": "claude-sonnet-5",
+   "pattern": "four-turn",
+   "slug": "event-conference-session-av-checks",
+   "cost_usd": 0.363578,
+   "input_tokens": 40699,
+   "output_tokens": 28218,
+   "calls": 4,
+   "seconds": 262.0
+  },
+  {
+   "model": "claude-sonnet-5",
+   "pattern": "baseline",
+   "slug": "event-conference-session-av-checks",
+   "cost_usd": 0.228168,
+   "input_tokens": 15804,
+   "output_tokens": 19656,
+   "calls": 2,
+   "seconds": 184.5
+  },
+  {
+   "model": "claude-sonnet-5",
+   "pattern": "four-turn",
+   "slug": "fitness-hiit-circuit-intervals",
+   "cost_usd": 0.408912,
+   "input_tokens": 58006,
+   "output_tokens": 29290,
+   "calls": 5,
+   "seconds": 268.7
+  },
+  {
+   "model": "claude-sonnet-5",
+   "pattern": "baseline",
+   "slug": "fitness-hiit-circuit-intervals",
+   "cost_usd": 0.074698,
+   "input_tokens": 6354,
+   "output_tokens": 6199,
+   "calls": 1,
+   "seconds": 50.2
+  },
+  {
+   "model": "claude-sonnet-5",
+   "pattern": "four-turn",
+   "slug": "kitchen-backyard-barbecue-smoker-grill",
+   "cost_usd": 0.34258,
+   "input_tokens": 40010,
+   "output_tokens": 26256,
+   "calls": 4,
+   "seconds": 251.1
+  },
+  {
+   "model": "claude-sonnet-5",
+   "pattern": "baseline",
+   "slug": "kitchen-backyard-barbecue-smoker-grill",
+   "cost_usd": 0.17934,
+   "input_tokens": 16450,
+   "output_tokens": 14644,
+   "calls": 2,
+   "seconds": 129.4
+  },
+  {
+   "model": "claude-sonnet-5",
+   "pattern": "four-turn",
+   "slug": "lab-cell-passaging-hood-incubator",
+   "cost_usd": 0.593042,
+   "input_tokens": 59081,
+   "output_tokens": 47488,
+   "calls": 5,
+   "seconds": 455.4
+  },
+  {
+   "model": "claude-sonnet-5",
+   "pattern": "baseline",
+   "slug": "lab-cell-passaging-hood-incubator",
+   "cost_usd": 0.296848,
+   "input_tokens": 13629,
+   "output_tokens": 26959,
+   "calls": 2,
+   "seconds": 292.2
+  },
+  {
+   "model": "claude-sonnet-5",
+   "pattern": "four-turn",
+   "slug": "event-product-launch-run-of-show",
+   "cost_usd": 0.346286,
+   "input_tokens": 41018,
+   "output_tokens": 26425,
+   "calls": 4,
+   "seconds": 273.5
+  },
+  {
+   "model": "claude-sonnet-5",
+   "pattern": "baseline",
+   "slug": "event-product-launch-run-of-show",
+   "cost_usd": 0.278872,
+   "input_tokens": 14291,
+   "output_tokens": 25029,
+   "calls": 2,
+   "seconds": 250.4
+  },
+  {
+   "model": "claude-sonnet-5",
+   "pattern": "four-turn",
+   "slug": "fitness-partner-upper-body-supersets",
+   "cost_usd": 0.686472,
+   "input_tokens": 79926,
+   "output_tokens": 52662,
+   "calls": 6,
+   "seconds": 458.8
+  },
+  {
+   "model": "claude-sonnet-5",
+   "pattern": "baseline",
+   "slug": "fitness-partner-upper-body-supersets",
+   "cost_usd": 0.265082,
+   "input_tokens": 15051,
+   "output_tokens": 23498,
+   "calls": 2,
+   "seconds": 213.4
+  },
+  {
+   "model": "claude-sonnet-5",
+   "pattern": "four-turn",
+   "slug": "kitchen-country-loaf-bread-bake",
+   "cost_usd": 0.814022,
+   "input_tokens": 74361,
+   "output_tokens": 66530,
+   "calls": 6,
+   "seconds": 698.9
+  },
+  {
+   "model": "claude-sonnet-5",
+   "pattern": "baseline",
+   "slug": "kitchen-country-loaf-bread-bake",
+   "cost_usd": 0.463232,
+   "input_tokens": 21486,
+   "output_tokens": 42026,
+   "calls": 3,
+   "seconds": 433.5
+  }
+ ]
+}

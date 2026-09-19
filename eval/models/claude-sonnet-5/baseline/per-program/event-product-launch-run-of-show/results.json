@@ -1,0 +1,326 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "claude-sonnet-5",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/baseline/cache",
+    "limit": null,
+    "only": [
+      "event-product-launch-run-of-show"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 2,
+      "input_tokens": 14291,
+      "output_tokens": 25029,
+      "cost_usd": 0.278872,
+      "fix_iterations": 1
+    },
+    "generated_at": "2026-09-19T02:58:41+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.5555555555555556,
+    "steps_f1": 0.7142857142857143,
+    "durations_accuracy": 0.9,
+    "resources_precision": 0.25,
+    "resources_recall": 0.16666666666666666,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.2,
+    "relationships_recall": 0.1111111111111111,
+    "relationships_f1": 0.14285714285714285,
+    "structure_rand_index": 0.9777777777777777,
+    "end_to_end_pass": 1.0,
+    "unsupported_rate": 0.4444444444444444
+  },
+  "programs": [
+    {
+      "slug": "event-product-launch-run-of-show",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.5555555555555556,
+        "steps_f1": 0.7142857142857143,
+        "durations_accuracy": 0.9,
+        "resources_precision": 0.25,
+        "resources_recall": 0.16666666666666666,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.2,
+        "relationships_recall": 0.1111111111111111,
+        "relationships_f1": 0.14285714285714285,
+        "structure_rand_index": 0.9777777777777777,
+        "end_to_end_pass": 1.0,
+        "unsupported_rate": 0.4444444444444444
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.5555555555555556,
+        "f1": 0.7142857142857143,
+        "tp": 10,
+        "n_gold": 18,
+        "n_pred": 10
+      },
+      "durations": {
+        "accuracy": 0.9,
+        "correct": 9,
+        "total": 10
+      },
+      "resources": {
+        "precision": 0.25,
+        "recall": 0.16666666666666666,
+        "f1": 0.2,
+        "tp": 1,
+        "n_gold": 6,
+        "n_pred": 4
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.2,
+        "recall": 0.1111111111111111,
+        "f1": 0.14285714285714285,
+        "tp": 2,
+        "n_gold": 18,
+        "n_pred": 10
+      },
+      "structure": {
+        "rand_index": 0.9777777777777777,
+        "agreements": 44,
+        "pairs": 45,
+        "n_steps": 10
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 13020.0,
+        "pred_makespan": 13020.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "setup-registration",
+          "walkthrough",
+          "doors-open",
+          "usher-to-seats",
+          "host-welcome",
+          "ceo-keynote",
+          "product-video",
+          "product-demo",
+          "qa",
+          "host-close",
+          "breakdown-desk",
+          "strike-stage"
+        ],
+        "pred_critical_path": [
+          "foh-setup",
+          "foh-walkthrough",
+          "guest-registration",
+          "foh-usher",
+          "host-welcome",
+          "ceo-keynote",
+          "product-video",
+          "live-demo",
+          "qna",
+          "host-close",
+          "reception-canapes"
+        ],
+        "js_critical_path": [
+          "foh-setup",
+          "foh-walkthrough",
+          "guest-registration",
+          "foh-usher",
+          "host-welcome",
+          "ceo-keynote",
+          "product-video",
+          "live-demo",
+          "qna",
+          "host-close",
+          "reception-canapes"
+        ],
+        "js_makespan": 13020,
+        "critical_overlap": 0.5,
+        "critical_ok": true,
+        "passed": true
+      },
+      "unsupported_rate": 0.4444444444444444,
+      "unsupported_steps": [
+        "av-linecheck",
+        "av-playlist",
+        "foh-setup",
+        "guest-registration",
+        "foh-usher",
+        "cater-setup",
+        "reception-canapes",
+        "live-demo"
+      ],
+      "matching": [
+        {
+          "gold": "rehearsal",
+          "predicted": "rehearsal",
+          "by": "name"
+        },
+        {
+          "gold": "strike-stage",
+          "predicted": "av-strike",
+          "by": "name"
+        },
+        {
+          "gold": "walkthrough",
+          "predicted": "foh-walkthrough",
+          "by": "name"
+        },
+        {
+          "gold": "breakdown-desk",
+          "predicted": "foh-breakdown",
+          "by": "name"
+        },
+        {
+          "gold": "host-welcome",
+          "predicted": "host-welcome",
+          "by": "name"
+        },
+        {
+          "gold": "ceo-keynote",
+          "predicted": "ceo-keynote",
+          "by": "name"
+        },
+        {
+          "gold": "product-video",
+          "predicted": "product-video",
+          "by": "name"
+        },
+        {
+          "gold": "qa",
+          "predicted": "qna",
+          "by": "name"
+        },
+        {
+          "gold": "host-close",
+          "predicted": "host-close",
+          "by": "name"
+        },
+        {
+          "gold": "bar-service",
+          "predicted": "bar-service",
+          "by": "name"
+        },
+        {
+          "gold": "line-check",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "welcome-playlist",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "setup-registration",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "doors-open",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "usher-to-seats",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "product-demo",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "set-bar",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "reception",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "av-linecheck",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "av-playlist",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "foh-setup",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "guest-registration",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "foh-usher",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "cater-setup",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "reception-canapes",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "live-demo",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "claude-sonnet-5",
+        "pattern": "baseline",
+        "calls": 2,
+        "input_tokens": 14291,
+        "output_tokens": 25029,
+        "cost_usd": 0.278872,
+        "cache_keys": [
+          "70f96a168cdbd9eca8b314de82c762b5508f9093c1759240106112f738b22c0e",
+          "1a273efbf1478436ab5f864a29ad2648ed8ba339e2b9db957704a7d9750073b9"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/baseline/per-program/event-product-launch-run-of-show/responses/event-product-launch-run-of-show.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/baseline/per-program/event-product-launch-run-of-show/predicted/event-product-launch-run-of-show.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Product Launch Evening: Run of Show for 200 guests, following the source text below",
+            "finish_at": "21:00",
+            "constraints": "one stage, one projector, crew call 17:00, doors 18:00, program over by 20:00, venue resets at 21:00",
+            "vertical": "events"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

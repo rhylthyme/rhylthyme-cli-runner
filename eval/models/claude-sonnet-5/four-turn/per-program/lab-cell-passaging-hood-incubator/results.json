@@ -1,0 +1,352 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "claude-sonnet-5",
+    "pattern": "four-turn",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/four-turn/cache",
+    "limit": null,
+    "only": [
+      "lab-cell-passaging-hood-incubator"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 5,
+      "input_tokens": 59081,
+      "output_tokens": 47488,
+      "cost_usd": 0.593042,
+      "fix_iterations": 1
+    },
+    "generated_at": "2026-09-19T02:45:05+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 0.9090909090909091,
+    "steps_recall": 0.9523809523809523,
+    "steps_f1": 0.9302325581395349,
+    "durations_accuracy": 0.9,
+    "resources_precision": 0.8333333333333334,
+    "resources_recall": 0.8333333333333334,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.59375,
+    "relationships_recall": 0.7307692307692307,
+    "relationships_f1": 0.6551724137931033,
+    "structure_rand_index": 1.0,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.043478260869565216
+  },
+  "programs": [
+    {
+      "slug": "lab-cell-passaging-hood-incubator",
+      "headline": {
+        "steps_precision": 0.9090909090909091,
+        "steps_recall": 0.9523809523809523,
+        "steps_f1": 0.9302325581395349,
+        "durations_accuracy": 0.9,
+        "resources_precision": 0.8333333333333334,
+        "resources_recall": 0.8333333333333334,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.59375,
+        "relationships_recall": 0.7307692307692307,
+        "relationships_f1": 0.6551724137931033,
+        "structure_rand_index": 1.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.043478260869565216
+      },
+      "steps": {
+        "precision": 0.9090909090909091,
+        "recall": 0.9523809523809523,
+        "f1": 0.9302325581395349,
+        "tp": 20,
+        "n_gold": 21,
+        "n_pred": 22
+      },
+      "durations": {
+        "accuracy": 0.9,
+        "correct": 18,
+        "total": 20
+      },
+      "resources": {
+        "precision": 0.8333333333333334,
+        "recall": 0.8333333333333334,
+        "f1": 0.8333333333333334,
+        "tp": 5,
+        "n_gold": 6,
+        "n_pred": 6
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.59375,
+        "recall": 0.7307692307692307,
+        "f1": 0.6551724137931033,
+        "tp": 19,
+        "n_gold": 26,
+        "n_pred": 32
+      },
+      "structure": {
+        "rand_index": 1.0,
+        "agreements": 190,
+        "pairs": 190,
+        "n_steps": 20
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 76260.0,
+        "pred_makespan": 61500.0,
+        "makespan_ok": false,
+        "gold_critical_path": [
+          "warm-reagents",
+          "a-rinse",
+          "a-trypsinise",
+          "a-neutralise",
+          "a-spin",
+          "a-resuspend",
+          "a-count",
+          "b-count",
+          "b-seed",
+          "b-settle"
+        ],
+        "pred_critical_path": [
+          "prep-wipe-cabinet",
+          "prep-check-flasks-microscope",
+          "flaskA-aspirate-rinse",
+          "flaskA-add-trypsin",
+          "flaskA-incubate-trypsin",
+          "flaskA-neutralise",
+          "flaskA-transfer-tube",
+          "flaskA-centrifuge",
+          "flaskA-resuspend",
+          "flaskA-count-cells",
+          "flaskB-count-cells",
+          "flaskB-seed-flasks",
+          "flaskB-settle-overnight"
+        ],
+        "js_critical_path": [
+          "prep-wipe-cabinet",
+          "prep-check-flasks-microscope",
+          "flaskA-aspirate-rinse",
+          "flaskA-add-trypsin",
+          "flaskA-incubate-trypsin",
+          "flaskA-neutralise",
+          "flaskA-transfer-tube",
+          "flaskA-centrifuge",
+          "flaskA-resuspend",
+          "flaskA-count-cells",
+          "flaskB-count-cells",
+          "flaskB-seed-flasks",
+          "flaskB-settle-overnight"
+        ],
+        "js_makespan": 61500,
+        "critical_overlap": 0.9,
+        "critical_ok": true,
+        "passed": false
+      },
+      "unsupported_rate": 0.043478260869565216,
+      "unsupported_steps": [
+        "prewarm-reagents"
+      ],
+      "matching": [
+        {
+          "gold": "clean-cabinet",
+          "predicted": "prep-wipe-cabinet",
+          "by": "span"
+        },
+        {
+          "gold": "inspect-flasks",
+          "predicted": "prep-check-flasks-microscope",
+          "by": "span"
+        },
+        {
+          "gold": "a-rinse",
+          "predicted": "flaskA-aspirate-rinse",
+          "by": "span"
+        },
+        {
+          "gold": "a-trypsinise",
+          "predicted": "flaskA-add-trypsin",
+          "by": "span"
+        },
+        {
+          "gold": "a-neutralise",
+          "predicted": "flaskA-neutralise",
+          "by": "span"
+        },
+        {
+          "gold": "a-spin",
+          "predicted": "flaskA-transfer-tube",
+          "by": "span"
+        },
+        {
+          "gold": "a-resuspend",
+          "predicted": "flaskA-resuspend",
+          "by": "span"
+        },
+        {
+          "gold": "a-count",
+          "predicted": "flaskA-count-cells",
+          "by": "span"
+        },
+        {
+          "gold": "a-seed",
+          "predicted": "flaskA-seed-flasks",
+          "by": "span"
+        },
+        {
+          "gold": "a-settle",
+          "predicted": "flaskA-settle-overnight",
+          "by": "span"
+        },
+        {
+          "gold": "b-rinse",
+          "predicted": "flaskB-aspirate-rinse",
+          "by": "span"
+        },
+        {
+          "gold": "b-trypsinise",
+          "predicted": "flaskB-trypsinise",
+          "by": "span"
+        },
+        {
+          "gold": "b-neutralise",
+          "predicted": "flaskB-neutralise",
+          "by": "span"
+        },
+        {
+          "gold": "b-spin",
+          "predicted": "flaskB-centrifuge",
+          "by": "span"
+        },
+        {
+          "gold": "b-resuspend",
+          "predicted": "flaskB-resuspend",
+          "by": "span"
+        },
+        {
+          "gold": "b-count",
+          "predicted": "flaskB-count-cells",
+          "by": "span"
+        },
+        {
+          "gold": "b-seed",
+          "predicted": "flaskB-seed-flasks",
+          "by": "span"
+        },
+        {
+          "gold": "b-settle",
+          "predicted": "flaskB-settle-overnight",
+          "by": "span"
+        },
+        {
+          "gold": "clean-down",
+          "predicted": "finish-wipe-cabinet",
+          "by": "span"
+        },
+        {
+          "gold": "log-passage",
+          "predicted": "finish-write-log",
+          "by": "span"
+        },
+        {
+          "gold": "warm-reagents",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "prewarm-reagents",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "flaskA-incubate-trypsin",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "flaskA-centrifuge",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "claude-sonnet-5",
+        "pattern": "four-turn",
+        "calls": 5,
+        "input_tokens": 59081,
+        "output_tokens": 47488,
+        "cost_usd": 0.593042,
+        "cache_keys": [
+          "bbea897b2225809fc7fa27fb83369bd3e18d78da3c02444c9fcb408969ea8b56",
+          "c669cbbe91ca909a7a98622a79b3dfd78c412b978fba788d553ba588ab13a428",
+          "eaabb7f7225f2fb26a5cdac44ecbce2af2a65ee3ffcd15ccbf1a72d454c7c93d",
+          "6aaf3de0a54fa552ea9d4818672f8350e7a656ba1500be52f10043aeb974f2a2",
+          "1d2df645b6177de9fbd6b3eef910606f856ceabc97d9e22012e4baaeac6be5af"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/four-turn/per-program/lab-cell-passaging-hood-incubator/responses/lab-cell-passaging-hood-incubator.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/four-turn/per-program/lab-cell-passaging-hood-incubator/predicted/lab-cell-passaging-hood-incubator.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 22,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Passaging Two Flasks of Adherent HEK293 Cells for two T75 flasks split 1:6 into four",
+            "finish_at": null,
+            "constraints": "one biosafety cabinet, one 37 \u00b0C water bath, one CO\u2082 incubator, one benchtop centrifuge, one microscope with haemocytometer, one operator",
+            "vertical": "lab",
+            "turn": "T1",
+            "kind": "protocol",
+            "constraintsLine": "Resource limits: one biosafety cabinet, one 37 \u00b0C water bath, one CO\u2082 incubator, one benchtop centrifuge, one microscope with haemocytometer, one operator.",
+            "deadlineLine": "No finishing time was given; finish as early as the work allows.",
+            "source": "Source text (read all of it):\n<<<\nPassaging Two Flasks of Adherent HEK293 Cells\n\nTwo T75 flasks at about 90 % confluence are split 1:6 into four new flasks. The room has one biosafety cabinet, one 37 \u00b0C water bath, one CO\u2082 incubator, one benchtop centrifuge and one microscope with a haemocytometer. Only one flask can be open in the cabinet at a time, so the two flasks queue for it while the centrifuge and the microscope stay free. Work with pre-warmed medium, PBS and trypsin-EDTA throughout; nothing cold touches the cells. One operator.\n\nPreparation\n1. Wipe down the cabinet, lay out pipettes and tubes, and let the blower run; 10 minutes.\n2. Check both flasks on the microscope for confluence and contamination; 10 minutes.\n\nFlask A\n3. Aspirate the spent medium and rinse the monolayer with 5 mL of PBS; 4 minutes in the cabinet.\n4. Add 2 mL of trypsin-EDTA, rock the flask and return it to the incubator for 5 minutes.\n5. Knock the flask, check detachment and neutralise with 8 mL of medium; 5 minutes in the cabinet.\n6. Transfer the suspension to a 15 mL tube and spin at 300 \u00d7 g for 5 minutes.\n7. Aspirate the supernatant and resuspend the pellet in 10 mL of fresh medium; 4 minutes.\n8. Count the cells on the haemocytometer; 6 minutes.\n9. Seed two new T75 flasks at 1:6 and label them; 6 minutes in the cabinet.\n10. Return the new flasks to the incubator and leave them to settle overnight, at least 16 hours.\n\nFlask B\n11. Start flask B the moment flask A leaves the cabinet: aspirate and rinse with 5 mL of PBS; 4 minutes.\n12. Trypsinise flask B in the incubator for 5 minutes.\n13. Neutralise flask B as soon as flask A is out of the cabinet again; 5 minutes.\n14. Spin flask B at 300 \u00d7 g for 5 minutes once the centrifuge is free.\n15. Resuspend the flask B pellet in 10 mL of fresh medium; 4 minutes.\n16. Count flask B on the haemocytometer once flask A has been counted; 6 minutes.\n17. Seed two more T75 flasks at 1:6 and label them; 6 minutes.\n18. Return them to the incubator to settle overnight alongside the first pair.\n\nFinishing\n19. Wipe the cabinet down, discard the waste and switch the blower to standby; 10 minutes.\n20. Write the passage number, the split ratio and the counts into the culture log; 5 minutes.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Passaging Two Flasks of Adherent HEK293 Cells for two T75 flasks split 1:6 into four",
+            "finish_at": null,
+            "constraints": "one biosafety cabinet, one 37 \u00b0C water bath, one CO\u2082 incubator, one benchtop centrifuge, one microscope with haemocytometer, one operator",
+            "vertical": "lab",
+            "turn": "T2",
+            "kind": "protocol"
+          },
+          "T3 extraction": {
+            "goal": "Passaging Two Flasks of Adherent HEK293 Cells for two T75 flasks split 1:6 into four",
+            "finish_at": null,
+            "constraints": "one biosafety cabinet, one 37 \u00b0C water bath, one CO\u2082 incubator, one benchtop centrifuge, one microscope with haemocytometer, one operator",
+            "vertical": "lab",
+            "turn": "T3",
+            "kind": "protocol",
+            "environment": "a lab where you have: one biosafety cabinet, one 37 \u00b0C water bath, one CO\u2082 incubator, one benchtop centrifuge, one microscope with haemocytometer, one operator",
+            "deadline": "the earliest time the work allows",
+            "source": "Source text (read all of it):\n<<<\nPassaging Two Flasks of Adherent HEK293 Cells\n\nTwo T75 flasks at about 90 % confluence are split 1:6 into four new flasks. The room has one biosafety cabinet, one 37 \u00b0C water bath, one CO\u2082 incubator, one benchtop centrifuge and one microscope with a haemocytometer. Only one flask can be open in the cabinet at a time, so the two flasks queue for it while the centrifuge and the microscope stay free. Work with pre-warmed medium, PBS and trypsin-EDTA throughout; nothing cold touches the cells. One operator.\n\nPreparation\n1. Wipe down the cabinet, lay out pipettes and tubes, and let the blower run; 10 minutes.\n2. Check both flasks on the microscope for confluence and contamination; 10 minutes.\n\nFlask A\n3. Aspirate the spent medium and rinse the monolayer with 5 mL of PBS; 4 minutes in the cabinet.\n4. Add 2 mL of trypsin-EDTA, rock the flask and return it to the incubator for 5 minutes.\n5. Knock the flask, check detachment and neutralise with 8 mL of medium; 5 minutes in the cabinet.\n6. Transfer the suspension to a 15 mL tube and spin at 300 \u00d7 g for 5 minutes.\n7. Aspirate the supernatant and resuspend the pellet in 10 mL of fresh medium; 4 minutes.\n8. Count the cells on the haemocytometer; 6 minutes.\n9. Seed two new T75 flasks at 1:6 and label them; 6 minutes in the cabinet.\n10. Return the new flasks to the incubator and leave them to settle overnight, at least 16 hours.\n\nFlask B\n11. Start flask B the moment flask A leaves the cabinet: aspirate and rinse with 5 mL of PBS; 4 minutes.\n12. Trypsinise flask B in the incubator for 5 minutes.\n13. Neutralise flask B as soon as flask A is out of the cabinet again; 5 minutes.\n14. Spin flask B at 300 \u00d7 g for 5 minutes once the centrifuge is free.\n15. Resuspend the flask B pellet in 10 mL of fresh medium; 4 minutes.\n16. Count flask B on the haemocytometer once flask A has been counted; 6 minutes.\n17. Seed two more T75 flasks at 1:6 and label them; 6 minutes.\n18. Return them to the incubator to settle overnight alongside the first pair.\n\nFinishing\n19. Wipe the cabinet down, discard the waste and switch the blower to standby; 10 minutes.\n20. Write the passage number, the split ratio and the counts into the culture log; 5 minutes.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Passaging Two Flasks of Adherent HEK293 Cells for two T75 flasks split 1:6 into four",
+            "finish_at": null,
+            "constraints": "one biosafety cabinet, one 37 \u00b0C water bath, one CO\u2082 incubator, one benchtop centrifuge, one microscope with haemocytometer, one operator",
+            "vertical": "lab",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or run_protocol",
+            "finishAtArg": ""
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

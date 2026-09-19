@@ -1,0 +1,285 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "claude-sonnet-5",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/baseline/cache",
+    "limit": null,
+    "only": [
+      "kitchen-backyard-barbecue-smoker-grill"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 2,
+      "input_tokens": 16450,
+      "output_tokens": 14644,
+      "cost_usd": 0.17934,
+      "fix_iterations": 1
+    },
+    "generated_at": "2026-09-19T02:37:30+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.8333333333333334,
+    "steps_f1": 0.9090909090909091,
+    "durations_accuracy": 1.0,
+    "resources_precision": 0.3333333333333333,
+    "resources_recall": 0.3333333333333333,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.5555555555555556,
+    "relationships_recall": 0.5263157894736842,
+    "relationships_f1": 0.5405405405405405,
+    "structure_rand_index": 1.0,
+    "end_to_end_pass": 1.0,
+    "unsupported_rate": 0.16666666666666666
+  },
+  "programs": [
+    {
+      "slug": "kitchen-backyard-barbecue-smoker-grill",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.8333333333333334,
+        "steps_f1": 0.9090909090909091,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.3333333333333333,
+        "resources_recall": 0.3333333333333333,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.5555555555555556,
+        "relationships_recall": 0.5263157894736842,
+        "relationships_f1": 0.5405405405405405,
+        "structure_rand_index": 1.0,
+        "end_to_end_pass": 1.0,
+        "unsupported_rate": 0.16666666666666666
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.8333333333333334,
+        "f1": 0.9090909090909091,
+        "tp": 15,
+        "n_gold": 18,
+        "n_pred": 15
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 15,
+        "total": 15
+      },
+      "resources": {
+        "precision": 0.3333333333333333,
+        "recall": 0.3333333333333333,
+        "f1": 0.3333333333333333,
+        "tp": 2,
+        "n_gold": 6,
+        "n_pred": 6
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.5555555555555556,
+        "recall": 0.5263157894736842,
+        "f1": 0.5405405405405405,
+        "tp": 10,
+        "n_gold": 19,
+        "n_pred": 18
+      },
+      "structure": {
+        "rand_index": 1.0,
+        "agreements": 105,
+        "pairs": 105,
+        "n_steps": 15
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 43320.0,
+        "pred_makespan": 47400.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "light-smoker",
+          "smoke-unwrapped",
+          "wrap-pork",
+          "smoke-wrapped",
+          "rest-in-cooler",
+          "light-kettle",
+          "grill-sausages",
+          "grill-corn",
+          "toast-buns",
+          "set-table",
+          "call-everyone"
+        ],
+        "pred_critical_path": [
+          "light-kettle",
+          "grill-sausages",
+          "grill-corn",
+          "toast-buns",
+          "table-set",
+          "call-everyone"
+        ],
+        "js_critical_path": [
+          "light-kettle",
+          "grill-sausages",
+          "grill-corn",
+          "toast-buns",
+          "table-set",
+          "call-everyone"
+        ],
+        "js_makespan": 47400,
+        "critical_overlap": 0.5454545454545454,
+        "critical_ok": true,
+        "passed": true
+      },
+      "unsupported_rate": 0.16666666666666666,
+      "unsupported_steps": [
+        "wrap-paper",
+        "cooler-hold",
+        "dress-refrigerate"
+      ],
+      "matching": [
+        {
+          "gold": "trim-and-rub",
+          "predicted": "trim-rub",
+          "by": "name"
+        },
+        {
+          "gold": "light-smoker",
+          "predicted": "light-smoker",
+          "by": "name"
+        },
+        {
+          "gold": "smoke-unwrapped",
+          "predicted": "smoke-unwrapped",
+          "by": "name"
+        },
+        {
+          "gold": "smoke-wrapped",
+          "predicted": "smoke-wrapped",
+          "by": "name"
+        },
+        {
+          "gold": "pull-pork",
+          "predicted": "pull-pork",
+          "by": "name"
+        },
+        {
+          "gold": "fry-bacon-onion",
+          "predicted": "fry-bacon-onion",
+          "by": "name"
+        },
+        {
+          "gold": "simmer-beans",
+          "predicted": "simmer-beans",
+          "by": "name"
+        },
+        {
+          "gold": "shred-cabbage",
+          "predicted": "shred-cabbage",
+          "by": "name"
+        },
+        {
+          "gold": "whisk-slaw-dressing",
+          "predicted": "whisk-dressing",
+          "by": "name"
+        },
+        {
+          "gold": "light-kettle",
+          "predicted": "light-kettle",
+          "by": "name"
+        },
+        {
+          "gold": "grill-sausages",
+          "predicted": "grill-sausages",
+          "by": "name"
+        },
+        {
+          "gold": "grill-corn",
+          "predicted": "grill-corn",
+          "by": "name"
+        },
+        {
+          "gold": "toast-buns",
+          "predicted": "toast-buns",
+          "by": "name"
+        },
+        {
+          "gold": "set-table",
+          "predicted": "table-set",
+          "by": "name"
+        },
+        {
+          "gold": "call-everyone",
+          "predicted": "call-everyone",
+          "by": "name"
+        },
+        {
+          "gold": "wrap-pork",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "rest-in-cooler",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "chill-slaw",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "wrap-paper",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "cooler-hold",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "dress-refrigerate",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "claude-sonnet-5",
+        "pattern": "baseline",
+        "calls": 2,
+        "input_tokens": 16450,
+        "output_tokens": 14644,
+        "cost_usd": 0.17934,
+        "cache_keys": [
+          "0a254a5b9243f51f8b44486295c4f7c6399d121caa74015cae8910baa52bd110",
+          "cb033163e7a82472a9c3e446b47ff96c1e53414f70bc2e9bd25bb3f6ced0fc43"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/baseline/per-program/kitchen-backyard-barbecue-smoker-grill/responses/kitchen-backyard-barbecue-smoker-grill.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/claude-sonnet-5/baseline/per-program/kitchen-backyard-barbecue-smoker-grill/predicted/kitchen-backyard-barbecue-smoker-grill.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Backyard Barbecue: Smoker and Grill for a shoulder, sausages and sides for about twelve, following the source text below",
+            "finish_at": null,
+            "constraints": "one offset smoker, one kettle grill, one side burner, one cooler for holding, two cooks",
+            "vertical": "kitchen"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}
