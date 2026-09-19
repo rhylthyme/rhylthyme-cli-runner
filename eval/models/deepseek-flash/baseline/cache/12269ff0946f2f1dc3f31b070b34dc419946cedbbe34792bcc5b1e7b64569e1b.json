@@ -1,0 +1,37 @@
+{
+ "key": "12269ff0946f2f1dc3f31b070b34dc419946cedbbe34792bcc5b1e7b64569e1b",
+ "model": "deepseek-flash",
+ "pattern": "baseline",
+ "slug": "kitchen-holiday-cookie-batch",
+ "recorded_at": "2026-09-19T17:48:01+00:00",
+ "system_sha256": "c8ee9f715e865f7c4393154f6433c88fc7d4f84b1790097d602b8a4c30336f32",
+ "messages": [
+  {
+   "role": "user",
+   "content": "Plan this as a Rhylthyme meal and deliver a live timeline: Holiday Cookie Batch: Three Doughs, One Oven for three doughs, roughly a hundred cookies, following the source text below\nResource limits: one stand mixer, one oven, two sheet pans that must cool between batches, one baker.\nSteps:\n1. Check the public catalog first (search_public_recipes or cook_recipe). If a good match exists, use it and stop — its result already has the live URL.\n2. Otherwise read rhylthyme://guide/authoring and build a program: one track per parallel line of work, sequential steps chained with afterStep, realistic durations, and a resourceConstraint for every task.\n3. Express the limits as constraints, not as copied JSON. A machine that runs one job at a time is `resourceConstraints[].maxConcurrent`. Work repeated n times (n trays, n samples, n aircraft) is `replicates: {count: n, mode: \"serial\" | \"parallel\" | \"stagger\"}` on ONE step — never n hand-copied steps or tracks. Chain what follows each repetition with `{\"type\":\"afterStep\",\"stepId\":\"<step>\",\"instances\":\"each\"}`, and give the step that waits for all of them `\"instances\":\"all\"`. When a holding area between them only fits k at a time (a rack that holds two trays, a rotor that holds six tubes, a taxiway that holds two aircraft), set `replicates.maxInFlight: k` so the upstream step is held back instead of stranding the downstream one.\n4. Run validate_program and fix every error it reports.\n5. Run analyze_schedule to check the makespan, critical path and resource conflicts; adjust offsets so tracks finish together. Its `bindingConstraints` say which limit is actually gating the makespan.\n6. Call visualize_schedule and give the user the live URL plus the Gantt/itinerary from the result. Do not describe the schedule in prose.\n\nSource text to schedule (read all of it):\n<<<\nHoliday Cookie Batch: Three Doughs, One Oven\n\nThree doughs, one stand mixer, one oven and two sheet pans. A pan has to cool before it is reloaded or the next batch spreads, so the oven waits on the pans as often as the pans wait on the oven. One baker, one afternoon, everything boxed by evening.\n\nDoughs\nCream the butter and sugar for the sugar cookies and beat in the flour; 12 minutes in the mixer. Wrap the dough and chill it for 1 hour.\nWash the bowl, then make the chocolate chip dough the same way; 12 minutes. That one goes straight onto a pan.\nWash the bowl again and make the gingerbread dough with molasses and spice; 15 minutes. Chill it for 2 hours.\n\nOrder\nThe oven runs one pan at a time, in this order: chocolate chip, sugar, gingerbread. Nothing goes in until its dough is cut and a cool pan is free.\n\nBaking\nHeat the oven to 350°F; 15 minutes. Scoop the chocolate chip dough onto the first pan; 6 minutes. Bake it for 11 minutes. Slide the pan onto a rack and let it cool for 12 minutes before you touch the cookies, and let the pan itself cool for 20 minutes before it goes back in.\n\nRoll and cut the chilled sugar cookies onto the second pan; 14 minutes. Bake for 9 minutes as soon as the chocolate chip pan is out. Let the sugar cookies cool on the rack for 10 minutes; the second pan needs its own 20 minutes before anything else touches it.\n\nRoll the gingerbread a quarter inch thick and cut it out; 18 minutes. Bake for 10 minutes once the sugar cookies are out and the first pan has cooled. Cool the gingerbread for 15 minutes. Ice the gingerbread when it is cold; 25 minutes.\n\nBox everything; 10 minutes.\n>>>"
+  },
+  {
+   "role": "assistant",
+   "content": ""
+  },
+  {
+   "role": "user",
+   "content": "validate_program reported 1 error(s):\n- no JSON object with a `tracks` array was found in the reply\n\nFix every error and reply with the complete corrected program JSON in a single ```json fenced block."
+  },
+  {
+   "role": "assistant",
+   "content": ""
+  },
+  {
+   "role": "user",
+   "content": "validate_program reported 1 error(s):\n- no JSON object with a `tracks` array was found in the reply\n\nFix every error and reply with the complete corrected program JSON in a single ```json fenced block."
+  }
+ ],
+ "completion": {
+  "text": "",
+  "input_tokens": 4474,
+  "output_tokens": 16000,
+  "model": "deepseek-flash",
+  "stop_reason": "max_tokens"
+ }
+}

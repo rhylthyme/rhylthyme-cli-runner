@@ -1,0 +1,389 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "gemini-3.1-flash-lite",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/cache",
+    "limit": null,
+    "only": [
+      "fitness-rowing-erg-interval-session"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 1,
+      "input_tokens": 4523,
+      "output_tokens": 1369,
+      "cost_usd": 0.00318425,
+      "fix_iterations": 0
+    },
+    "generated_at": "2026-09-19T17:15:40+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.17857142857142858,
+    "steps_f1": 0.30303030303030304,
+    "durations_accuracy": 0.8,
+    "resources_precision": 0.5,
+    "resources_recall": 0.3333333333333333,
+    "actors_accuracy": 0.0,
+    "relationships_precision": 0.4,
+    "relationships_recall": 0.06896551724137931,
+    "relationships_f1": 0.1176470588235294,
+    "structure_rand_index": 0.8,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.6666666666666666
+  },
+  "programs": [
+    {
+      "slug": "fitness-rowing-erg-interval-session",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.17857142857142858,
+        "steps_f1": 0.30303030303030304,
+        "durations_accuracy": 0.8,
+        "resources_precision": 0.5,
+        "resources_recall": 0.3333333333333333,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.4,
+        "relationships_recall": 0.06896551724137931,
+        "relationships_f1": 0.1176470588235294,
+        "structure_rand_index": 0.8,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.6666666666666666
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.17857142857142858,
+        "f1": 0.30303030303030304,
+        "tp": 5,
+        "n_gold": 28,
+        "n_pred": 5
+      },
+      "durations": {
+        "accuracy": 0.8,
+        "correct": 4,
+        "total": 5
+      },
+      "resources": {
+        "precision": 0.5,
+        "recall": 0.3333333333333333,
+        "f1": 0.4,
+        "tp": 1,
+        "n_gold": 3,
+        "n_pred": 2
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.4,
+        "recall": 0.06896551724137931,
+        "f1": 0.1176470588235294,
+        "tp": 2,
+        "n_gold": 29,
+        "n_pred": 5
+      },
+      "structure": {
+        "rand_index": 0.8,
+        "agreements": 8,
+        "pairs": 10,
+        "n_steps": 5
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 4560.0,
+        "pred_makespan": 4320.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "d-warmup",
+          "a-piece-1",
+          "a-piece-2",
+          "a-piece-3",
+          "c-piece-3",
+          "a-drill",
+          "b-drill",
+          "c-drill",
+          "d-drill",
+          "a-cooldown",
+          "debrief"
+        ],
+        "pred_critical_path": [
+          "c-brief",
+          "wup-ab",
+          "wup-cd",
+          "p-ab-1",
+          "p-ab-2",
+          "p-ab-3",
+          "p-cd-3",
+          "p-all-pieces",
+          "drill-indiv",
+          "cooldown",
+          "c-debrief"
+        ],
+        "js_critical_path": [
+          "c-brief",
+          "wup-ab",
+          "wup-cd",
+          "p-ab-1",
+          "p-ab-2",
+          "p-ab-3",
+          "p-cd-3",
+          "p-all-pieces",
+          "drill-indiv-r1",
+          "drill-indiv-r2",
+          "drill-indiv-r3",
+          "drill-indiv-r4",
+          "cooldown",
+          "c-debrief"
+        ],
+        "js_makespan": 4860,
+        "critical_overlap": 0.2727272727272727,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.6666666666666666,
+      "unsupported_steps": [
+        "c-brief",
+        "wup-ab",
+        "p-ab-1",
+        "p-ab-2",
+        "p-ab-3",
+        "wup-cd",
+        "p-cd-1",
+        "p-cd-2",
+        "p-cd-3",
+        "p-all-pieces"
+      ],
+      "matching": [
+        {
+          "gold": "a-drill",
+          "predicted": "drill-indiv",
+          "by": "name"
+        },
+        {
+          "gold": "a-cooldown",
+          "predicted": "cooldown",
+          "by": "name"
+        },
+        {
+          "gold": "c-drill",
+          "predicted": "c-drill",
+          "by": "name"
+        },
+        {
+          "gold": "call-splits",
+          "predicted": "c-splits",
+          "by": "name"
+        },
+        {
+          "gold": "debrief",
+          "predicted": "c-debrief",
+          "by": "name"
+        },
+        {
+          "gold": "a-warmup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-piece-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-piece-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-piece-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-warmup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-piece-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-piece-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-piece-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-drill",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-cooldown",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-warmup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-piece-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-piece-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-piece-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-cooldown",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "d-warmup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "d-piece-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "d-piece-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "d-piece-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "d-drill",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "d-cooldown",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "brief-crew",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "run-drills",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "c-brief",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "wup-ab",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "p-ab-1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "p-ab-2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "p-ab-3",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "wup-cd",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "p-cd-1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "p-cd-2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "p-cd-3",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "p-all-pieces",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "gemini-3.1-flash-lite",
+        "pattern": "baseline",
+        "calls": 1,
+        "input_tokens": 4523,
+        "output_tokens": 1369,
+        "cost_usd": 0.00318425,
+        "cache_keys": [
+          "a6369e13191c3994ad00bc1fb47df5019b47d6e8232fa8effebb733e814780d0"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/per-program/fitness-rowing-erg-interval-session/responses/fitness-rowing-erg-interval-session.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/per-program/fitness-rowing-erg-interval-session/predicted/fitness-rowing-erg-interval-session.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Erg Session \u2014 four rowers, two machines for 4 rowers, 2 ergs, 3 pieces, following the source text below",
+            "finish_at": null,
+            "constraints": "two ergs, four rowers, one coach, one rower on the coached drill at a time",
+            "vertical": "gym"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

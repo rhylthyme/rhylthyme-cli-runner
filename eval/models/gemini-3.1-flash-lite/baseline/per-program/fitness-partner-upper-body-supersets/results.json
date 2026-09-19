@@ -1,0 +1,399 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "gemini-3.1-flash-lite",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/cache",
+    "limit": null,
+    "only": [
+      "fitness-partner-upper-body-supersets"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 1,
+      "input_tokens": 4405,
+      "output_tokens": 2155,
+      "cost_usd": 0.00433375,
+      "fix_iterations": 0
+    },
+    "generated_at": "2026-09-19T17:14:18+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.5357142857142857,
+    "steps_f1": 0.6976744186046512,
+    "durations_accuracy": 1.0,
+    "resources_precision": 0.6,
+    "resources_recall": 0.6,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.4,
+    "relationships_recall": 0.15789473684210525,
+    "relationships_f1": 0.22641509433962267,
+    "structure_rand_index": 1.0,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.4230769230769231
+  },
+  "programs": [
+    {
+      "slug": "fitness-partner-upper-body-supersets",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.5357142857142857,
+        "steps_f1": 0.6976744186046512,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.6,
+        "resources_recall": 0.6,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.4,
+        "relationships_recall": 0.15789473684210525,
+        "relationships_f1": 0.22641509433962267,
+        "structure_rand_index": 1.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.4230769230769231
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.5357142857142857,
+        "f1": 0.6976744186046512,
+        "tp": 15,
+        "n_gold": 28,
+        "n_pred": 15
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 15,
+        "total": 15
+      },
+      "resources": {
+        "precision": 0.6,
+        "recall": 0.6,
+        "f1": 0.6,
+        "tp": 3,
+        "n_gold": 5,
+        "n_pred": 5
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.4,
+        "recall": 0.15789473684210525,
+        "f1": 0.22641509433962267,
+        "tp": 6,
+        "n_gold": 38,
+        "n_pred": 15
+      },
+      "structure": {
+        "rand_index": 1.0,
+        "agreements": 105,
+        "pairs": 105,
+        "n_steps": 15
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 1405.0,
+        "pred_makespan": 1330.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "a-warmup-row",
+          "a-mobility",
+          "a-bench-1",
+          "a-row-1",
+          "a-rest-a1",
+          "a-bench-2",
+          "a-row-2",
+          "a-rest-a2",
+          "a-press-1",
+          "b-press-1",
+          "b-rest-b1",
+          "b-pullups-2",
+          "b-press-2",
+          "a-cooldown"
+        ],
+        "pred_critical_path": [
+          "warmup-erg-a",
+          "warmup-mobilize-a",
+          "a-bench-1",
+          "a-row-1",
+          "a-rest-1",
+          "a-bench-2",
+          "a-row-2",
+          "a-press-1",
+          "a-pullup-1",
+          "a-rest-b1",
+          "a-press-2",
+          "a-pullup-2",
+          "cooldown-a"
+        ],
+        "js_critical_path": [
+          "warmup-erg-a",
+          "warmup-mobilize-a",
+          "a-bench-1",
+          "a-row-1",
+          "a-rest-1",
+          "a-bench-2",
+          "a-row-2",
+          "a-press-1",
+          "a-pullup-1",
+          "a-rest-b1",
+          "a-press-2",
+          "a-pullup-2",
+          "cooldown-a"
+        ],
+        "js_makespan": 1330,
+        "critical_overlap": 0.42857142857142855,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.4230769230769231,
+      "unsupported_steps": [
+        "warmup-erg-a",
+        "warmup-mobilize-a",
+        "a-rest-1",
+        "a-pullup-1",
+        "a-pullup-2",
+        "warmup-erg-b",
+        "warmup-mobilize-b",
+        "b-rest-1",
+        "b-pullup-1",
+        "b-pullup-2",
+        "cooldown-b"
+      ],
+      "matching": [
+        {
+          "gold": "a-bench-1",
+          "predicted": "a-bench-1",
+          "by": "name"
+        },
+        {
+          "gold": "a-row-1",
+          "predicted": "a-row-1",
+          "by": "name"
+        },
+        {
+          "gold": "a-bench-2",
+          "predicted": "a-bench-2",
+          "by": "name"
+        },
+        {
+          "gold": "a-row-2",
+          "predicted": "a-row-2",
+          "by": "name"
+        },
+        {
+          "gold": "a-press-1",
+          "predicted": "a-press-1",
+          "by": "name"
+        },
+        {
+          "gold": "a-rest-b1",
+          "predicted": "a-rest-b1",
+          "by": "name"
+        },
+        {
+          "gold": "a-press-2",
+          "predicted": "a-press-2",
+          "by": "name"
+        },
+        {
+          "gold": "a-cooldown",
+          "predicted": "cooldown-a",
+          "by": "name"
+        },
+        {
+          "gold": "b-row-1",
+          "predicted": "b-row-1",
+          "by": "name"
+        },
+        {
+          "gold": "b-bench-1",
+          "predicted": "b-bench-1",
+          "by": "name"
+        },
+        {
+          "gold": "b-row-2",
+          "predicted": "b-row-2",
+          "by": "name"
+        },
+        {
+          "gold": "b-bench-2",
+          "predicted": "b-bench-2",
+          "by": "name"
+        },
+        {
+          "gold": "b-press-1",
+          "predicted": "b-press-1",
+          "by": "name"
+        },
+        {
+          "gold": "b-rest-b1",
+          "predicted": "b-rest-b1",
+          "by": "name"
+        },
+        {
+          "gold": "b-press-2",
+          "predicted": "b-press-2",
+          "by": "name"
+        },
+        {
+          "gold": "a-warmup-row",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-mobility",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-rest-a1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-rest-a2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-pullups-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-pullups-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-warmup-row",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-mobility",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rest-a1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rest-a2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-pullups-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-pullups-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-cooldown",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "warmup-erg-a",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "warmup-mobilize-a",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "a-rest-1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "a-pullup-1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "a-pullup-2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "warmup-erg-b",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "warmup-mobilize-b",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-rest-1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-pullup-1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-pullup-2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "cooldown-b",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "gemini-3.1-flash-lite",
+        "pattern": "baseline",
+        "calls": 1,
+        "input_tokens": 4405,
+        "output_tokens": 2155,
+        "cost_usd": 0.00433375,
+        "cache_keys": [
+          "db024458ed8fdcb05679f8d2b1f533222fb46ff648df523426edbfd0c0eacc39"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/per-program/fitness-partner-upper-body-supersets/responses/fitness-partner-upper-body-supersets.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/per-program/fitness-partner-upper-body-supersets/predicted/fitness-partner-upper-body-supersets.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Partner Upper-Body Superset Session for 2 lifters, following the source text below",
+            "finish_at": null,
+            "constraints": "one bench and barbell, one pair of dumbbells, one pull-up bar, two ergs, about 25 minutes",
+            "vertical": "gym"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

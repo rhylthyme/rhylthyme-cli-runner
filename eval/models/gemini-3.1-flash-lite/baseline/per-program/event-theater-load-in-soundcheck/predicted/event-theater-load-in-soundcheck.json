@@ -1,0 +1,277 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "lyric-load-in",
+  "name": "Load-In Schedule: The Lyric",
+  "description": "One-nighter touring band load-in schedule.",
+  "environmentType": "event",
+  "actors": 8,
+  "tracks": [
+    {
+      "trackId": "dock",
+      "name": "Loading Dock",
+      "steps": [
+        {
+          "stepId": "load-lt",
+          "name": "Lighting truck in",
+          "task": "dock",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "load-bl",
+          "name": "Backline truck in",
+          "task": "dock",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "load-lt"
+          }
+        },
+        {
+          "stepId": "clear-dock",
+          "name": "Clear dock",
+          "task": "dock",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "load-bl"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "lighting",
+      "name": "Lighting",
+      "steps": [
+        {
+          "stepId": "rig-bars",
+          "name": "Rig bars",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "load-lt"
+          }
+        },
+        {
+          "stepId": "focus",
+          "name": "Focus rig",
+          "task": "desk",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rig-bars"
+          }
+        },
+        {
+          "stepId": "cues",
+          "name": "Build cues",
+          "task": "desk",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 1800,
+            "maxSeconds": 5400,
+            "defaultSeconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "focus"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "audio",
+      "name": "Audio/Backline",
+      "steps": [
+        {
+          "stepId": "fly-pa",
+          "name": "Fly PA",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 4500
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "load-lt"
+          }
+        },
+        {
+          "stepId": "set-mon",
+          "name": "Set monitor world",
+          "task": "monitors",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "fly-pa"
+          }
+        },
+        {
+          "stepId": "backline-up",
+          "name": "Backline up",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "set-mon"
+          }
+        },
+        {
+          "stepId": "ring-house",
+          "name": "Ring house",
+          "task": "pa",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "backline-up"
+          }
+        },
+        {
+          "stepId": "ring-wedges",
+          "name": "Ring wedges",
+          "task": "monitors",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "ring-house"
+          }
+        },
+        {
+          "stepId": "soundcheck",
+          "name": "Soundcheck",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "ring-wedges"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "front",
+      "name": "House & Band",
+      "steps": [
+        {
+          "stepId": "set-house",
+          "name": "Set front of house",
+          "task": "house",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 7200
+          }
+        },
+        {
+          "stepId": "dinner",
+          "name": "Band dinner",
+          "task": "greenroom",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "soundcheck"
+          }
+        },
+        {
+          "stepId": "clean-house",
+          "name": "Clean house",
+          "task": "house",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "dinner"
+          }
+        },
+        {
+          "stepId": "doors",
+          "name": "Doors",
+          "task": "house",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "clean-house"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "dock",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "stage",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "desk",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "pa",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "monitors",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "greenroom",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "house",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "serves": "1 touring band",
+    "sourceUrl": "rhylthyme://guide/authoring"
+  }
+}

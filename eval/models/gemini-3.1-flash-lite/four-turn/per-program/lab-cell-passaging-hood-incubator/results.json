@@ -1,0 +1,345 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "gemini-3.1-flash-lite",
+    "pattern": "four-turn",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/four-turn/cache",
+    "limit": null,
+    "only": [
+      "lab-cell-passaging-hood-incubator"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 5,
+      "input_tokens": 40679,
+      "output_tokens": 8055,
+      "cost_usd": 0.02225225,
+      "fix_iterations": 1
+    },
+    "generated_at": "2026-09-19T17:13:49+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.9047619047619048,
+    "steps_f1": 0.9500000000000001,
+    "durations_accuracy": 0.9473684210526315,
+    "resources_precision": 0.6666666666666666,
+    "resources_recall": 0.6666666666666666,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.95,
+    "relationships_recall": 0.7307692307692307,
+    "relationships_f1": 0.8260869565217392,
+    "structure_rand_index": 0.5497076023391813,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.0
+  },
+  "programs": [
+    {
+      "slug": "lab-cell-passaging-hood-incubator",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.9047619047619048,
+        "steps_f1": 0.9500000000000001,
+        "durations_accuracy": 0.9473684210526315,
+        "resources_precision": 0.6666666666666666,
+        "resources_recall": 0.6666666666666666,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.95,
+        "relationships_recall": 0.7307692307692307,
+        "relationships_f1": 0.8260869565217392,
+        "structure_rand_index": 0.5497076023391813,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.0
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.9047619047619048,
+        "f1": 0.9500000000000001,
+        "tp": 19,
+        "n_gold": 21,
+        "n_pred": 19
+      },
+      "durations": {
+        "accuracy": 0.9473684210526315,
+        "correct": 18,
+        "total": 19
+      },
+      "resources": {
+        "precision": 0.6666666666666666,
+        "recall": 0.6666666666666666,
+        "f1": 0.6666666666666666,
+        "tp": 4,
+        "n_gold": 6,
+        "n_pred": 6
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.95,
+        "recall": 0.7307692307692307,
+        "f1": 0.8260869565217392,
+        "tp": 19,
+        "n_gold": 26,
+        "n_pred": 20
+      },
+      "structure": {
+        "rand_index": 0.5497076023391813,
+        "agreements": 94,
+        "pairs": 171,
+        "n_steps": 19
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 76260.0,
+        "pred_makespan": 6300.0,
+        "makespan_ok": false,
+        "gold_critical_path": [
+          "warm-reagents",
+          "a-rinse",
+          "a-trypsinise",
+          "a-neutralise",
+          "a-spin",
+          "a-resuspend",
+          "a-count",
+          "b-count",
+          "b-seed",
+          "b-settle"
+        ],
+        "pred_critical_path": [
+          "prep-cabinet",
+          "check-confluence",
+          "a-rinse",
+          "a-trypsinize",
+          "a-neutralize",
+          "a-spin",
+          "a-resuspend",
+          "a-count",
+          "a-seed",
+          "b-rinse",
+          "b-trypsinize",
+          "b-neutralize",
+          "b-spin",
+          "b-resuspend",
+          "b-count",
+          "b-seed",
+          "finish-cleanup",
+          "finish-log"
+        ],
+        "js_critical_path": [
+          "prep-cabinet",
+          "check-confluence",
+          "a-rinse",
+          "a-trypsinize",
+          "a-neutralize",
+          "a-spin",
+          "a-resuspend",
+          "a-count",
+          "a-seed",
+          "b-rinse",
+          "b-trypsinize",
+          "b-neutralize",
+          "b-spin",
+          "b-resuspend",
+          "b-count",
+          "b-seed",
+          "finish-cleanup",
+          "finish-log"
+        ],
+        "js_makespan": 6300,
+        "critical_overlap": 0.8,
+        "critical_ok": true,
+        "passed": false
+      },
+      "unsupported_rate": 0.0,
+      "unsupported_steps": [],
+      "matching": [
+        {
+          "gold": "warm-reagents",
+          "predicted": "warm-reagents",
+          "by": "name"
+        },
+        {
+          "gold": "clean-cabinet",
+          "predicted": "prep-cabinet",
+          "by": "span"
+        },
+        {
+          "gold": "inspect-flasks",
+          "predicted": "check-confluence",
+          "by": "span"
+        },
+        {
+          "gold": "a-rinse",
+          "predicted": "a-rinse",
+          "by": "span"
+        },
+        {
+          "gold": "a-trypsinise",
+          "predicted": "a-trypsinize",
+          "by": "span"
+        },
+        {
+          "gold": "a-neutralise",
+          "predicted": "a-neutralize",
+          "by": "span"
+        },
+        {
+          "gold": "a-spin",
+          "predicted": "a-spin",
+          "by": "span"
+        },
+        {
+          "gold": "a-resuspend",
+          "predicted": "a-resuspend",
+          "by": "span"
+        },
+        {
+          "gold": "a-count",
+          "predicted": "a-count",
+          "by": "span"
+        },
+        {
+          "gold": "a-seed",
+          "predicted": "a-seed",
+          "by": "span"
+        },
+        {
+          "gold": "b-rinse",
+          "predicted": "b-rinse",
+          "by": "span"
+        },
+        {
+          "gold": "b-trypsinise",
+          "predicted": "b-trypsinize",
+          "by": "span"
+        },
+        {
+          "gold": "b-neutralise",
+          "predicted": "b-neutralize",
+          "by": "span"
+        },
+        {
+          "gold": "b-spin",
+          "predicted": "b-spin",
+          "by": "span"
+        },
+        {
+          "gold": "b-resuspend",
+          "predicted": "b-resuspend",
+          "by": "span"
+        },
+        {
+          "gold": "b-count",
+          "predicted": "b-count",
+          "by": "span"
+        },
+        {
+          "gold": "b-seed",
+          "predicted": "b-seed",
+          "by": "span"
+        },
+        {
+          "gold": "clean-down",
+          "predicted": "finish-cleanup",
+          "by": "span"
+        },
+        {
+          "gold": "log-passage",
+          "predicted": "finish-log",
+          "by": "span"
+        },
+        {
+          "gold": "a-settle",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-settle",
+          "predicted": null,
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "gemini-3.1-flash-lite",
+        "pattern": "four-turn",
+        "calls": 5,
+        "input_tokens": 40679,
+        "output_tokens": 8055,
+        "cost_usd": 0.02225225,
+        "cache_keys": [
+          "511c3f9fe482b910ff39fd5c8ee1623d7110b1d958b7e9b5797228b64310b66a",
+          "a0749dd6e816149b67ea999c8860850133bee743ebd9929260abd6448feaa017",
+          "a50928c1fc833c8a8b9bd47c4f14f9e841a7a48525514facf54c859e9c1f88b2",
+          "56f61ec9020b8891c061c2c24a1c39cdcbc82cb707b0f97fcf3a2b0d7af21384",
+          "c32e5054c6bc11374a7eb7bdd48f838ad9e2b0c3f88e991d5a127696d46b1bc4"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/four-turn/per-program/lab-cell-passaging-hood-incubator/responses/lab-cell-passaging-hood-incubator.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/four-turn/per-program/lab-cell-passaging-hood-incubator/predicted/lab-cell-passaging-hood-incubator.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 18,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Passaging Two Flasks of Adherent HEK293 Cells for two T75 flasks split 1:6 into four",
+            "finish_at": null,
+            "constraints": "one biosafety cabinet, one 37 \u00b0C water bath, one CO\u2082 incubator, one benchtop centrifuge, one microscope with haemocytometer, one operator",
+            "vertical": "lab",
+            "turn": "T1",
+            "kind": "protocol",
+            "constraintsLine": "Resource limits: one biosafety cabinet, one 37 \u00b0C water bath, one CO\u2082 incubator, one benchtop centrifuge, one microscope with haemocytometer, one operator.",
+            "deadlineLine": "No finishing time was given; finish as early as the work allows.",
+            "source": "Source text (read all of it):\n<<<\nPassaging Two Flasks of Adherent HEK293 Cells\n\nTwo T75 flasks at about 90 % confluence are split 1:6 into four new flasks. The room has one biosafety cabinet, one 37 \u00b0C water bath, one CO\u2082 incubator, one benchtop centrifuge and one microscope with a haemocytometer. Only one flask can be open in the cabinet at a time, so the two flasks queue for it while the centrifuge and the microscope stay free. Work with pre-warmed medium, PBS and trypsin-EDTA throughout; nothing cold touches the cells. One operator.\n\nPreparation\n1. Wipe down the cabinet, lay out pipettes and tubes, and let the blower run; 10 minutes.\n2. Check both flasks on the microscope for confluence and contamination; 10 minutes.\n\nFlask A\n3. Aspirate the spent medium and rinse the monolayer with 5 mL of PBS; 4 minutes in the cabinet.\n4. Add 2 mL of trypsin-EDTA, rock the flask and return it to the incubator for 5 minutes.\n5. Knock the flask, check detachment and neutralise with 8 mL of medium; 5 minutes in the cabinet.\n6. Transfer the suspension to a 15 mL tube and spin at 300 \u00d7 g for 5 minutes.\n7. Aspirate the supernatant and resuspend the pellet in 10 mL of fresh medium; 4 minutes.\n8. Count the cells on the haemocytometer; 6 minutes.\n9. Seed two new T75 flasks at 1:6 and label them; 6 minutes in the cabinet.\n10. Return the new flasks to the incubator and leave them to settle overnight, at least 16 hours.\n\nFlask B\n11. Start flask B the moment flask A leaves the cabinet: aspirate and rinse with 5 mL of PBS; 4 minutes.\n12. Trypsinise flask B in the incubator for 5 minutes.\n13. Neutralise flask B as soon as flask A is out of the cabinet again; 5 minutes.\n14. Spin flask B at 300 \u00d7 g for 5 minutes once the centrifuge is free.\n15. Resuspend the flask B pellet in 10 mL of fresh medium; 4 minutes.\n16. Count flask B on the haemocytometer once flask A has been counted; 6 minutes.\n17. Seed two more T75 flasks at 1:6 and label them; 6 minutes.\n18. Return them to the incubator to settle overnight alongside the first pair.\n\nFinishing\n19. Wipe the cabinet down, discard the waste and switch the blower to standby; 10 minutes.\n20. Write the passage number, the split ratio and the counts into the culture log; 5 minutes.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Passaging Two Flasks of Adherent HEK293 Cells for two T75 flasks split 1:6 into four",
+            "finish_at": null,
+            "constraints": "one biosafety cabinet, one 37 \u00b0C water bath, one CO\u2082 incubator, one benchtop centrifuge, one microscope with haemocytometer, one operator",
+            "vertical": "lab",
+            "turn": "T2",
+            "kind": "protocol"
+          },
+          "T3 extraction": {
+            "goal": "Passaging Two Flasks of Adherent HEK293 Cells for two T75 flasks split 1:6 into four",
+            "finish_at": null,
+            "constraints": "one biosafety cabinet, one 37 \u00b0C water bath, one CO\u2082 incubator, one benchtop centrifuge, one microscope with haemocytometer, one operator",
+            "vertical": "lab",
+            "turn": "T3",
+            "kind": "protocol",
+            "environment": "a lab where you have: one biosafety cabinet, one 37 \u00b0C water bath, one CO\u2082 incubator, one benchtop centrifuge, one microscope with haemocytometer, one operator",
+            "deadline": "the earliest time the work allows",
+            "source": "Source text (read all of it):\n<<<\nPassaging Two Flasks of Adherent HEK293 Cells\n\nTwo T75 flasks at about 90 % confluence are split 1:6 into four new flasks. The room has one biosafety cabinet, one 37 \u00b0C water bath, one CO\u2082 incubator, one benchtop centrifuge and one microscope with a haemocytometer. Only one flask can be open in the cabinet at a time, so the two flasks queue for it while the centrifuge and the microscope stay free. Work with pre-warmed medium, PBS and trypsin-EDTA throughout; nothing cold touches the cells. One operator.\n\nPreparation\n1. Wipe down the cabinet, lay out pipettes and tubes, and let the blower run; 10 minutes.\n2. Check both flasks on the microscope for confluence and contamination; 10 minutes.\n\nFlask A\n3. Aspirate the spent medium and rinse the monolayer with 5 mL of PBS; 4 minutes in the cabinet.\n4. Add 2 mL of trypsin-EDTA, rock the flask and return it to the incubator for 5 minutes.\n5. Knock the flask, check detachment and neutralise with 8 mL of medium; 5 minutes in the cabinet.\n6. Transfer the suspension to a 15 mL tube and spin at 300 \u00d7 g for 5 minutes.\n7. Aspirate the supernatant and resuspend the pellet in 10 mL of fresh medium; 4 minutes.\n8. Count the cells on the haemocytometer; 6 minutes.\n9. Seed two new T75 flasks at 1:6 and label them; 6 minutes in the cabinet.\n10. Return the new flasks to the incubator and leave them to settle overnight, at least 16 hours.\n\nFlask B\n11. Start flask B the moment flask A leaves the cabinet: aspirate and rinse with 5 mL of PBS; 4 minutes.\n12. Trypsinise flask B in the incubator for 5 minutes.\n13. Neutralise flask B as soon as flask A is out of the cabinet again; 5 minutes.\n14. Spin flask B at 300 \u00d7 g for 5 minutes once the centrifuge is free.\n15. Resuspend the flask B pellet in 10 mL of fresh medium; 4 minutes.\n16. Count flask B on the haemocytometer once flask A has been counted; 6 minutes.\n17. Seed two more T75 flasks at 1:6 and label them; 6 minutes.\n18. Return them to the incubator to settle overnight alongside the first pair.\n\nFinishing\n19. Wipe the cabinet down, discard the waste and switch the blower to standby; 10 minutes.\n20. Write the passage number, the split ratio and the counts into the culture log; 5 minutes.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Passaging Two Flasks of Adherent HEK293 Cells for two T75 flasks split 1:6 into four",
+            "finish_at": null,
+            "constraints": "one biosafety cabinet, one 37 \u00b0C water bath, one CO\u2082 incubator, one benchtop centrifuge, one microscope with haemocytometer, one operator",
+            "vertical": "lab",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or run_protocol",
+            "finishAtArg": ""
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

@@ -1,0 +1,340 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "gemini-3.1-flash-lite",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/cache",
+    "limit": null,
+    "only": [
+      "event-conference-session-av-checks"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 2,
+      "input_tokens": 10713,
+      "output_tokens": 2617,
+      "cost_usd": 0.00660375,
+      "fix_iterations": 1
+    },
+    "generated_at": "2026-09-19T17:11:57+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.25,
+    "steps_f1": 0.4,
+    "durations_accuracy": 1.0,
+    "resources_precision": 0.8,
+    "resources_recall": 0.6666666666666666,
+    "actors_accuracy": 0.0,
+    "relationships_precision": 0.6,
+    "relationships_recall": 0.15,
+    "relationships_f1": 0.24,
+    "structure_rand_index": 0.7,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.6428571428571429
+  },
+  "programs": [
+    {
+      "slug": "event-conference-session-av-checks",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.25,
+        "steps_f1": 0.4,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.8,
+        "resources_recall": 0.6666666666666666,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.6,
+        "relationships_recall": 0.15,
+        "relationships_f1": 0.24,
+        "structure_rand_index": 0.7,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.6428571428571429
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.25,
+        "f1": 0.4,
+        "tp": 5,
+        "n_gold": 20,
+        "n_pred": 5
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 5,
+        "total": 5
+      },
+      "resources": {
+        "precision": 0.8,
+        "recall": 0.6666666666666666,
+        "f1": 0.7272727272727272,
+        "tp": 4,
+        "n_gold": 6,
+        "n_pred": 5
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.6,
+        "recall": 0.15,
+        "f1": 0.24,
+        "tp": 3,
+        "n_gold": 20,
+        "n_pred": 5
+      },
+      "structure": {
+        "rand_index": 0.7,
+        "agreements": 7,
+        "pairs": 10,
+        "n_steps": 5
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 15240.0,
+        "pred_makespan": 7920.0,
+        "makespan_ok": false,
+        "gold_critical_path": [
+          "line-check",
+          "projector-test",
+          "mic-check",
+          "load-deck-one",
+          "chair-opens",
+          "talk-one",
+          "qa-one",
+          "load-deck-two",
+          "changeover-one",
+          "talk-two",
+          "qa-two",
+          "serve-coffee",
+          "clear-foyer",
+          "changeover-two",
+          "talk-three",
+          "qa-three",
+          "chair-closes",
+          "strike-av"
+        ],
+        "pred_critical_path": [
+          "housekeeping",
+          "talk",
+          "changeover",
+          "load-2",
+          "close",
+          "strike"
+        ],
+        "js_critical_path": [
+          "housekeeping",
+          "talk-r1",
+          "talk-r2",
+          "talk-r3",
+          "changeover-r3",
+          "load-2-r3",
+          "close",
+          "strike"
+        ],
+        "js_makespan": 12360,
+        "critical_overlap": 0.05555555555555555,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.6428571428571429,
+      "unsupported_steps": [
+        "load-1",
+        "housekeeping",
+        "talk",
+        "changeover",
+        "load-2",
+        "close",
+        "coffee-prep",
+        "load-3",
+        "coffee-out"
+      ],
+      "matching": [
+        {
+          "gold": "line-check",
+          "predicted": "line-check",
+          "by": "name"
+        },
+        {
+          "gold": "projector-test",
+          "predicted": "test-projector",
+          "by": "name"
+        },
+        {
+          "gold": "mic-check",
+          "predicted": "lapel-check",
+          "by": "name"
+        },
+        {
+          "gold": "strike-av",
+          "predicted": "strike",
+          "by": "name"
+        },
+        {
+          "gold": "clear-foyer",
+          "predicted": "clear-foyer",
+          "by": "name"
+        },
+        {
+          "gold": "load-deck-one",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "load-deck-two",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "load-deck-three",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "chair-opens",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "talk-one",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "qa-one",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "changeover-one",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "talk-two",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "qa-two",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "changeover-two",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "talk-three",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "qa-three",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "chair-closes",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "set-coffee",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "serve-coffee",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "load-1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "housekeeping",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "talk",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "changeover",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "load-2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "close",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "coffee-prep",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "load-3",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "coffee-out",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "gemini-3.1-flash-lite",
+        "pattern": "baseline",
+        "calls": 2,
+        "input_tokens": 10713,
+        "output_tokens": 2617,
+        "cost_usd": 0.00660375,
+        "cache_keys": [
+          "239c4c707a29f13730c846123edfb4f02d9253c6b26f25a16992c8f4e203f261",
+          "6754b1b1ed8d859c98111a55e7def83946065ba4e02e8e77bcb6ebba720484ed"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/per-program/event-conference-session-av-checks/responses/event-conference-session-av-checks.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/per-program/event-conference-session-av-checks/predicted/event-conference-session-av-checks.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Session Chair's Sheet \u2014 Room 2B for one room, three speakers, following the source text below",
+            "finish_at": "coffee break at 10:30",
+            "constraints": "one projector, one lapel microphone pack, one AV desk, one lectern, one foyer for catering",
+            "vertical": "events"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

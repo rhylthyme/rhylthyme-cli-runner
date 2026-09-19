@@ -1,0 +1,354 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "product-launch-evening-v2",
+  "name": "Product Launch Evening",
+  "description": "Run of show for a 200-guest product launch event with corrected track sequencing.",
+  "environmentType": "event",
+  "actors": 4,
+  "tracks": [
+    {
+      "trackId": "tech-crew",
+      "name": "AV and Stage Crew",
+      "steps": [
+        {
+          "stepId": "av-line-check",
+          "name": "Line check equipment",
+          "task": "av_system",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "runs a full line check of the projector, clicker and both microphones; allow 30 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "keynote-rehearsal",
+          "name": "Keynote rehearsal",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "av-line-check"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "walks the CEO and the product lead through the stage for a 20-minute rehearsal of the keynote transitions",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "program-flow",
+      "name": "On-Stage Program",
+      "steps": [
+        {
+          "stepId": "host-welcome",
+          "name": "Host opening",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "manual"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "welcomes the audience for 5 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "ceo-keynote",
+          "name": "CEO keynote",
+          "task": "av_system",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "host-welcome"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "CEO keynote begins on the host's cue and runs 20 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "product-video",
+          "name": "Play product video",
+          "task": "av_system",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "ceo-keynote"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "technician plays a 2-minute product video from the booth",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "product-demo",
+          "name": "Live product demo",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1500
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "product-video"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "product lead follows with a 25-minute live demo",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "moderated-qa",
+          "name": "Moderated Q&A",
+          "task": "stage",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 900,
+            "maxSeconds": 1500,
+            "defaultSeconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "product-demo"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "moderated Q&A follows for about 20 minutes, no less than 15 and no more than 25",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "host-closing",
+          "name": "Host closing",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "moderated-qa"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "host closes the program in 5 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "strike-stage",
+          "name": "Strike stage",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "host-closing"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "AV technician strikes the stage over 30 minutes after the hall is clear",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "front-of-house",
+      "name": "Front of House",
+      "steps": [
+        {
+          "stepId": "set-registration",
+          "name": "Set up registration",
+          "task": "registration_desk",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "sets up the registration desk and lays out name badges, which takes 45 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "guest-registration",
+          "name": "Guest registration",
+          "task": "registration_desk",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "set-registration"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Guests arrive and register over 30 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "usher-guests",
+          "name": "Usher guests to seats",
+          "task": "hall_seating",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "guest-registration"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "front-of-house ushers guests to their seats, which takes 5 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "breakdown-registration",
+          "name": "Break down registration",
+          "task": "registration_desk",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "usher-guests"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "breaks down the registration desk once the last guests have left the hall, about 15 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "catering",
+      "name": "Catering",
+      "steps": [
+        {
+          "stepId": "setup-catering",
+          "name": "Set bar and canapés",
+          "task": "foyer_bar",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "sets the bar and the canapé stations in the foyer over 60 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "serve-canapes",
+          "name": "Circulate canapés",
+          "task": "foyer_bar",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "host-closing"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "catering circulates canapés for 45 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "av_system",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "stage",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "registration_desk",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "foyer_bar",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "hall_seating",
+      "maxConcurrent": 1
+    }
+  ]
+}

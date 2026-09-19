@@ -1,0 +1,245 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "erg-session-four-rowers",
+  "name": "Erg Session: Four Rowers, Two Machines",
+  "description": "Interval training for 4 rowers rotating on 2 ergs.",
+  "environmentType": "gym",
+  "actors": 4,
+  "tracks": [
+    {
+      "trackId": "coach",
+      "name": "Coach",
+      "steps": [
+        {
+          "stepId": "c-brief",
+          "name": "Briefing",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "c-splits",
+          "name": "Call splits",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "c-brief"
+          }
+        },
+        {
+          "stepId": "c-drill",
+          "name": "Drills",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 720
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "p-all-pieces"
+          }
+        },
+        {
+          "stepId": "c-debrief",
+          "name": "Debrief",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cooldown"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "rowers-ab",
+      "name": "Rowers A & B",
+      "steps": [
+        {
+          "stepId": "wup-ab",
+          "name": "Warm-up (AB)",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "c-brief"
+          }
+        },
+        {
+          "stepId": "p-ab-1",
+          "name": "Piece 1 (AB)",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wup-cd"
+          }
+        },
+        {
+          "stepId": "p-ab-2",
+          "name": "Piece 2 (AB)",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "p-ab-1",
+            "offsetSeconds": 240
+          }
+        },
+        {
+          "stepId": "p-ab-3",
+          "name": "Piece 3 (AB)",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "p-ab-2",
+            "offsetSeconds": 240
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "rowers-cd",
+      "name": "Rowers C & D",
+      "steps": [
+        {
+          "stepId": "wup-cd",
+          "name": "Warm-up (CD)",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wup-ab"
+          }
+        },
+        {
+          "stepId": "p-cd-1",
+          "name": "Piece 1 (CD)",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "p-ab-1"
+          }
+        },
+        {
+          "stepId": "p-cd-2",
+          "name": "Piece 2 (CD)",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "p-ab-2"
+          }
+        },
+        {
+          "stepId": "p-cd-3",
+          "name": "Piece 3 (CD)",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "p-ab-3"
+          }
+        },
+        {
+          "stepId": "p-all-pieces",
+          "name": "Pieces finished",
+          "task": "none",
+          "duration": {
+            "type": "fixed",
+            "seconds": 0
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "p-cd-3"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "drills",
+      "name": "Technique Drills",
+      "steps": [
+        {
+          "stepId": "drill-indiv",
+          "name": "Technique Drill",
+          "task": "erg",
+          "replicates": {
+            "count": 4,
+            "mode": "serial"
+          },
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "p-all-pieces"
+          }
+        },
+        {
+          "stepId": "cooldown",
+          "name": "Cooldown",
+          "task": "none",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "drill-indiv",
+            "instances": "all"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "erg",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "coach",
+      "maxConcurrent": 1
+    }
+  ]
+}

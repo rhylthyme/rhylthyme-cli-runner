@@ -1,0 +1,302 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "gemini-3.1-flash-lite",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/cache",
+    "limit": null,
+    "only": [
+      "kitchen-soup-and-salad-lunch"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 2,
+      "input_tokens": 10073,
+      "output_tokens": 2394,
+      "cost_usd": 0.00610925,
+      "fix_iterations": 1
+    },
+    "generated_at": "2026-09-19T17:18:46+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.4,
+    "steps_f1": 0.5714285714285715,
+    "durations_accuracy": 1.0,
+    "resources_precision": 0.5,
+    "resources_recall": 0.5,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.3333333333333333,
+    "relationships_recall": 0.11764705882352941,
+    "relationships_f1": 0.1739130434782609,
+    "structure_rand_index": 0.7333333333333333,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.5384615384615384
+  },
+  "programs": [
+    {
+      "slug": "kitchen-soup-and-salad-lunch",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.4,
+        "steps_f1": 0.5714285714285715,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.5,
+        "resources_recall": 0.5,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.3333333333333333,
+        "relationships_recall": 0.11764705882352941,
+        "relationships_f1": 0.1739130434782609,
+        "structure_rand_index": 0.7333333333333333,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.5384615384615384
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.4,
+        "f1": 0.5714285714285715,
+        "tp": 6,
+        "n_gold": 15,
+        "n_pred": 6
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 6,
+        "total": 6
+      },
+      "resources": {
+        "precision": 0.5,
+        "recall": 0.5,
+        "f1": 0.5,
+        "tp": 2,
+        "n_gold": 4,
+        "n_pred": 4
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.3333333333333333,
+        "recall": 0.11764705882352941,
+        "f1": 0.1739130434782609,
+        "tp": 2,
+        "n_gold": 17,
+        "n_pred": 6
+      },
+      "structure": {
+        "rand_index": 0.7333333333333333,
+        "agreements": 11,
+        "pairs": 15,
+        "n_steps": 6
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 4080.0,
+        "pred_makespan": 5640.0,
+        "makespan_ok": false,
+        "gold_critical_path": [
+          "dice-vegetables",
+          "sweat-vegetables",
+          "add-lentils",
+          "simmer-lentils",
+          "blitz-soup",
+          "hold-soup",
+          "serve-lunch"
+        ],
+        "pred_critical_path": [
+          "prep-veg",
+          "sweat",
+          "boil",
+          "wash-salad",
+          "slice-veg",
+          "whisk-dressing",
+          "toss-salad",
+          "slice-bread",
+          "toast-bread",
+          "lay-table",
+          "assemble-lunch",
+          "serve-soup"
+        ],
+        "js_critical_path": [
+          "prep-veg",
+          "sweat",
+          "boil",
+          "wash-salad",
+          "slice-veg",
+          "whisk-dressing",
+          "toss-salad",
+          "slice-bread",
+          "toast-bread",
+          "lay-table",
+          "assemble-lunch",
+          "serve-soup"
+        ],
+        "js_makespan": 5640,
+        "critical_overlap": 0.14285714285714285,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.5384615384615384,
+      "unsupported_steps": [
+        "prep-veg",
+        "boil",
+        "blitz",
+        "serve-soup",
+        "toast-bread",
+        "lay-table",
+        "assemble-lunch"
+      ],
+      "matching": [
+        {
+          "gold": "sweat-vegetables",
+          "predicted": "sweat",
+          "by": "name"
+        },
+        {
+          "gold": "wash-leaves",
+          "predicted": "wash-salad",
+          "by": "name"
+        },
+        {
+          "gold": "shave-fennel",
+          "predicted": "slice-veg",
+          "by": "name"
+        },
+        {
+          "gold": "whisk-dressing",
+          "predicted": "whisk-dressing",
+          "by": "name"
+        },
+        {
+          "gold": "dress-salad",
+          "predicted": "toss-salad",
+          "by": "name"
+        },
+        {
+          "gold": "slice-bread",
+          "predicted": "slice-bread",
+          "by": "name"
+        },
+        {
+          "gold": "dice-vegetables",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "add-lentils",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "simmer-lentils",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "blitz-soup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "hold-soup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "warm-bread",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "wrap-bread",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "lay-places",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "serve-lunch",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "prep-veg",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "boil",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "blitz",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "serve-soup",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "toast-bread",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "lay-table",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "assemble-lunch",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "gemini-3.1-flash-lite",
+        "pattern": "baseline",
+        "calls": 2,
+        "input_tokens": 10073,
+        "output_tokens": 2394,
+        "cost_usd": 0.00610925,
+        "cache_keys": [
+          "d273ef04a78e4fec3b7a3a933b2f3677e387ca9f4c91e8cd71562b0be48ded8f",
+          "387552f225ef3fd9e57d4b42ac9e92f98283b0db283ca8c2c748e5f618157fdc"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/per-program/kitchen-soup-and-salad-lunch/responses/kitchen-soup-and-salad-lunch.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/per-program/kitchen-soup-and-salad-lunch/predicted/kitchen-soup-and-salad-lunch.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Weekday Lentil Soup and Salad for Four for 4 people, following the source text below",
+            "finish_at": "12:30",
+            "constraints": "one cook, two burners, one toaster oven, one stick blender",
+            "vertical": "kitchen"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

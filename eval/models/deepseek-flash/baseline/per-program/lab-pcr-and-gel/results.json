@@ -1,0 +1,319 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "deepseek-flash",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/baseline/cache",
+    "limit": null,
+    "only": [
+      "lab-pcr-and-gel"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 2,
+      "input_tokens": 9788,
+      "output_tokens": 21855,
+      "cost_usd": 0.0291624,
+      "fix_iterations": 1
+    },
+    "generated_at": "2026-09-19T17:50:00+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.5,
+    "steps_f1": 0.6666666666666666,
+    "durations_accuracy": 1.0,
+    "resources_precision": 0.7777777777777778,
+    "resources_recall": 1.0,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.5,
+    "relationships_recall": 0.2222222222222222,
+    "relationships_f1": 0.30769230769230765,
+    "structure_rand_index": 0.7857142857142857,
+    "end_to_end_pass": 1.0,
+    "unsupported_rate": 0.5
+  },
+  "programs": [
+    {
+      "slug": "lab-pcr-and-gel",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.5,
+        "steps_f1": 0.6666666666666666,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.7777777777777778,
+        "resources_recall": 1.0,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.5,
+        "relationships_recall": 0.2222222222222222,
+        "relationships_f1": 0.30769230769230765,
+        "structure_rand_index": 0.7857142857142857,
+        "end_to_end_pass": 1.0,
+        "unsupported_rate": 0.5
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.5,
+        "f1": 0.6666666666666666,
+        "tp": 8,
+        "n_gold": 16,
+        "n_pred": 8
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 8,
+        "total": 8
+      },
+      "resources": {
+        "precision": 0.7777777777777778,
+        "recall": 1.0,
+        "f1": 0.8750000000000001,
+        "tp": 7,
+        "n_gold": 7,
+        "n_pred": 9
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.5,
+        "recall": 0.2222222222222222,
+        "f1": 0.30769230769230765,
+        "tp": 4,
+        "n_gold": 18,
+        "n_pred": 8
+      },
+      "structure": {
+        "rand_index": 0.7857142857142857,
+        "agreements": 22,
+        "pairs": 28,
+        "n_steps": 8
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 12660.0,
+        "pred_makespan": 12240.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "thaw-reagents",
+          "assemble-mix",
+          "aliquot-and-spin",
+          "load-cycler",
+          "run-pcr",
+          "spin-products",
+          "load-gel",
+          "run-gel",
+          "image-gel",
+          "record-results"
+        ],
+        "pred_critical_path": [
+          "thaw-reagents",
+          "assemble-mastermix",
+          "aliquot-and-spin",
+          "load-thermocycler",
+          "pcr-cycling",
+          "add-dye-and-spin",
+          "load-wells",
+          "run-gel",
+          "image-gel",
+          "record-results"
+        ],
+        "js_critical_path": [
+          "thaw-reagents",
+          "assemble-mastermix",
+          "aliquot-and-spin",
+          "load-thermocycler",
+          "pcr-cycling",
+          "add-dye-and-spin",
+          "load-wells-r1",
+          "load-wells-r2",
+          "load-wells-r3",
+          "load-wells-r4",
+          "load-wells-r5",
+          "load-wells-r6",
+          "load-wells-r7",
+          "load-wells-r8",
+          "run-gel",
+          "image-gel",
+          "record-results"
+        ],
+        "js_makespan": 12660,
+        "critical_overlap": 0.5,
+        "critical_ok": true,
+        "passed": true
+      },
+      "unsupported_rate": 0.5,
+      "unsupported_steps": [
+        "assemble-mastermix",
+        "load-thermocycler",
+        "pcr-cycling",
+        "add-dye-and-spin",
+        "load-wells",
+        "cool-flask",
+        "gel-into-rig",
+        "thaw-ladder"
+      ],
+      "matching": [
+        {
+          "gold": "thaw-reagents",
+          "predicted": "thaw-reagents",
+          "by": "name"
+        },
+        {
+          "gold": "aliquot-and-spin",
+          "predicted": "aliquot-and-spin",
+          "by": "name"
+        },
+        {
+          "gold": "melt-agarose",
+          "predicted": "melt-agarose",
+          "by": "name"
+        },
+        {
+          "gold": "pour-gel",
+          "predicted": "pour-gel",
+          "by": "name"
+        },
+        {
+          "gold": "set-gel",
+          "predicted": "set-gel",
+          "by": "name"
+        },
+        {
+          "gold": "run-gel",
+          "predicted": "run-gel",
+          "by": "name"
+        },
+        {
+          "gold": "image-gel",
+          "predicted": "image-gel",
+          "by": "name"
+        },
+        {
+          "gold": "record-results",
+          "predicted": "record-results",
+          "by": "name"
+        },
+        {
+          "gold": "assemble-mix",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "load-cycler",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "run-pcr",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cool-agarose",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "place-gel",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "prepare-ladder",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "spin-products",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "load-gel",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "assemble-mastermix",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "load-thermocycler",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "pcr-cycling",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "add-dye-and-spin",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "load-wells",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "cool-flask",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "gel-into-rig",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "thaw-ladder",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "deepseek-flash",
+        "pattern": "baseline",
+        "calls": 2,
+        "input_tokens": 9788,
+        "output_tokens": 21855,
+        "cost_usd": 0.0291624,
+        "cache_keys": [
+          "c5de159ffc98df7ef0b685dd5c1ef1bda1bcd2d40336a03b600404b896e170ba",
+          "b679093f72d23037277fb4230d476e422683e7de5770a1a3805c8406cab0235c"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/baseline/per-program/lab-pcr-and-gel/responses/lab-pcr-and-gel.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/baseline/per-program/lab-pcr-and-gel/predicted/lab-pcr-and-gel.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Colony PCR Screen with a Diagnostic Gel for eight clones, one gel, following the source text below",
+            "finish_at": null,
+            "constraints": "one thermocycler, one microcentrifuge, one microwave, one gel rig, one transilluminator, one operator",
+            "vertical": "lab"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

@@ -1,0 +1,332 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "room-2b-session-chair-sheet",
+  "name": "Session Chair's Sheet — Room 2B (Thursday morning)",
+  "description": "One room, one projector, one lapel pack, one AV desk, one lectern, one foyer. Three 30-minute talks with questions after each. The projector is claimed by every talk and every deck load, so each load sits in a gap; the lapel pack is what makes the changeovers real steps. Question blocks are the only elastic (chair trims talk 3's questions if the first two run long). Catering runs in parallel from 90 minutes in and the third changeover waits on the foyer being cleared; the last item, the AV strike, lands on the 10:30 coffee break.",
+  "environmentType": "event",
+  "actors": 3,
+  "tracks": [
+    {
+      "trackId": "av-setup",
+      "name": "AV desk & room build",
+      "steps": [
+        {
+          "stepId": "lineCheck",
+          "name": "Line check at the AV desk: laptop, HDMI, house sound, record feed",
+          "task": "avDesk",
+          "duration": {
+            "type": "fixed",
+            "seconds": "30m"
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "projectorTest",
+          "name": "Test the projector: resolution, keystone, cue slide",
+          "task": "projector",
+          "duration": {
+            "type": "fixed",
+            "seconds": "15m"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "lineCheck"
+          }
+        },
+        {
+          "stepId": "lapelCheck",
+          "name": "Check the lapel pack: battery, gain, walk to the back row",
+          "task": "lapel",
+          "duration": {
+            "type": "fixed",
+            "seconds": "10m"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "projectorTest"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "slides",
+      "name": "Deck loads (projector gaps only)",
+      "steps": [
+        {
+          "stepId": "loadDeck1",
+          "name": "Load deck 1 once the lapel pack is checked — leave on the cue slide",
+          "task": "projector",
+          "duration": {
+            "type": "fixed",
+            "seconds": "10m"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "lapelCheck"
+          }
+        },
+        {
+          "stepId": "loadDeck2",
+          "name": "Load deck 2 as soon as talk 1's questions are over",
+          "task": "projector",
+          "duration": {
+            "type": "fixed",
+            "seconds": "5m"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "questions1"
+          }
+        },
+        {
+          "stepId": "loadDeck3",
+          "name": "Load deck 3 while the coffee is going out",
+          "task": "projector",
+          "duration": {
+            "type": "fixed",
+            "seconds": "5m"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "coffeeOut",
+            "event": "start"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "session",
+      "name": "Chair & talks (Room 2B)",
+      "steps": [
+        {
+          "stepId": "chairOpens",
+          "name": "Chair opens the room: housekeeping, fire exits, calls speaker 1",
+          "task": "lectern",
+          "duration": {
+            "type": "fixed",
+            "seconds": "5m"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "loadDeck1"
+          }
+        },
+        {
+          "stepId": "talk1",
+          "name": "Talk 1 — starts when the chair calls the first speaker",
+          "task": "projector",
+          "duration": {
+            "type": "fixed",
+            "seconds": "30m"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "chairOpens"
+          }
+        },
+        {
+          "stepId": "questions1",
+          "name": "Questions after talk 1",
+          "task": "lectern",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 300,
+            "maxSeconds": 600,
+            "defaultSeconds": 420
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "talk1"
+          }
+        },
+        {
+          "stepId": "changeover2",
+          "name": "Changeover to speaker 2: unclip the pack, clip it on, chair calls",
+          "task": "lapel",
+          "duration": {
+            "type": "fixed",
+            "seconds": "5m"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "questions1"
+          }
+        },
+        {
+          "stepId": "talk2",
+          "name": "Talk 2 — starts when the chair calls the second speaker",
+          "task": "projector",
+          "duration": {
+            "type": "fixed",
+            "seconds": "30m"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "changeover2"
+          }
+        },
+        {
+          "stepId": "questions2",
+          "name": "Questions after talk 2",
+          "task": "lectern",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 300,
+            "maxSeconds": 600,
+            "defaultSeconds": 420
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "talk2"
+          }
+        },
+        {
+          "stepId": "changeover3",
+          "name": "Changeover to speaker 3 once the foyer is cleared: unclip the pack, clip it on, chair calls",
+          "task": "lapel",
+          "duration": {
+            "type": "fixed",
+            "seconds": "5m"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "clearFoyer"
+          }
+        },
+        {
+          "stepId": "talk3",
+          "name": "Talk 3 — starts when the chair calls the third speaker",
+          "task": "projector",
+          "duration": {
+            "type": "fixed",
+            "seconds": "30m"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "changeover3"
+          }
+        },
+        {
+          "stepId": "questions3",
+          "name": "Questions after talk 3 (the elastic the chair trims)",
+          "task": "lectern",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 300,
+            "maxSeconds": 900,
+            "defaultSeconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "talk3"
+          }
+        },
+        {
+          "stepId": "chairClose",
+          "name": "Chair closes the session",
+          "task": "lectern",
+          "duration": {
+            "type": "fixed",
+            "seconds": "5m"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "questions3"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "catering",
+      "name": "Catering (service corridor & foyer)",
+      "steps": [
+        {
+          "stepId": "coffeeStation",
+          "name": "Set the coffee station in the service corridor (from 90 minutes in)",
+          "task": "foyer",
+          "duration": {
+            "type": "fixed",
+            "seconds": "30m"
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 5400
+          }
+        },
+        {
+          "stepId": "coffeeOut",
+          "name": "Coffee goes out to the foyer",
+          "task": "foyer",
+          "duration": {
+            "type": "fixed",
+            "seconds": "20m"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "questions2"
+          }
+        },
+        {
+          "stepId": "clearFoyer",
+          "name": "Clear the foyer",
+          "task": "foyer",
+          "duration": {
+            "type": "fixed",
+            "seconds": "10m"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "coffeeOut"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "strike",
+      "name": "Strike",
+      "steps": [
+        {
+          "stepId": "strikeAv",
+          "name": "Strike the AV desk when the chair closes: cables coiled, record feed off",
+          "task": "avDesk",
+          "duration": {
+            "type": "fixed",
+            "seconds": "20m"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "chairClose"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "avDesk",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "projector",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "lapel",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "lectern",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "foyer",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "sourceUrl": "",
+    "attribution": "Session Chair's Sheet — Room 2B, Thursday morning"
+  }
+}

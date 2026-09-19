@@ -1,0 +1,197 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "streaking-three-cultures-fixed-v2",
+  "name": "Streaking Three Cultures onto Selective Media",
+  "environmentType": "laboratory",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "bench-work",
+      "name": "Bench and Loop Station",
+      "steps": [
+        {
+          "stepId": "wipe-bench",
+          "name": "Wipe the bench",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Wipe the bench with 70 % ethanol and light the burner",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "label-plates",
+          "name": "Label plates",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wipe-bench"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Label three selective plates with the isolate number, the medium and the date",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "streak-isolates",
+          "name": "Streak isolates 1-3",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "label-plates"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Streak isolate 1 for single colonies in four quadrants, flaming the loop between each",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "supervisor-signoff",
+          "name": "Supervisor sign-off",
+          "task": "supervisor",
+          "duration": {
+            "type": "indefinite",
+            "defaultSeconds": 300
+          },
+          "startTrigger": {
+            "type": "manual"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "the supervisor has signed off the readings",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "streak-purity",
+          "name": "Streak purity plate",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "supervisor-signoff"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Streaking it takes 15 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "incubation",
+      "name": "Incubation",
+      "steps": [
+        {
+          "stepId": "incubate-1-2",
+          "name": "Incubate plates 1-2",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 64800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "streak-isolates"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "put them on the incubator shelf overnight, 16 to 20 hours",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "incubate-3",
+          "name": "Incubate plate 3",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 21600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "incubate-1-2"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Incubate plate 3 at 37 °C for 6 hours",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "incubate-purity-plate",
+          "name": "Incubate purity plate",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 28800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "incubate-3"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Incubate the purity plate at 37 °C for 8 hours",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "bench",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "burner",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "incubator",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "supervisor",
+      "maxConcurrent": 1
+    }
+  ]
+}

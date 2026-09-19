@@ -1,0 +1,311 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "gemini-3.1-flash-lite",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/cache",
+    "limit": null,
+    "only": [
+      "kitchen-holiday-cookie-batch"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 2,
+      "input_tokens": 10262,
+      "output_tokens": 2574,
+      "cost_usd": 0.0064265,
+      "fix_iterations": 1
+    },
+    "generated_at": "2026-09-19T17:17:23+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.45,
+    "steps_f1": 0.6206896551724138,
+    "durations_accuracy": 1.0,
+    "resources_precision": 0.6,
+    "resources_recall": 0.5,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.4444444444444444,
+    "relationships_recall": 0.15384615384615385,
+    "relationships_f1": 0.2285714285714286,
+    "structure_rand_index": 0.6388888888888888,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.35714285714285715
+  },
+  "programs": [
+    {
+      "slug": "kitchen-holiday-cookie-batch",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.45,
+        "steps_f1": 0.6206896551724138,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.6,
+        "resources_recall": 0.5,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.4444444444444444,
+        "relationships_recall": 0.15384615384615385,
+        "relationships_f1": 0.2285714285714286,
+        "structure_rand_index": 0.6388888888888888,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.35714285714285715
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.45,
+        "f1": 0.6206896551724138,
+        "tp": 9,
+        "n_gold": 20,
+        "n_pred": 9
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 9,
+        "total": 9
+      },
+      "resources": {
+        "precision": 0.6,
+        "recall": 0.5,
+        "f1": 0.5454545454545454,
+        "tp": 3,
+        "n_gold": 6,
+        "n_pred": 5
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.4444444444444444,
+        "recall": 0.15384615384615385,
+        "f1": 0.2285714285714286,
+        "tp": 4,
+        "n_gold": 26,
+        "n_pred": 9
+      },
+      "structure": {
+        "rand_index": 0.6388888888888888,
+        "agreements": 23,
+        "pairs": 36,
+        "n_steps": 9
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 14220.0,
+        "pred_makespan": 16920.0,
+        "makespan_ok": false,
+        "gold_critical_path": [
+          "cream-sugar-dough",
+          "mix-choc-dough",
+          "mix-gingerbread-dough",
+          "chill-gingerbread-dough",
+          "cut-gingerbread",
+          "bake-gingerbread",
+          "cool-gingerbread",
+          "ice-gingerbread",
+          "box-everything"
+        ],
+        "pred_critical_path": [
+          "prep-sugar",
+          "chill-sugar",
+          "prep-cc",
+          "prep-ginger",
+          "chill-ginger",
+          "prep-pan3",
+          "bake-ginger",
+          "ice-ginger",
+          "box"
+        ],
+        "js_critical_path": [
+          "prep-sugar",
+          "chill-sugar",
+          "prep-cc",
+          "prep-ginger",
+          "chill-ginger",
+          "prep-pan3",
+          "bake-ginger",
+          "ice-ginger",
+          "box"
+        ],
+        "js_makespan": 16920,
+        "critical_overlap": 0.5555555555555556,
+        "critical_ok": true,
+        "passed": false
+      },
+      "unsupported_rate": 0.35714285714285715,
+      "unsupported_steps": [
+        "prep-sugar",
+        "prep-cc",
+        "prep-pan1",
+        "box",
+        "bake-cc"
+      ],
+      "matching": [
+        {
+          "gold": "mix-gingerbread-dough",
+          "predicted": "prep-ginger",
+          "by": "name"
+        },
+        {
+          "gold": "preheat-oven",
+          "predicted": "preheat",
+          "by": "name"
+        },
+        {
+          "gold": "bake-sugar",
+          "predicted": "bake-sugar",
+          "by": "name"
+        },
+        {
+          "gold": "bake-gingerbread",
+          "predicted": "bake-ginger",
+          "by": "name"
+        },
+        {
+          "gold": "chill-sugar-dough",
+          "predicted": "chill-sugar",
+          "by": "name"
+        },
+        {
+          "gold": "cut-sugar",
+          "predicted": "prep-pan2",
+          "by": "name"
+        },
+        {
+          "gold": "chill-gingerbread-dough",
+          "predicted": "chill-ginger",
+          "by": "name"
+        },
+        {
+          "gold": "cut-gingerbread",
+          "predicted": "prep-pan3",
+          "by": "name"
+        },
+        {
+          "gold": "ice-gingerbread",
+          "predicted": "ice-ginger",
+          "by": "name"
+        },
+        {
+          "gold": "cream-sugar-dough",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "mix-choc-dough",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "bake-choc",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "scoop-choc",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cool-choc-cookies",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cool-pan-one",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cool-pan-two",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "temper-sugar-dough",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cool-sugar-cookies",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cool-gingerbread",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "box-everything",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "prep-sugar",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "prep-cc",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "prep-pan1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "box",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "bake-cc",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "gemini-3.1-flash-lite",
+        "pattern": "baseline",
+        "calls": 2,
+        "input_tokens": 10262,
+        "output_tokens": 2574,
+        "cost_usd": 0.0064265,
+        "cache_keys": [
+          "b4b2fc7fd2ec6641f50bd66538f0f5ee6ba17e910025ad66c78af2c248a6a264",
+          "41a3dc673dbc8a8267a21615b69afd6dcf9113274b474b17281e2769398caf7e"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/per-program/kitchen-holiday-cookie-batch/responses/kitchen-holiday-cookie-batch.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/per-program/kitchen-holiday-cookie-batch/predicted/kitchen-holiday-cookie-batch.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Holiday Cookie Batch: Three Doughs, One Oven for three doughs, roughly a hundred cookies, following the source text below",
+            "finish_at": null,
+            "constraints": "one stand mixer, one oven, two sheet pans that must cool between batches, one baker",
+            "vertical": "kitchen"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

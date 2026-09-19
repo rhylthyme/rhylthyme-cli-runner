@@ -1,0 +1,195 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "sandwich-elisa-two-plates",
+  "name": "Sandwich ELISA on Two Plates",
+  "description": "Two 96-well plates processed with a 30-minute stagger using a single plate washer.",
+  "environmentType": "laboratory",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "reagents",
+      "name": "Reagent Preparation",
+      "steps": [
+        {
+          "stepId": "prep-standards",
+          "name": "Make standard curve",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "prep-samples",
+          "name": "Dilute samples",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep-standards"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "plates",
+      "name": "ELISA Processing",
+      "steps": [
+        {
+          "stepId": "wash-1",
+          "name": "Wash",
+          "task": "washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "replicates": {
+            "count": 2,
+            "mode": "stagger",
+            "delay": "30m"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep-samples"
+          }
+        },
+        {
+          "stepId": "block",
+          "name": "Block",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-1",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "wash-2",
+          "name": "Wash",
+          "task": "washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "block",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "incubate-primary",
+          "name": "Incubate samples",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 7200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-2",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "wash-3",
+          "name": "Wash",
+          "task": "washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "incubate-primary",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "incubate-secondary",
+          "name": "Incubate detection antibody",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-3",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "wash-4",
+          "name": "Wash",
+          "task": "washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "incubate-secondary",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "develop",
+          "name": "TMB development",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-4",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "read",
+          "name": "Read plate",
+          "task": "reader",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "develop",
+            "instances": "each"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "operator",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "washer",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "incubator",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "reader",
+      "maxConcurrent": 1
+    }
+  ]
+}

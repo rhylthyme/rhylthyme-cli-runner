@@ -1,0 +1,5545 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "gemini-3.1-flash-lite",
+    "pattern": "baseline",
+    "from_cache": true,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/cache",
+    "limit": null,
+    "only": [
+      "event-conference-session-av-checks",
+      "fitness-hiit-circuit-intervals",
+      "kitchen-backyard-barbecue-smoker-grill",
+      "lab-cell-passaging-hood-incubator",
+      "event-product-launch-run-of-show",
+      "fitness-partner-upper-body-supersets",
+      "kitchen-country-loaf-bread-bake",
+      "lab-elisa-plate-wash",
+      "event-theater-load-in-soundcheck",
+      "fitness-rowing-erg-interval-session",
+      "kitchen-griddle-breakfast-for-six",
+      "lab-microbiology-streak-and-incubate",
+      "event-wedding-reception-timeline",
+      "fitness-swim-practice-lane-assignments",
+      "kitchen-holiday-cookie-batch",
+      "lab-pcr-and-gel",
+      "kitchen-sheet-pan-chicken-dinner",
+      "lab-plasmid-miniprep-digest",
+      "kitchen-soup-and-salad-lunch",
+      "lab-western-blot-transfer-block"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 20,
+      "calls": 40,
+      "input_tokens": 220222,
+      "output_tokens": 55208,
+      "cost_usd": 0.1378675,
+      "fix_iterations": 20
+    },
+    "generated_at": "2026-09-19T17:19:21+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 0.95,
+    "steps_recall": 0.3743775474038632,
+    "steps_f1": 0.5033570749707386,
+    "durations_accuracy": 0.9008082706766917,
+    "resources_precision": 0.5582142857142858,
+    "resources_recall": 0.4853571428571429,
+    "actors_accuracy": 0.7,
+    "relationships_precision": 0.46532751605120026,
+    "relationships_recall": 0.17999104937806296,
+    "relationships_f1": 0.24354701248081057,
+    "structure_rand_index": 0.7768784577995105,
+    "end_to_end_pass": 0.15,
+    "unsupported_rate": 0.4584097805788982
+  },
+  "programs": [
+    {
+      "slug": "event-conference-session-av-checks",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.25,
+        "steps_f1": 0.4,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.8,
+        "resources_recall": 0.6666666666666666,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.6,
+        "relationships_recall": 0.15,
+        "relationships_f1": 0.24,
+        "structure_rand_index": 0.7,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.6428571428571429
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.25,
+        "f1": 0.4,
+        "tp": 5,
+        "n_gold": 20,
+        "n_pred": 5
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 5,
+        "total": 5
+      },
+      "resources": {
+        "precision": 0.8,
+        "recall": 0.6666666666666666,
+        "f1": 0.7272727272727272,
+        "tp": 4,
+        "n_gold": 6,
+        "n_pred": 5
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.6,
+        "recall": 0.15,
+        "f1": 0.24,
+        "tp": 3,
+        "n_gold": 20,
+        "n_pred": 5
+      },
+      "structure": {
+        "rand_index": 0.7,
+        "agreements": 7,
+        "pairs": 10,
+        "n_steps": 5
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 15240.0,
+        "pred_makespan": 7920.0,
+        "makespan_ok": false,
+        "gold_critical_path": [
+          "line-check",
+          "projector-test",
+          "mic-check",
+          "load-deck-one",
+          "chair-opens",
+          "talk-one",
+          "qa-one",
+          "load-deck-two",
+          "changeover-one",
+          "talk-two",
+          "qa-two",
+          "serve-coffee",
+          "clear-foyer",
+          "changeover-two",
+          "talk-three",
+          "qa-three",
+          "chair-closes",
+          "strike-av"
+        ],
+        "pred_critical_path": [
+          "housekeeping",
+          "talk",
+          "changeover",
+          "load-2",
+          "close",
+          "strike"
+        ],
+        "js_critical_path": [
+          "housekeeping",
+          "talk-r1",
+          "talk-r2",
+          "talk-r3",
+          "changeover-r3",
+          "load-2-r3",
+          "close",
+          "strike"
+        ],
+        "js_makespan": 12360,
+        "critical_overlap": 0.05555555555555555,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.6428571428571429,
+      "unsupported_steps": [
+        "load-1",
+        "housekeeping",
+        "talk",
+        "changeover",
+        "load-2",
+        "close",
+        "coffee-prep",
+        "load-3",
+        "coffee-out"
+      ],
+      "matching": [
+        {
+          "gold": "line-check",
+          "predicted": "line-check",
+          "by": "name"
+        },
+        {
+          "gold": "projector-test",
+          "predicted": "test-projector",
+          "by": "name"
+        },
+        {
+          "gold": "mic-check",
+          "predicted": "lapel-check",
+          "by": "name"
+        },
+        {
+          "gold": "strike-av",
+          "predicted": "strike",
+          "by": "name"
+        },
+        {
+          "gold": "clear-foyer",
+          "predicted": "clear-foyer",
+          "by": "name"
+        },
+        {
+          "gold": "load-deck-one",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "load-deck-two",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "load-deck-three",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "chair-opens",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "talk-one",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "qa-one",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "changeover-one",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "talk-two",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "qa-two",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "changeover-two",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "talk-three",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "qa-three",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "chair-closes",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "set-coffee",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "serve-coffee",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "load-1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "housekeeping",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "talk",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "changeover",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "load-2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "close",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "coffee-prep",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "load-3",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "coffee-out",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "gemini-3.1-flash-lite",
+        "pattern": "baseline",
+        "calls": 2,
+        "input_tokens": 10713,
+        "output_tokens": 2617,
+        "cost_usd": 0.00660375,
+        "cache_keys": [
+          "239c4c707a29f13730c846123edfb4f02d9253c6b26f25a16992c8f4e203f261",
+          "6754b1b1ed8d859c98111a55e7def83946065ba4e02e8e77bcb6ebba720484ed"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/responses/event-conference-session-av-checks.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/predicted/event-conference-session-av-checks.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Session Chair's Sheet \u2014 Room 2B for one room, three speakers, following the source text below",
+            "finish_at": "coffee break at 10:30",
+            "constraints": "one projector, one lapel microphone pack, one AV desk, one lectern, one foyer for catering",
+            "vertical": "events"
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "event-product-launch-run-of-show",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.3888888888888889,
+        "steps_f1": 0.56,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.25,
+        "resources_recall": 0.16666666666666666,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.5714285714285714,
+        "relationships_recall": 0.2222222222222222,
+        "relationships_f1": 0.32,
+        "structure_rand_index": 0.7142857142857143,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.5882352941176471
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.3888888888888889,
+        "f1": 0.56,
+        "tp": 7,
+        "n_gold": 18,
+        "n_pred": 7
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 7,
+        "total": 7
+      },
+      "resources": {
+        "precision": 0.25,
+        "recall": 0.16666666666666666,
+        "f1": 0.2,
+        "tp": 1,
+        "n_gold": 6,
+        "n_pred": 4
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.5714285714285714,
+        "recall": 0.2222222222222222,
+        "f1": 0.32,
+        "tp": 4,
+        "n_gold": 18,
+        "n_pred": 7
+      },
+      "structure": {
+        "rand_index": 0.7142857142857143,
+        "agreements": 15,
+        "pairs": 21,
+        "n_steps": 7
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 13020.0,
+        "pred_makespan": 13020.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "setup-registration",
+          "walkthrough",
+          "doors-open",
+          "usher-to-seats",
+          "host-welcome",
+          "ceo-keynote",
+          "product-video",
+          "product-demo",
+          "qa",
+          "host-close",
+          "breakdown-desk",
+          "strike-stage"
+        ],
+        "pred_critical_path": [
+          "line-check",
+          "rehearsal",
+          "standby-doors",
+          "play-deck",
+          "video",
+          "demo",
+          "qa",
+          "closing-av",
+          "strike"
+        ],
+        "js_critical_path": [
+          "line-check",
+          "rehearsal",
+          "standby-doors",
+          "play-deck",
+          "video",
+          "demo",
+          "qa",
+          "closing-av",
+          "strike"
+        ],
+        "js_makespan": 13020,
+        "critical_overlap": 0.25,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.5882352941176471,
+      "unsupported_steps": [
+        "standby-doors",
+        "play-deck",
+        "demo",
+        "closing-av",
+        "doors",
+        "seat",
+        "monitor",
+        "breakdown",
+        "set-catering",
+        "service"
+      ],
+      "matching": [
+        {
+          "gold": "line-check",
+          "predicted": "line-check",
+          "by": "name"
+        },
+        {
+          "gold": "rehearsal",
+          "predicted": "rehearsal",
+          "by": "name"
+        },
+        {
+          "gold": "strike-stage",
+          "predicted": "strike",
+          "by": "name"
+        },
+        {
+          "gold": "setup-registration",
+          "predicted": "reg-setup",
+          "by": "name"
+        },
+        {
+          "gold": "walkthrough",
+          "predicted": "walkthrough",
+          "by": "name"
+        },
+        {
+          "gold": "product-video",
+          "predicted": "video",
+          "by": "name"
+        },
+        {
+          "gold": "qa",
+          "predicted": "qa",
+          "by": "name"
+        },
+        {
+          "gold": "welcome-playlist",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "doors-open",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "usher-to-seats",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "breakdown-desk",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "host-welcome",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "ceo-keynote",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "product-demo",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "host-close",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "set-bar",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "bar-service",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "reception",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "standby-doors",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "play-deck",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "demo",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "closing-av",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "doors",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "seat",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "monitor",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "breakdown",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "set-catering",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "service",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "gemini-3.1-flash-lite",
+        "pattern": "baseline",
+        "calls": 1,
+        "input_tokens": 4592,
+        "output_tokens": 1419,
+        "cost_usd": 0.0032765,
+        "cache_keys": [
+          "f88c06e2986a2f639911f3482135e75d1385021a4f575069c4e4d65bcb55aab5"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/responses/event-product-launch-run-of-show.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/predicted/event-product-launch-run-of-show.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Product Launch Evening: Run of Show for 200 guests, following the source text below",
+            "finish_at": "21:00",
+            "constraints": "one stage, one projector, crew call 17:00, doors 18:00, program over by 20:00, venue resets at 21:00",
+            "vertical": "events"
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "event-theater-load-in-soundcheck",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.65,
+        "steps_f1": 0.787878787878788,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.7142857142857143,
+        "resources_recall": 0.7142857142857143,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.5384615384615384,
+        "relationships_recall": 0.3181818181818182,
+        "relationships_f1": 0.39999999999999997,
+        "structure_rand_index": 0.8717948717948718,
+        "end_to_end_pass": 1.0,
+        "unsupported_rate": 0.1875
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.65,
+        "f1": 0.787878787878788,
+        "tp": 13,
+        "n_gold": 20,
+        "n_pred": 13
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 13,
+        "total": 13
+      },
+      "resources": {
+        "precision": 0.7142857142857143,
+        "recall": 0.7142857142857143,
+        "f1": 0.7142857142857143,
+        "tp": 5,
+        "n_gold": 7,
+        "n_pred": 7
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.5384615384615384,
+        "recall": 0.3181818181818182,
+        "f1": 0.39999999999999997,
+        "tp": 7,
+        "n_gold": 22,
+        "n_pred": 13
+      },
+      "structure": {
+        "rand_index": 0.8717948717948718,
+        "agreements": 68,
+        "pairs": 78,
+        "n_steps": 13
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 28200.0,
+        "pred_makespan": 26700.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "lx-truck-in",
+          "backline-truck-in",
+          "set-monitor-world",
+          "ring-out-wedges",
+          "soundcheck",
+          "band-dinner",
+          "clean-house",
+          "doors",
+          "show",
+          "strike-lx"
+        ],
+        "pred_critical_path": [
+          "load-lt",
+          "fly-pa",
+          "set-mon",
+          "backline-up",
+          "ring-house",
+          "ring-wedges",
+          "soundcheck",
+          "dinner",
+          "clean-house",
+          "doors"
+        ],
+        "js_critical_path": [
+          "load-lt",
+          "fly-pa",
+          "set-mon",
+          "backline-up",
+          "ring-house",
+          "ring-wedges",
+          "soundcheck",
+          "dinner",
+          "clean-house",
+          "doors"
+        ],
+        "js_makespan": 26700,
+        "critical_overlap": 0.6,
+        "critical_ok": true,
+        "passed": true
+      },
+      "unsupported_rate": 0.1875,
+      "unsupported_steps": [
+        "rig-bars",
+        "ring-house",
+        "ring-wedges"
+      ],
+      "matching": [
+        {
+          "gold": "lx-truck-in",
+          "predicted": "load-lt",
+          "by": "name"
+        },
+        {
+          "gold": "backline-truck-in",
+          "predicted": "load-bl",
+          "by": "name"
+        },
+        {
+          "gold": "clear-dock",
+          "predicted": "clear-dock",
+          "by": "name"
+        },
+        {
+          "gold": "lx-focus",
+          "predicted": "focus",
+          "by": "name"
+        },
+        {
+          "gold": "lx-cue-build",
+          "predicted": "cues",
+          "by": "name"
+        },
+        {
+          "gold": "fly-pa",
+          "predicted": "fly-pa",
+          "by": "name"
+        },
+        {
+          "gold": "set-monitor-world",
+          "predicted": "set-mon",
+          "by": "name"
+        },
+        {
+          "gold": "backline-up",
+          "predicted": "backline-up",
+          "by": "name"
+        },
+        {
+          "gold": "soundcheck",
+          "predicted": "soundcheck",
+          "by": "name"
+        },
+        {
+          "gold": "band-dinner",
+          "predicted": "dinner",
+          "by": "name"
+        },
+        {
+          "gold": "set-front-of-house",
+          "predicted": "set-house",
+          "by": "name"
+        },
+        {
+          "gold": "clean-house",
+          "predicted": "clean-house",
+          "by": "name"
+        },
+        {
+          "gold": "doors",
+          "predicted": "doors",
+          "by": "name"
+        },
+        {
+          "gold": "rig-lx",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "strike-lx",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "ring-out-house",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "ring-out-wedges",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "stage-sweep",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "show",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "backline-out",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "rig-bars",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "ring-house",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "ring-wedges",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "gemini-3.1-flash-lite",
+        "pattern": "baseline",
+        "calls": 2,
+        "input_tokens": 10868,
+        "output_tokens": 2980,
+        "cost_usd": 0.007187,
+        "cache_keys": [
+          "884ba987b81acfbae8cdf54beb3039fcb9f04f9f31d895a35c5a23607654375e",
+          "58608fe3f105a26ed60f389a4eef1aa07a3d7056d79ab3d82fb8da146e4be586"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/responses/event-theater-load-in-soundcheck.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/predicted/event-theater-load-in-soundcheck.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Load-In Schedule \u2014 The Lyric for one-nighter, touring band, house crew of eight, following the source text below",
+            "finish_at": "doors",
+            "constraints": "one loading dock, one stage, one lighting desk, one PA, one monitor world, one green room",
+            "vertical": "events"
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "event-wedding-reception-timeline",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 1.0,
+        "steps_f1": 1.0,
+        "durations_accuracy": 0.8947368421052632,
+        "resources_precision": 0.3333333333333333,
+        "resources_recall": 0.2857142857142857,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.5789473684210527,
+        "relationships_recall": 0.5789473684210527,
+        "relationships_f1": 0.5789473684210527,
+        "structure_rand_index": 0.6257309941520468,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.0
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 19,
+        "n_gold": 19,
+        "n_pred": 19
+      },
+      "durations": {
+        "accuracy": 0.8947368421052632,
+        "correct": 17,
+        "total": 19
+      },
+      "resources": {
+        "precision": 0.3333333333333333,
+        "recall": 0.2857142857142857,
+        "f1": 0.30769230769230765,
+        "tp": 2,
+        "n_gold": 7,
+        "n_pred": 6
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.5789473684210527,
+        "recall": 0.5789473684210527,
+        "f1": 0.5789473684210527,
+        "tp": 11,
+        "n_gold": 19,
+        "n_pred": 19
+      },
+      "structure": {
+        "rand_index": 0.6257309941520468,
+        "agreements": 107,
+        "pairs": 171,
+        "n_steps": 19
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 23400.0,
+        "pred_makespan": 27300.0,
+        "makespan_ok": false,
+        "gold_critical_path": [
+          "flip-room",
+          "dress-tables",
+          "seat-guests",
+          "plate-starters",
+          "serve-starters",
+          "clear-starters",
+          "plate-mains",
+          "serve-mains",
+          "clear-mains",
+          "first-dance",
+          "speeches",
+          "cake-cut",
+          "plate-dessert",
+          "serve-dessert",
+          "dancing"
+        ],
+        "pred_critical_path": [
+          "open-bar",
+          "canape-service",
+          "call-dinner",
+          "starters-plate",
+          "serve-starters",
+          "clear-starters",
+          "mains-plate",
+          "serve-mains",
+          "clear-mains",
+          "dance-first",
+          "speeches",
+          "cut-cake",
+          "dessert-plate",
+          "serve-dessert",
+          "dancing"
+        ],
+        "js_critical_path": [
+          "open-bar",
+          "canape-service",
+          "call-dinner",
+          "starters-plate",
+          "serve-starters",
+          "clear-starters",
+          "mains-plate",
+          "serve-mains",
+          "clear-mains",
+          "dance-first",
+          "speeches",
+          "cut-cake",
+          "dessert-plate",
+          "serve-dessert",
+          "dancing"
+        ],
+        "js_makespan": 27300,
+        "critical_overlap": 0.8,
+        "critical_ok": true,
+        "passed": false
+      },
+      "unsupported_rate": 0.0,
+      "unsupported_steps": [],
+      "matching": [
+        {
+          "gold": "flip-room",
+          "predicted": "room-flip",
+          "by": "name"
+        },
+        {
+          "gold": "dress-tables",
+          "predicted": "dress-tables",
+          "by": "name"
+        },
+        {
+          "gold": "seat-guests",
+          "predicted": "seat-guests",
+          "by": "name"
+        },
+        {
+          "gold": "open-bar",
+          "predicted": "open-bar",
+          "by": "name"
+        },
+        {
+          "gold": "pass-canapes",
+          "predicted": "canape-service",
+          "by": "name"
+        },
+        {
+          "gold": "call-to-dinner",
+          "predicted": "call-dinner",
+          "by": "name"
+        },
+        {
+          "gold": "plate-starters",
+          "predicted": "starters-plate",
+          "by": "name"
+        },
+        {
+          "gold": "plate-mains",
+          "predicted": "mains-plate",
+          "by": "name"
+        },
+        {
+          "gold": "plate-dessert",
+          "predicted": "dessert-plate",
+          "by": "name"
+        },
+        {
+          "gold": "serve-starters",
+          "predicted": "serve-starters",
+          "by": "name"
+        },
+        {
+          "gold": "clear-starters",
+          "predicted": "clear-starters",
+          "by": "name"
+        },
+        {
+          "gold": "serve-mains",
+          "predicted": "serve-mains",
+          "by": "name"
+        },
+        {
+          "gold": "clear-mains",
+          "predicted": "clear-mains",
+          "by": "name"
+        },
+        {
+          "gold": "serve-dessert",
+          "predicted": "serve-dessert",
+          "by": "name"
+        },
+        {
+          "gold": "welcome-toast",
+          "predicted": "toast",
+          "by": "name"
+        },
+        {
+          "gold": "first-dance",
+          "predicted": "dance-first",
+          "by": "name"
+        },
+        {
+          "gold": "speeches",
+          "predicted": "speeches",
+          "by": "name"
+        },
+        {
+          "gold": "cake-cut",
+          "predicted": "cut-cake",
+          "by": "name"
+        },
+        {
+          "gold": "dancing",
+          "predicted": "dancing",
+          "by": "name"
+        }
+      ],
+      "extras": {
+        "model": "gemini-3.1-flash-lite",
+        "pattern": "baseline",
+        "calls": 2,
+        "input_tokens": 10938,
+        "output_tokens": 3187,
+        "cost_usd": 0.007515,
+        "cache_keys": [
+          "3b9617ec360670f419038ff71e9a02efc8f2c6c0f625ab94ab6bc01685c08826",
+          "c1b6191f02f0074a4739e025b7e12264f847f4bcdcfcdc4b21a309f60810b56b"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/responses/event-wedding-reception-timeline.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/predicted/event-wedding-reception-timeline.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Wedding Reception Run Sheet \u2014 Ashgrove Barn for 90 guests, three courses, following the source text below",
+            "finish_at": "band's last set",
+            "constraints": "one kitchen pass, one bar, one microphone, two servers on the floor, one dance floor",
+            "vertical": "events"
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "fitness-hiit-circuit-intervals",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.07407407407407407,
+        "steps_f1": 0.13793103448275862,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.5,
+        "resources_recall": 0.2,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.5,
+        "relationships_recall": 0.024390243902439025,
+        "relationships_f1": 0.046511627906976744,
+        "structure_rand_index": 1.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.6
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.07407407407407407,
+        "f1": 0.13793103448275862,
+        "tp": 2,
+        "n_gold": 27,
+        "n_pred": 2
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 2,
+        "total": 2
+      },
+      "resources": {
+        "precision": 0.5,
+        "recall": 0.2,
+        "f1": 0.28571428571428575,
+        "tp": 1,
+        "n_gold": 5,
+        "n_pred": 2
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.5,
+        "recall": 0.024390243902439025,
+        "f1": 0.046511627906976744,
+        "tp": 1,
+        "n_gold": 41,
+        "n_pred": 2
+      },
+      "structure": {
+        "rand_index": 1.0,
+        "agreements": 1,
+        "pairs": 1,
+        "n_steps": 2
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 1320.0,
+        "pred_makespan": 1020.0,
+        "makespan_ok": false,
+        "gold_critical_path": [
+          "a-warmup",
+          "a-rower-r1",
+          "a-rest-r1",
+          "a-kettlebell-r2",
+          "a-rest-r2",
+          "a-box-r3",
+          "a-rest-r3",
+          "a-sled-r4",
+          "a-cooldown"
+        ],
+        "pred_critical_path": [
+          "warmup",
+          "round-work",
+          "rest",
+          "circuit-barrier",
+          "cooldown"
+        ],
+        "js_critical_path": [
+          "warmup",
+          "round-work-r1",
+          "round-work-r2",
+          "round-work-r3",
+          "round-work-r4",
+          "round-work-r5",
+          "round-work-r6",
+          "round-work-r7",
+          "round-work-r8",
+          "round-work-r9",
+          "round-work-r10",
+          "round-work-r11",
+          "round-work-r12",
+          "rest-r12",
+          "circuit-barrier",
+          "cooldown"
+        ],
+        "js_makespan": 1680,
+        "critical_overlap": 0.2222222222222222,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.6,
+      "unsupported_steps": [
+        "round-work",
+        "rest",
+        "circuit-barrier"
+      ],
+      "matching": [
+        {
+          "gold": "a-warmup",
+          "predicted": "warmup",
+          "by": "name"
+        },
+        {
+          "gold": "a-cooldown",
+          "predicted": "cooldown",
+          "by": "name"
+        },
+        {
+          "gold": "a-rower-r1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-rest-r1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-kettlebell-r2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-rest-r2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-box-r3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-rest-r3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-sled-r4",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-warmup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-kettlebell-r1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rest-r1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-box-r2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rest-r2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-sled-r3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rest-r3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rower-r4",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-cooldown",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-warmup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-box-r1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-rest-r1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-sled-r2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-rest-r2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-rower-r3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-rest-r3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-kettlebell-r4",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-cooldown",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "round-work",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "rest",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "circuit-barrier",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "gemini-3.1-flash-lite",
+        "pattern": "baseline",
+        "calls": 2,
+        "input_tokens": 9931,
+        "output_tokens": 1305,
+        "cost_usd": 0.00444025,
+        "cache_keys": [
+          "88f855da483ddda23b6a2b5c1488b155328998c1d25c04f204f1638fdcb54455",
+          "b5b0e91ec57e2f1b17a13199829f8e74a60f20c327ebe9b62645a4dd55c2581a"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/responses/fitness-hiit-circuit-intervals.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/predicted/fitness-hiit-circuit-intervals.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "HIIT Circuit Card \u2014 three athletes, four stations for 3 athletes, 4 rounds, following the source text below",
+            "finish_at": null,
+            "constraints": "one rower, one kettlebell, one box, one sled, three athletes on the floor",
+            "vertical": "gym"
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "fitness-partner-upper-body-supersets",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.5357142857142857,
+        "steps_f1": 0.6976744186046512,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.6,
+        "resources_recall": 0.6,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.4,
+        "relationships_recall": 0.15789473684210525,
+        "relationships_f1": 0.22641509433962267,
+        "structure_rand_index": 1.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.4230769230769231
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.5357142857142857,
+        "f1": 0.6976744186046512,
+        "tp": 15,
+        "n_gold": 28,
+        "n_pred": 15
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 15,
+        "total": 15
+      },
+      "resources": {
+        "precision": 0.6,
+        "recall": 0.6,
+        "f1": 0.6,
+        "tp": 3,
+        "n_gold": 5,
+        "n_pred": 5
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.4,
+        "recall": 0.15789473684210525,
+        "f1": 0.22641509433962267,
+        "tp": 6,
+        "n_gold": 38,
+        "n_pred": 15
+      },
+      "structure": {
+        "rand_index": 1.0,
+        "agreements": 105,
+        "pairs": 105,
+        "n_steps": 15
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 1405.0,
+        "pred_makespan": 1330.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "a-warmup-row",
+          "a-mobility",
+          "a-bench-1",
+          "a-row-1",
+          "a-rest-a1",
+          "a-bench-2",
+          "a-row-2",
+          "a-rest-a2",
+          "a-press-1",
+          "b-press-1",
+          "b-rest-b1",
+          "b-pullups-2",
+          "b-press-2",
+          "a-cooldown"
+        ],
+        "pred_critical_path": [
+          "warmup-erg-a",
+          "warmup-mobilize-a",
+          "a-bench-1",
+          "a-row-1",
+          "a-rest-1",
+          "a-bench-2",
+          "a-row-2",
+          "a-press-1",
+          "a-pullup-1",
+          "a-rest-b1",
+          "a-press-2",
+          "a-pullup-2",
+          "cooldown-a"
+        ],
+        "js_critical_path": [
+          "warmup-erg-a",
+          "warmup-mobilize-a",
+          "a-bench-1",
+          "a-row-1",
+          "a-rest-1",
+          "a-bench-2",
+          "a-row-2",
+          "a-press-1",
+          "a-pullup-1",
+          "a-rest-b1",
+          "a-press-2",
+          "a-pullup-2",
+          "cooldown-a"
+        ],
+        "js_makespan": 1330,
+        "critical_overlap": 0.42857142857142855,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.4230769230769231,
+      "unsupported_steps": [
+        "warmup-erg-a",
+        "warmup-mobilize-a",
+        "a-rest-1",
+        "a-pullup-1",
+        "a-pullup-2",
+        "warmup-erg-b",
+        "warmup-mobilize-b",
+        "b-rest-1",
+        "b-pullup-1",
+        "b-pullup-2",
+        "cooldown-b"
+      ],
+      "matching": [
+        {
+          "gold": "a-bench-1",
+          "predicted": "a-bench-1",
+          "by": "name"
+        },
+        {
+          "gold": "a-row-1",
+          "predicted": "a-row-1",
+          "by": "name"
+        },
+        {
+          "gold": "a-bench-2",
+          "predicted": "a-bench-2",
+          "by": "name"
+        },
+        {
+          "gold": "a-row-2",
+          "predicted": "a-row-2",
+          "by": "name"
+        },
+        {
+          "gold": "a-press-1",
+          "predicted": "a-press-1",
+          "by": "name"
+        },
+        {
+          "gold": "a-rest-b1",
+          "predicted": "a-rest-b1",
+          "by": "name"
+        },
+        {
+          "gold": "a-press-2",
+          "predicted": "a-press-2",
+          "by": "name"
+        },
+        {
+          "gold": "a-cooldown",
+          "predicted": "cooldown-a",
+          "by": "name"
+        },
+        {
+          "gold": "b-row-1",
+          "predicted": "b-row-1",
+          "by": "name"
+        },
+        {
+          "gold": "b-bench-1",
+          "predicted": "b-bench-1",
+          "by": "name"
+        },
+        {
+          "gold": "b-row-2",
+          "predicted": "b-row-2",
+          "by": "name"
+        },
+        {
+          "gold": "b-bench-2",
+          "predicted": "b-bench-2",
+          "by": "name"
+        },
+        {
+          "gold": "b-press-1",
+          "predicted": "b-press-1",
+          "by": "name"
+        },
+        {
+          "gold": "b-rest-b1",
+          "predicted": "b-rest-b1",
+          "by": "name"
+        },
+        {
+          "gold": "b-press-2",
+          "predicted": "b-press-2",
+          "by": "name"
+        },
+        {
+          "gold": "a-warmup-row",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-mobility",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-rest-a1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-rest-a2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-pullups-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-pullups-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-warmup-row",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-mobility",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rest-a1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rest-a2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-pullups-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-pullups-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-cooldown",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "warmup-erg-a",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "warmup-mobilize-a",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "a-rest-1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "a-pullup-1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "a-pullup-2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "warmup-erg-b",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "warmup-mobilize-b",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-rest-1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-pullup-1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-pullup-2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "cooldown-b",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "gemini-3.1-flash-lite",
+        "pattern": "baseline",
+        "calls": 1,
+        "input_tokens": 4405,
+        "output_tokens": 2155,
+        "cost_usd": 0.00433375,
+        "cache_keys": [
+          "db024458ed8fdcb05679f8d2b1f533222fb46ff648df523426edbfd0c0eacc39"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/responses/fitness-partner-upper-body-supersets.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/predicted/fitness-partner-upper-body-supersets.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Partner Upper-Body Superset Session for 2 lifters, following the source text below",
+            "finish_at": null,
+            "constraints": "one bench and barbell, one pair of dumbbells, one pull-up bar, two ergs, about 25 minutes",
+            "vertical": "gym"
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "fitness-rowing-erg-interval-session",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.17857142857142858,
+        "steps_f1": 0.30303030303030304,
+        "durations_accuracy": 0.8,
+        "resources_precision": 0.5,
+        "resources_recall": 0.3333333333333333,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.4,
+        "relationships_recall": 0.06896551724137931,
+        "relationships_f1": 0.1176470588235294,
+        "structure_rand_index": 0.8,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.6666666666666666
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.17857142857142858,
+        "f1": 0.30303030303030304,
+        "tp": 5,
+        "n_gold": 28,
+        "n_pred": 5
+      },
+      "durations": {
+        "accuracy": 0.8,
+        "correct": 4,
+        "total": 5
+      },
+      "resources": {
+        "precision": 0.5,
+        "recall": 0.3333333333333333,
+        "f1": 0.4,
+        "tp": 1,
+        "n_gold": 3,
+        "n_pred": 2
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.4,
+        "recall": 0.06896551724137931,
+        "f1": 0.1176470588235294,
+        "tp": 2,
+        "n_gold": 29,
+        "n_pred": 5
+      },
+      "structure": {
+        "rand_index": 0.8,
+        "agreements": 8,
+        "pairs": 10,
+        "n_steps": 5
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 4560.0,
+        "pred_makespan": 4320.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "d-warmup",
+          "a-piece-1",
+          "a-piece-2",
+          "a-piece-3",
+          "c-piece-3",
+          "a-drill",
+          "b-drill",
+          "c-drill",
+          "d-drill",
+          "a-cooldown",
+          "debrief"
+        ],
+        "pred_critical_path": [
+          "c-brief",
+          "wup-ab",
+          "wup-cd",
+          "p-ab-1",
+          "p-ab-2",
+          "p-ab-3",
+          "p-cd-3",
+          "p-all-pieces",
+          "drill-indiv",
+          "cooldown",
+          "c-debrief"
+        ],
+        "js_critical_path": [
+          "c-brief",
+          "wup-ab",
+          "wup-cd",
+          "p-ab-1",
+          "p-ab-2",
+          "p-ab-3",
+          "p-cd-3",
+          "p-all-pieces",
+          "drill-indiv-r1",
+          "drill-indiv-r2",
+          "drill-indiv-r3",
+          "drill-indiv-r4",
+          "cooldown",
+          "c-debrief"
+        ],
+        "js_makespan": 4860,
+        "critical_overlap": 0.2727272727272727,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.6666666666666666,
+      "unsupported_steps": [
+        "c-brief",
+        "wup-ab",
+        "p-ab-1",
+        "p-ab-2",
+        "p-ab-3",
+        "wup-cd",
+        "p-cd-1",
+        "p-cd-2",
+        "p-cd-3",
+        "p-all-pieces"
+      ],
+      "matching": [
+        {
+          "gold": "a-drill",
+          "predicted": "drill-indiv",
+          "by": "name"
+        },
+        {
+          "gold": "a-cooldown",
+          "predicted": "cooldown",
+          "by": "name"
+        },
+        {
+          "gold": "c-drill",
+          "predicted": "c-drill",
+          "by": "name"
+        },
+        {
+          "gold": "call-splits",
+          "predicted": "c-splits",
+          "by": "name"
+        },
+        {
+          "gold": "debrief",
+          "predicted": "c-debrief",
+          "by": "name"
+        },
+        {
+          "gold": "a-warmup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-piece-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-piece-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-piece-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-warmup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-piece-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-piece-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-piece-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-drill",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-cooldown",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-warmup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-piece-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-piece-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-piece-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-cooldown",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "d-warmup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "d-piece-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "d-piece-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "d-piece-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "d-drill",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "d-cooldown",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "brief-crew",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "run-drills",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "c-brief",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "wup-ab",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "p-ab-1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "p-ab-2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "p-ab-3",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "wup-cd",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "p-cd-1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "p-cd-2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "p-cd-3",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "p-all-pieces",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "gemini-3.1-flash-lite",
+        "pattern": "baseline",
+        "calls": 1,
+        "input_tokens": 4523,
+        "output_tokens": 1369,
+        "cost_usd": 0.00318425,
+        "cache_keys": [
+          "a6369e13191c3994ad00bc1fb47df5019b47d6e8232fa8effebb733e814780d0"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/responses/fitness-rowing-erg-interval-session.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/predicted/fitness-rowing-erg-interval-session.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Erg Session \u2014 four rowers, two machines for 4 rowers, 2 ergs, 3 pieces, following the source text below",
+            "finish_at": null,
+            "constraints": "two ergs, four rowers, one coach, one rower on the coached drill at a time",
+            "vertical": "gym"
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "fitness-swim-practice-lane-assignments",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.25,
+        "steps_f1": 0.4,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.6666666666666666,
+        "resources_recall": 0.5,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.4,
+        "relationships_recall": 0.09090909090909091,
+        "relationships_f1": 0.14814814814814814,
+        "structure_rand_index": 1.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.5454545454545454
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.25,
+        "f1": 0.4,
+        "tp": 5,
+        "n_gold": 20,
+        "n_pred": 5
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 5,
+        "total": 5
+      },
+      "resources": {
+        "precision": 0.6666666666666666,
+        "recall": 0.5,
+        "f1": 0.5714285714285715,
+        "tp": 2,
+        "n_gold": 4,
+        "n_pred": 3
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.4,
+        "recall": 0.09090909090909091,
+        "f1": 0.14814814814814814,
+        "tp": 2,
+        "n_gold": 22,
+        "n_pred": 5
+      },
+      "structure": {
+        "rand_index": 1.0,
+        "agreements": 10,
+        "pairs": 10,
+        "n_steps": 5
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 8700.0,
+        "pred_makespan": 7800.0,
+        "makespan_ok": false,
+        "gold_critical_path": [
+          "brief-squad",
+          "watch-warmup",
+          "whiteboard-talk",
+          "kick-3",
+          "main-3",
+          "sprint-1",
+          "sprint-2",
+          "sprint-3",
+          "cool-1",
+          "debrief"
+        ],
+        "pred_critical_path": [
+          "brief",
+          "warmup-watch",
+          "whiteboard",
+          "kick",
+          "main-set",
+          "main-set-barrier",
+          "sprint-timing",
+          "debrief"
+        ],
+        "js_critical_path": [
+          "brief",
+          "warmup-watch",
+          "whiteboard",
+          "kick",
+          "main-set-r1",
+          "main-set-barrier",
+          "sprints-r1",
+          "sprints-r2",
+          "sprints-r3",
+          "cooldown"
+        ],
+        "js_makespan": 7800,
+        "critical_overlap": 0.4,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.5454545454545454,
+      "unsupported_steps": [
+        "warmup",
+        "kick",
+        "main-set",
+        "main-set-barrier",
+        "sprints",
+        "cooldown"
+      ],
+      "matching": [
+        {
+          "gold": "brief-squad",
+          "predicted": "brief",
+          "by": "name"
+        },
+        {
+          "gold": "watch-warmup",
+          "predicted": "warmup-watch",
+          "by": "name"
+        },
+        {
+          "gold": "whiteboard-talk",
+          "predicted": "whiteboard",
+          "by": "name"
+        },
+        {
+          "gold": "time-sprints",
+          "predicted": "sprint-timing",
+          "by": "name"
+        },
+        {
+          "gold": "debrief",
+          "predicted": "debrief",
+          "by": "name"
+        },
+        {
+          "gold": "warmup-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "kick-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "main-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "sprint-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cool-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "warmup-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "kick-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "main-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "sprint-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cool-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "warmup-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "kick-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "main-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "sprint-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cool-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "warmup",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "kick",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "main-set",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "main-set-barrier",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "sprints",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "cooldown",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "gemini-3.1-flash-lite",
+        "pattern": "baseline",
+        "calls": 3,
+        "input_tokens": 17088,
+        "output_tokens": 3117,
+        "cost_usd": 0.0089475,
+        "cache_keys": [
+          "682495ee601e5c9a2214f7d0aa11213143efe7a089278d0279415984b1b0a875",
+          "3b76a83ed862cdbefc7e2bb84211047189d3f8521ef312c9eab89f6cb6e50952",
+          "3279979d950281e797cce8e203ed50754d69bc86f4eae8d31456dbe36027e85d"
+        ],
+        "fix_iterations": 2,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/responses/fitness-swim-practice-lane-assignments.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/predicted/fitness-swim-practice-lane-assignments.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Practice Plan \u2014 Thursday AM, three lanes for one squad of twelve, three lanes, one coach, following the source text below",
+            "finish_at": "150 minutes of pool time",
+            "constraints": "three lanes, one set of starting blocks, one coach on deck, two and a half hours of pool time",
+            "vertical": "gym"
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "kitchen-backyard-barbecue-smoker-grill",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.6666666666666666,
+        "steps_f1": 0.8,
+        "durations_accuracy": 0.75,
+        "resources_precision": 0.3333333333333333,
+        "resources_recall": 0.3333333333333333,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.75,
+        "relationships_recall": 0.47368421052631576,
+        "relationships_f1": 0.5806451612903226,
+        "structure_rand_index": 0.9090909090909091,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.25
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.6666666666666666,
+        "f1": 0.8,
+        "tp": 12,
+        "n_gold": 18,
+        "n_pred": 12
+      },
+      "durations": {
+        "accuracy": 0.75,
+        "correct": 9,
+        "total": 12
+      },
+      "resources": {
+        "precision": 0.3333333333333333,
+        "recall": 0.3333333333333333,
+        "f1": 0.3333333333333333,
+        "tp": 2,
+        "n_gold": 6,
+        "n_pred": 6
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.75,
+        "recall": 0.47368421052631576,
+        "f1": 0.5806451612903226,
+        "tp": 9,
+        "n_gold": 19,
+        "n_pred": 12
+      },
+      "structure": {
+        "rand_index": 0.9090909090909091,
+        "agreements": 60,
+        "pairs": 66,
+        "n_steps": 12
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 43320.0,
+        "pred_makespan": 57780.0,
+        "makespan_ok": false,
+        "gold_critical_path": [
+          "light-smoker",
+          "smoke-unwrapped",
+          "wrap-pork",
+          "smoke-wrapped",
+          "rest-in-cooler",
+          "light-kettle",
+          "grill-sausages",
+          "grill-corn",
+          "toast-buns",
+          "set-table",
+          "call-everyone"
+        ],
+        "pred_critical_path": [
+          "light-smoker",
+          "prep-pork",
+          "smoke-unwrapped",
+          "wrap-pork",
+          "smoke-wrapped",
+          "hold-pork",
+          "prep-slaw",
+          "fridge-slaw",
+          "cook-beans"
+        ],
+        "js_critical_path": [
+          "light-smoker",
+          "prep-pork",
+          "smoke-unwrapped",
+          "wrap-pork",
+          "smoke-wrapped",
+          "hold-pork",
+          "prep-slaw",
+          "fridge-slaw",
+          "cook-beans"
+        ],
+        "js_makespan": 57780,
+        "critical_overlap": 0.45454545454545453,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.25,
+      "unsupported_steps": [
+        "prep-slaw",
+        "cook-beans",
+        "light-grill",
+        "serve"
+      ],
+      "matching": [
+        {
+          "gold": "trim-and-rub",
+          "predicted": "prep-pork",
+          "by": "name"
+        },
+        {
+          "gold": "light-smoker",
+          "predicted": "light-smoker",
+          "by": "name"
+        },
+        {
+          "gold": "smoke-unwrapped",
+          "predicted": "smoke-unwrapped",
+          "by": "name"
+        },
+        {
+          "gold": "wrap-pork",
+          "predicted": "wrap-pork",
+          "by": "name"
+        },
+        {
+          "gold": "smoke-wrapped",
+          "predicted": "smoke-wrapped",
+          "by": "name"
+        },
+        {
+          "gold": "rest-in-cooler",
+          "predicted": "hold-pork",
+          "by": "name"
+        },
+        {
+          "gold": "pull-pork",
+          "predicted": "pull-meat",
+          "by": "name"
+        },
+        {
+          "gold": "chill-slaw",
+          "predicted": "fridge-slaw",
+          "by": "name"
+        },
+        {
+          "gold": "grill-sausages",
+          "predicted": "grill-sausages",
+          "by": "name"
+        },
+        {
+          "gold": "grill-corn",
+          "predicted": "grill-corn",
+          "by": "name"
+        },
+        {
+          "gold": "toast-buns",
+          "predicted": "toast-buns",
+          "by": "name"
+        },
+        {
+          "gold": "set-table",
+          "predicted": "set-table",
+          "by": "name"
+        },
+        {
+          "gold": "fry-bacon-onion",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "simmer-beans",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "shred-cabbage",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "whisk-slaw-dressing",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "light-kettle",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "call-everyone",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "prep-slaw",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "cook-beans",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "light-grill",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "serve",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "gemini-3.1-flash-lite",
+        "pattern": "baseline",
+        "calls": 2,
+        "input_tokens": 10502,
+        "output_tokens": 2901,
+        "cost_usd": 0.006977,
+        "cache_keys": [
+          "27536ae8888c90afe439be923d06a56f3bf1cb5a59c0a24b7bf53f546a7aa77d",
+          "7b325623d99f3829192f761341646876f4fa16e06e0dccf120164d681de8e8ce"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/responses/kitchen-backyard-barbecue-smoker-grill.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/predicted/kitchen-backyard-barbecue-smoker-grill.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Backyard Barbecue: Smoker and Grill for a shoulder, sausages and sides for about twelve, following the source text below",
+            "finish_at": null,
+            "constraints": "one offset smoker, one kettle grill, one side burner, one cooler for holding, two cooks",
+            "vertical": "kitchen"
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "kitchen-country-loaf-bread-bake",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.2916666666666667,
+        "steps_f1": 0.45161290322580644,
+        "durations_accuracy": 0.5714285714285714,
+        "resources_precision": 0.6,
+        "resources_recall": 0.75,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.42857142857142855,
+        "relationships_recall": 0.11538461538461539,
+        "relationships_f1": 0.18181818181818182,
+        "structure_rand_index": 0.5238095238095238,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.4166666666666667
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.2916666666666667,
+        "f1": 0.45161290322580644,
+        "tp": 7,
+        "n_gold": 24,
+        "n_pred": 7
+      },
+      "durations": {
+        "accuracy": 0.5714285714285714,
+        "correct": 4,
+        "total": 7
+      },
+      "resources": {
+        "precision": 0.6,
+        "recall": 0.75,
+        "f1": 0.6666666666666665,
+        "tp": 3,
+        "n_gold": 4,
+        "n_pred": 5
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.42857142857142855,
+        "recall": 0.11538461538461539,
+        "f1": 0.18181818181818182,
+        "tp": 3,
+        "n_gold": 26,
+        "n_pred": 7
+      },
+      "structure": {
+        "rand_index": 0.5238095238095238,
+        "agreements": 11,
+        "pairs": 21,
+        "n_steps": 7
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 88560.0,
+        "pred_makespan": 88020.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "mix-levain",
+          "ripen-levain",
+          "mix-dough",
+          "bulk-ferment",
+          "divide-preshape",
+          "bench-rest",
+          "shape-boules",
+          "retard",
+          "score-load-first",
+          "bake-first-covered",
+          "bake-first-uncovered",
+          "reheat-dutch-oven",
+          "score-load-second",
+          "bake-second-covered",
+          "bake-second-uncovered",
+          "cool-second"
+        ],
+        "pred_critical_path": [
+          "prep-ingredients",
+          "mix-levain",
+          "ripen-levain",
+          "autolyse",
+          "mix-dough",
+          "fold",
+          "bulk-ferment",
+          "shape",
+          "retard",
+          "preheat",
+          "bake-loop",
+          "cool"
+        ],
+        "js_critical_path": [
+          "prep-ingredients",
+          "mix-levain",
+          "ripen-levain",
+          "autolyse",
+          "mix-dough",
+          "fold-r3",
+          "bulk-ferment",
+          "shape",
+          "retard",
+          "preheat",
+          "bake-loop-r1",
+          "bake-loop-r2",
+          "cool-r2"
+        ],
+        "js_makespan": 94020,
+        "critical_overlap": 0.3125,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.4166666666666667,
+      "unsupported_steps": [
+        "fold",
+        "shape",
+        "preheat",
+        "bake-loop",
+        "cool"
+      ],
+      "matching": [
+        {
+          "gold": "mix-levain",
+          "predicted": "mix-levain",
+          "by": "name"
+        },
+        {
+          "gold": "ripen-levain",
+          "predicted": "ripen-levain",
+          "by": "name"
+        },
+        {
+          "gold": "weigh-ingredients",
+          "predicted": "prep-ingredients",
+          "by": "name"
+        },
+        {
+          "gold": "autolyse",
+          "predicted": "autolyse",
+          "by": "name"
+        },
+        {
+          "gold": "mix-dough",
+          "predicted": "mix-dough",
+          "by": "name"
+        },
+        {
+          "gold": "bulk-ferment",
+          "predicted": "bulk-ferment",
+          "by": "name"
+        },
+        {
+          "gold": "retard",
+          "predicted": "retard",
+          "by": "name"
+        },
+        {
+          "gold": "mix-flour-water",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "divide-preshape",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "bench-rest",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "shape-boules",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "fold-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "fold-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "fold-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "heat-dutch-oven",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "score-load-first",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "bake-first-covered",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "bake-first-uncovered",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "reheat-dutch-oven",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "score-load-second",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "bake-second-covered",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "bake-second-uncovered",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cool-second",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cool-first",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "fold",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "shape",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "preheat",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "bake-loop",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "cool",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "gemini-3.1-flash-lite",
+        "pattern": "baseline",
+        "calls": 3,
+        "input_tokens": 17849,
+        "output_tokens": 3864,
+        "cost_usd": 0.01025825,
+        "cache_keys": [
+          "a556f3ad2f88ded251bb842dd5416aab00c39c0ce52508813f3d0de5b82ec281",
+          "d1f4f029243823307a7bc6694d5aa652c18f27aff4422b04bcea9899fd2924d4",
+          "08815c167818567019c4503905cf10eb5e2225f3e2f39dfedaabac639ce072c5"
+        ],
+        "fix_iterations": 2,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/responses/kitchen-country-loaf-bread-bake.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/predicted/kitchen-country-loaf-bread-bake.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Country Loaf: Two Boules, One Dutch Oven for one batch, two 900 g boules, following the source text below",
+            "finish_at": null,
+            "constraints": "one oven, one dutch oven, one refrigerator, one baker, the two loaves bake one after the other",
+            "vertical": "kitchen"
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "kitchen-griddle-breakfast-for-six",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.42105263157894735,
+        "steps_f1": 0.5925925925925926,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.5,
+        "resources_recall": 0.3333333333333333,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.5,
+        "relationships_recall": 0.17391304347826086,
+        "relationships_f1": 0.25806451612903225,
+        "structure_rand_index": 1.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.42857142857142855
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.42105263157894735,
+        "f1": 0.5925925925925926,
+        "tp": 8,
+        "n_gold": 19,
+        "n_pred": 8
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 8,
+        "total": 8
+      },
+      "resources": {
+        "precision": 0.5,
+        "recall": 0.3333333333333333,
+        "f1": 0.4,
+        "tp": 2,
+        "n_gold": 6,
+        "n_pred": 4
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.5,
+        "recall": 0.17391304347826086,
+        "f1": 0.25806451612903225,
+        "tp": 4,
+        "n_gold": 23,
+        "n_pred": 8
+      },
+      "structure": {
+        "rand_index": 1.0,
+        "agreements": 28,
+        "pairs": 28,
+        "n_steps": 8
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 3840.0,
+        "pred_makespan": 3120.0,
+        "makespan_ok": false,
+        "gold_critical_path": [
+          "mix-batter",
+          "rest-batter",
+          "pancakes-pass-1",
+          "pancakes-pass-2",
+          "pancakes-pass-3",
+          "drop-griddle-heat",
+          "scramble-eggs",
+          "serve-breakfast"
+        ],
+        "pred_critical_path": [
+          "prep-batter",
+          "cook-pancakes",
+          "cool-griddle",
+          "cook-scrambled",
+          "call-serve"
+        ],
+        "js_critical_path": [
+          "heat-griddle",
+          "cook-bacon",
+          "clean-griddle",
+          "cook-pancakes-r1",
+          "cook-pancakes-r2",
+          "cook-pancakes-r3",
+          "cool-griddle",
+          "cook-scrambled",
+          "call-serve"
+        ],
+        "js_makespan": 3840,
+        "critical_overlap": 0.125,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.42857142857142855,
+      "unsupported_steps": [
+        "prep-batter",
+        "prep-table",
+        "cook-pancakes",
+        "cool-griddle",
+        "cook-toast",
+        "call-serve"
+      ],
+      "matching": [
+        {
+          "gold": "crack-eggs",
+          "predicted": "prep-eggs",
+          "by": "name"
+        },
+        {
+          "gold": "heat-griddle",
+          "predicted": "heat-griddle",
+          "by": "name"
+        },
+        {
+          "gold": "cook-bacon",
+          "predicted": "cook-bacon",
+          "by": "name"
+        },
+        {
+          "gold": "scrape-griddle",
+          "predicted": "clean-griddle",
+          "by": "name"
+        },
+        {
+          "gold": "scramble-eggs",
+          "predicted": "cook-scrambled",
+          "by": "name"
+        },
+        {
+          "gold": "butter-toast",
+          "predicted": "butter-toast",
+          "by": "name"
+        },
+        {
+          "gold": "grind-beans",
+          "predicted": "grind-beans",
+          "by": "name"
+        },
+        {
+          "gold": "brew-coffee",
+          "predicted": "brew-coffee",
+          "by": "name"
+        },
+        {
+          "gold": "mix-batter",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "rest-batter",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "set-table",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "warm-plates",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "pancakes-pass-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "pancakes-pass-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "pancakes-pass-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "drop-griddle-heat",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "toast-batch-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "toast-batch-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "serve-breakfast",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "prep-batter",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "prep-table",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "cook-pancakes",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "cool-griddle",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "cook-toast",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "call-serve",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "gemini-3.1-flash-lite",
+        "pattern": "baseline",
+        "calls": 2,
+        "input_tokens": 10572,
+        "output_tokens": 3105,
+        "cost_usd": 0.0073005,
+        "cache_keys": [
+          "47b100251a7a1f848b72bfec55299898bd0c12df53209e0bb5a76a765de64c50",
+          "ff7ddbc1a5645b5be95a9a66c7de112811a114beba8ef137cef82d8cca33ea12"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/responses/kitchen-griddle-breakfast-for-six.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/predicted/kitchen-griddle-breakfast-for-six.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Breakfast for Six on One Griddle for 6 people, following the source text below",
+            "finish_at": "09:00",
+            "constraints": "one griddle, one two-slice toaster, one coffee maker, one oven on its lowest setting, one cook",
+            "vertical": "kitchen"
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "kitchen-holiday-cookie-batch",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.45,
+        "steps_f1": 0.6206896551724138,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.6,
+        "resources_recall": 0.5,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.4444444444444444,
+        "relationships_recall": 0.15384615384615385,
+        "relationships_f1": 0.2285714285714286,
+        "structure_rand_index": 0.6388888888888888,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.35714285714285715
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.45,
+        "f1": 0.6206896551724138,
+        "tp": 9,
+        "n_gold": 20,
+        "n_pred": 9
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 9,
+        "total": 9
+      },
+      "resources": {
+        "precision": 0.6,
+        "recall": 0.5,
+        "f1": 0.5454545454545454,
+        "tp": 3,
+        "n_gold": 6,
+        "n_pred": 5
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.4444444444444444,
+        "recall": 0.15384615384615385,
+        "f1": 0.2285714285714286,
+        "tp": 4,
+        "n_gold": 26,
+        "n_pred": 9
+      },
+      "structure": {
+        "rand_index": 0.6388888888888888,
+        "agreements": 23,
+        "pairs": 36,
+        "n_steps": 9
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 14220.0,
+        "pred_makespan": 16920.0,
+        "makespan_ok": false,
+        "gold_critical_path": [
+          "cream-sugar-dough",
+          "mix-choc-dough",
+          "mix-gingerbread-dough",
+          "chill-gingerbread-dough",
+          "cut-gingerbread",
+          "bake-gingerbread",
+          "cool-gingerbread",
+          "ice-gingerbread",
+          "box-everything"
+        ],
+        "pred_critical_path": [
+          "prep-sugar",
+          "chill-sugar",
+          "prep-cc",
+          "prep-ginger",
+          "chill-ginger",
+          "prep-pan3",
+          "bake-ginger",
+          "ice-ginger",
+          "box"
+        ],
+        "js_critical_path": [
+          "prep-sugar",
+          "chill-sugar",
+          "prep-cc",
+          "prep-ginger",
+          "chill-ginger",
+          "prep-pan3",
+          "bake-ginger",
+          "ice-ginger",
+          "box"
+        ],
+        "js_makespan": 16920,
+        "critical_overlap": 0.5555555555555556,
+        "critical_ok": true,
+        "passed": false
+      },
+      "unsupported_rate": 0.35714285714285715,
+      "unsupported_steps": [
+        "prep-sugar",
+        "prep-cc",
+        "prep-pan1",
+        "box",
+        "bake-cc"
+      ],
+      "matching": [
+        {
+          "gold": "mix-gingerbread-dough",
+          "predicted": "prep-ginger",
+          "by": "name"
+        },
+        {
+          "gold": "preheat-oven",
+          "predicted": "preheat",
+          "by": "name"
+        },
+        {
+          "gold": "bake-sugar",
+          "predicted": "bake-sugar",
+          "by": "name"
+        },
+        {
+          "gold": "bake-gingerbread",
+          "predicted": "bake-ginger",
+          "by": "name"
+        },
+        {
+          "gold": "chill-sugar-dough",
+          "predicted": "chill-sugar",
+          "by": "name"
+        },
+        {
+          "gold": "cut-sugar",
+          "predicted": "prep-pan2",
+          "by": "name"
+        },
+        {
+          "gold": "chill-gingerbread-dough",
+          "predicted": "chill-ginger",
+          "by": "name"
+        },
+        {
+          "gold": "cut-gingerbread",
+          "predicted": "prep-pan3",
+          "by": "name"
+        },
+        {
+          "gold": "ice-gingerbread",
+          "predicted": "ice-ginger",
+          "by": "name"
+        },
+        {
+          "gold": "cream-sugar-dough",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "mix-choc-dough",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "bake-choc",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "scoop-choc",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cool-choc-cookies",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cool-pan-one",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cool-pan-two",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "temper-sugar-dough",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cool-sugar-cookies",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cool-gingerbread",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "box-everything",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "prep-sugar",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "prep-cc",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "prep-pan1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "box",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "bake-cc",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "gemini-3.1-flash-lite",
+        "pattern": "baseline",
+        "calls": 2,
+        "input_tokens": 10262,
+        "output_tokens": 2574,
+        "cost_usd": 0.0064265,
+        "cache_keys": [
+          "b4b2fc7fd2ec6641f50bd66538f0f5ee6ba17e910025ad66c78af2c248a6a264",
+          "41a3dc673dbc8a8267a21615b69afd6dcf9113274b474b17281e2769398caf7e"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/responses/kitchen-holiday-cookie-batch.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/predicted/kitchen-holiday-cookie-batch.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Holiday Cookie Batch: Three Doughs, One Oven for three doughs, roughly a hundred cookies, following the source text below",
+            "finish_at": null,
+            "constraints": "one stand mixer, one oven, two sheet pans that must cool between batches, one baker",
+            "vertical": "kitchen"
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "kitchen-sheet-pan-chicken-dinner",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.42857142857142855,
+        "steps_f1": 0.6,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.6666666666666666,
+        "resources_recall": 0.6666666666666666,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.5,
+        "relationships_recall": 0.16666666666666666,
+        "relationships_f1": 0.25,
+        "structure_rand_index": 0.9333333333333333,
+        "end_to_end_pass": 1.0,
+        "unsupported_rate": 0.5384615384615384
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.42857142857142855,
+        "f1": 0.6,
+        "tp": 6,
+        "n_gold": 14,
+        "n_pred": 6
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 6,
+        "total": 6
+      },
+      "resources": {
+        "precision": 0.6666666666666666,
+        "recall": 0.6666666666666666,
+        "f1": 0.6666666666666666,
+        "tp": 2,
+        "n_gold": 3,
+        "n_pred": 3
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.5,
+        "recall": 0.16666666666666666,
+        "f1": 0.25,
+        "tp": 3,
+        "n_gold": 18,
+        "n_pred": 6
+      },
+      "structure": {
+        "rand_index": 0.9333333333333333,
+        "agreements": 14,
+        "pairs": 15,
+        "n_steps": 6
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 4980.0,
+        "pred_makespan": 4860.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "preheat-oven",
+          "roast-potatoes",
+          "roast-chicken",
+          "swap-pans",
+          "final-roast",
+          "rest-chicken",
+          "plate-dinner"
+        ],
+        "pred_critical_path": [
+          "preheat",
+          "roast-potatoes-initial",
+          "roast-chicken-and-potatoes",
+          "final-roast",
+          "rest-chicken",
+          "plating",
+          "dress-salad"
+        ],
+        "js_critical_path": [
+          "preheat",
+          "roast-potatoes-initial",
+          "roast-chicken-and-potatoes",
+          "final-roast",
+          "rest-chicken",
+          "plating",
+          "dress-salad"
+        ],
+        "js_makespan": 4860,
+        "critical_overlap": 0.5714285714285714,
+        "critical_ok": true,
+        "passed": true
+      },
+      "unsupported_rate": 0.5384615384615384,
+      "unsupported_steps": [
+        "preheat",
+        "roast-chicken-and-potatoes",
+        "prep-potatoes",
+        "prep-chicken",
+        "add-broccoli",
+        "finish-sauce",
+        "prep-salad"
+      ],
+      "matching": [
+        {
+          "gold": "roast-potatoes",
+          "predicted": "roast-potatoes-initial",
+          "by": "name"
+        },
+        {
+          "gold": "final-roast",
+          "predicted": "final-roast",
+          "by": "name"
+        },
+        {
+          "gold": "rest-chicken",
+          "predicted": "rest-chicken",
+          "by": "name"
+        },
+        {
+          "gold": "reduce-sauce",
+          "predicted": "reduce-sauce",
+          "by": "name"
+        },
+        {
+          "gold": "dress-salad",
+          "predicted": "dress-salad",
+          "by": "name"
+        },
+        {
+          "gold": "plate-dinner",
+          "predicted": "plating",
+          "by": "name"
+        },
+        {
+          "gold": "toss-potatoes",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "season-chicken",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "preheat-oven",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "roast-chicken",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "swap-pans",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "finish-butter",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "wash-leaves",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "make-vinaigrette",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "preheat",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "roast-chicken-and-potatoes",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "prep-potatoes",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "prep-chicken",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "add-broccoli",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "finish-sauce",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "prep-salad",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "gemini-3.1-flash-lite",
+        "pattern": "baseline",
+        "calls": 3,
+        "input_tokens": 17840,
+        "output_tokens": 4228,
+        "cost_usd": 0.010802,
+        "cache_keys": [
+          "c109e7b44f4a993423893553af88bd4e853bc715c70910d105ebf53f768e0f19",
+          "69c0685463b83d75ee40f815224fc7df8c05072577b588e75a7e164ccba97939",
+          "5600e072385075506d8aadd58e84ecbdd1f0c5ef43f08d914bd007eccc0c47a1"
+        ],
+        "fix_iterations": 2,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/responses/kitchen-sheet-pan-chicken-dinner.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/predicted/kitchen-sheet-pan-chicken-dinner.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Sheet-Pan Chicken with Potatoes and Broccoli for 4 people, following the source text below",
+            "finish_at": null,
+            "constraints": "one oven, two sheet pans, one burner, one cook",
+            "vertical": "kitchen"
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "kitchen-soup-and-salad-lunch",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.4,
+        "steps_f1": 0.5714285714285715,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.5,
+        "resources_recall": 0.5,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.3333333333333333,
+        "relationships_recall": 0.11764705882352941,
+        "relationships_f1": 0.1739130434782609,
+        "structure_rand_index": 0.7333333333333333,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.5384615384615384
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.4,
+        "f1": 0.5714285714285715,
+        "tp": 6,
+        "n_gold": 15,
+        "n_pred": 6
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 6,
+        "total": 6
+      },
+      "resources": {
+        "precision": 0.5,
+        "recall": 0.5,
+        "f1": 0.5,
+        "tp": 2,
+        "n_gold": 4,
+        "n_pred": 4
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.3333333333333333,
+        "recall": 0.11764705882352941,
+        "f1": 0.1739130434782609,
+        "tp": 2,
+        "n_gold": 17,
+        "n_pred": 6
+      },
+      "structure": {
+        "rand_index": 0.7333333333333333,
+        "agreements": 11,
+        "pairs": 15,
+        "n_steps": 6
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 4080.0,
+        "pred_makespan": 5640.0,
+        "makespan_ok": false,
+        "gold_critical_path": [
+          "dice-vegetables",
+          "sweat-vegetables",
+          "add-lentils",
+          "simmer-lentils",
+          "blitz-soup",
+          "hold-soup",
+          "serve-lunch"
+        ],
+        "pred_critical_path": [
+          "prep-veg",
+          "sweat",
+          "boil",
+          "wash-salad",
+          "slice-veg",
+          "whisk-dressing",
+          "toss-salad",
+          "slice-bread",
+          "toast-bread",
+          "lay-table",
+          "assemble-lunch",
+          "serve-soup"
+        ],
+        "js_critical_path": [
+          "prep-veg",
+          "sweat",
+          "boil",
+          "wash-salad",
+          "slice-veg",
+          "whisk-dressing",
+          "toss-salad",
+          "slice-bread",
+          "toast-bread",
+          "lay-table",
+          "assemble-lunch",
+          "serve-soup"
+        ],
+        "js_makespan": 5640,
+        "critical_overlap": 0.14285714285714285,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.5384615384615384,
+      "unsupported_steps": [
+        "prep-veg",
+        "boil",
+        "blitz",
+        "serve-soup",
+        "toast-bread",
+        "lay-table",
+        "assemble-lunch"
+      ],
+      "matching": [
+        {
+          "gold": "sweat-vegetables",
+          "predicted": "sweat",
+          "by": "name"
+        },
+        {
+          "gold": "wash-leaves",
+          "predicted": "wash-salad",
+          "by": "name"
+        },
+        {
+          "gold": "shave-fennel",
+          "predicted": "slice-veg",
+          "by": "name"
+        },
+        {
+          "gold": "whisk-dressing",
+          "predicted": "whisk-dressing",
+          "by": "name"
+        },
+        {
+          "gold": "dress-salad",
+          "predicted": "toss-salad",
+          "by": "name"
+        },
+        {
+          "gold": "slice-bread",
+          "predicted": "slice-bread",
+          "by": "name"
+        },
+        {
+          "gold": "dice-vegetables",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "add-lentils",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "simmer-lentils",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "blitz-soup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "hold-soup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "warm-bread",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "wrap-bread",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "lay-places",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "serve-lunch",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "prep-veg",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "boil",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "blitz",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "serve-soup",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "toast-bread",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "lay-table",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "assemble-lunch",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "gemini-3.1-flash-lite",
+        "pattern": "baseline",
+        "calls": 2,
+        "input_tokens": 10073,
+        "output_tokens": 2394,
+        "cost_usd": 0.00610925,
+        "cache_keys": [
+          "d273ef04a78e4fec3b7a3a933b2f3677e387ca9f4c91e8cd71562b0be48ded8f",
+          "387552f225ef3fd9e57d4b42ac9e92f98283b0db283ca8c2c748e5f618157fdc"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/responses/kitchen-soup-and-salad-lunch.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/predicted/kitchen-soup-and-salad-lunch.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Weekday Lentil Soup and Salad for Four for 4 people, following the source text below",
+            "finish_at": "12:30",
+            "constraints": "one cook, two burners, one toaster oven, one stick blender",
+            "vertical": "kitchen"
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "lab-cell-passaging-hood-incubator",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.19047619047619047,
+        "steps_f1": 0.32,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.75,
+        "resources_recall": 0.5,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.75,
+        "relationships_recall": 0.11538461538461539,
+        "relationships_f1": 0.19999999999999998,
+        "structure_rand_index": 1.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.6
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.19047619047619047,
+        "f1": 0.32,
+        "tp": 4,
+        "n_gold": 21,
+        "n_pred": 4
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 4,
+        "total": 4
+      },
+      "resources": {
+        "precision": 0.75,
+        "recall": 0.5,
+        "f1": 0.6,
+        "tp": 3,
+        "n_gold": 6,
+        "n_pred": 4
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.75,
+        "recall": 0.11538461538461539,
+        "f1": 0.19999999999999998,
+        "tp": 3,
+        "n_gold": 26,
+        "n_pred": 4
+      },
+      "structure": {
+        "rand_index": 1.0,
+        "agreements": 6,
+        "pairs": 6,
+        "n_steps": 4
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 76260.0,
+        "pred_makespan": 5120.0,
+        "makespan_ok": false,
+        "gold_critical_path": [
+          "warm-reagents",
+          "a-rinse",
+          "a-trypsinise",
+          "a-neutralise",
+          "a-spin",
+          "a-resuspend",
+          "a-count",
+          "b-count",
+          "b-seed",
+          "b-settle"
+        ],
+        "pred_critical_path": [
+          "prep",
+          "microscope-check",
+          "process-a",
+          "spin-a",
+          "resuspend-a",
+          "count-a",
+          "seed-a",
+          "seed-b",
+          "cleanup",
+          "log"
+        ],
+        "js_critical_path": [
+          "prep",
+          "microscope-check",
+          "process-a-r1",
+          "process-a-r2",
+          "spin-a-r2",
+          "resuspend-a-r2",
+          "count-a-r2",
+          "seed-a-r2",
+          "seed-b",
+          "cleanup",
+          "log"
+        ],
+        "js_makespan": 6520,
+        "critical_overlap": 0.3,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.6,
+      "unsupported_steps": [
+        "prep",
+        "cleanup",
+        "log",
+        "microscope-check",
+        "process-a",
+        "seed-b"
+      ],
+      "matching": [
+        {
+          "gold": "a-spin",
+          "predicted": "spin-a",
+          "by": "name"
+        },
+        {
+          "gold": "a-resuspend",
+          "predicted": "resuspend-a",
+          "by": "name"
+        },
+        {
+          "gold": "a-count",
+          "predicted": "count-a",
+          "by": "name"
+        },
+        {
+          "gold": "a-seed",
+          "predicted": "seed-a",
+          "by": "name"
+        },
+        {
+          "gold": "warm-reagents",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "clean-cabinet",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "inspect-flasks",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-rinse",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-trypsinise",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-neutralise",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-settle",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rinse",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-trypsinise",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-neutralise",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-spin",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-resuspend",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-count",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-seed",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-settle",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "clean-down",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "log-passage",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "prep",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "cleanup",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "log",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "microscope-check",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "process-a",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "seed-b",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "gemini-3.1-flash-lite",
+        "pattern": "baseline",
+        "calls": 1,
+        "input_tokens": 4662,
+        "output_tokens": 1238,
+        "cost_usd": 0.0030225,
+        "cache_keys": [
+          "d412baefe7ffba83c6f54ecf6ee347f281489b885558897da82fbc418ac39ef0"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/responses/lab-cell-passaging-hood-incubator.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/predicted/lab-cell-passaging-hood-incubator.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Passaging Two Flasks of Adherent HEK293 Cells for two T75 flasks split 1:6 into four, following the source text below",
+            "finish_at": null,
+            "constraints": "one biosafety cabinet, one 37 \u00b0C water bath, one CO\u2082 incubator, one benchtop centrifuge, one microscope with haemocytometer, one operator",
+            "vertical": "lab"
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "lab-elisa-plate-wash",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.045454545454545456,
+        "steps_f1": 0.08695652173913045,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.25,
+        "resources_recall": 0.2,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.0,
+        "relationships_recall": 0.0,
+        "relationships_f1": 0.0,
+        "structure_rand_index": 1.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.9090909090909091
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.045454545454545456,
+        "f1": 0.08695652173913045,
+        "tp": 1,
+        "n_gold": 22,
+        "n_pred": 1
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "resources": {
+        "precision": 0.25,
+        "recall": 0.2,
+        "f1": 0.22222222222222224,
+        "tp": 1,
+        "n_gold": 5,
+        "n_pred": 4
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 25,
+        "n_pred": 1
+      },
+      "structure": {
+        "rand_index": 1.0,
+        "agreements": 0,
+        "pairs": 0,
+        "n_steps": 1
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 76200.0,
+        "pred_makespan": 20400.0,
+        "makespan_ok": false,
+        "gold_critical_path": [
+          "coat-plate-2",
+          "wash-2-coat",
+          "block-2",
+          "wash-2-block",
+          "samples-2",
+          "wash-2-samples",
+          "detection-2",
+          "wash-2-detection",
+          "develop-2",
+          "read-2"
+        ],
+        "pred_critical_path": [
+          "prep-standards",
+          "prep-samples",
+          "wash-1",
+          "block",
+          "wash-2",
+          "incubate-primary",
+          "wash-3",
+          "incubate-secondary",
+          "wash-4",
+          "develop",
+          "read"
+        ],
+        "js_critical_path": [
+          "prep-standards",
+          "prep-samples",
+          "wash-1-r2",
+          "block-r2",
+          "wash-2-r2",
+          "incubate-primary-r2",
+          "wash-3-r2",
+          "incubate-secondary-r2",
+          "wash-4-r2",
+          "develop-r2",
+          "read-r2"
+        ],
+        "js_makespan": 22200,
+        "critical_overlap": 0.0,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.9090909090909091,
+      "unsupported_steps": [
+        "prep-standards",
+        "wash-1",
+        "block",
+        "wash-2",
+        "incubate-primary",
+        "wash-3",
+        "incubate-secondary",
+        "wash-4",
+        "develop",
+        "read"
+      ],
+      "matching": [
+        {
+          "gold": "dilute-samples",
+          "predicted": "prep-samples",
+          "by": "name"
+        },
+        {
+          "gold": "make-standards",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "coat-plate-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "wash-1-coat",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "block-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "wash-1-block",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "samples-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "wash-1-samples",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "detection-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "wash-1-detection",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "develop-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "read-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "coat-plate-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "wash-2-coat",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "block-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "wash-2-block",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "samples-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "wash-2-samples",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "detection-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "wash-2-detection",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "develop-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "read-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "prep-standards",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "wash-1",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "block",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "wash-2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "incubate-primary",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "wash-3",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "incubate-secondary",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "wash-4",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "develop",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "read",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "gemini-3.1-flash-lite",
+        "pattern": "baseline",
+        "calls": 1,
+        "input_tokens": 4711,
+        "output_tokens": 1181,
+        "cost_usd": 0.00294925,
+        "cache_keys": [
+          "01a4b5cfaa558ee5d8fa6acd45a40c50ac5b3711f8d1d7a3f93fb6c5be8a2700"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/responses/lab-elisa-plate-wash.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/predicted/lab-elisa-plate-wash.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Sandwich ELISA on Two Plates, One Washer for two 96-well plates, staggered 30 minutes, following the source text below",
+            "finish_at": null,
+            "constraints": "one plate washer, one 37 \u00b0C incubator holding two plates, one plate reader, one operator",
+            "vertical": "lab"
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "lab-microbiology-streak-and-incubate",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.2777777777777778,
+        "steps_f1": 0.4347826086956522,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.6,
+        "resources_recall": 0.6,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.6,
+        "relationships_recall": 0.15789473684210525,
+        "relationships_f1": 0.25,
+        "structure_rand_index": 0.8,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.5454545454545454
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.2777777777777778,
+        "f1": 0.4347826086956522,
+        "tp": 5,
+        "n_gold": 18,
+        "n_pred": 5
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 5,
+        "total": 5
+      },
+      "resources": {
+        "precision": 0.6,
+        "recall": 0.6,
+        "f1": 0.6,
+        "tp": 3,
+        "n_gold": 5,
+        "n_pred": 5
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.6,
+        "recall": 0.15789473684210525,
+        "f1": 0.25,
+        "tp": 3,
+        "n_gold": 19,
+        "n_pred": 5
+      },
+      "structure": {
+        "rand_index": 0.8,
+        "agreements": 8,
+        "pairs": 10,
+        "n_steps": 5
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 98400.0,
+        "pred_makespan": 93000.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "sterilise-bench",
+          "label-plates",
+          "streak-1",
+          "streak-2",
+          "incubate-2",
+          "read-2",
+          "pick-colony",
+          "streak-purity-plate",
+          "incubate-purity-plate"
+        ],
+        "pred_critical_path": [
+          "wipe-bench",
+          "label-plates",
+          "streak-isolates",
+          "incubate-p1-p2",
+          "read-plates",
+          "subculture",
+          "streak-purity",
+          "incubate-purity",
+          "smear-stain",
+          "microscopy"
+        ],
+        "js_critical_path": [
+          "wipe-bench",
+          "label-plates",
+          "streak-isolates-r1",
+          "incubate-p1-p2-r1",
+          "read-plates-r1",
+          "streak-isolates-r3",
+          "incubate-p1-p2-r3",
+          "read-plates-r3",
+          "subculture",
+          "streak-purity",
+          "incubate-purity",
+          "smear-stain",
+          "microscopy"
+        ],
+        "js_makespan": 152100,
+        "critical_overlap": 0.4444444444444444,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.5454545454545454,
+      "unsupported_steps": [
+        "streak-isolates",
+        "incubate-p1-p2",
+        "incubate-p3",
+        "read-plates",
+        "subculture",
+        "smear-stain"
+      ],
+      "matching": [
+        {
+          "gold": "sterilise-bench",
+          "predicted": "wipe-bench",
+          "by": "name"
+        },
+        {
+          "gold": "label-plates",
+          "predicted": "label-plates",
+          "by": "name"
+        },
+        {
+          "gold": "streak-purity-plate",
+          "predicted": "streak-purity",
+          "by": "name"
+        },
+        {
+          "gold": "incubate-purity-plate",
+          "predicted": "incubate-purity",
+          "by": "name"
+        },
+        {
+          "gold": "read-stain",
+          "predicted": "microscopy",
+          "by": "name"
+        },
+        {
+          "gold": "streak-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "incubate-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "read-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "streak-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "incubate-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "read-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "streak-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "hold-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "incubate-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "read-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "pick-colony",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "make-smear",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "gram-stain",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "streak-isolates",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "incubate-p1-p2",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "incubate-p3",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "read-plates",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "subculture",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "smear-stain",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "gemini-3.1-flash-lite",
+        "pattern": "baseline",
+        "calls": 2,
+        "input_tokens": 10544,
+        "output_tokens": 2670,
+        "cost_usd": 0.006641,
+        "cache_keys": [
+          "ead1a252e9c626317d92d816de67e9b43d9fad4499addc871bd540554b58eee2",
+          "d6cc2dbda9952e03bf137099c95c6d92a7343718b6e8b8748ec3b45b0e4742bc"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/responses/lab-microbiology-streak-and-incubate.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/predicted/lab-microbiology-streak-and-incubate.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Streaking Three Cultures onto Selective Media for three isolates, one purity plate, following the source text below",
+            "finish_at": null,
+            "constraints": "one loop station at the burner, one 37 \u00b0C incubator shelf holding two plates, one staining rack, one microscope, one technician, a supervisor signs off the readings",
+            "vertical": "lab"
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "lab-pcr-and-gel",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.625,
+        "steps_f1": 0.7692307692307693,
+        "durations_accuracy": 1.0,
+        "resources_precision": 1.0,
+        "resources_recall": 0.8571428571428571,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.6363636363636364,
+        "relationships_recall": 0.3888888888888889,
+        "relationships_f1": 0.4827586206896552,
+        "structure_rand_index": 0.6444444444444445,
+        "end_to_end_pass": 1.0,
+        "unsupported_rate": 0.375
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.625,
+        "f1": 0.7692307692307693,
+        "tp": 10,
+        "n_gold": 16,
+        "n_pred": 10
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 10,
+        "total": 10
+      },
+      "resources": {
+        "precision": 1.0,
+        "recall": 0.8571428571428571,
+        "f1": 0.923076923076923,
+        "tp": 6,
+        "n_gold": 7,
+        "n_pred": 6
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.6363636363636364,
+        "recall": 0.3888888888888889,
+        "f1": 0.4827586206896552,
+        "tp": 7,
+        "n_gold": 18,
+        "n_pred": 11
+      },
+      "structure": {
+        "rand_index": 0.6444444444444445,
+        "agreements": 29,
+        "pairs": 45,
+        "n_steps": 10
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 12660.0,
+        "pred_makespan": 12660.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "thaw-reagents",
+          "assemble-mix",
+          "aliquot-and-spin",
+          "load-cycler",
+          "run-pcr",
+          "spin-products",
+          "load-gel",
+          "run-gel",
+          "image-gel",
+          "record-results"
+        ],
+        "pred_critical_path": [
+          "thaw",
+          "mastermix",
+          "aliquot",
+          "load-pcr",
+          "cycling",
+          "post-pcr-spin",
+          "load-gel",
+          "run-gel",
+          "image",
+          "record"
+        ],
+        "js_critical_path": [
+          "thaw",
+          "mastermix",
+          "aliquot",
+          "load-pcr",
+          "cycling",
+          "post-pcr-spin",
+          "load-gel",
+          "run-gel",
+          "image",
+          "record"
+        ],
+        "js_makespan": 12660,
+        "critical_overlap": 0.6,
+        "critical_ok": true,
+        "passed": true
+      },
+      "unsupported_rate": 0.375,
+      "unsupported_steps": [
+        "mastermix",
+        "load-pcr",
+        "cycling",
+        "post-pcr-spin",
+        "thaw-ladder",
+        "prepare-rig"
+      ],
+      "matching": [
+        {
+          "gold": "thaw-reagents",
+          "predicted": "thaw",
+          "by": "name"
+        },
+        {
+          "gold": "aliquot-and-spin",
+          "predicted": "aliquot",
+          "by": "name"
+        },
+        {
+          "gold": "melt-agarose",
+          "predicted": "melt-agarose",
+          "by": "name"
+        },
+        {
+          "gold": "cool-agarose",
+          "predicted": "cool-agarose",
+          "by": "name"
+        },
+        {
+          "gold": "pour-gel",
+          "predicted": "pour-gel",
+          "by": "name"
+        },
+        {
+          "gold": "set-gel",
+          "predicted": "set-gel",
+          "by": "name"
+        },
+        {
+          "gold": "load-gel",
+          "predicted": "load-gel",
+          "by": "name"
+        },
+        {
+          "gold": "run-gel",
+          "predicted": "run-gel",
+          "by": "name"
+        },
+        {
+          "gold": "image-gel",
+          "predicted": "image",
+          "by": "name"
+        },
+        {
+          "gold": "record-results",
+          "predicted": "record",
+          "by": "name"
+        },
+        {
+          "gold": "assemble-mix",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "load-cycler",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "run-pcr",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "place-gel",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "prepare-ladder",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "spin-products",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "mastermix",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "load-pcr",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "cycling",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "post-pcr-spin",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "thaw-ladder",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "prepare-rig",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "gemini-3.1-flash-lite",
+        "pattern": "baseline",
+        "calls": 2,
+        "input_tokens": 10950,
+        "output_tokens": 2832,
+        "cost_usd": 0.0069855,
+        "cache_keys": [
+          "ad3295a1372805e5653110e3fd4d3879aaeba08810d07ed9aaa30b90ef718313",
+          "aa43bab7dbf6309bc95c647a7a68b379169ea80fbe7a65c16b4121e4345deac7"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/responses/lab-pcr-and-gel.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/predicted/lab-pcr-and-gel.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Colony PCR Screen with a Diagnostic Gel for eight clones, one gel, following the source text below",
+            "finish_at": null,
+            "constraints": "one thermocycler, one microcentrifuge, one microwave, one gel rig, one transilluminator, one operator",
+            "vertical": "lab"
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "lab-plasmid-miniprep-digest",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.36363636363636365,
+        "steps_f1": 0.5333333333333333,
+        "durations_accuracy": 1.0,
+        "resources_precision": 1.0,
+        "resources_recall": 1.0,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.375,
+        "relationships_recall": 0.125,
+        "relationships_f1": 0.1875,
+        "structure_rand_index": 0.6428571428571429,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.5555555555555556
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.36363636363636365,
+        "f1": 0.5333333333333333,
+        "tp": 8,
+        "n_gold": 22,
+        "n_pred": 8
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 8,
+        "total": 8
+      },
+      "resources": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 9,
+        "n_gold": 9,
+        "n_pred": 9
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.375,
+        "recall": 0.125,
+        "f1": 0.1875,
+        "tp": 3,
+        "n_gold": 24,
+        "n_pred": 8
+      },
+      "structure": {
+        "rand_index": 0.6428571428571429,
+        "agreements": 18,
+        "pairs": 28,
+        "n_steps": 8
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 10860.0,
+        "pred_makespan": 10860.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "pellet-culture",
+          "resuspend-pellet",
+          "lyse-cells",
+          "neutralize-and-spin",
+          "bind-column",
+          "wash-column",
+          "dry-column",
+          "elute-dna",
+          "quantify-dna",
+          "warm-heat-block",
+          "setup-digest",
+          "incubate-digest",
+          "heat-inactivate",
+          "load-gel",
+          "run-gel",
+          "image-gel"
+        ],
+        "pred_critical_path": [
+          "pellet",
+          "resuspend",
+          "lysis",
+          "clear",
+          "bind",
+          "wash",
+          "elute",
+          "quantify",
+          "setup-digest",
+          "digest",
+          "inactivate",
+          "prep-ladder",
+          "load-gel",
+          "run-gel",
+          "image-gel"
+        ],
+        "js_critical_path": [
+          "pellet",
+          "resuspend",
+          "lysis",
+          "clear",
+          "bind",
+          "wash",
+          "elute",
+          "quantify",
+          "setup-digest",
+          "digest",
+          "inactivate",
+          "prep-ladder",
+          "load-gel",
+          "run-gel",
+          "image-gel"
+        ],
+        "js_makespan": 10860,
+        "critical_overlap": 0.4375,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.5555555555555556,
+      "unsupported_steps": [
+        "resuspend",
+        "lysis",
+        "clear",
+        "wash",
+        "elute",
+        "quantify",
+        "digest",
+        "prep-ladder",
+        "melt",
+        "cool"
+      ],
+      "matching": [
+        {
+          "gold": "pellet-culture",
+          "predicted": "pellet",
+          "by": "name"
+        },
+        {
+          "gold": "bind-column",
+          "predicted": "bind",
+          "by": "name"
+        },
+        {
+          "gold": "set-gel",
+          "predicted": "set",
+          "by": "name"
+        },
+        {
+          "gold": "setup-digest",
+          "predicted": "setup-digest",
+          "by": "name"
+        },
+        {
+          "gold": "heat-inactivate",
+          "predicted": "inactivate",
+          "by": "name"
+        },
+        {
+          "gold": "load-gel",
+          "predicted": "load-gel",
+          "by": "name"
+        },
+        {
+          "gold": "run-gel",
+          "predicted": "run-gel",
+          "by": "name"
+        },
+        {
+          "gold": "image-gel",
+          "predicted": "image-gel",
+          "by": "name"
+        },
+        {
+          "gold": "resuspend-pellet",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "lyse-cells",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "neutralize-and-spin",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "wash-column",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "dry-column",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "elute-dna",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "quantify-dna",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "melt-agarose",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cool-agarose",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "pour-gel",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "place-gel",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "prepare-ladder",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "warm-heat-block",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "incubate-digest",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "resuspend",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "lysis",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "clear",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "wash",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "elute",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "quantify",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "digest",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "prep-ladder",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "melt",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "cool",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "gemini-3.1-flash-lite",
+        "pattern": "baseline",
+        "calls": 3,
+        "input_tokens": 19582,
+        "output_tokens": 4864,
+        "cost_usd": 0.0121915,
+        "cache_keys": [
+          "f4e714262d9917b9e9feec7391abb8a3e7cc0bd783184b243d26d06b0c93df5c",
+          "4c6cb420f9d42c5f01b55a22f1343cd1cbbbbc23ccf0dc31eb7db06d58dd21e5",
+          "662b78812eec506196f67e0ff62bd9a2e4d08dac321b767d5203c8fb8ccb6af9"
+        ],
+        "fix_iterations": 2,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/responses/lab-plasmid-miniprep-digest.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/predicted/lab-plasmid-miniprep-digest.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Plasmid Miniprep, Restriction Digest and Gel Check for one 5 mL culture, one digest, following the source text below",
+            "finish_at": null,
+            "constraints": "one microcentrifuge, one 37 \u00b0C heat block, one 65 \u00b0C heat block, one gel rig, one operator",
+            "vertical": "lab"
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "lab-western-blot-transfer-block",
+      "headline": {
+        "steps_precision": 0.0,
+        "steps_recall": 0.0,
+        "steps_f1": 0.0,
+        "durations_accuracy": 0.0,
+        "resources_precision": 0.0,
+        "resources_recall": 0.0,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.0,
+        "relationships_recall": 0.0,
+        "relationships_f1": 0.0,
+        "structure_rand_index": 0.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.0
+      },
+      "steps": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 21,
+        "n_pred": 0
+      },
+      "durations": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 21
+      },
+      "resources": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 8,
+        "n_pred": 0
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 23,
+        "n_pred": 0
+      },
+      "structure": {
+        "rand_index": 0.0,
+        "agreements": 0,
+        "pairs": 0,
+        "n_steps": 0
+      },
+      "end_to_end": {
+        "python_valid": false,
+        "python_errors": [],
+        "js_status": "skipped",
+        "js_valid": null,
+        "js_errors": [],
+        "gold_makespan": 0.0,
+        "pred_makespan": 0.0,
+        "makespan_ok": false,
+        "gold_critical_path": [],
+        "pred_critical_path": [],
+        "js_critical_path": null,
+        "js_makespan": null,
+        "critical_overlap": 0.0,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.0,
+      "unsupported_steps": [],
+      "matching": [],
+      "extras": {
+        "model": "gemini-3.1-flash-lite",
+        "pattern": "baseline",
+        "calls": 3,
+        "input_tokens": 19617,
+        "output_tokens": 5208,
+        "cost_usd": 0.01271625,
+        "cache_keys": [
+          "cf67bd235ad3a4cd6c8180cf1c1d4f0d48381407b77c009c396d00720b6714f5",
+          "9a767e95eaf4d74a0b10633466392eb69c6d81bc5743d32a93b4f1bac250e5ad",
+          "0ae8c1954eb17a8b10b0922e1ad4bb5ab678547113200c1d28cd3b1316b14cfa"
+        ],
+        "fix_iterations": 2,
+        "validation_errors": [
+          "Step 'prep-membrane': negative offsetSeconds (-2700s) requires referenced step 'run' to have duration.type='indefinite', but it has 'fixed'",
+          "Track 'Gel and Transfer': Steps 'Run gel' and 'Prep membrane' overlap by 2700 seconds. Step 'Run gel' ends at 6420s, but step 'Prep membrane' starts at 3720s."
+        ],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/responses/lab-western-blot-transfer-block.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/predicted/lab-western-blot-transfer-block.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Western Blot: SDS-PAGE, Wet Transfer and Overnight Primary for one 10-lane gel, one membrane, following the source text below",
+            "finish_at": null,
+            "constraints": "one gel tank, one wet transfer tank, one orbital rocker, one tray at a time, one cold room, one chemiluminescence imager, one operator",
+            "vertical": "lab"
+          }
+        }
+      },
+      "error": "program failed validation after 2 fix iteration(s): Step 'prep-membrane': negative offsetSeconds (-2700s) requires referenced step 'run' to have duration.type='indefinite', but it has 'fixed'; Track 'Gel and Transfer': Steps 'Run gel' and 'Prep membrane' overlap by 2700 seconds. Step 'Run gel' ends at 6420s, but step 'Prep membrane' starts at 3720s."
+    }
+  ],
+  "missing": [
+    "lab-western-blot-transfer-block"
+  ]
+}

@@ -1,0 +1,200 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "passaging-hek293-flasks",
+  "name": "Passaging Two Flasks of Adherent HEK293 Cells",
+  "description": "Split two T75 flasks 1:6 into four new flasks, maintaining cell health and sequential cabinet access.",
+  "environmentType": "laboratory",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "prep-and-cleanup",
+      "name": "Prep and Cleanup",
+      "steps": [
+        {
+          "stepId": "prep",
+          "name": "Prepare cabinet",
+          "task": "biosafety-cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "cleanup",
+          "name": "Cleanup cabinet",
+          "task": "biosafety-cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "seed-b"
+          }
+        },
+        {
+          "stepId": "log",
+          "name": "Log experiment",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cleanup"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "cells",
+      "name": "Flask Processing",
+      "steps": [
+        {
+          "stepId": "microscope-check",
+          "name": "Check confluence",
+          "task": "microscope",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep"
+          }
+        },
+        {
+          "stepId": "process-a",
+          "name": "Process Flask A",
+          "task": "biosafety-cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1400
+          },
+          "replicates": {
+            "count": 2,
+            "mode": "serial"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "microscope-check"
+          }
+        },
+        {
+          "stepId": "spin-a",
+          "name": "Spin Flask A",
+          "task": "centrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "process-a",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "resuspend-a",
+          "name": "Resuspend Flask A",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "spin-a",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "count-a",
+          "name": "Count Flask A",
+          "task": "microscope",
+          "duration": {
+            "type": "fixed",
+            "seconds": 360
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "resuspend-a",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "seed-a",
+          "name": "Seed Flask A",
+          "task": "biosafety-cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": 360
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "count-a",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "seed-b",
+          "name": "Seed Flask B",
+          "task": "biosafety-cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": 360
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "seed-a",
+            "instances": "all"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "biosafety-cabinet",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "microscope",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "centrifuge",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "bench",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "ingredients": [
+      {
+        "name": "HEK293 Cells",
+        "measure": "2x T75"
+      },
+      {
+        "name": "PBS",
+        "measure": "10mL"
+      },
+      {
+        "name": "Trypsin-EDTA",
+        "measure": "4mL"
+      },
+      {
+        "name": "Media",
+        "measure": "20mL"
+      }
+    ],
+    "serves": "4x T75",
+    "attribution": "Standard HEK293 Passaging Protocol"
+  }
+}

@@ -1,0 +1,337 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "western-blot-protocol-v3",
+  "name": "Western Blot: SDS-PAGE, Wet Transfer and Overnight Primary",
+  "description": "Corrected Western Blot protocol with valid step sequences.",
+  "environmentType": "laboratory",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "sample-prep",
+      "name": "Sample Preparation",
+      "steps": [
+        {
+          "stepId": "thaw",
+          "name": "Thaw and normalize",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "denature",
+          "name": "Heat block denature",
+          "task": "heat-block",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "thaw"
+          }
+        },
+        {
+          "stepId": "spin",
+          "name": "Spin down",
+          "task": "microcentrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "denature"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "gel-work",
+      "name": "Gel and Transfer",
+      "steps": [
+        {
+          "stepId": "assemble",
+          "name": "Assemble tank",
+          "task": "gel-tank",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "load",
+          "name": "Load gel",
+          "task": "gel-tank",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "spin"
+          }
+        },
+        {
+          "stepId": "run",
+          "name": "Run gel",
+          "task": "gel-tank",
+          "duration": {
+            "type": "fixed",
+            "seconds": 4500
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "load"
+          }
+        },
+        {
+          "stepId": "prep-membrane",
+          "name": "Prep membrane",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "run",
+            "offsetSeconds": -2700
+          }
+        },
+        {
+          "stepId": "prep-pads",
+          "name": "Soak pads",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep-membrane"
+          }
+        },
+        {
+          "stepId": "sandwich",
+          "name": "Build sandwich",
+          "task": "transfer-tank",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "run",
+            "offsetSeconds": 300
+          }
+        },
+        {
+          "stepId": "transfer",
+          "name": "Transfer",
+          "task": "transfer-tank",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "sandwich"
+          }
+        },
+        {
+          "stepId": "ponceau",
+          "name": "Stain/Photo",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "transfer"
+          }
+        },
+        {
+          "stepId": "block",
+          "name": "Block",
+          "task": "rocker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "ponceau"
+          }
+        },
+        {
+          "stepId": "primary",
+          "name": "Primary antibody",
+          "task": "cold-room",
+          "duration": {
+            "type": "fixed",
+            "seconds": 54000
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "block"
+          }
+        },
+        {
+          "stepId": "wash1",
+          "name": "Wash 1",
+          "task": "rocker",
+          "replicates": {
+            "count": 3,
+            "mode": "serial"
+          },
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "primary"
+          }
+        },
+        {
+          "stepId": "secondary",
+          "name": "Secondary antibody",
+          "task": "rocker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash1",
+            "instances": "all"
+          }
+        },
+        {
+          "stepId": "wash2",
+          "name": "Wash 2",
+          "task": "rocker",
+          "replicates": {
+            "count": 3,
+            "mode": "serial"
+          },
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "secondary"
+          }
+        },
+        {
+          "stepId": "ecl-mix",
+          "name": "Mix ECL",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "secondary",
+            "offsetSeconds": 3000
+          }
+        },
+        {
+          "stepId": "ecl-incubation",
+          "name": "ECL incubation",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "wash2",
+                "instances": "all"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "ecl-mix"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "image",
+          "name": "Image",
+          "task": "imager",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "ecl-incubation"
+          }
+        },
+        {
+          "stepId": "analyze",
+          "name": "Analyze",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "image"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "bench",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "heat-block",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "microcentrifuge",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "gel-tank",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "transfer-tank",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "rocker",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "cold-room",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "imager",
+      "maxConcurrent": 1
+    }
+  ]
+}

@@ -1,0 +1,223 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "sandwich-elisa-two-plates-one-washer",
+  "name": "Sandwich ELISA on Two Plates, One Washer",
+  "description": "Two 96-well plates run 30 minutes apart through a sandwich ELISA for a secreted cytokine. One automated plate washer, one 37 °C incubator holding two plates, one plate reader, one operator. Day 1 coat at 4 °C, Day 2 assay from 15 h into the coat.",
+  "environmentType": "laboratory",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "coating",
+      "name": "Day 1 — capture antibody coating (4 °C cold room)",
+      "steps": [
+        {
+          "stepId": "coat",
+          "name": "Coat plate with 100 µL/well capture antibody in carbonate buffer, seal, 4 °C",
+          "task": "coldroom",
+          "duration": {
+            "type": "fixed",
+            "seconds": 54000
+          },
+          "replicates": {
+            "count": 2,
+            "mode": "stagger",
+            "delay": "30m"
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "reagents",
+      "name": "Day 2 — reagent prep (from 15 h into the coat)",
+      "steps": [
+        {
+          "stepId": "standardCurve",
+          "name": "Make up seven-point standard curve in assay diluent",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 54000
+          }
+        },
+        {
+          "stepId": "dilutions",
+          "name": "Dilute samples 1:4 into assay diluent and lay out the plate map",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "standardCurve"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "assayPlates",
+      "name": "Day 2 — both plates, per-plate chain (plate 2 inherits the 30 min stagger)",
+      "steps": [
+        {
+          "stepId": "wash1",
+          "name": "Wash plate 4× with 300 µL wash buffer (plate 1, then plate 2 as the washer frees up)",
+          "task": "washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "coat",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "block",
+          "name": "Block with 200 µL/well assay diluent, 1 h at 37 °C",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash1",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "wash2",
+          "name": "Wash plate 4× with 300 µL wash buffer",
+          "task": "washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "block",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "samples",
+          "name": "Add 100 µL/well standards and samples, incubate 2 h at 37 °C",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 7200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash2",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "wash3",
+          "name": "Wash plate 4× with 300 µL wash buffer",
+          "task": "washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "samples",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "detect",
+          "name": "Add 100 µL/well biotinylated detection antibody, incubate 1 h at 37 °C",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash3",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "wash4",
+          "name": "Wash plate 4× with 300 µL wash buffer",
+          "task": "washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "detect",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "develop",
+          "name": "Add 100 µL TMB, develop 15 min in the dark, stop with 50 µL 2 N H2SO4",
+          "task": "operator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash4",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "read",
+          "name": "Read absorbance at 450 nm with 570 nm reference",
+          "task": "reader",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "develop",
+            "instances": "each"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "coldroom",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "washer",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "incubator",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "reader",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "operator",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "sourceUrl": "",
+    "attribution": "Sandwich ELISA on Two Plates, One Washer — two 96-well plates staggered 30 minutes, one plate washer, one 37 °C incubator (2 plates), one plate reader, one operator"
+  }
+}

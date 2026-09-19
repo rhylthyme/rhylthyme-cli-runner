@@ -1,0 +1,240 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "session-chair-room-2b",
+  "name": "Session Chair: Room 2B",
+  "description": "Run-of-show for three speakers in Room 2B with projector and AV desk constraints.",
+  "environmentType": "event",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "av-prep",
+      "name": "AV Team",
+      "steps": [
+        {
+          "stepId": "line-check",
+          "name": "Line check",
+          "task": "av-desk",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "test-projector",
+          "name": "Test projector",
+          "task": "projector",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "line-check"
+          }
+        },
+        {
+          "stepId": "lapel-check",
+          "name": "Check lapel pack",
+          "task": "lapel-mic",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "test-projector"
+          }
+        },
+        {
+          "stepId": "load-1",
+          "name": "Load deck 1",
+          "task": "projector",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "lapel-check"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "session",
+      "name": "Session",
+      "steps": [
+        {
+          "stepId": "housekeeping",
+          "name": "Housekeeping",
+          "task": "lectern",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 3300
+          }
+        },
+        {
+          "stepId": "talk",
+          "name": "Talk and Q&A",
+          "task": "lectern",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 2100,
+            "maxSeconds": 2520,
+            "defaultSeconds": 2220
+          },
+          "replicates": {
+            "count": 3,
+            "mode": "serial"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "housekeeping"
+          }
+        },
+        {
+          "stepId": "changeover",
+          "name": "Changeover",
+          "task": "lapel-mic",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "talk",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "load-2",
+          "name": "Load deck 2",
+          "task": "projector",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "changeover",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "close",
+          "name": "Close session",
+          "task": "lectern",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "load-2",
+            "instances": "all"
+          }
+        },
+        {
+          "stepId": "strike",
+          "name": "Strike AV",
+          "task": "av-desk",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "close"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "catering",
+      "name": "Catering",
+      "steps": [
+        {
+          "stepId": "coffee-prep",
+          "name": "Prep coffee",
+          "task": "foyer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 0
+          }
+        },
+        {
+          "stepId": "load-3",
+          "name": "Load deck 3",
+          "task": "projector",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "coffee-prep"
+          }
+        },
+        {
+          "stepId": "coffee-out",
+          "name": "Coffee out",
+          "task": "foyer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "load-3"
+          }
+        },
+        {
+          "stepId": "clear-foyer",
+          "name": "Clear foyer",
+          "task": "foyer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "coffee-out"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "av-desk",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "projector",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "lapel-mic",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "lectern",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "foyer",
+      "maxConcurrent": 1
+    }
+  ]
+}

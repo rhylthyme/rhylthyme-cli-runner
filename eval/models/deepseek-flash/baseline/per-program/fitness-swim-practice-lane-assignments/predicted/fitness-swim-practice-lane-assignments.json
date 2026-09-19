@@ -1,0 +1,342 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "thursday-am-practice-three-lanes",
+  "name": "Thursday AM Practice — Three Lanes, One Squad, One Coach",
+  "description": "2h30m of pool time for one squad of twelve: deck brief, warm-up, whiteboard, kick set, lane-specific main sets (sprint / middle distance / distance), one sprint set off the single set of blocks one lane at a time, cooldown together, deck debrief. Three lanes, one set of starting blocks, one coach on deck; everything finished by 150 minutes of pool time.",
+  "environmentType": "gym",
+  "tracks": [
+    {
+      "trackId": "deck",
+      "name": "Coach on deck",
+      "steps": [
+        {
+          "stepId": "deck-brief",
+          "name": "Brief the squad on deck — the morning, who is in which lane",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "watch-warmup",
+          "name": "Watch the warm-up from the deck, fix anything ugly",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "deck-brief"
+          }
+        },
+        {
+          "stepId": "whiteboard",
+          "name": "Call the lanes to the wall and walk the main set on the whiteboard — nobody pushes off until the board is done",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wu1"
+          }
+        },
+        {
+          "stepId": "time-sprints",
+          "name": "Time the sprints from the deck — stopwatch and the wall clock",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "main1"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "main2"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "main3"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "debrief",
+          "name": "Deck debrief — splits, what to fix, Saturday's meet (waits for the stopwatch block to end AND the cooldown to be in)",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "time-sprints"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "cd1"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "lane1",
+      "name": "Lane 1 — Sprint group",
+      "steps": [
+        {
+          "stepId": "wu1",
+          "name": "Warm-up (all three lanes together) — 800 easy, mixed stroke, breathing every five on the last hundred",
+          "task": "lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "deck-brief"
+          }
+        },
+        {
+          "stepId": "kick1",
+          "name": "Kick set with boards",
+          "task": "lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "whiteboard"
+          }
+        },
+        {
+          "stepId": "main1",
+          "name": "Main set — lane 1, plan 40 minutes (30–50)",
+          "task": "lane",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 1800,
+            "maxSeconds": 3000,
+            "defaultSeconds": 2400
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "kick1"
+          }
+        },
+        {
+          "stepId": "cd1",
+          "name": "Cooldown (all lanes together) — 300 easy backstroke and breaststroke",
+          "task": "lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "sprint",
+            "instances": "all"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "lane2",
+      "name": "Lane 2 — Middle distance",
+      "steps": [
+        {
+          "stepId": "wu2",
+          "name": "Warm-up (all three lanes together) — 800 easy, mixed stroke, breathing every five on the last hundred",
+          "task": "lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "deck-brief"
+          }
+        },
+        {
+          "stepId": "kick2",
+          "name": "Kick set with boards",
+          "task": "lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "whiteboard"
+          }
+        },
+        {
+          "stepId": "main2",
+          "name": "Main set — lane 2, plan 45 minutes (30–50)",
+          "task": "lane",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 1800,
+            "maxSeconds": 3000,
+            "defaultSeconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "kick2"
+          }
+        },
+        {
+          "stepId": "cd2",
+          "name": "Cooldown (all lanes together) — 300 easy backstroke and breaststroke",
+          "task": "lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "sprint",
+            "instances": "all"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "lane3",
+      "name": "Lane 3 — Distance group",
+      "steps": [
+        {
+          "stepId": "wu3",
+          "name": "Warm-up (all three lanes together) — 800 easy, mixed stroke, breathing every five on the last hundred",
+          "task": "lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "deck-brief"
+          }
+        },
+        {
+          "stepId": "kick3",
+          "name": "Kick set — vertical kick, no board",
+          "task": "lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "whiteboard"
+          }
+        },
+        {
+          "stepId": "main3",
+          "name": "Main set — lane 3, plan 50 minutes (30–50)",
+          "task": "lane",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 1800,
+            "maxSeconds": 3000,
+            "defaultSeconds": 3000
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "kick3"
+          }
+        },
+        {
+          "stepId": "cd3",
+          "name": "Cooldown (all lanes together) — 300 easy backstroke and breaststroke",
+          "task": "lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "sprint",
+            "instances": "all"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "blocks",
+      "name": "Starting blocks — one set, one lane at a time",
+      "steps": [
+        {
+          "stepId": "sprint",
+          "name": "Sprint set — 10 minutes per lane off the blocks, 25s flat out, lane 1 → lane 2 → lane 3 (lane 3 gets the extra rest while the first two go)",
+          "task": "blocks",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "replicates": {
+            "count": 3,
+            "mode": "serial"
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "main1"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "main2"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "main3"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "lane",
+      "maxConcurrent": 3
+    },
+    {
+      "task": "blocks",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "coach",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "serves": "12 swimmers, 1 coach",
+    "sourceUrl": "",
+    "attribution": "Thursday AM practice plan — three lanes, 2h30m pool time"
+  }
+}

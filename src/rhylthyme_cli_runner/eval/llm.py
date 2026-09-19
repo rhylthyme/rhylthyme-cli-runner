@@ -49,6 +49,11 @@ PRICES_PER_MTOK: Dict[str, tuple] = {
     # provider-side prompt caching.
     "deepseek-flash": (0.30, 1.20),
     "deepseek-v4-pro": (1.32, 3.96),
+    # Gemini paid tier, from ai.google.dev/gemini-api/docs/pricing on
+    # 2026-09-19. Output prices include thinking tokens.
+    "gemini-3.5-flash-lite": (0.30, 2.50),
+    "gemini-3.1-flash-lite": (0.25, 1.50),
+    "gemini-2.5-flash-lite": (0.10, 0.40),
 }
 
 
@@ -203,6 +208,11 @@ OPENAI_COMPAT_PROVIDERS = [
     ("kimi-", "https://api.moonshot.ai/v1", "MOONSHOT_API_KEY"),
     ("moonshot-", "https://api.moonshot.ai/v1", "MOONSHOT_API_KEY"),
     ("glm-", "https://api.z.ai/api/paas/v4", "ZAI_API_KEY"),
+    (
+        "gemini-",
+        "https://generativelanguage.googleapis.com/v1beta/openai",
+        "GEMINI_API_KEY",
+    ),
 ]
 OPENROUTER = ("https://openrouter.ai/api/v1", "OPENROUTER_API_KEY")
 

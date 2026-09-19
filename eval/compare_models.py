@@ -73,17 +73,17 @@ def main() -> None:
     for results in sorted(OUT.glob("*/*/results.json")):
         cells[(results.parent.parent.name, results.parent.name)] = programs_of(results)
 
-    common = set.intersection(*(set(v) for v in cells.values()))
-    slugs = sorted(common)
-    domains = sorted({s.split("-")[0] for s in slugs})
     order = sorted(
         cells, key=lambda k: (k[0] != "claude-haiku-4-5", k[0], k[1] != "baseline")
     )
-
-    def mean(cell, fn, subset=None):
-        vals = [value(fn, cells[cell][s]) for s in (subset or slugs)]
-        vals = [v for v in vals if v is not None]
-        return sum(vals) / len(vals) if vals else None
+    models = []
+    for m, _ in order:
+        if m not in models:
+            models.append(m)
+    coverage = {
+        m: set.intersection(*(set(v) for (mm, _), v in cells.items() if mm == m))
+        for m in models
+    }
 
     def fmt(key, v):
         if v is None:
@@ -96,55 +96,90 @@ def main() -> None:
             return f"{100 * v:.0f}%"
         return f"{v:.2f}"
 
+    def table(chosen, rows_out):
+        """One like-for-like table over the programs every chosen model ran."""
+        slugs = sorted(set.intersection(*(coverage[m] for m in chosen)))
+        cols = [c for c in order if c[0] in chosen]
+        domains = sorted({s.split("-")[0] for s in slugs})
+        out = [
+            f"## {len(slugs)} programs: "
+            + ", ".join(m.replace("claude-", "") for m in chosen),
+            "",
+            "Domains: "
+            + ", ".join(f"{d} {sum(s.startswith(d) for s in slugs)}" for d in domains)
+            + ".",
+            "",
+            "| Metric | "
+            + " | ".join(f"{m.replace('claude-', '')} {p}" for m, p in cols)
+            + " |",
+            "|---|" + "---|" * len(cols),
+        ]
+        for key, label, fn in METRICS:
+            vals = []
+            for c in cols:
+                got = [value(fn, cells[c][s]) for s in slugs]
+                got = [v for v in got if v is not None]
+                vals.append(sum(got) / len(got) if got else None)
+            out.append(f"| {label} | " + " | ".join(fmt(key, v) for v in vals) + " |")
+            for (m, pat), v in zip(cols, vals):
+                rows_out.append(
+                    [len(slugs), label, m, pat, "" if v is None else round(v, 4)]
+                )
+        four = [c for c in cols if c[1] == "four-turn"]
+        out += [
+            "",
+            "End-to-end by program, four-turn prompt:",
+            "",
+            "| Program | "
+            + " | ".join(m.replace("claude-", "") for m, _ in four)
+            + " |",
+            "|---|" + "---|" * len(four),
+        ]
+        for s in slugs:
+            marks = [
+                (
+                    "no program"
+                    if cells[c][s].get("error")
+                    else (
+                        "pass"
+                        if (cells[c][s].get("end_to_end") or {}).get("passed")
+                        else "fail"
+                    )
+                )
+                for c in four
+            ]
+            out.append(f"| {s} | " + " | ".join(marks) + " |")
+        return out + [""]
+
+    # One table per coverage level: every model, then progressively only the
+    # models that ran more programs, so a small run does not shrink the rest.
     lines = [
         "# Model x prompt comparison",
         "",
-        f"Programs scored in every cell: {len(slugs)} "
-        f"({', '.join(f'{d} {sum(s.startswith(d) for s in slugs)}' for d in domains)}). "
-        "One run per cell; means over those programs only. A run that produced no "
-        "program counts as an end-to-end failure; its component scores are left out.",
+        "One run per cell. Each table covers only the programs that every model in it ran, so its "
+        "means are like for like. A run that produced no program counts as an end-to-end failure; "
+        "its component scores are left out. Costs are list-price estimates (DeepSeek at peak rates; "
+        "it actually charged about a third of that off-peak).",
         "",
-        "| Metric | "
-        + " | ".join(f"{m.replace('claude-', '')} {p}" for m, p in order)
-        + " |",
-        "|---|" + "---|" * len(order),
+        "Programs run per model: "
+        + ", ".join(f"{m.replace('claude-', '')} {len(coverage[m])}" for m in models)
+        + ".",
+        "",
     ]
-    rows = []
-    for key, label, fn in METRICS:
-        vals = [mean(c, fn) for c in order]
-        lines.append(f"| {label} | " + " | ".join(fmt(key, v) for v in vals) + " |")
-        rows.append([label] + [("" if v is None else round(v, 4)) for v in vals])
-
-    lines += [
-        "",
-        "## End-to-end pass by program (four-turn)",
-        "",
-        "| Program | "
-        + " | ".join(m.replace("claude-", "") for m, p in order if p == "four-turn")
-        + " |",
-        "|---|" + "---|" * sum(1 for _, p in order if p == "four-turn"),
-    ]
-    for s in slugs:
-        marks = [
-            (
-                "no program"
-                if cells[c][s].get("error")
-                else (
-                    "pass"
-                    if (cells[c][s].get("end_to_end") or {}).get("passed")
-                    else "fail"
-                )
-            )
-            for c in order
-            if c[1] == "four-turn"
-        ]
-        lines.append(f"| {s} | " + " | ".join(marks) + " |")
+    rows: list = []
+    seen_sets = []
+    for size in sorted({len(v) for v in coverage.values()}):
+        chosen = [m for m in models if len(coverage[m]) >= size]
+        if len(chosen) < 2 or chosen in seen_sets:
+            continue
+        seen_sets.append(chosen)
+        lines += table(chosen, rows)
 
     OUT.mkdir(exist_ok=True)
     (OUT / "comparison.md").write_text("\n".join(lines) + "\n")
     with open(OUT / "comparison.csv", "w", newline="") as f:
         w = csv.writer(f)
-        w.writerow(["metric"] + [f"{m}|{p}" for m, p in order])
+        w.writerow(["n_programs", "metric", "model", "prompt", "value"])
         w.writerows(rows)
     print("\n".join(lines))
 

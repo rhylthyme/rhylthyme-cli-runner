@@ -1,0 +1,289 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "gemini-3.1-flash-lite",
+    "pattern": "four-turn",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/four-turn/cache",
+    "limit": null,
+    "only": [
+      "kitchen-sheet-pan-chicken-dinner"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 4,
+      "input_tokens": 25128,
+      "output_tokens": 3802,
+      "cost_usd": 0.011985,
+      "fix_iterations": 0
+    },
+    "generated_at": "2026-09-19T17:18:15+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 0.9285714285714286,
+    "steps_recall": 0.9285714285714286,
+    "steps_f1": 0.9285714285714286,
+    "durations_accuracy": 0.9230769230769231,
+    "resources_precision": 0.6666666666666666,
+    "resources_recall": 0.6666666666666666,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.5,
+    "relationships_recall": 0.3888888888888889,
+    "relationships_f1": 0.43750000000000006,
+    "structure_rand_index": 0.8076923076923077,
+    "end_to_end_pass": 1.0,
+    "unsupported_rate": 0.0
+  },
+  "programs": [
+    {
+      "slug": "kitchen-sheet-pan-chicken-dinner",
+      "headline": {
+        "steps_precision": 0.9285714285714286,
+        "steps_recall": 0.9285714285714286,
+        "steps_f1": 0.9285714285714286,
+        "durations_accuracy": 0.9230769230769231,
+        "resources_precision": 0.6666666666666666,
+        "resources_recall": 0.6666666666666666,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.5,
+        "relationships_recall": 0.3888888888888889,
+        "relationships_f1": 0.43750000000000006,
+        "structure_rand_index": 0.8076923076923077,
+        "end_to_end_pass": 1.0,
+        "unsupported_rate": 0.0
+      },
+      "steps": {
+        "precision": 0.9285714285714286,
+        "recall": 0.9285714285714286,
+        "f1": 0.9285714285714286,
+        "tp": 13,
+        "n_gold": 14,
+        "n_pred": 14
+      },
+      "durations": {
+        "accuracy": 0.9230769230769231,
+        "correct": 12,
+        "total": 13
+      },
+      "resources": {
+        "precision": 0.6666666666666666,
+        "recall": 0.6666666666666666,
+        "f1": 0.6666666666666666,
+        "tp": 2,
+        "n_gold": 3,
+        "n_pred": 3
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.5,
+        "recall": 0.3888888888888889,
+        "f1": 0.43750000000000006,
+        "tp": 7,
+        "n_gold": 18,
+        "n_pred": 14
+      },
+      "structure": {
+        "rand_index": 0.8076923076923077,
+        "agreements": 63,
+        "pairs": 78,
+        "n_steps": 13
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 4980.0,
+        "pred_makespan": 5040.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "preheat-oven",
+          "roast-potatoes",
+          "roast-chicken",
+          "swap-pans",
+          "final-roast",
+          "rest-chicken",
+          "plate-dinner"
+        ],
+        "pred_critical_path": [
+          "preheat",
+          "roast-potatoes",
+          "roast-chicken-potatoes",
+          "add-broccoli",
+          "roast-final",
+          "rest-chicken",
+          "dress-salad"
+        ],
+        "js_critical_path": [
+          "preheat",
+          "roast-potatoes",
+          "roast-chicken-potatoes",
+          "add-broccoli",
+          "roast-final",
+          "rest-chicken",
+          "dress-salad"
+        ],
+        "js_makespan": 5040,
+        "critical_overlap": 0.7142857142857143,
+        "critical_ok": true,
+        "passed": true
+      },
+      "unsupported_rate": 0.0,
+      "unsupported_steps": [],
+      "matching": [
+        {
+          "gold": "toss-potatoes",
+          "predicted": "prep-potatoes",
+          "by": "span"
+        },
+        {
+          "gold": "season-chicken",
+          "predicted": "prep-chicken",
+          "by": "span"
+        },
+        {
+          "gold": "preheat-oven",
+          "predicted": "preheat",
+          "by": "span"
+        },
+        {
+          "gold": "roast-potatoes",
+          "predicted": "roast-potatoes",
+          "by": "span"
+        },
+        {
+          "gold": "swap-pans",
+          "predicted": "roast-chicken-potatoes",
+          "by": "span"
+        },
+        {
+          "gold": "final-roast",
+          "predicted": "roast-final",
+          "by": "span"
+        },
+        {
+          "gold": "rest-chicken",
+          "predicted": "rest-chicken",
+          "by": "span"
+        },
+        {
+          "gold": "reduce-sauce",
+          "predicted": "reduce-sauce",
+          "by": "span"
+        },
+        {
+          "gold": "finish-butter",
+          "predicted": "finish-sauce",
+          "by": "span"
+        },
+        {
+          "gold": "wash-leaves",
+          "predicted": "salad-wash",
+          "by": "span"
+        },
+        {
+          "gold": "make-vinaigrette",
+          "predicted": "salad-vinegar",
+          "by": "span"
+        },
+        {
+          "gold": "dress-salad",
+          "predicted": "dress-salad",
+          "by": "span"
+        },
+        {
+          "gold": "plate-dinner",
+          "predicted": "serve",
+          "by": "span"
+        },
+        {
+          "gold": "roast-chicken",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "add-broccoli",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "gemini-3.1-flash-lite",
+        "pattern": "four-turn",
+        "calls": 4,
+        "input_tokens": 25128,
+        "output_tokens": 3802,
+        "cost_usd": 0.011985,
+        "cache_keys": [
+          "002637f4a9f4e23fa84b6b904b52aa93a3c9db60860e4076fde8da30fdba6ec3",
+          "33b910928c04d23acdbd53e9bf424722ebce1b05d1c7da25816eab7a9196d42a",
+          "aa8f78eaa7c73acc53a6fb953671fee277b891b7d37360d94bd2989cf564f9b1",
+          "1cca762e89562351c1df160dfd24178ed4e3c81fe99dfbfb9694c5d11c9e5d1e"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/four-turn/per-program/kitchen-sheet-pan-chicken-dinner/responses/kitchen-sheet-pan-chicken-dinner.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/four-turn/per-program/kitchen-sheet-pan-chicken-dinner/predicted/kitchen-sheet-pan-chicken-dinner.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 14,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Sheet-Pan Chicken with Potatoes and Broccoli for 4 people",
+            "finish_at": null,
+            "constraints": "one oven, two sheet pans, one burner, one cook",
+            "vertical": "kitchen",
+            "turn": "T1",
+            "kind": "recipe",
+            "constraintsLine": "Resource limits: one oven, two sheet pans, one burner, one cook.",
+            "deadlineLine": "No finishing time was given; finish as early as the work allows.",
+            "source": "Source text (read all of it):\n<<<\nSheet-Pan Chicken with Potatoes and Broccoli\n\nA Tuesday dinner for four. One oven, two sheet pans, one burner, one cook. The potatoes need longer than the chicken and the broccoli needs least of all, so the two pans go in at different times and come out together.\n\nOven\nHeat the oven to 425\u00b0F; 15 minutes. While it heats, toss the halved potatoes with oil and salt on the first sheet pan; 8 minutes. Slide the potatoes in and roast them for 15 minutes on their own.\n\nPat the chicken thighs dry, rub them with the spice mix and lay them on the second pan; 10 minutes. Put the second pan in when the potatoes have had their 15 minutes. Twenty minutes after the chicken goes in, pull both pans out, rotate them, tip the broccoli onto the potato pan and put everything back; 4 minutes. Roast for a final 15 minutes, until the thighs read 175\u00b0F and the broccoli is charred at the edges. Rest the chicken on a board for 8 minutes before slicing.\n\nPan sauce\nOnce the pans are out, tip the pan juices into a small pan, add stock and mustard and reduce for 6 minutes. Whisk in cold butter off the heat; 2 minutes. Keep the sauce off the flame until you plate.\n\nSalad\nStart the salad when the chicken goes in the oven, not before, or the leaves will sit around. Wash and dry the leaves; 6 minutes. Shake the vinaigrette together in a jar; 3 minutes. Dress the salad only when the chicken has been resting five minutes; 2 minutes.\n\nServe\nSlice the thighs and plate everything; 6 minutes. Sauce goes over the chicken at the table.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Sheet-Pan Chicken with Potatoes and Broccoli for 4 people",
+            "finish_at": null,
+            "constraints": "one oven, two sheet pans, one burner, one cook",
+            "vertical": "kitchen",
+            "turn": "T2",
+            "kind": "recipe"
+          },
+          "T3 extraction": {
+            "goal": "Sheet-Pan Chicken with Potatoes and Broccoli for 4 people",
+            "finish_at": null,
+            "constraints": "one oven, two sheet pans, one burner, one cook",
+            "vertical": "kitchen",
+            "turn": "T3",
+            "kind": "recipe",
+            "environment": "a kitchen where you have: one oven, two sheet pans, one burner, one cook",
+            "deadline": "the earliest time the work allows",
+            "source": "Source text (read all of it):\n<<<\nSheet-Pan Chicken with Potatoes and Broccoli\n\nA Tuesday dinner for four. One oven, two sheet pans, one burner, one cook. The potatoes need longer than the chicken and the broccoli needs least of all, so the two pans go in at different times and come out together.\n\nOven\nHeat the oven to 425\u00b0F; 15 minutes. While it heats, toss the halved potatoes with oil and salt on the first sheet pan; 8 minutes. Slide the potatoes in and roast them for 15 minutes on their own.\n\nPat the chicken thighs dry, rub them with the spice mix and lay them on the second pan; 10 minutes. Put the second pan in when the potatoes have had their 15 minutes. Twenty minutes after the chicken goes in, pull both pans out, rotate them, tip the broccoli onto the potato pan and put everything back; 4 minutes. Roast for a final 15 minutes, until the thighs read 175\u00b0F and the broccoli is charred at the edges. Rest the chicken on a board for 8 minutes before slicing.\n\nPan sauce\nOnce the pans are out, tip the pan juices into a small pan, add stock and mustard and reduce for 6 minutes. Whisk in cold butter off the heat; 2 minutes. Keep the sauce off the flame until you plate.\n\nSalad\nStart the salad when the chicken goes in the oven, not before, or the leaves will sit around. Wash and dry the leaves; 6 minutes. Shake the vinaigrette together in a jar; 3 minutes. Dress the salad only when the chicken has been resting five minutes; 2 minutes.\n\nServe\nSlice the thighs and plate everything; 6 minutes. Sauce goes over the chicken at the table.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Sheet-Pan Chicken with Potatoes and Broccoli for 4 people",
+            "finish_at": null,
+            "constraints": "one oven, two sheet pans, one burner, one cook",
+            "vertical": "kitchen",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or cook_recipe",
+            "finishAtArg": ""
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

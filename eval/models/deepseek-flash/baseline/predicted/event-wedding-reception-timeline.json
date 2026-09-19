@@ -1,0 +1,333 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "ashgrove-barn-wedding-reception",
+  "name": "Wedding Reception Run Sheet — Ashgrove Barn (90 guests)",
+  "description": "Ceremony breaks at 16:00 and every time is measured from that moment. The 40-60 minute canape window is the only slack in the sheet: the room call gates everything downstream, and the kitchen holds dessert rather than plating it early.",
+  "environmentType": "event",
+  "actors": 3,
+  "tracks": [
+    {
+      "trackId": "room",
+      "name": "Room",
+      "steps": [
+        {
+          "stepId": "flipRoom",
+          "name": "Flip ceremony room to reception seating (chairs out, rounds in, linen on)",
+          "task": "room",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "dressTables",
+          "name": "Dress tables — centrepieces, place cards, candles",
+          "task": "room",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "flipRoom"
+          }
+        },
+        {
+          "stepId": "seatGuests",
+          "name": "Seat 90 guests (planner calls the room)",
+          "task": "room",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "callToDinner"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "foyer",
+      "name": "Foyer / Bar",
+      "steps": [
+        {
+          "stepId": "openBar",
+          "name": "Open the bar — set up and pour the first round",
+          "task": "bar",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "passCanapes",
+          "name": "Pass canapes in the foyer (runs however long the photographs take)",
+          "task": "floor",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 2400,
+            "maxSeconds": 3600,
+            "defaultSeconds": 2700
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 1200
+          }
+        },
+        {
+          "stepId": "callToDinner",
+          "name": "Call the room to dinner",
+          "task": "mic",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "passCanapes"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "kitchen",
+      "name": "Kitchen pass",
+      "steps": [
+        {
+          "stepId": "plateStarters",
+          "name": "Plate starters on the pass (15 min after the room starts seating)",
+          "task": "pass",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "seatGuests",
+            "event": "start",
+            "offsetSeconds": 900
+          }
+        },
+        {
+          "stepId": "plateMains",
+          "name": "Mains on the pass (5 min after starter plates are cleared)",
+          "task": "pass",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "clearStarters",
+            "offsetSeconds": 300
+          }
+        },
+        {
+          "stepId": "plateDessert",
+          "name": "Plate dessert the moment the cake is cut",
+          "task": "pass",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cutCake",
+            "event": "start"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "floor",
+      "name": "Floor — two servers",
+      "steps": [
+        {
+          "stepId": "serveStarters",
+          "name": "Serve the starters",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "plateStarters"
+          }
+        },
+        {
+          "stepId": "clearStarters",
+          "name": "Clear the starters (20 min after they go out)",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "serveStarters",
+            "event": "start",
+            "offsetSeconds": 1200
+          }
+        },
+        {
+          "stepId": "serveMains",
+          "name": "Serve the mains",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "plateMains"
+          }
+        },
+        {
+          "stepId": "clearMains",
+          "name": "Clear the mains (40 min after they go out)",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "serveMains",
+            "event": "start",
+            "offsetSeconds": 2400
+          }
+        },
+        {
+          "stepId": "serveDessert",
+          "name": "Serve the dessert",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "plateDessert"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "programme",
+      "name": "Room programme — MC, band, cake",
+      "steps": [
+        {
+          "stepId": "welcomeToast",
+          "name": "Welcome toast as soon as the guests are seated",
+          "task": "mic",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "seatGuests"
+          }
+        },
+        {
+          "stepId": "firstDance",
+          "name": "First dance (once the main plates are cleared)",
+          "task": "danceFloor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "clearMains"
+          }
+        },
+        {
+          "stepId": "speeches",
+          "name": "Speeches — two or three, as the MC cues them",
+          "task": "mic",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 900,
+            "maxSeconds": 1500,
+            "defaultSeconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "firstDance"
+          }
+        },
+        {
+          "stepId": "cutCake",
+          "name": "Cut the cake straight after the speeches",
+          "task": "cakeTable",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "speeches"
+          }
+        },
+        {
+          "stepId": "dancing",
+          "name": "Open dancing — ten minutes after the dessert is served, until the band's last set",
+          "task": "danceFloor",
+          "duration": {
+            "type": "indefinite",
+            "defaultSeconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "serveDessert",
+            "offsetSeconds": 600
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "room",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "bar",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "mic",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "pass",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "floor",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "danceFloor",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "cakeTable",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "serves": "90 guests",
+    "sourceUrl": "",
+    "attribution": "Ashgrove Barn wedding run sheet (ceremony break 16:00)"
+  }
+}

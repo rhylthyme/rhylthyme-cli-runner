@@ -1,0 +1,265 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "colony-pcr-gel-screen",
+  "name": "Colony PCR Screen with Diagnostic Gel",
+  "description": "PCR screening of 8 clones with concurrent gel preparation.",
+  "environmentType": "laboratory",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "pcr-track",
+      "name": "PCR Workflow",
+      "steps": [
+        {
+          "stepId": "thaw",
+          "name": "Thaw reagents",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "mastermix",
+          "name": "Assemble master mix",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "thaw"
+          }
+        },
+        {
+          "stepId": "aliquot",
+          "name": "Aliquot and spin",
+          "task": "microcentrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "mastermix"
+          }
+        },
+        {
+          "stepId": "load-pcr",
+          "name": "Load thermocycler",
+          "task": "thermocycler",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "aliquot"
+          }
+        },
+        {
+          "stepId": "cycling",
+          "name": "Run PCR cycling",
+          "task": "thermocycler",
+          "duration": {
+            "type": "fixed",
+            "seconds": 6600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "load-pcr"
+          }
+        },
+        {
+          "stepId": "post-pcr-spin",
+          "name": "Post-PCR spin and dye",
+          "task": "microcentrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cycling"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "gel-track",
+      "name": "Gel Electrophoresis",
+      "steps": [
+        {
+          "stepId": "melt-agarose",
+          "name": "Melt agarose",
+          "task": "microwave",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 1500
+          }
+        },
+        {
+          "stepId": "cool-agarose",
+          "name": "Cool agarose",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 720
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "melt-agarose"
+          }
+        },
+        {
+          "stepId": "pour-gel",
+          "name": "Pour gel",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cool-agarose"
+          }
+        },
+        {
+          "stepId": "set-gel",
+          "name": "Gel setting",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2100
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "pour-gel"
+          }
+        },
+        {
+          "stepId": "thaw-ladder",
+          "name": "Thaw ladder",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "set-gel"
+          }
+        },
+        {
+          "stepId": "prepare-rig",
+          "name": "Prepare gel rig",
+          "task": "gel-rig",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "thaw-ladder"
+          }
+        },
+        {
+          "stepId": "load-gel",
+          "name": "Load gel",
+          "task": "gel-rig",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "post-pcr-spin"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "prepare-rig"
+              }
+            ]
+          }
+        },
+        {
+          "stepId": "run-gel",
+          "name": "Run gel",
+          "task": "gel-rig",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2400
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "load-gel"
+          }
+        },
+        {
+          "stepId": "image",
+          "name": "Image gel",
+          "task": "transilluminator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "run-gel"
+          }
+        },
+        {
+          "stepId": "record",
+          "name": "Record results",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "image"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "bench",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "thermocycler",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "microcentrifuge",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "microwave",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "gel-rig",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "transilluminator",
+      "maxConcurrent": 1
+    }
+  ]
+}

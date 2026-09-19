@@ -1,0 +1,440 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "hiit-circuit-card-three-athletes-four-stations",
+  "name": "HIIT Circuit Card - Three Athletes, Four Stations",
+  "description": "Small-group HIIT on a 45-minute session clock: 5 minutes of floor warm-up together, then four rounds of 60 seconds all-out work and 60 seconds of rest on a four-station carousel (rower, kettlebell, box, sled) with only three athletes, so exactly one station sits empty every round and nobody ever waits on equipment. There is no rest after the fourth station - it runs straight into a shared 10-minute cooldown that starts only once all three athletes have finished.",
+  "environmentType": "gym",
+  "actors": 3,
+  "tracks": [
+    {
+      "trackId": "athlete-a",
+      "name": "Athlete A",
+      "steps": [
+        {
+          "stepId": "a-warmup",
+          "name": "Warm-up on the floor - skipping, hip openers, shoulder pass-throughs, 2x10 air squats",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "a-r1-rower",
+          "name": "Round 1 - Rower (damper 5, pull hard, no split-chasing on the last 10s)",
+          "task": "rower",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "a-warmup"
+          }
+        },
+        {
+          "stepId": "a-r1-rest",
+          "name": "Round 1 rest - 60s on the floor, walk it off, do not sit down",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "a-r1-rower"
+          }
+        },
+        {
+          "stepId": "a-r2-kettlebell",
+          "name": "Round 2 - Kettlebell swings (one bell, hips not arms, chest tall at the top)",
+          "task": "kettlebell",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "a-r1-rest"
+          }
+        },
+        {
+          "stepId": "a-r2-rest",
+          "name": "Round 2 rest - 60s on the floor, walk it off, do not lean on equipment",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "a-r2-kettlebell"
+          }
+        },
+        {
+          "stepId": "a-r3-box",
+          "name": "Round 3 - Box step-overs (alternate the lead leg, full extension, no rebound)",
+          "task": "box",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "a-r2-rest"
+          }
+        },
+        {
+          "stepId": "a-r3-rest",
+          "name": "Round 3 rest - 60s on the floor, walk it off",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "a-r3-box"
+          }
+        },
+        {
+          "stepId": "a-r4-sled",
+          "name": "Round 4 - Sled push, length of the turf and back (low hands, short steps) - no rest after this one",
+          "task": "sled",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "a-r3-rest"
+          }
+        },
+        {
+          "stepId": "a-cooldown",
+          "name": "Cooldown on the floor - easy bike or walk, then quads, hips and thoracic spine (starts when all three have finished Round 4)",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "a-r4-sled"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "b-r4-rower"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "c-r4-kettlebell"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "athlete-b",
+      "name": "Athlete B",
+      "steps": [
+        {
+          "stepId": "b-warmup",
+          "name": "Warm-up on the floor - skipping, hip openers, shoulder pass-throughs, 2x10 air squats",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "b-r1-kettlebell",
+          "name": "Round 1 - Kettlebell swings (one bell, hips not arms, chest tall at the top)",
+          "task": "kettlebell",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "b-warmup"
+          }
+        },
+        {
+          "stepId": "b-r1-rest",
+          "name": "Round 1 rest - 60s on the floor, walk it off, do not sit down",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "b-r1-kettlebell"
+          }
+        },
+        {
+          "stepId": "b-r2-box",
+          "name": "Round 2 - Box step-overs (alternate the lead leg, full extension, no rebound)",
+          "task": "box",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "b-r1-rest"
+          }
+        },
+        {
+          "stepId": "b-r2-rest",
+          "name": "Round 2 rest - 60s on the floor, walk it off, do not lean on equipment",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "b-r2-box"
+          }
+        },
+        {
+          "stepId": "b-r3-sled",
+          "name": "Round 3 - Sled push, length of the turf and back (longest reset - clear the hand-off)",
+          "task": "sled",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "b-r2-rest"
+          }
+        },
+        {
+          "stepId": "b-r3-rest",
+          "name": "Round 3 rest - 60s on the floor, walk it off",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "b-r3-sled"
+          }
+        },
+        {
+          "stepId": "b-r4-rower",
+          "name": "Round 4 - Rower (damper 5, pull hard) - no rest after this one",
+          "task": "rower",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "b-r3-rest"
+          }
+        },
+        {
+          "stepId": "b-cooldown",
+          "name": "Cooldown on the floor - easy bike or walk, then quads, hips and thoracic spine (starts when all three have finished Round 4)",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "a-r4-sled"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "b-r4-rower"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "c-r4-kettlebell"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "athlete-c",
+      "name": "Athlete C",
+      "steps": [
+        {
+          "stepId": "c-warmup",
+          "name": "Warm-up on the floor - skipping, hip openers, shoulder pass-throughs, 2x10 air squats",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "c-r1-box",
+          "name": "Round 1 - Box step-overs (alternate the lead leg, full extension, no rebound)",
+          "task": "box",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "c-warmup"
+          }
+        },
+        {
+          "stepId": "c-r1-rest",
+          "name": "Round 1 rest - 60s on the floor, walk it off, do not sit down",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "c-r1-box"
+          }
+        },
+        {
+          "stepId": "c-r2-sled",
+          "name": "Round 2 - Sled push, length of the turf and back (low hands, short steps)",
+          "task": "sled",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "c-r1-rest"
+          }
+        },
+        {
+          "stepId": "c-r2-rest",
+          "name": "Round 2 rest - 60s on the floor, walk it off, do not lean on equipment",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "c-r2-sled"
+          }
+        },
+        {
+          "stepId": "c-r3-rower",
+          "name": "Round 3 - Rower (damper 5, pull hard, no split-chasing on the last 10s)",
+          "task": "rower",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "c-r2-rest"
+          }
+        },
+        {
+          "stepId": "c-r3-rest",
+          "name": "Round 3 rest - 60s on the floor, walk it off",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "c-r3-rower"
+          }
+        },
+        {
+          "stepId": "c-r4-kettlebell",
+          "name": "Round 4 - Kettlebell swings (hips not arms, chest tall at the top) - no rest after this one",
+          "task": "kettlebell",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "c-r3-rest"
+          }
+        },
+        {
+          "stepId": "c-cooldown",
+          "name": "Cooldown on the floor - easy bike or walk, then quads, hips and thoracic spine (starts when all three have finished Round 4)",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "a-r4-sled"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "b-r4-rower"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "c-r4-kettlebell"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "floor",
+      "maxConcurrent": 3
+    },
+    {
+      "task": "rower",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "kettlebell",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "box",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "sled",
+      "maxConcurrent": 1
+    }
+  ]
+}

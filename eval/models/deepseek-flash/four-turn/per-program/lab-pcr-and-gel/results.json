@@ -1,0 +1,329 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "deepseek-flash",
+    "pattern": "four-turn",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/cache",
+    "limit": null,
+    "only": [
+      "lab-pcr-and-gel"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 4,
+      "input_tokens": 29935,
+      "output_tokens": 25763,
+      "cost_usd": 0.0398961,
+      "fix_iterations": 0
+    },
+    "generated_at": "2026-09-19T17:50:14+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 0.8421052631578947,
+    "steps_recall": 1.0,
+    "steps_f1": 0.9142857142857143,
+    "durations_accuracy": 0.9375,
+    "resources_precision": 0.625,
+    "resources_recall": 0.7142857142857143,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.6666666666666666,
+    "relationships_recall": 0.7777777777777778,
+    "relationships_f1": 0.717948717948718,
+    "structure_rand_index": 0.8916666666666667,
+    "end_to_end_pass": 1.0,
+    "unsupported_rate": 0.05
+  },
+  "programs": [
+    {
+      "slug": "lab-pcr-and-gel",
+      "headline": {
+        "steps_precision": 0.8421052631578947,
+        "steps_recall": 1.0,
+        "steps_f1": 0.9142857142857143,
+        "durations_accuracy": 0.9375,
+        "resources_precision": 0.625,
+        "resources_recall": 0.7142857142857143,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.6666666666666666,
+        "relationships_recall": 0.7777777777777778,
+        "relationships_f1": 0.717948717948718,
+        "structure_rand_index": 0.8916666666666667,
+        "end_to_end_pass": 1.0,
+        "unsupported_rate": 0.05
+      },
+      "steps": {
+        "precision": 0.8421052631578947,
+        "recall": 1.0,
+        "f1": 0.9142857142857143,
+        "tp": 16,
+        "n_gold": 16,
+        "n_pred": 19
+      },
+      "durations": {
+        "accuracy": 0.9375,
+        "correct": 15,
+        "total": 16
+      },
+      "resources": {
+        "precision": 0.625,
+        "recall": 0.7142857142857143,
+        "f1": 0.6666666666666666,
+        "tp": 5,
+        "n_gold": 7,
+        "n_pred": 8
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.6666666666666666,
+        "recall": 0.7777777777777778,
+        "f1": 0.717948717948718,
+        "tp": 14,
+        "n_gold": 18,
+        "n_pred": 21
+      },
+      "structure": {
+        "rand_index": 0.8916666666666667,
+        "agreements": 107,
+        "pairs": 120,
+        "n_steps": 16
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 12660.0,
+        "pred_makespan": 12720.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "thaw-reagents",
+          "assemble-mix",
+          "aliquot-and-spin",
+          "load-cycler",
+          "run-pcr",
+          "spin-products",
+          "load-gel",
+          "run-gel",
+          "image-gel",
+          "record-results"
+        ],
+        "pred_critical_path": [
+          "thaw-reagents",
+          "assemble-master-mix",
+          "aliquot-and-add-colonies",
+          "spin-colony-tubes",
+          "load-thermocycler",
+          "run-cycling",
+          "spin-pcr-tubes",
+          "add-loading-dye",
+          "load-wells",
+          "run-gel",
+          "image-gel",
+          "record-results"
+        ],
+        "js_critical_path": [
+          "thaw-reagents",
+          "assemble-master-mix",
+          "aliquot-and-add-colonies",
+          "spin-colony-tubes",
+          "load-thermocycler",
+          "run-cycling",
+          "spin-pcr-tubes",
+          "add-loading-dye",
+          "load-wells",
+          "run-gel",
+          "image-gel",
+          "record-results"
+        ],
+        "js_makespan": 12720,
+        "critical_overlap": 1.0,
+        "critical_ok": true,
+        "passed": true
+      },
+      "unsupported_rate": 0.05,
+      "unsupported_steps": [
+        "prepare-rig-buffer"
+      ],
+      "matching": [
+        {
+          "gold": "thaw-reagents",
+          "predicted": "thaw-reagents",
+          "by": "span"
+        },
+        {
+          "gold": "assemble-mix",
+          "predicted": "assemble-master-mix",
+          "by": "span"
+        },
+        {
+          "gold": "aliquot-and-spin",
+          "predicted": "aliquot-and-add-colonies",
+          "by": "span"
+        },
+        {
+          "gold": "load-cycler",
+          "predicted": "load-thermocycler",
+          "by": "span"
+        },
+        {
+          "gold": "run-pcr",
+          "predicted": "run-cycling",
+          "by": "span"
+        },
+        {
+          "gold": "melt-agarose",
+          "predicted": "weigh-agarose",
+          "by": "span"
+        },
+        {
+          "gold": "cool-agarose",
+          "predicted": "cool-flask",
+          "by": "span"
+        },
+        {
+          "gold": "pour-gel",
+          "predicted": "stain-and-pour-gel",
+          "by": "span"
+        },
+        {
+          "gold": "set-gel",
+          "predicted": "set-gel",
+          "by": "span"
+        },
+        {
+          "gold": "place-gel",
+          "predicted": "decomb-into-rig",
+          "by": "span"
+        },
+        {
+          "gold": "prepare-ladder",
+          "predicted": "thaw-ladder",
+          "by": "span"
+        },
+        {
+          "gold": "spin-products",
+          "predicted": "add-loading-dye",
+          "by": "span"
+        },
+        {
+          "gold": "load-gel",
+          "predicted": "load-wells",
+          "by": "span"
+        },
+        {
+          "gold": "run-gel",
+          "predicted": "run-gel",
+          "by": "span"
+        },
+        {
+          "gold": "image-gel",
+          "predicted": "image-gel",
+          "by": "span"
+        },
+        {
+          "gold": "record-results",
+          "predicted": "record-results",
+          "by": "span"
+        },
+        {
+          "gold": null,
+          "predicted": "spin-colony-tubes",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "microwave-agarose",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "prepare-rig-buffer",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "spin-pcr-tubes",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "deepseek-flash",
+        "pattern": "four-turn",
+        "calls": 4,
+        "input_tokens": 29935,
+        "output_tokens": 25763,
+        "cost_usd": 0.0398961,
+        "cache_keys": [
+          "1eaa64808c45a5d0f3f857fc55fb838b0269f98fa43725c0c3fbdfc409d6bfb0",
+          "c02f354c1792dde167c415c4cecdd5b3a036a748ce883bfc0294737ee55504ba",
+          "13b0c2c654da5900e075ae49d979042168df9e5d2ad27b68e0ea6ea6dadc9aa2",
+          "2339f0850831c9540fbc9fa506a531a76210eeb03336594939e19a999d3dbe34"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/per-program/lab-pcr-and-gel/responses/lab-pcr-and-gel.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/per-program/lab-pcr-and-gel/predicted/lab-pcr-and-gel.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 19,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Colony PCR Screen with a Diagnostic Gel for eight clones, one gel",
+            "finish_at": null,
+            "constraints": "one thermocycler, one microcentrifuge, one microwave, one gel rig, one transilluminator, one operator",
+            "vertical": "lab",
+            "turn": "T1",
+            "kind": "protocol",
+            "constraintsLine": "Resource limits: one thermocycler, one microcentrifuge, one microwave, one gel rig, one transilluminator, one operator.",
+            "deadlineLine": "No finishing time was given; finish as early as the work allows.",
+            "source": "Source text (read all of it):\n<<<\nColony PCR Screen with a Diagnostic Gel\n\nEight candidate clones are screened by PCR and the products are run on a single agarose gel. The bench has one thermocycler, one microcentrifuge, a microwave, one gel rig and one transilluminator, and one person runs the whole thing. The cycling block is long enough to cast and set the gel while it runs, so start the agarose partway through the run rather than waiting for the machine to finish.\n\nPart 1: Reaction setup\n1. Thaw the primers, dNTPs and 10\u00d7 buffer on ice; 15 minutes. Keep the polymerase in the cold block until the last moment.\n2. Assemble a 25 \u00b5L master mix on ice for eight reactions plus one spare; 10 minutes of pipetting.\n3. Aliquot 25 \u00b5L into eight strip tubes, add 1 \u00b5L of each colony suspension and spin them down for 30 seconds in the microcentrifuge; 5 minutes.\n\nPart 2: Cycling\n4. Load the strip tubes into the thermocycler and start the program; 3 minutes.\n5. Run 95 \u00b0C for 3 minutes, then 35 cycles of 95 \u00b0C for 30 seconds, 58 \u00b0C for 30 seconds and 72 \u00b0C for 45 seconds, then a final 72 \u00b0C for 5 minutes. The block reports 1 hour 50 minutes.\n\nPart 3: Agarose gel\n6. Twenty-five minutes into the cycling run, weigh 1.0 g of agarose into 100 mL of 1\u00d7 TAE and microwave for 3 minutes, swirling once, until no lens of undissolved agarose is left.\n7. Cool the flask on the bench for 12 minutes, until it is comfortable to hold.\n8. Add 5 \u00b5L of DNA stain, pour the gel into the casting tray and seat the 10-well comb; 3 minutes.\n9. Let the gel set for 35 minutes at room temperature. Do not rush this; a soft gel tears at the wells.\n10. Remove the comb and place the gel in the rig under 1\u00d7 TAE; 2 minutes.\n\nPart 4: Run and read\n11. Ten minutes after the gel is poured to set, thaw the 100 bp ladder and mix it with 6\u00d7 loading dye; 5 minutes.\n12. When the cycling finishes, spin the tubes down and add 5 \u00b5L of loading dye to each; 5 minutes.\n13. Load 10 \u00b5L per well alongside 5 \u00b5L of ladder; 8 minutes. Nothing goes into a well until the gel is in the rig and the ladder is ready.\n14. Run the gel at 120 V for 40 minutes, until the dye front is two-thirds down.\n15. Image the gel on the transilluminator; 5 minutes.\n16. Record which clones carry the insert and mark the plate; 10 minutes.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Colony PCR Screen with a Diagnostic Gel for eight clones, one gel",
+            "finish_at": null,
+            "constraints": "one thermocycler, one microcentrifuge, one microwave, one gel rig, one transilluminator, one operator",
+            "vertical": "lab",
+            "turn": "T2",
+            "kind": "protocol"
+          },
+          "T3 extraction": {
+            "goal": "Colony PCR Screen with a Diagnostic Gel for eight clones, one gel",
+            "finish_at": null,
+            "constraints": "one thermocycler, one microcentrifuge, one microwave, one gel rig, one transilluminator, one operator",
+            "vertical": "lab",
+            "turn": "T3",
+            "kind": "protocol",
+            "environment": "a lab where you have: one thermocycler, one microcentrifuge, one microwave, one gel rig, one transilluminator, one operator",
+            "deadline": "the earliest time the work allows",
+            "source": "Source text (read all of it):\n<<<\nColony PCR Screen with a Diagnostic Gel\n\nEight candidate clones are screened by PCR and the products are run on a single agarose gel. The bench has one thermocycler, one microcentrifuge, a microwave, one gel rig and one transilluminator, and one person runs the whole thing. The cycling block is long enough to cast and set the gel while it runs, so start the agarose partway through the run rather than waiting for the machine to finish.\n\nPart 1: Reaction setup\n1. Thaw the primers, dNTPs and 10\u00d7 buffer on ice; 15 minutes. Keep the polymerase in the cold block until the last moment.\n2. Assemble a 25 \u00b5L master mix on ice for eight reactions plus one spare; 10 minutes of pipetting.\n3. Aliquot 25 \u00b5L into eight strip tubes, add 1 \u00b5L of each colony suspension and spin them down for 30 seconds in the microcentrifuge; 5 minutes.\n\nPart 2: Cycling\n4. Load the strip tubes into the thermocycler and start the program; 3 minutes.\n5. Run 95 \u00b0C for 3 minutes, then 35 cycles of 95 \u00b0C for 30 seconds, 58 \u00b0C for 30 seconds and 72 \u00b0C for 45 seconds, then a final 72 \u00b0C for 5 minutes. The block reports 1 hour 50 minutes.\n\nPart 3: Agarose gel\n6. Twenty-five minutes into the cycling run, weigh 1.0 g of agarose into 100 mL of 1\u00d7 TAE and microwave for 3 minutes, swirling once, until no lens of undissolved agarose is left.\n7. Cool the flask on the bench for 12 minutes, until it is comfortable to hold.\n8. Add 5 \u00b5L of DNA stain, pour the gel into the casting tray and seat the 10-well comb; 3 minutes.\n9. Let the gel set for 35 minutes at room temperature. Do not rush this; a soft gel tears at the wells.\n10. Remove the comb and place the gel in the rig under 1\u00d7 TAE; 2 minutes.\n\nPart 4: Run and read\n11. Ten minutes after the gel is poured to set, thaw the 100 bp ladder and mix it with 6\u00d7 loading dye; 5 minutes.\n12. When the cycling finishes, spin the tubes down and add 5 \u00b5L of loading dye to each; 5 minutes.\n13. Load 10 \u00b5L per well alongside 5 \u00b5L of ladder; 8 minutes. Nothing goes into a well until the gel is in the rig and the ladder is ready.\n14. Run the gel at 120 V for 40 minutes, until the dye front is two-thirds down.\n15. Image the gel on the transilluminator; 5 minutes.\n16. Record which clones carry the insert and mark the plate; 10 minutes.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Colony PCR Screen with a Diagnostic Gel for eight clones, one gel",
+            "finish_at": null,
+            "constraints": "one thermocycler, one microcentrifuge, one microwave, one gel rig, one transilluminator, one operator",
+            "vertical": "lab",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or run_protocol",
+            "finishAtArg": ""
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

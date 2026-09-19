@@ -1,0 +1,198 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "deepseek-flash",
+    "pattern": "four-turn",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/cache",
+    "limit": null,
+    "only": [
+      "kitchen-holiday-cookie-batch"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 6,
+      "input_tokens": 52493,
+      "output_tokens": 59727,
+      "cost_usd": 0.08742029999999999,
+      "fix_iterations": 2
+    },
+    "generated_at": "2026-09-19T17:48:31+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 0.0,
+    "steps_recall": 0.0,
+    "steps_f1": 0.0,
+    "durations_accuracy": 0.0,
+    "resources_precision": 0.0,
+    "resources_recall": 0.0,
+    "actors_accuracy": 0.0,
+    "relationships_precision": 0.0,
+    "relationships_recall": 0.0,
+    "relationships_f1": 0.0,
+    "structure_rand_index": 0.0,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.0
+  },
+  "programs": [
+    {
+      "slug": "kitchen-holiday-cookie-batch",
+      "headline": {
+        "steps_precision": 0.0,
+        "steps_recall": 0.0,
+        "steps_f1": 0.0,
+        "durations_accuracy": 0.0,
+        "resources_precision": 0.0,
+        "resources_recall": 0.0,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.0,
+        "relationships_recall": 0.0,
+        "relationships_f1": 0.0,
+        "structure_rand_index": 0.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.0
+      },
+      "steps": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 20,
+        "n_pred": 0
+      },
+      "durations": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 20
+      },
+      "resources": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 6,
+        "n_pred": 0
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 26,
+        "n_pred": 0
+      },
+      "structure": {
+        "rand_index": 0.0,
+        "agreements": 0,
+        "pairs": 0,
+        "n_steps": 0
+      },
+      "end_to_end": {
+        "python_valid": false,
+        "python_errors": [],
+        "js_status": "skipped",
+        "js_valid": null,
+        "js_errors": [],
+        "gold_makespan": 0.0,
+        "pred_makespan": 0.0,
+        "makespan_ok": false,
+        "gold_critical_path": [],
+        "pred_critical_path": [],
+        "js_critical_path": null,
+        "js_makespan": null,
+        "critical_overlap": 0.0,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.0,
+      "unsupported_steps": [],
+      "matching": [],
+      "extras": {
+        "model": "deepseek-flash",
+        "pattern": "four-turn",
+        "calls": 6,
+        "input_tokens": 52493,
+        "output_tokens": 59727,
+        "cost_usd": 0.08742029999999999,
+        "cache_keys": [
+          "ac9d1b8a2f84cd2ab94e027e01a2156a6e4189f491bcf4176740d6bd0bc11d6f",
+          "ca925f25d1b0fb78a9a1d0482d3fd5a85ba8474dead12e04421657195cfa7e6d",
+          "22db0d6389eeef05aab7fdde015b00319312810d73f745faeaaf89d6d9b45f69",
+          "05057476f3c3d05eef3f4621acfc7e5df7fb8ed9eddf885a93d273d3734dbbce",
+          "f0033793468a14c0d27a9c2ad30db0a0865ad3b2181bfaf44dec6a08bd8dfb2a",
+          "92ef65f4f19517d04aaf5733fb933e46e29583d9d49c47de8668254d54ee116a"
+        ],
+        "fix_iterations": 2,
+        "validation_errors": [
+          "no JSON object with a `tracks` array was found in the reply"
+        ],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/per-program/kitchen-holiday-cookie-batch/responses/kitchen-holiday-cookie-batch.json",
+        "predicted_path": null,
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 21,
+        "unsupported_step_ids": [
+          "wash-bowl-1",
+          "wash-bowl-2"
+        ],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Holiday Cookie Batch: Three Doughs, One Oven for three doughs, roughly a hundred cookies",
+            "finish_at": null,
+            "constraints": "one stand mixer, one oven, two sheet pans that must cool between batches, one baker",
+            "vertical": "kitchen",
+            "turn": "T1",
+            "kind": "recipe",
+            "constraintsLine": "Resource limits: one stand mixer, one oven, two sheet pans that must cool between batches, one baker.",
+            "deadlineLine": "No finishing time was given; finish as early as the work allows.",
+            "source": "Source text (read all of it):\n<<<\nHoliday Cookie Batch: Three Doughs, One Oven\n\nThree doughs, one stand mixer, one oven and two sheet pans. A pan has to cool before it is reloaded or the next batch spreads, so the oven waits on the pans as often as the pans wait on the oven. One baker, one afternoon, everything boxed by evening.\n\nDoughs\nCream the butter and sugar for the sugar cookies and beat in the flour; 12 minutes in the mixer. Wrap the dough and chill it for 1 hour.\nWash the bowl, then make the chocolate chip dough the same way; 12 minutes. That one goes straight onto a pan.\nWash the bowl again and make the gingerbread dough with molasses and spice; 15 minutes. Chill it for 2 hours.\n\nOrder\nThe oven runs one pan at a time, in this order: chocolate chip, sugar, gingerbread. Nothing goes in until its dough is cut and a cool pan is free.\n\nBaking\nHeat the oven to 350\u00b0F; 15 minutes. Scoop the chocolate chip dough onto the first pan; 6 minutes. Bake it for 11 minutes. Slide the pan onto a rack and let it cool for 12 minutes before you touch the cookies, and let the pan itself cool for 20 minutes before it goes back in.\n\nRoll and cut the chilled sugar cookies onto the second pan; 14 minutes. Bake for 9 minutes as soon as the chocolate chip pan is out. Let the sugar cookies cool on the rack for 10 minutes; the second pan needs its own 20 minutes before anything else touches it.\n\nRoll the gingerbread a quarter inch thick and cut it out; 18 minutes. Bake for 10 minutes once the sugar cookies are out and the first pan has cooled. Cool the gingerbread for 15 minutes. Ice the gingerbread when it is cold; 25 minutes.\n\nBox everything; 10 minutes.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Holiday Cookie Batch: Three Doughs, One Oven for three doughs, roughly a hundred cookies",
+            "finish_at": null,
+            "constraints": "one stand mixer, one oven, two sheet pans that must cool between batches, one baker",
+            "vertical": "kitchen",
+            "turn": "T2",
+            "kind": "recipe"
+          },
+          "T3 extraction": {
+            "goal": "Holiday Cookie Batch: Three Doughs, One Oven for three doughs, roughly a hundred cookies",
+            "finish_at": null,
+            "constraints": "one stand mixer, one oven, two sheet pans that must cool between batches, one baker",
+            "vertical": "kitchen",
+            "turn": "T3",
+            "kind": "recipe",
+            "environment": "a kitchen where you have: one stand mixer, one oven, two sheet pans that must cool between batches, one baker",
+            "deadline": "the earliest time the work allows",
+            "source": "Source text (read all of it):\n<<<\nHoliday Cookie Batch: Three Doughs, One Oven\n\nThree doughs, one stand mixer, one oven and two sheet pans. A pan has to cool before it is reloaded or the next batch spreads, so the oven waits on the pans as often as the pans wait on the oven. One baker, one afternoon, everything boxed by evening.\n\nDoughs\nCream the butter and sugar for the sugar cookies and beat in the flour; 12 minutes in the mixer. Wrap the dough and chill it for 1 hour.\nWash the bowl, then make the chocolate chip dough the same way; 12 minutes. That one goes straight onto a pan.\nWash the bowl again and make the gingerbread dough with molasses and spice; 15 minutes. Chill it for 2 hours.\n\nOrder\nThe oven runs one pan at a time, in this order: chocolate chip, sugar, gingerbread. Nothing goes in until its dough is cut and a cool pan is free.\n\nBaking\nHeat the oven to 350\u00b0F; 15 minutes. Scoop the chocolate chip dough onto the first pan; 6 minutes. Bake it for 11 minutes. Slide the pan onto a rack and let it cool for 12 minutes before you touch the cookies, and let the pan itself cool for 20 minutes before it goes back in.\n\nRoll and cut the chilled sugar cookies onto the second pan; 14 minutes. Bake for 9 minutes as soon as the chocolate chip pan is out. Let the sugar cookies cool on the rack for 10 minutes; the second pan needs its own 20 minutes before anything else touches it.\n\nRoll the gingerbread a quarter inch thick and cut it out; 18 minutes. Bake for 10 minutes once the sugar cookies are out and the first pan has cooled. Cool the gingerbread for 15 minutes. Ice the gingerbread when it is cold; 25 minutes.\n\nBox everything; 10 minutes.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Holiday Cookie Batch: Three Doughs, One Oven for three doughs, roughly a hundred cookies",
+            "finish_at": null,
+            "constraints": "one stand mixer, one oven, two sheet pans that must cool between batches, one baker",
+            "vertical": "kitchen",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or cook_recipe",
+            "finishAtArg": ""
+          }
+        }
+      },
+      "error": "no JSON object with a `tracks` array was found in the reply"
+    }
+  ],
+  "missing": [
+    "kitchen-holiday-cookie-batch"
+  ]
+}

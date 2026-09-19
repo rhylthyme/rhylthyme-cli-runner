@@ -1,0 +1,444 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "sandwich-elisa-two-plates",
+  "name": "Sandwich ELISA on Two Plates",
+  "environmentType": "laboratory",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "reagents",
+      "name": "Reagent Preparation",
+      "steps": [
+        {
+          "stepId": "make-standard-curve",
+          "name": "Make standard curve",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "make up the seven-point standard curve in assay diluent; 30 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "dilute-samples",
+          "name": "Dilute samples",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "make-standard-curve"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Dilute the samples 1:4 into assay diluent and lay out the plate map; 30 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "plate-1",
+      "name": "Plate 1",
+      "steps": [
+        {
+          "stepId": "wash-p1-1",
+          "name": "Wash plate 1 (initial)",
+          "task": "washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "dilute-samples"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Wash the plate four times with 300 µL of wash buffer; 5 minutes on the washer.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "block-p1",
+          "name": "Block plate 1",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-p1-1"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Block with 200 µL per well of assay diluent for 1 hour at 37 °C.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "wash-p1-2",
+          "name": "Wash plate 1 (post-block)",
+          "task": "washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "block-p1"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Wash four times; 5 minutes on the washer.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "incubate-p1-samples",
+          "name": "Incubate plate 1 samples",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 7200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-p1-2"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Add 100 µL of standards and samples and incubate for 2 hours at 37 °C.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "wash-p1-3",
+          "name": "Wash plate 1 (post-incubation)",
+          "task": "washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "incubate-p1-samples"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Wash four times; 5 minutes on the washer.",
+              "occurrence": 2
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "incubate-p1-detection",
+          "name": "Incubate plate 1 detection antibody",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-p1-3"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Add 100 µL of biotinylated detection antibody and incubate for 1 hour at 37 °C.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "wash-p1-4",
+          "name": "Wash plate 1 (final)",
+          "task": "washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "incubate-p1-detection"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Wash four times; 5 minutes on the washer.",
+              "occurrence": 3
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "develop-p1",
+          "name": "Develop plate 1",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-p1-4"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "develop in the dark for exactly 15 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "read-p1",
+          "name": "Read plate 1",
+          "task": "reader",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "develop-p1"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Read the absorbance at 450 nm with a 570 nm reference; 5 minutes on the reader.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "plate-2",
+      "name": "Plate 2",
+      "steps": [
+        {
+          "stepId": "wash-p2-1",
+          "name": "Wash plate 2 (initial)",
+          "task": "washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 5400
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Wash plate 2 four times as soon as the washer is free; 5 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "block-p2",
+          "name": "Block plate 2",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-p2-1"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Block plate 2 with 200 µL of assay diluent for 1 hour at 37 °C.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "wash-p2-2",
+          "name": "Wash plate 2 (post-block)",
+          "task": "washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "block-p2"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Wash plate 2 again once plate 1 is off the washer; 5 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "incubate-p2-samples",
+          "name": "Incubate plate 2 samples",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 7200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-p2-2"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Add the standards and samples to plate 2 and incubate for 2 hours at 37 °C.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "wash-p2-3",
+          "name": "Wash plate 2 (post-incubation)",
+          "task": "washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "incubate-p2-samples"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Wash plate 2; 5 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "incubate-p2-detection",
+          "name": "Incubate plate 2 detection antibody",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-p2-3"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Add the detection antibody to plate 2 and incubate for 1 hour at 37 °C.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "wash-p2-4",
+          "name": "Wash plate 2 (final)",
+          "task": "washer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "incubate-p2-detection"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Wash plate 2 a final time; 5 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "develop-p2",
+          "name": "Develop plate 2",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-p2-4"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Develop plate 2 with TMB for exactly 15 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "read-p2",
+          "name": "Read plate 2",
+          "task": "reader",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "develop-p2"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Read plate 2 at 450 nm; 5 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "washer",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "incubator",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "reader",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "bench",
+      "maxConcurrent": 1
+    }
+  ]
+}

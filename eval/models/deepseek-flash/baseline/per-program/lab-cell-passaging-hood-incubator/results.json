@@ -1,0 +1,342 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "deepseek-flash",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/baseline/cache",
+    "limit": null,
+    "only": [
+      "lab-cell-passaging-hood-incubator"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 3,
+      "input_tokens": 13899,
+      "output_tokens": 38051,
+      "cost_usd": 0.0498309,
+      "fix_iterations": 2
+    },
+    "generated_at": "2026-09-19T17:02:14+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.19047619047619047,
+    "steps_f1": 0.32,
+    "durations_accuracy": 1.0,
+    "resources_precision": 1.0,
+    "resources_recall": 0.8333333333333334,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.75,
+    "relationships_recall": 0.11538461538461539,
+    "relationships_f1": 0.19999999999999998,
+    "structure_rand_index": 1.0,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.6666666666666666
+  },
+  "programs": [
+    {
+      "slug": "lab-cell-passaging-hood-incubator",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.19047619047619047,
+        "steps_f1": 0.32,
+        "durations_accuracy": 1.0,
+        "resources_precision": 1.0,
+        "resources_recall": 0.8333333333333334,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.75,
+        "relationships_recall": 0.11538461538461539,
+        "relationships_f1": 0.19999999999999998,
+        "structure_rand_index": 1.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.6666666666666666
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.19047619047619047,
+        "f1": 0.32,
+        "tp": 4,
+        "n_gold": 21,
+        "n_pred": 4
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 4,
+        "total": 4
+      },
+      "resources": {
+        "precision": 1.0,
+        "recall": 0.8333333333333334,
+        "f1": 0.9090909090909091,
+        "tp": 5,
+        "n_gold": 6,
+        "n_pred": 5
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.75,
+        "recall": 0.11538461538461539,
+        "f1": 0.19999999999999998,
+        "tp": 3,
+        "n_gold": 26,
+        "n_pred": 4
+      },
+      "structure": {
+        "rand_index": 1.0,
+        "agreements": 6,
+        "pairs": 6,
+        "n_steps": 4
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 76260.0,
+        "pred_makespan": 61800.0,
+        "makespan_ok": false,
+        "gold_critical_path": [
+          "warm-reagents",
+          "a-rinse",
+          "a-trypsinise",
+          "a-neutralise",
+          "a-spin",
+          "a-resuspend",
+          "a-count",
+          "b-count",
+          "b-seed",
+          "b-settle"
+        ],
+        "pred_critical_path": [
+          "prep-cabinet",
+          "check-confluence",
+          "rinse-pbs",
+          "trypsinise",
+          "neutralise",
+          "spin",
+          "resuspend",
+          "count-cells",
+          "seed-flasks",
+          "settle-overnight",
+          "wipe-down",
+          "culture-log"
+        ],
+        "js_critical_path": [
+          "prep-cabinet",
+          "check-confluence",
+          "rinse-pbs-r1",
+          "trypsinise-r1",
+          "neutralise-r1",
+          "spin-r1",
+          "resuspend-r1",
+          "count-cells-r1",
+          "seed-flasks-r1",
+          "settle-overnight",
+          "wipe-down",
+          "culture-log"
+        ],
+        "js_makespan": 61800,
+        "critical_overlap": 0.4,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.6666666666666666,
+      "unsupported_steps": [
+        "prep-cabinet",
+        "check-confluence",
+        "rinse-pbs",
+        "count-cells",
+        "seed-flasks",
+        "settle-overnight",
+        "wipe-down",
+        "culture-log"
+      ],
+      "matching": [
+        {
+          "gold": "a-trypsinise",
+          "predicted": "trypsinise",
+          "by": "name"
+        },
+        {
+          "gold": "a-neutralise",
+          "predicted": "neutralise",
+          "by": "name"
+        },
+        {
+          "gold": "a-spin",
+          "predicted": "spin",
+          "by": "name"
+        },
+        {
+          "gold": "a-resuspend",
+          "predicted": "resuspend",
+          "by": "name"
+        },
+        {
+          "gold": "warm-reagents",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "clean-cabinet",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "inspect-flasks",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-rinse",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-count",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-seed",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-settle",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rinse",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-trypsinise",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-neutralise",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-spin",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-resuspend",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-count",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-seed",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-settle",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "clean-down",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "log-passage",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "prep-cabinet",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "check-confluence",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "rinse-pbs",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "count-cells",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "seed-flasks",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "settle-overnight",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "wipe-down",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "culture-log",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "deepseek-flash",
+        "pattern": "baseline",
+        "calls": 3,
+        "input_tokens": 13899,
+        "output_tokens": 38051,
+        "cost_usd": 0.0498309,
+        "cache_keys": [
+          "6ccdf604e556293419a4bf93a686b50811a0fb9a59bd4d3023f846ba77b4d354",
+          "1a9325f9601d001d35dfddea07a6ecbd5da5d9d15ec2471b24ca98113be5019b",
+          "2da5774dd46299e532fec4f41feaed0af0da89e487f123edb7c4c1945ae3ea92"
+        ],
+        "fix_iterations": 2,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/baseline/per-program/lab-cell-passaging-hood-incubator/responses/lab-cell-passaging-hood-incubator.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/baseline/per-program/lab-cell-passaging-hood-incubator/predicted/lab-cell-passaging-hood-incubator.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Passaging Two Flasks of Adherent HEK293 Cells for two T75 flasks split 1:6 into four, following the source text below",
+            "finish_at": null,
+            "constraints": "one biosafety cabinet, one 37 \u00b0C water bath, one CO\u2082 incubator, one benchtop centrifuge, one microscope with haemocytometer, one operator",
+            "vertical": "lab"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

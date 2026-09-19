@@ -1,0 +1,106 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "hiit-circuit-card",
+  "name": "HIIT Circuit Card",
+  "description": "3 athletes, 4 stations, 4 rounds of intense circuit training.",
+  "environmentType": "gym",
+  "actors": 3,
+  "tracks": [
+    {
+      "trackId": "warmup-cooldown",
+      "name": "General",
+      "steps": [
+        {
+          "stepId": "warmup",
+          "name": "Warm-up",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "cooldown",
+          "name": "Cooldown",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "circuit-barrier"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "athletes",
+      "name": "Athletes",
+      "steps": [
+        {
+          "stepId": "round-work",
+          "name": "Station Work",
+          "task": "equipment",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "replicates": {
+            "count": 12,
+            "mode": "serial"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warmup"
+          }
+        },
+        {
+          "stepId": "rest",
+          "name": "Rest",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "round-work",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "circuit-barrier",
+          "name": "Circuit End",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 0
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest",
+            "instances": "all"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "floor",
+      "maxConcurrent": 3
+    },
+    {
+      "task": "equipment",
+      "maxConcurrent": 3
+    }
+  ],
+  "metadata": {
+    "serves": "3 athletes",
+    "attribution": "HIIT Circuit Card"
+  }
+}

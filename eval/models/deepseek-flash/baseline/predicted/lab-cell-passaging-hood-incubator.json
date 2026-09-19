@@ -1,0 +1,204 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "hek293-passaging-two-flasks",
+  "name": "Passaging two T75 flasks of adherent HEK293 (1:6 into four)",
+  "description": "Two T75 flasks at ~90% confluence, split 1:6 into four new flasks. The per-flask chain (rinse, trypsinise, neutralise, spin, resuspend, count, seed) is ONE replicated step chain: count 2, so flask B releases the moment flask A leaves the cabinet. The cabinet, centrifuge and microscope are single-occupancy (maxConcurrent 1) and do the queueing; the CO2 incubator holds both flasks at once (maxConcurrent 2). One operator. Target: both pairs seeded within ~1 h, then >=16 h settling, then cleanup and log.",
+  "environmentType": "laboratory",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "culture",
+      "name": "Culture work — cabinet, incubator, centrifuge, microscope",
+      "steps": [
+        {
+          "stepId": "prep-cabinet",
+          "name": "Wipe cabinet, lay out pipettes and tubes, run blower",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "check-confluence",
+          "name": "Check both flasks for confluence and contamination",
+          "task": "microscope",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep-cabinet"
+          }
+        },
+        {
+          "stepId": "rinse-pbs",
+          "name": "Aspirate spent medium, rinse monolayer with 5 mL PBS",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "replicates": {
+            "count": 2,
+            "mode": "parallel"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "check-confluence"
+          }
+        },
+        {
+          "stepId": "trypsinise",
+          "name": "Add 2 mL trypsin-EDTA, rock flask, incubate 5 min",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rinse-pbs",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "neutralise",
+          "name": "Knock flask, check detachment, neutralise with 8 mL medium",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "trypsinise",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "spin",
+          "name": "Transfer to 15 mL tube, spin 300 x g for 5 min",
+          "task": "centrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "neutralise",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "resuspend",
+          "name": "Aspirate supernatant, resuspend pellet in 10 mL fresh medium",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "spin",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "count-cells",
+          "name": "Count cells on haemocytometer",
+          "task": "microscope",
+          "duration": {
+            "type": "fixed",
+            "seconds": 360
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "resuspend",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "seed-flasks",
+          "name": "Seed two new T75 flasks at 1:6 and label them",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": 360
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "count-cells",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "settle-overnight",
+          "name": "Return all four new flasks to the incubator to settle (>=16 h)",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 57600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "seed-flasks",
+            "instances": "all"
+          }
+        },
+        {
+          "stepId": "wipe-down",
+          "name": "Wipe cabinet down, discard waste, blower to standby",
+          "task": "cabinet",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "settle-overnight"
+          }
+        },
+        {
+          "stepId": "culture-log",
+          "name": "Log passage number, split ratio and counts",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wipe-down"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "cabinet",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "centrifuge",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "microscope",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "incubator",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "bench",
+      "maxConcurrent": 1
+    }
+  ]
+}

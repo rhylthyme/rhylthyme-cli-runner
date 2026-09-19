@@ -1,0 +1,394 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "gemini-3.1-flash-lite",
+    "pattern": "four-turn",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/four-turn/cache",
+    "limit": null,
+    "only": [
+      "fitness-hiit-circuit-intervals"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 4,
+      "input_tokens": 25415,
+      "output_tokens": 2641,
+      "cost_usd": 0.01031525,
+      "fix_iterations": 0
+    },
+    "generated_at": "2026-09-19T17:12:56+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 0.3333333333333333,
+    "steps_recall": 0.07407407407407407,
+    "steps_f1": 0.12121212121212122,
+    "durations_accuracy": 1.0,
+    "resources_precision": 1.0,
+    "resources_recall": 1.0,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.16666666666666666,
+    "relationships_recall": 0.024390243902439025,
+    "relationships_f1": 0.0425531914893617,
+    "structure_rand_index": 1.0,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.3333333333333333
+  },
+  "programs": [
+    {
+      "slug": "fitness-hiit-circuit-intervals",
+      "headline": {
+        "steps_precision": 0.3333333333333333,
+        "steps_recall": 0.07407407407407407,
+        "steps_f1": 0.12121212121212122,
+        "durations_accuracy": 1.0,
+        "resources_precision": 1.0,
+        "resources_recall": 1.0,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.16666666666666666,
+        "relationships_recall": 0.024390243902439025,
+        "relationships_f1": 0.0425531914893617,
+        "structure_rand_index": 1.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.3333333333333333
+      },
+      "steps": {
+        "precision": 0.3333333333333333,
+        "recall": 0.07407407407407407,
+        "f1": 0.12121212121212122,
+        "tp": 2,
+        "n_gold": 27,
+        "n_pred": 6
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 2,
+        "total": 2
+      },
+      "resources": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 5,
+        "n_gold": 5,
+        "n_pred": 5
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.16666666666666666,
+        "recall": 0.024390243902439025,
+        "f1": 0.0425531914893617,
+        "tp": 1,
+        "n_gold": 41,
+        "n_pred": 6
+      },
+      "structure": {
+        "rand_index": 1.0,
+        "agreements": 1,
+        "pairs": 1,
+        "n_steps": 2
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 1320.0,
+        "pred_makespan": 1320.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "a-warmup",
+          "a-rower-r1",
+          "a-rest-r1",
+          "a-kettlebell-r2",
+          "a-rest-r2",
+          "a-box-r3",
+          "a-rest-r3",
+          "a-sled-r4",
+          "a-cooldown"
+        ],
+        "pred_critical_path": [
+          "warmup-a",
+          "r1-row",
+          "r1-rest",
+          "r2-kb",
+          "r2-rest",
+          "r3-box",
+          "r3-rest",
+          "r4-sled",
+          "cooldown"
+        ],
+        "js_critical_path": [
+          "warmup-a",
+          "r1-row",
+          "r1-rest",
+          "r2-kb",
+          "r2-rest",
+          "r3-box",
+          "r3-rest",
+          "r4-sled",
+          "cooldown"
+        ],
+        "js_makespan": 1320,
+        "critical_overlap": 0.2222222222222222,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.3333333333333333,
+      "unsupported_steps": [
+        "r2-kb",
+        "r3-box",
+        "r4-sled"
+      ],
+      "matching": [
+        {
+          "gold": "a-warmup",
+          "predicted": "warmup-a",
+          "by": "span"
+        },
+        {
+          "gold": "a-cooldown",
+          "predicted": "cooldown",
+          "by": "span"
+        },
+        {
+          "gold": "a-rower-r1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-rest-r1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-kettlebell-r2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-rest-r2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-box-r3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-rest-r3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-sled-r4",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-warmup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-kettlebell-r1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rest-r1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-box-r2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rest-r2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-sled-r3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rest-r3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rower-r4",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-cooldown",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-warmup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-box-r1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-rest-r1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-sled-r2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-rest-r2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-rower-r3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-rest-r3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-kettlebell-r4",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-cooldown",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "r1-row",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "r1-rest",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "r2-kb",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "r2-rest",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "r3-box",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "r3-rest",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "r4-sled",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "gemini-3.1-flash-lite",
+        "pattern": "four-turn",
+        "calls": 4,
+        "input_tokens": 25415,
+        "output_tokens": 2641,
+        "cost_usd": 0.01031525,
+        "cache_keys": [
+          "510fb34e26ba5c5391eec505d64e5ad5ae3dc51e4d72052866a8e6a149b5aaa7",
+          "c68c6199842d911f2c7e3c7837994122e75bffdd3b277ea48713d195bfd7ceed",
+          "45c8b70e12abc78ba4dd2084a4882d6ffdcf12ed1ed7e370fff62a49e7ac0de5",
+          "4c849b32280a099ab170ed5ee04ed1d98bf3508958acd94ebca3579b42ba631c"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/four-turn/per-program/fitness-hiit-circuit-intervals/responses/fitness-hiit-circuit-intervals.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/four-turn/per-program/fitness-hiit-circuit-intervals/predicted/fitness-hiit-circuit-intervals.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 7,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "HIIT Circuit Card \u2014 three athletes, four stations for 3 athletes, 4 rounds",
+            "finish_at": null,
+            "constraints": "one rower, one kettlebell, one box, one sled, three athletes on the floor",
+            "vertical": "gym",
+            "turn": "T1",
+            "kind": "workout",
+            "constraintsLine": "Resource limits: one rower, one kettlebell, one box, one sled, three athletes on the floor.",
+            "deadlineLine": "No finishing time was given; finish as early as the work allows.",
+            "source": "Source text (read all of it):\n<<<\nHIIT Circuit Card \u2014 three athletes, four stations\n\nSmall group session, forty-five minutes on the clock including the warm-up and the stretch. There is one rower, one kettlebell, one box and one sled in the corner of the gym, and three of you. That means one station sits empty every round, and it means nobody ever waits on equipment if the rotation is respected.\n\nThe rule\nSixty seconds of work, all out, then sixty seconds of rest. Nobody starts a station until the athlete ahead of them has left it. If you are early, stand at the station and breathe; do not start.\n\nWarm-up\nFive minutes on the floor together: skipping, hip openers, shoulder pass-throughs, two sets of ten air squats. All three of you start at the same time and finish at the same time.\n\nThe stations\nRower: damper on five, pull hard, do not chase the split on the last ten seconds.\nKettlebell swings: one bell, hips not arms, chest tall at the top.\nBox step-overs: alternate the lead leg, full extension at the top, no rebound.\nSled push: the length of the turf and back, low hands, short steps.\n\nThe rotation\nRound 1: A on the rower, B on the kettlebell, C on the box.\nRound 2: A on the kettlebell, B on the box, C on the sled.\nRound 3: A on the box, B on the sled, C on the rower.\nRound 4: A on the sled, B on the rower, C on the kettlebell.\n\nRest\nSixty seconds of rest on the floor after every station. Walk it off, do not sit down, do not lean on the next piece of equipment while somebody is still using it. There is no rest after the fourth station: that one runs straight into the cooldown.\n\nCooldown\nTen minutes on the floor when all three of you have finished the fourth station: easy bike or a walk, then quads, hips and thoracic spine. Nobody leaves early; the cooldown starts together.\n\nCoach's note\nThe sled is the one that wrecks the rotation if somebody drags it. It is the longest reset and it is at the far end of the turf, so the athlete coming off the sled is the one most likely to hold up the person behind them. Watch that hand-off.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "HIIT Circuit Card \u2014 three athletes, four stations for 3 athletes, 4 rounds",
+            "finish_at": null,
+            "constraints": "one rower, one kettlebell, one box, one sled, three athletes on the floor",
+            "vertical": "gym",
+            "turn": "T2",
+            "kind": "workout"
+          },
+          "T3 extraction": {
+            "goal": "HIIT Circuit Card \u2014 three athletes, four stations for 3 athletes, 4 rounds",
+            "finish_at": null,
+            "constraints": "one rower, one kettlebell, one box, one sled, three athletes on the floor",
+            "vertical": "gym",
+            "turn": "T3",
+            "kind": "workout",
+            "environment": "a gym where you have: one rower, one kettlebell, one box, one sled, three athletes on the floor",
+            "deadline": "the earliest time the work allows",
+            "source": "Source text (read all of it):\n<<<\nHIIT Circuit Card \u2014 three athletes, four stations\n\nSmall group session, forty-five minutes on the clock including the warm-up and the stretch. There is one rower, one kettlebell, one box and one sled in the corner of the gym, and three of you. That means one station sits empty every round, and it means nobody ever waits on equipment if the rotation is respected.\n\nThe rule\nSixty seconds of work, all out, then sixty seconds of rest. Nobody starts a station until the athlete ahead of them has left it. If you are early, stand at the station and breathe; do not start.\n\nWarm-up\nFive minutes on the floor together: skipping, hip openers, shoulder pass-throughs, two sets of ten air squats. All three of you start at the same time and finish at the same time.\n\nThe stations\nRower: damper on five, pull hard, do not chase the split on the last ten seconds.\nKettlebell swings: one bell, hips not arms, chest tall at the top.\nBox step-overs: alternate the lead leg, full extension at the top, no rebound.\nSled push: the length of the turf and back, low hands, short steps.\n\nThe rotation\nRound 1: A on the rower, B on the kettlebell, C on the box.\nRound 2: A on the kettlebell, B on the box, C on the sled.\nRound 3: A on the box, B on the sled, C on the rower.\nRound 4: A on the sled, B on the rower, C on the kettlebell.\n\nRest\nSixty seconds of rest on the floor after every station. Walk it off, do not sit down, do not lean on the next piece of equipment while somebody is still using it. There is no rest after the fourth station: that one runs straight into the cooldown.\n\nCooldown\nTen minutes on the floor when all three of you have finished the fourth station: easy bike or a walk, then quads, hips and thoracic spine. Nobody leaves early; the cooldown starts together.\n\nCoach's note\nThe sled is the one that wrecks the rotation if somebody drags it. It is the longest reset and it is at the far end of the turf, so the athlete coming off the sled is the one most likely to hold up the person behind them. Watch that hand-off.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "HIIT Circuit Card \u2014 three athletes, four stations for 3 athletes, 4 rounds",
+            "finish_at": null,
+            "constraints": "one rower, one kettlebell, one box, one sled, three athletes on the floor",
+            "vertical": "gym",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or start_workout",
+            "finishAtArg": ""
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

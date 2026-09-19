@@ -1,0 +1,345 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "gemini-3.1-flash-lite",
+    "pattern": "four-turn",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/four-turn/cache",
+    "limit": null,
+    "only": [
+      "event-wedding-reception-timeline"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 5,
+      "input_tokens": 39920,
+      "output_tokens": 7834,
+      "cost_usd": 0.021731,
+      "fix_iterations": 1
+    },
+    "generated_at": "2026-09-19T17:16:52+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 1.0,
+    "steps_f1": 1.0,
+    "durations_accuracy": 1.0,
+    "resources_precision": 0.4,
+    "resources_recall": 0.2857142857142857,
+    "actors_accuracy": 0.0,
+    "relationships_precision": 0.6842105263157895,
+    "relationships_recall": 0.6842105263157895,
+    "relationships_f1": 0.6842105263157895,
+    "structure_rand_index": 0.8245614035087719,
+    "end_to_end_pass": 1.0,
+    "unsupported_rate": 0.05
+  },
+  "programs": [
+    {
+      "slug": "event-wedding-reception-timeline",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 1.0,
+        "steps_f1": 1.0,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.4,
+        "resources_recall": 0.2857142857142857,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.6842105263157895,
+        "relationships_recall": 0.6842105263157895,
+        "relationships_f1": 0.6842105263157895,
+        "structure_rand_index": 0.8245614035087719,
+        "end_to_end_pass": 1.0,
+        "unsupported_rate": 0.05
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 19,
+        "n_gold": 19,
+        "n_pred": 19
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 19,
+        "total": 19
+      },
+      "resources": {
+        "precision": 0.4,
+        "recall": 0.2857142857142857,
+        "f1": 0.3333333333333333,
+        "tp": 2,
+        "n_gold": 7,
+        "n_pred": 5
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.6842105263157895,
+        "recall": 0.6842105263157895,
+        "f1": 0.6842105263157895,
+        "tp": 13,
+        "n_gold": 19,
+        "n_pred": 19
+      },
+      "structure": {
+        "rand_index": 0.8245614035087719,
+        "agreements": 141,
+        "pairs": 171,
+        "n_steps": 19
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 23400.0,
+        "pred_makespan": 24600.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "flip-room",
+          "dress-tables",
+          "seat-guests",
+          "plate-starters",
+          "serve-starters",
+          "clear-starters",
+          "plate-mains",
+          "serve-mains",
+          "clear-mains",
+          "first-dance",
+          "speeches",
+          "cake-cut",
+          "plate-dessert",
+          "serve-dessert",
+          "dancing"
+        ],
+        "pred_critical_path": [
+          "setup-bar",
+          "pass-canapes",
+          "call-room",
+          "seat-guests",
+          "plate-starters",
+          "serve-starters",
+          "clear-starters",
+          "plate-mains",
+          "serve-mains",
+          "clear-mains",
+          "first-dance",
+          "speeches",
+          "cut-cake",
+          "hold-dessert",
+          "plate-dessert",
+          "serve-dessert",
+          "dancing"
+        ],
+        "js_critical_path": [
+          "setup-bar",
+          "pass-canapes",
+          "call-room",
+          "seat-guests",
+          "plate-starters",
+          "serve-starters",
+          "clear-starters",
+          "plate-mains",
+          "serve-mains",
+          "clear-mains",
+          "first-dance",
+          "speeches",
+          "cut-cake",
+          "hold-dessert",
+          "plate-dessert",
+          "serve-dessert",
+          "dancing"
+        ],
+        "js_makespan": 24600,
+        "critical_overlap": 0.8666666666666667,
+        "critical_ok": true,
+        "passed": true
+      },
+      "unsupported_rate": 0.05,
+      "unsupported_steps": [
+        "hold-dessert"
+      ],
+      "matching": [
+        {
+          "gold": "flip-room",
+          "predicted": "room-flip",
+          "by": "span"
+        },
+        {
+          "gold": "dress-tables",
+          "predicted": "dress-tables",
+          "by": "span"
+        },
+        {
+          "gold": "seat-guests",
+          "predicted": "seat-guests",
+          "by": "span"
+        },
+        {
+          "gold": "open-bar",
+          "predicted": "setup-bar",
+          "by": "span"
+        },
+        {
+          "gold": "pass-canapes",
+          "predicted": "pass-canapes",
+          "by": "span"
+        },
+        {
+          "gold": "call-to-dinner",
+          "predicted": "call-room",
+          "by": "span"
+        },
+        {
+          "gold": "plate-starters",
+          "predicted": "plate-starters",
+          "by": "span"
+        },
+        {
+          "gold": "plate-mains",
+          "predicted": "plate-mains",
+          "by": "span"
+        },
+        {
+          "gold": "plate-dessert",
+          "predicted": "plate-dessert",
+          "by": "span"
+        },
+        {
+          "gold": "serve-starters",
+          "predicted": "serve-starters",
+          "by": "span"
+        },
+        {
+          "gold": "clear-starters",
+          "predicted": "clear-starters",
+          "by": "span"
+        },
+        {
+          "gold": "serve-mains",
+          "predicted": "serve-mains",
+          "by": "span"
+        },
+        {
+          "gold": "clear-mains",
+          "predicted": "clear-mains",
+          "by": "span"
+        },
+        {
+          "gold": "serve-dessert",
+          "predicted": "serve-dessert",
+          "by": "span"
+        },
+        {
+          "gold": "welcome-toast",
+          "predicted": "welcome-toast",
+          "by": "span"
+        },
+        {
+          "gold": "first-dance",
+          "predicted": "first-dance",
+          "by": "span"
+        },
+        {
+          "gold": "speeches",
+          "predicted": "speeches",
+          "by": "span"
+        },
+        {
+          "gold": "cake-cut",
+          "predicted": "cut-cake",
+          "by": "span"
+        },
+        {
+          "gold": "dancing",
+          "predicted": "dancing",
+          "by": "span"
+        },
+        {
+          "gold": null,
+          "predicted": "hold-dessert",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "gemini-3.1-flash-lite",
+        "pattern": "four-turn",
+        "calls": 5,
+        "input_tokens": 39920,
+        "output_tokens": 7834,
+        "cost_usd": 0.021731,
+        "cache_keys": [
+          "630785de8b8009a1ac5d52a86f8244bcacfca7394b6283c9da45c49ac0d6e38e",
+          "fcedf4d39ad70d978e56cfda1c654cfe810c3c650823f376d250582e6ae0d2d0",
+          "fafc6648e4bda4a89e6ff49ae2364420a27d489b4597d589ea68fc526aaf8183",
+          "c84150823470646a198ed84a902771dcf626c0af4c87ced72364d833617b4f34",
+          "a6f6a2714b2ceb84483be721d6c18d4389f18c22c4ed930fd6fbcd7d3566a397"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/four-turn/per-program/event-wedding-reception-timeline/responses/event-wedding-reception-timeline.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/four-turn/per-program/event-wedding-reception-timeline/predicted/event-wedding-reception-timeline.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 19,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Wedding Reception Run Sheet \u2014 Ashgrove Barn for 90 guests, three courses",
+            "finish_at": "band's last set",
+            "constraints": "one kitchen pass, one bar, one microphone, two servers on the floor, one dance floor",
+            "vertical": "events",
+            "turn": "T1",
+            "kind": "run-of-show",
+            "constraintsLine": "Resource limits: one kitchen pass, one bar, one microphone, two servers on the floor, one dance floor.",
+            "deadlineLine": "Everything must be finished by band's last set.",
+            "source": "Source text (read all of it):\n<<<\nWedding Reception Run Sheet \u2014 Ashgrove Barn, 90 guests\n\nThe ceremony breaks at four o'clock and this sheet starts there. One kitchen pass, one bar, one microphone, two servers on the floor, one band. The planner owns the room call; the MC owns everything that goes through the microphone. Nothing on the pass overlaps: the kitchen plates one course at a time and the floor waits for it.\n\nRoom\nFlip the ceremony room to reception seating: 45 minutes, chairs out, rounds in, linen on.\nDress the tables with centrepieces, place cards and candles; 15 minutes once the flip is done.\nSeat the guests when the planner calls the room; 15 minutes to get 90 people down.\n\nFoyer\nOpen the bar as soon as the ceremony breaks; 20 minutes to set and pour the first round.\nPass canapes in the foyer from twenty minutes in, and keep passing for forty minutes to an hour, however long the photographs take.\nCall the room to dinner once the canapes are done; 5 minutes.\n\nKitchen\nStarters plate up fifteen minutes after the room starts seating; 15 minutes on the pass.\nMains go on the pass five minutes after the starter plates are cleared; 30 minutes.\nDessert plates up the moment the cake is cut; 15 minutes.\n\nFloor\nServe the starters; 10 minutes.\nClear the starters twenty minutes after they go out; 10 minutes.\nServe the mains; 15 minutes.\nClear the mains forty minutes after they go out; 10 minutes.\nServe the dessert; 10 minutes.\n\nProgramme\nWelcome toast as soon as the guests are seated; 5 minutes on the microphone.\nFirst dance once the main plates are cleared; 5 minutes.\nSpeeches when the MC cues them: two or three of them, fifteen minutes total, twenty-five at the outside.\nCut the cake straight after the speeches; 10 minutes.\nDancing starts ten minutes after the dessert is served and runs until the band's last set.\n\nNotes for the day\nThe photographs are the only thing we do not control, so the canape window is the slack in the sheet: if the couple are late back from the orchard the bar carries it. Everything downstream of the room call is fixed. If the speeches run long, the kitchen holds the dessert rather than plating it early \u2014 the pass is the bottleneck and a plated dessert sitting under a lamp is worse than a five minute gap on the floor.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Wedding Reception Run Sheet \u2014 Ashgrove Barn for 90 guests, three courses",
+            "finish_at": "band's last set",
+            "constraints": "one kitchen pass, one bar, one microphone, two servers on the floor, one dance floor",
+            "vertical": "events",
+            "turn": "T2",
+            "kind": "run-of-show"
+          },
+          "T3 extraction": {
+            "goal": "Wedding Reception Run Sheet \u2014 Ashgrove Barn for 90 guests, three courses",
+            "finish_at": "band's last set",
+            "constraints": "one kitchen pass, one bar, one microphone, two servers on the floor, one dance floor",
+            "vertical": "events",
+            "turn": "T3",
+            "kind": "run-of-show",
+            "environment": "a venue where you have: one kitchen pass, one bar, one microphone, two servers on the floor, one dance floor",
+            "deadline": "band's last set",
+            "source": "Source text (read all of it):\n<<<\nWedding Reception Run Sheet \u2014 Ashgrove Barn, 90 guests\n\nThe ceremony breaks at four o'clock and this sheet starts there. One kitchen pass, one bar, one microphone, two servers on the floor, one band. The planner owns the room call; the MC owns everything that goes through the microphone. Nothing on the pass overlaps: the kitchen plates one course at a time and the floor waits for it.\n\nRoom\nFlip the ceremony room to reception seating: 45 minutes, chairs out, rounds in, linen on.\nDress the tables with centrepieces, place cards and candles; 15 minutes once the flip is done.\nSeat the guests when the planner calls the room; 15 minutes to get 90 people down.\n\nFoyer\nOpen the bar as soon as the ceremony breaks; 20 minutes to set and pour the first round.\nPass canapes in the foyer from twenty minutes in, and keep passing for forty minutes to an hour, however long the photographs take.\nCall the room to dinner once the canapes are done; 5 minutes.\n\nKitchen\nStarters plate up fifteen minutes after the room starts seating; 15 minutes on the pass.\nMains go on the pass five minutes after the starter plates are cleared; 30 minutes.\nDessert plates up the moment the cake is cut; 15 minutes.\n\nFloor\nServe the starters; 10 minutes.\nClear the starters twenty minutes after they go out; 10 minutes.\nServe the mains; 15 minutes.\nClear the mains forty minutes after they go out; 10 minutes.\nServe the dessert; 10 minutes.\n\nProgramme\nWelcome toast as soon as the guests are seated; 5 minutes on the microphone.\nFirst dance once the main plates are cleared; 5 minutes.\nSpeeches when the MC cues them: two or three of them, fifteen minutes total, twenty-five at the outside.\nCut the cake straight after the speeches; 10 minutes.\nDancing starts ten minutes after the dessert is served and runs until the band's last set.\n\nNotes for the day\nThe photographs are the only thing we do not control, so the canape window is the slack in the sheet: if the couple are late back from the orchard the bar carries it. Everything downstream of the room call is fixed. If the speeches run long, the kitchen holds the dessert rather than plating it early \u2014 the pass is the bottleneck and a plated dessert sitting under a lamp is worse than a five minute gap on the floor.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Wedding Reception Run Sheet \u2014 Ashgrove Barn for 90 guests, three courses",
+            "finish_at": "band's last set",
+            "constraints": "one kitchen pass, one bar, one microphone, two servers on the floor, one dance floor",
+            "vertical": "events",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or plan_event",
+            "finishAtArg": " with finishAt=\"band's last set\""
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

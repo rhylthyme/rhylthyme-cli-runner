@@ -1,0 +1,197 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "deepseek-flash",
+    "pattern": "four-turn",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/cache",
+    "limit": null,
+    "only": [
+      "lab-microbiology-streak-and-incubate"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 6,
+      "input_tokens": 52386,
+      "output_tokens": 64364,
+      "cost_usd": 0.09295260000000001,
+      "fix_iterations": 2
+    },
+    "generated_at": "2026-09-19T17:38:19+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 0.0,
+    "steps_recall": 0.0,
+    "steps_f1": 0.0,
+    "durations_accuracy": 0.0,
+    "resources_precision": 0.0,
+    "resources_recall": 0.0,
+    "actors_accuracy": 0.0,
+    "relationships_precision": 0.0,
+    "relationships_recall": 0.0,
+    "relationships_f1": 0.0,
+    "structure_rand_index": 0.0,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.0
+  },
+  "programs": [
+    {
+      "slug": "lab-microbiology-streak-and-incubate",
+      "headline": {
+        "steps_precision": 0.0,
+        "steps_recall": 0.0,
+        "steps_f1": 0.0,
+        "durations_accuracy": 0.0,
+        "resources_precision": 0.0,
+        "resources_recall": 0.0,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.0,
+        "relationships_recall": 0.0,
+        "relationships_f1": 0.0,
+        "structure_rand_index": 0.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.0
+      },
+      "steps": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 18,
+        "n_pred": 0
+      },
+      "durations": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 18
+      },
+      "resources": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 5,
+        "n_pred": 0
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 19,
+        "n_pred": 0
+      },
+      "structure": {
+        "rand_index": 0.0,
+        "agreements": 0,
+        "pairs": 0,
+        "n_steps": 0
+      },
+      "end_to_end": {
+        "python_valid": false,
+        "python_errors": [],
+        "js_status": "skipped",
+        "js_valid": null,
+        "js_errors": [],
+        "gold_makespan": 0.0,
+        "pred_makespan": 0.0,
+        "makespan_ok": false,
+        "gold_critical_path": [],
+        "pred_critical_path": [],
+        "js_critical_path": null,
+        "js_makespan": null,
+        "critical_overlap": 0.0,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.0,
+      "unsupported_steps": [],
+      "matching": [],
+      "extras": {
+        "model": "deepseek-flash",
+        "pattern": "four-turn",
+        "calls": 6,
+        "input_tokens": 52386,
+        "output_tokens": 64364,
+        "cost_usd": 0.09295260000000001,
+        "cache_keys": [
+          "fb9da2e6bb6ba794280348997dac539263f3b64d7014e9339731796e3f3e053d",
+          "b28439dd8627965cd9954b6a5124b9fe4670e40f9bb2359b3e284242d5d18564",
+          "6d5c6f78fd78f69b7614b8c8d2cbd1c9df6722ee0445679bed277d655589ff2b",
+          "60bee7304d9cb69b481baaa30f5a77a89db36b7927443b81e452c8dbb141544c",
+          "1a3160daa9ed4c94d2a55770b97ee5716ac8b3a4f23dc57cfdc551b90f4103d0",
+          "9de1d3b40bf3251349b8dcf05fa98ebd5b3a1519ea7b5776acc09d97d46aba58"
+        ],
+        "fix_iterations": 2,
+        "validation_errors": [
+          "no JSON object with a `tracks` array was found in the reply"
+        ],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/per-program/lab-microbiology-streak-and-incubate/responses/lab-microbiology-streak-and-incubate.json",
+        "predicted_path": null,
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 18,
+        "unsupported_step_ids": [
+          "supervisor-signoff"
+        ],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Streaking Three Cultures onto Selective Media for three isolates, one purity plate",
+            "finish_at": null,
+            "constraints": "one loop station at the burner, one 37 \u00b0C incubator shelf holding two plates, one staining rack, one microscope, one technician, a supervisor signs off the readings",
+            "vertical": "lab",
+            "turn": "T1",
+            "kind": "protocol",
+            "constraintsLine": "Resource limits: one loop station at the burner, one 37 \u00b0C incubator shelf holding two plates, one staining rack, one microscope, one technician, a supervisor signs off the readings.",
+            "deadlineLine": "No finishing time was given; finish as early as the work allows.",
+            "source": "Source text (read all of it):\n<<<\nStreaking Three Cultures onto Selective Media\n\nThree overnight broths are streaked for single colonies on selective agar, incubated at 37 \u00b0C and read the next morning. The bench has one Bunsen burner with a single loop station, one 37 \u00b0C incubator with room for two plates on the free shelf, one staining rack and one microscope. One technician works the bench; a supervisor reads the plates before anything is subcultured.\n\nSetup\n1. Wipe the bench with 70 % ethanol and light the burner; 10 minutes.\n2. Label three selective plates with the isolate number, the medium and the date; 10 minutes.\n\nStreaking\n3. Streak isolate 1 for single colonies in four quadrants, flaming the loop between each; 10 minutes.\n4. Streak isolate 2 the same way; 10 minutes.\n5. Streak isolate 3 the same way; 10 minutes.\n6. Invert plates 1 and 2 and put them on the incubator shelf overnight, 16 to 20 hours.\n7. Only two plates fit on the shelf, so hold plate 3 at room temperature on the bench until plate 1 comes out.\n8. Incubate plate 3 at 37 \u00b0C for 6 hours once the shelf is free.\n\nReading\n9. Read plate 1 in the morning: count the colonies, note the colour and record the selective growth; 15 minutes.\n10. Read plate 2 the same way; 15 minutes.\n11. Read plate 3 at the end of its run; 15 minutes.\n\nSubculture and stain\n12. Pick a single well-separated colony from each of plates 1 and 2 into fresh broth; 10 minutes at the loop station.\n13. Do not streak the purity plate until the supervisor has signed off the readings. Streaking it takes 15 minutes.\n14. Incubate the purity plate at 37 \u00b0C for 8 hours.\n15. Make a smear from the picked colony and heat-fix it; 10 minutes.\n16. Gram stain the smear on the rack: crystal violet, iodine, decolourise, safranin; 15 minutes.\n17. Read the stain under oil immersion and record the morphology; 15 minutes.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Streaking Three Cultures onto Selective Media for three isolates, one purity plate",
+            "finish_at": null,
+            "constraints": "one loop station at the burner, one 37 \u00b0C incubator shelf holding two plates, one staining rack, one microscope, one technician, a supervisor signs off the readings",
+            "vertical": "lab",
+            "turn": "T2",
+            "kind": "protocol"
+          },
+          "T3 extraction": {
+            "goal": "Streaking Three Cultures onto Selective Media for three isolates, one purity plate",
+            "finish_at": null,
+            "constraints": "one loop station at the burner, one 37 \u00b0C incubator shelf holding two plates, one staining rack, one microscope, one technician, a supervisor signs off the readings",
+            "vertical": "lab",
+            "turn": "T3",
+            "kind": "protocol",
+            "environment": "a lab where you have: one loop station at the burner, one 37 \u00b0C incubator shelf holding two plates, one staining rack, one microscope, one technician, a supervisor signs off the readings",
+            "deadline": "the earliest time the work allows",
+            "source": "Source text (read all of it):\n<<<\nStreaking Three Cultures onto Selective Media\n\nThree overnight broths are streaked for single colonies on selective agar, incubated at 37 \u00b0C and read the next morning. The bench has one Bunsen burner with a single loop station, one 37 \u00b0C incubator with room for two plates on the free shelf, one staining rack and one microscope. One technician works the bench; a supervisor reads the plates before anything is subcultured.\n\nSetup\n1. Wipe the bench with 70 % ethanol and light the burner; 10 minutes.\n2. Label three selective plates with the isolate number, the medium and the date; 10 minutes.\n\nStreaking\n3. Streak isolate 1 for single colonies in four quadrants, flaming the loop between each; 10 minutes.\n4. Streak isolate 2 the same way; 10 minutes.\n5. Streak isolate 3 the same way; 10 minutes.\n6. Invert plates 1 and 2 and put them on the incubator shelf overnight, 16 to 20 hours.\n7. Only two plates fit on the shelf, so hold plate 3 at room temperature on the bench until plate 1 comes out.\n8. Incubate plate 3 at 37 \u00b0C for 6 hours once the shelf is free.\n\nReading\n9. Read plate 1 in the morning: count the colonies, note the colour and record the selective growth; 15 minutes.\n10. Read plate 2 the same way; 15 minutes.\n11. Read plate 3 at the end of its run; 15 minutes.\n\nSubculture and stain\n12. Pick a single well-separated colony from each of plates 1 and 2 into fresh broth; 10 minutes at the loop station.\n13. Do not streak the purity plate until the supervisor has signed off the readings. Streaking it takes 15 minutes.\n14. Incubate the purity plate at 37 \u00b0C for 8 hours.\n15. Make a smear from the picked colony and heat-fix it; 10 minutes.\n16. Gram stain the smear on the rack: crystal violet, iodine, decolourise, safranin; 15 minutes.\n17. Read the stain under oil immersion and record the morphology; 15 minutes.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Streaking Three Cultures onto Selective Media for three isolates, one purity plate",
+            "finish_at": null,
+            "constraints": "one loop station at the burner, one 37 \u00b0C incubator shelf holding two plates, one staining rack, one microscope, one technician, a supervisor signs off the readings",
+            "vertical": "lab",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or run_protocol",
+            "finishAtArg": ""
+          }
+        }
+      },
+      "error": "no JSON object with a `tracks` array was found in the reply"
+    }
+  ],
+  "missing": [
+    "lab-microbiology-streak-and-incubate"
+  ]
+}

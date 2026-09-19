@@ -1,0 +1,234 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "holiday-cookie-batch",
+  "name": "Holiday Cookie Batch: Three Doughs, One Oven",
+  "description": "Three doughs, one stand mixer, one oven, two sheet pans. Baker prepares and cycles cookies.",
+  "environmentType": "kitchen",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "dough-prep",
+      "name": "Dough Preparation",
+      "steps": [
+        {
+          "stepId": "prep-sugar",
+          "name": "Mix sugar dough",
+          "task": "mixer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 720
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "chill-sugar",
+          "name": "Chill sugar dough",
+          "task": "fridge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep-sugar"
+          }
+        },
+        {
+          "stepId": "prep-cc",
+          "name": "Mix chocolate chip dough",
+          "task": "mixer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 720
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "chill-sugar"
+          }
+        },
+        {
+          "stepId": "prep-ginger",
+          "name": "Mix gingerbread dough",
+          "task": "mixer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep-cc"
+          }
+        },
+        {
+          "stepId": "chill-ginger",
+          "name": "Chill gingerbread dough",
+          "task": "fridge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 7200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep-ginger"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "baker-track",
+      "name": "Baker Tasks",
+      "steps": [
+        {
+          "stepId": "preheat",
+          "name": "Preheat oven",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "prep-pan1",
+          "name": "Scoop chocolate chip",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 360
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep-cc"
+          }
+        },
+        {
+          "stepId": "prep-pan2",
+          "name": "Roll and cut sugar cookies",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 840
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep-pan1"
+          }
+        },
+        {
+          "stepId": "prep-pan3",
+          "name": "Roll and cut gingerbread",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1080
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "chill-ginger"
+          }
+        },
+        {
+          "stepId": "ice-ginger",
+          "name": "Ice gingerbread",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1500
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bake-ginger"
+          }
+        },
+        {
+          "stepId": "box",
+          "name": "Box cookies",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "ice-ginger"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "oven-track",
+      "name": "Oven Operations",
+      "steps": [
+        {
+          "stepId": "bake-cc",
+          "name": "Bake chocolate chip",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 660
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep-pan1"
+          }
+        },
+        {
+          "stepId": "bake-sugar",
+          "name": "Bake sugar cookies",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 540
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep-pan2"
+          }
+        },
+        {
+          "stepId": "bake-ginger",
+          "name": "Bake gingerbread",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep-pan3"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "mixer",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "oven",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "baker",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "fridge",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "sheet-pan",
+      "maxConcurrent": 2
+    }
+  ],
+  "metadata": {
+    "serves": "100",
+    "sourceUrl": "rhylthyme://local/holiday-cookie-batch"
+  }
+}

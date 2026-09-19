@@ -1,0 +1,217 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "hiit-circuit-3-athletes",
+  "name": "HIIT Circuit Card",
+  "description": "3 athletes, 4 rounds, 4 stations. One of each equipment, rotation respected.",
+  "environmentType": "gym",
+  "actors": 3,
+  "tracks": [
+    {
+      "trackId": "athlete-a",
+      "name": "Athlete A",
+      "steps": [
+        {
+          "stepId": "warmup-a",
+          "name": "Warm-up",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Five minutes on the floor together",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "r1-row",
+          "name": "R1: Rower",
+          "task": "rower",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warmup-a"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Sixty seconds of work",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "r1-rest",
+          "name": "R1 Rest",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "r1-row"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "sixty seconds of rest",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "r2-kb",
+          "name": "R2: Kettlebell",
+          "task": "kettlebell",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "r1-rest"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Sixty seconds of work",
+              "occurrence": 2
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "r2-rest",
+          "name": "R2 Rest",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "r2-kb"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "sixty seconds of rest",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "r3-box",
+          "name": "R3: Box",
+          "task": "box",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "r2-rest"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Sixty seconds of work",
+              "occurrence": 3
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "r3-rest",
+          "name": "R3 Rest",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "r3-box"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "sixty seconds of rest",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "r4-sled",
+          "name": "R4: Sled",
+          "task": "sled",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "r3-rest"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Sixty seconds of work",
+              "occurrence": 4
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "cooldown",
+          "name": "Cooldown",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "r4-sled"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Ten minutes on the floor",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "rower",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "kettlebell",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "box",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "sled",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "floor",
+      "maxConcurrent": 3
+    }
+  ]
+}

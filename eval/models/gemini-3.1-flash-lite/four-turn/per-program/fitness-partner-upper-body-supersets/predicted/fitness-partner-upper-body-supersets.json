@@ -1,0 +1,238 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "partner-upper-body-superset",
+  "name": "Partner Upper-Body Superset Session",
+  "description": "Synchronized partner workout for two lifters with rotating supersets.",
+  "environmentType": "gym",
+  "actors": 2,
+  "tracks": [
+    {
+      "trackId": "partner-a",
+      "name": "Partner A",
+      "steps": [
+        {
+          "stepId": "warmup-a",
+          "name": "Rowing warmup",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "5 minutes of easy rowing on the ergs",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "mobility-a",
+          "name": "Mobility work",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warmup-a"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "3 minutes of arm circles and band pull-aparts",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "superset-a-r1-a",
+          "name": "Bench Press",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "mobility-a"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "does a set of 8 bench presses, which takes about 40 seconds",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "superset-a-r1-b",
+          "name": "DB Row",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "superset-a-r1-a"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "A goes to the rows once B has finished with the dumbbells",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "rest-1",
+          "name": "Rest",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 90
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "superset-a-r1-b"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "rest 90 seconds before the next round",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "partner-b",
+      "name": "Partner B",
+      "steps": [
+        {
+          "stepId": "warmup-b",
+          "name": "Rowing warmup",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "5 minutes of easy rowing on the ergs",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "mobility-b",
+          "name": "Mobility work",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warmup-b"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "3 minutes of arm circles and band pull-aparts",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "superset-a-r1-a-b",
+          "name": "DB Row",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "mobility-b"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Partner B starts on the dumbbell row at the same time",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "superset-a-r1-b-b",
+          "name": "Bench Press",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "superset-a-r1-a-b"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "B takes the bench as soon as A racks the bar",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "rest-1-b",
+          "name": "Rest",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 90
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "superset-a-r1-b-b"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "rest 90 seconds before the next round",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "erg",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "bench",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "dumbbells",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "floor",
+      "maxConcurrent": 2
+    }
+  ]
+}

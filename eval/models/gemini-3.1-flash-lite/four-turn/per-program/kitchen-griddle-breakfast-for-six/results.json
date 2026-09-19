@@ -1,0 +1,316 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "gemini-3.1-flash-lite",
+    "pattern": "four-turn",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/four-turn/cache",
+    "limit": null,
+    "only": [
+      "kitchen-griddle-breakfast-for-six"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 5,
+      "input_tokens": 37357,
+      "output_tokens": 6055,
+      "cost_usd": 0.01842175,
+      "fix_iterations": 1
+    },
+    "generated_at": "2026-09-19T17:16:07+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 0.9230769230769231,
+    "steps_recall": 0.631578947368421,
+    "steps_f1": 0.7499999999999999,
+    "durations_accuracy": 0.75,
+    "resources_precision": 0.6,
+    "resources_recall": 0.5,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.7142857142857143,
+    "relationships_recall": 0.43478260869565216,
+    "relationships_f1": 0.5405405405405405,
+    "structure_rand_index": 0.9090909090909091,
+    "end_to_end_pass": 1.0,
+    "unsupported_rate": 0.0
+  },
+  "programs": [
+    {
+      "slug": "kitchen-griddle-breakfast-for-six",
+      "headline": {
+        "steps_precision": 0.9230769230769231,
+        "steps_recall": 0.631578947368421,
+        "steps_f1": 0.7499999999999999,
+        "durations_accuracy": 0.75,
+        "resources_precision": 0.6,
+        "resources_recall": 0.5,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.7142857142857143,
+        "relationships_recall": 0.43478260869565216,
+        "relationships_f1": 0.5405405405405405,
+        "structure_rand_index": 0.9090909090909091,
+        "end_to_end_pass": 1.0,
+        "unsupported_rate": 0.0
+      },
+      "steps": {
+        "precision": 0.9230769230769231,
+        "recall": 0.631578947368421,
+        "f1": 0.7499999999999999,
+        "tp": 12,
+        "n_gold": 19,
+        "n_pred": 13
+      },
+      "durations": {
+        "accuracy": 0.75,
+        "correct": 9,
+        "total": 12
+      },
+      "resources": {
+        "precision": 0.6,
+        "recall": 0.5,
+        "f1": 0.5454545454545454,
+        "tp": 3,
+        "n_gold": 6,
+        "n_pred": 5
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.7142857142857143,
+        "recall": 0.43478260869565216,
+        "f1": 0.5405405405405405,
+        "tp": 10,
+        "n_gold": 23,
+        "n_pred": 14
+      },
+      "structure": {
+        "rand_index": 0.9090909090909091,
+        "agreements": 60,
+        "pairs": 66,
+        "n_steps": 12
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 3840.0,
+        "pred_makespan": 3840.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "mix-batter",
+          "rest-batter",
+          "pancakes-pass-1",
+          "pancakes-pass-2",
+          "pancakes-pass-3",
+          "drop-griddle-heat",
+          "scramble-eggs",
+          "serve-breakfast"
+        ],
+        "pred_critical_path": [
+          "whisk-pancake-batter",
+          "rest-batter",
+          "cook-pancakes",
+          "adjust-griddle-temp",
+          "scramble-eggs",
+          "serve-breakfast"
+        ],
+        "js_critical_path": [
+          "whisk-pancake-batter",
+          "rest-batter",
+          "cook-pancakes-r1",
+          "cook-pancakes-r2",
+          "cook-pancakes-r3",
+          "adjust-griddle-temp",
+          "scramble-eggs",
+          "serve-breakfast"
+        ],
+        "js_makespan": 6000,
+        "critical_overlap": 0.75,
+        "critical_ok": true,
+        "passed": true
+      },
+      "unsupported_rate": 0.0,
+      "unsupported_steps": [],
+      "matching": [
+        {
+          "gold": "mix-batter",
+          "predicted": "whisk-pancake-batter",
+          "by": "span"
+        },
+        {
+          "gold": "rest-batter",
+          "predicted": "rest-batter",
+          "by": "span"
+        },
+        {
+          "gold": "crack-eggs",
+          "predicted": "prep-eggs",
+          "by": "span"
+        },
+        {
+          "gold": "warm-plates",
+          "predicted": "warm-plates",
+          "by": "span"
+        },
+        {
+          "gold": "heat-griddle",
+          "predicted": "heat-griddle",
+          "by": "span"
+        },
+        {
+          "gold": "cook-bacon",
+          "predicted": "cook-bacon",
+          "by": "span"
+        },
+        {
+          "gold": "scrape-griddle",
+          "predicted": "clean-griddle-one",
+          "by": "span"
+        },
+        {
+          "gold": "pancakes-pass-1",
+          "predicted": "cook-pancakes",
+          "by": "span"
+        },
+        {
+          "gold": "drop-griddle-heat",
+          "predicted": "adjust-griddle-temp",
+          "by": "span"
+        },
+        {
+          "gold": "scramble-eggs",
+          "predicted": "scramble-eggs",
+          "by": "span"
+        },
+        {
+          "gold": "toast-batch-1",
+          "predicted": "toast-bread",
+          "by": "span"
+        },
+        {
+          "gold": "serve-breakfast",
+          "predicted": "serve-breakfast",
+          "by": "span"
+        },
+        {
+          "gold": "set-table",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "pancakes-pass-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "pancakes-pass-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "toast-batch-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "butter-toast",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "grind-beans",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "brew-coffee",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "grind-and-brew",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "gemini-3.1-flash-lite",
+        "pattern": "four-turn",
+        "calls": 5,
+        "input_tokens": 37357,
+        "output_tokens": 6055,
+        "cost_usd": 0.01842175,
+        "cache_keys": [
+          "ddb96440499c4fc5f19654a89ed20dfce572788df62b4e64c97aff82b1ac552e",
+          "71df461c1cc565cd125e8d25072df343067a7a4dbf838ab06fa2f41941c245e2",
+          "8a27c1078b3988e5f9b048f1cddb95a7f7b7d0c0c71ef7bcf8308417df00d841",
+          "7714cfca44d70da71b9fd62918e180247717844c46ecebcf2a17ab97c1883400",
+          "34baed059985d291afe14aa3a39b1091c0ac218beecc71b4a1a6a1679ad24e3f"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/four-turn/per-program/kitchen-griddle-breakfast-for-six/responses/kitchen-griddle-breakfast-for-six.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/four-turn/per-program/kitchen-griddle-breakfast-for-six/predicted/kitchen-griddle-breakfast-for-six.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 16,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Breakfast for Six on One Griddle for 6 people",
+            "finish_at": "09:00",
+            "constraints": "one griddle, one two-slice toaster, one coffee maker, one oven on its lowest setting, one cook",
+            "vertical": "kitchen",
+            "turn": "T1",
+            "kind": "recipe",
+            "constraintsLine": "Resource limits: one griddle, one two-slice toaster, one coffee maker, one oven on its lowest setting, one cook.",
+            "deadlineLine": "Everything must be finished by 09:00.",
+            "source": "Source text (read all of it):\n<<<\nBreakfast for Six on One Griddle\n\nOne electric griddle, a two-slice toaster, a burr grinder, a drip coffee maker and an oven turned to its lowest setting to hold things warm. One cook, six people, everyone eating at nine.\n\nPrep\nWhisk the dry pancake ingredients together, then beat in the buttermilk and eggs; 10 minutes. Let the batter stand for 20 minutes while the griddle does its first job. Crack a dozen eggs into a jug and season them; 5 minutes. Set the table and lay out six places; 10 minutes. Put six plates in the oven at its lowest setting and leave them there until you call everyone.\n\nGriddle\nEverything cooks on the one griddle, in order. Heat the griddle to 375\u00b0F; 8 minutes. Lay the bacon out and cook it for 14 minutes, turning once, then move it to the warm oven. Scrape the griddle and wipe off the fat; 3 minutes. Pancakes go on as soon as the griddle is clean and the batter has rested, in three passes: the first pass takes 6 minutes, the second another 6, and the third 6 more. Slide each pass into the oven as it comes off. Drop the griddle to 300\u00b0F and give it 4 minutes to settle, then scramble the eggs slowly for 7 minutes.\n\nToast\nThe toaster takes two slices at a time. Start the first batch of toast when the last pancake pass goes on; 3 minutes. Run a second batch straight after; 3 minutes. Butter all of it; 4 minutes.\n\nCoffee\nStart the grinder ten minutes after the bacon goes on so the pot is fresh. Grind the beans; 2 minutes. Brew a full pot; 9 minutes.\n\nServe\nCall everyone when the eggs, the toast and the coffee are all ready, and carry the warm plates through; 5 minutes.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Breakfast for Six on One Griddle for 6 people",
+            "finish_at": "09:00",
+            "constraints": "one griddle, one two-slice toaster, one coffee maker, one oven on its lowest setting, one cook",
+            "vertical": "kitchen",
+            "turn": "T2",
+            "kind": "recipe"
+          },
+          "T3 extraction": {
+            "goal": "Breakfast for Six on One Griddle for 6 people",
+            "finish_at": "09:00",
+            "constraints": "one griddle, one two-slice toaster, one coffee maker, one oven on its lowest setting, one cook",
+            "vertical": "kitchen",
+            "turn": "T3",
+            "kind": "recipe",
+            "environment": "a kitchen where you have: one griddle, one two-slice toaster, one coffee maker, one oven on its lowest setting, one cook",
+            "deadline": "09:00",
+            "source": "Source text (read all of it):\n<<<\nBreakfast for Six on One Griddle\n\nOne electric griddle, a two-slice toaster, a burr grinder, a drip coffee maker and an oven turned to its lowest setting to hold things warm. One cook, six people, everyone eating at nine.\n\nPrep\nWhisk the dry pancake ingredients together, then beat in the buttermilk and eggs; 10 minutes. Let the batter stand for 20 minutes while the griddle does its first job. Crack a dozen eggs into a jug and season them; 5 minutes. Set the table and lay out six places; 10 minutes. Put six plates in the oven at its lowest setting and leave them there until you call everyone.\n\nGriddle\nEverything cooks on the one griddle, in order. Heat the griddle to 375\u00b0F; 8 minutes. Lay the bacon out and cook it for 14 minutes, turning once, then move it to the warm oven. Scrape the griddle and wipe off the fat; 3 minutes. Pancakes go on as soon as the griddle is clean and the batter has rested, in three passes: the first pass takes 6 minutes, the second another 6, and the third 6 more. Slide each pass into the oven as it comes off. Drop the griddle to 300\u00b0F and give it 4 minutes to settle, then scramble the eggs slowly for 7 minutes.\n\nToast\nThe toaster takes two slices at a time. Start the first batch of toast when the last pancake pass goes on; 3 minutes. Run a second batch straight after; 3 minutes. Butter all of it; 4 minutes.\n\nCoffee\nStart the grinder ten minutes after the bacon goes on so the pot is fresh. Grind the beans; 2 minutes. Brew a full pot; 9 minutes.\n\nServe\nCall everyone when the eggs, the toast and the coffee are all ready, and carry the warm plates through; 5 minutes.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Breakfast for Six on One Griddle for 6 people",
+            "finish_at": "09:00",
+            "constraints": "one griddle, one two-slice toaster, one coffee maker, one oven on its lowest setting, one cook",
+            "vertical": "kitchen",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or cook_recipe",
+            "finishAtArg": " with finishAt=\"09:00\""
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

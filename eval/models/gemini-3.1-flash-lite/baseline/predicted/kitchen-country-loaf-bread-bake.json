@@ -1,0 +1,231 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "country-loaf-two-boules",
+  "name": "Country Loaf: Two Boules",
+  "description": "Two 900g boules baked sequentially in one dutch oven.",
+  "environmentType": "kitchen",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "dough",
+      "name": "Levain and Dough",
+      "steps": [
+        {
+          "stepId": "prep-ingredients",
+          "name": "Weigh ingredients",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "mix-levain",
+          "name": "Mix levain",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep-ingredients"
+          }
+        },
+        {
+          "stepId": "ripen-levain",
+          "name": "Ripen levain",
+          "task": "none",
+          "duration": {
+            "type": "fixed",
+            "seconds": 18000
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "mix-levain"
+          }
+        },
+        {
+          "stepId": "autolyse",
+          "name": "Autolyse",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "ripen-levain"
+          }
+        },
+        {
+          "stepId": "mix-dough",
+          "name": "Mix dough",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "autolyse"
+          }
+        },
+        {
+          "stepId": "fold",
+          "name": "Fold dough",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "replicates": {
+            "count": 3,
+            "mode": "stagger",
+            "delay": "30m"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "mix-dough"
+          }
+        },
+        {
+          "stepId": "bulk-ferment",
+          "name": "Bulk ferment",
+          "task": "none",
+          "duration": {
+            "type": "fixed",
+            "seconds": 14400
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "fold",
+            "instances": "all"
+          }
+        },
+        {
+          "stepId": "shape",
+          "name": "Divide and shape",
+          "task": "baker",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bulk-ferment"
+          }
+        },
+        {
+          "stepId": "retard",
+          "name": "Fridge retard",
+          "task": "refrigerator",
+          "duration": {
+            "type": "indefinite",
+            "defaultSeconds": 43200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "shape"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "bake",
+      "name": "Bake",
+      "steps": [
+        {
+          "stepId": "preheat",
+          "name": "Preheat oven/dutch oven",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "retard",
+            "offsetSeconds": -2700
+          }
+        },
+        {
+          "stepId": "bake-loop",
+          "name": "Bake boule",
+          "task": "dutch-oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2400
+          },
+          "replicates": {
+            "count": 2,
+            "mode": "serial",
+            "delay": "600s"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "preheat"
+          }
+        },
+        {
+          "stepId": "cool",
+          "name": "Cooling",
+          "task": "rack",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bake-loop",
+            "instances": "each"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "baker",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "oven",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "dutch-oven",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "refrigerator",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "rack",
+      "maxConcurrent": 2
+    }
+  ],
+  "metadata": {
+    "ingredients": [
+      {
+        "name": "flour",
+        "measure": "900g"
+      },
+      {
+        "name": "water",
+        "measure": "680g"
+      },
+      {
+        "name": "salt",
+        "measure": "20g"
+      }
+    ],
+    "serves": "2 boules",
+    "sourceUrl": "https://rhylthyme.com/recipes/country-loaf-two-boules",
+    "attribution": "Derived from source text"
+  }
+}

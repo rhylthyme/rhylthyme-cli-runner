@@ -1,0 +1,194 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "thursday-am-practice",
+  "name": "Thursday AM Practice",
+  "description": "Three lanes, one coach, sprint set with blocks and staggered cooldown.",
+  "environmentType": "gym",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "coach",
+      "name": "Coach",
+      "steps": [
+        {
+          "stepId": "brief",
+          "name": "Brief squad",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "warmup-watch",
+          "name": "Watch warm-up",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "brief"
+          }
+        },
+        {
+          "stepId": "whiteboard",
+          "name": "Whiteboard talk",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warmup-watch"
+          }
+        },
+        {
+          "stepId": "sprint-timing",
+          "name": "Time sprints",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "main-set-barrier"
+          }
+        },
+        {
+          "stepId": "debrief",
+          "name": "Debrief",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "sprint-timing"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "lanes",
+      "name": "Lanes 1-3",
+      "steps": [
+        {
+          "stepId": "warmup",
+          "name": "Warm-up",
+          "task": "lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "brief"
+          }
+        },
+        {
+          "stepId": "kick",
+          "name": "Kick set",
+          "task": "lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "whiteboard"
+          }
+        },
+        {
+          "stepId": "main-set",
+          "name": "Main set",
+          "task": "lane",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 1800,
+            "maxSeconds": 3000,
+            "defaultSeconds": 2700
+          },
+          "replicates": {
+            "count": 3,
+            "mode": "parallel"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "kick"
+          }
+        },
+        {
+          "stepId": "main-set-barrier",
+          "name": "Wait for all main sets",
+          "task": "lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 0
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "main-set",
+            "instances": "all"
+          }
+        },
+        {
+          "stepId": "sprints",
+          "name": "Sprint set",
+          "task": "blocks",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "replicates": {
+            "count": 3,
+            "mode": "serial"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "main-set-barrier"
+          }
+        },
+        {
+          "stepId": "cooldown",
+          "name": "Cooldown",
+          "task": "lane",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "sprints",
+            "instances": "all"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "coach",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "lane",
+      "maxConcurrent": 3
+    },
+    {
+      "task": "blocks",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "serves": "12 athletes",
+    "attribution": "Rhylthyme Practice Planner"
+  }
+}

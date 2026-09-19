@@ -59,6 +59,30 @@ def spent(ledger: dict) -> float:
     return round(sum(e["cost_usd"] for e in ledger["entries"]), 6)
 
 
+def deepseek_balance() -> float | None:
+    """The account's USD balance, straight from DeepSeek: what was really
+    charged, as opposed to the ledger's peak-rate estimate."""
+    import os
+    import urllib.request
+
+    key = os.environ.get("DEEPSEEK_API_KEY")
+    if not key:
+        return None
+    req = urllib.request.Request(
+        "https://api.deepseek.com/user/balance",
+        headers={"Authorization": f"Bearer {key}"},
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            infos = json.loads(resp.read().decode("utf-8")).get("balance_infos") or []
+    except Exception:  # noqa: BLE001 - a guard that cannot read must stop the run
+        return None
+    for info in infos:
+        if info.get("currency") == "USD":
+            return float(info["total_balance"])
+    return None
+
+
 def run_cli(args: list[str]) -> subprocess.CompletedProcess:
     cmd = [sys.executable, "-m", "rhylthyme_cli_runner.cli", "eval-prompts", *args]
     return subprocess.run(cmd, capture_output=True, text=True)
@@ -83,6 +107,32 @@ def main() -> None:
         type=int,
         default=0,
         help="Only the first N programs of the domain round-robin order.",
+    )
+    ap.add_argument(
+        "--first-guess",
+        type=float,
+        default=None,
+        help="USD to reserve for the very first program of each prompt, before any cost is measured "
+        "(default: 0.40 four-turn, 0.20 baseline, sized for a mid-tier model).",
+    )
+    ap.add_argument(
+        "--real-budget",
+        type=float,
+        default=0.0,
+        help="DeepSeek only: stop when the account balance has dropped this many USD "
+        "since --start-balance (real charges; the ledger cap still applies as a backstop).",
+    )
+    ap.add_argument(
+        "--start-balance",
+        type=float,
+        default=None,
+        help="Balance before any of this model's runs (default: the balance now).",
+    )
+    ap.add_argument(
+        "--real-reserve",
+        type=float,
+        default=0.15,
+        help="Headroom kept under --real-budget for the next program and billing lag.",
     )
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
@@ -113,7 +163,30 @@ def main() -> None:
             for e in ledger["entries"]
             if e["model"] == args.model and e["pattern"] == pattern
         ]
-        return 1.5 * max(seen) if seen else FIRST_GUESS.get(pattern, 0.40)
+        if seen:
+            return 1.5 * max(seen)
+        return (
+            args.first_guess
+            if args.first_guess is not None
+            else FIRST_GUESS.get(pattern, 0.40)
+        )
+
+    start_balance = None
+    if args.real_budget:
+        if not args.model.startswith("deepseek-"):
+            sys.exit(
+                "--real-budget reads the DeepSeek balance API; it only works for deepseek-* models."
+            )
+        start_balance = (
+            args.start_balance if args.start_balance is not None else deepseek_balance()
+        )
+        if start_balance is None:
+            sys.exit(
+                "Could not read the DeepSeek balance; refusing to run without the real-budget guard."
+            )
+        print(
+            f"real budget: ${args.real_budget:.2f} from a starting balance of ${start_balance:.2f}"
+        )
 
     # Slug outer, pattern inner: every program gets all its prompts or none,
     # so a run the cap cuts short is still a paired comparison.
@@ -127,34 +200,64 @@ def main() -> None:
                 f"STOP before {slug}: ${spent(ledger):.2f} spent + ${need:.2f} reserve > ${args.cap:.2f} cap"
             )
             break
+        if start_balance is not None and not args.dry_run:
+            now = deepseek_balance()
+            if now is None:
+                print(f"STOP before {slug}: could not read the DeepSeek balance")
+                break
+            real = start_balance - now
+            if real + args.real_reserve > args.real_budget:
+                print(
+                    f"STOP before {slug}: ${real:.2f} really charged + ${args.real_reserve:.2f} reserve"
+                    f" > ${args.real_budget:.2f} real budget"
+                )
+                break
+            print(
+                f"  balance ${now:.2f} (really charged so far ${real:.2f})", flush=True
+            )
+        if args.dry_run:
+            for pattern in todo:
+                print(f"would run {pattern}/{slug}")
+            continue
+        # A program's prompts run side by side (they share nothing), which
+        # halves the wall time; the budget checks above cover the pair.
+        started = time.time()
+        procs = {}
         for pattern in todo:
             cell = args.out / args.model / pattern
-            if args.dry_run:
-                print(f"would run {pattern}/{slug}")
-                continue
-            started = time.time()
-            proc = run_cli(
-                [
-                    "--gold",
-                    str(GOLD),
-                    "--model",
-                    args.model,
-                    "--patterns",
-                    pattern,
-                    "--only",
-                    slug,
-                    "--out",
-                    str(cell / "per-program" / slug),
-                    "--cache-dir",
-                    str(cell / "cache"),
-                    "--format",
-                    "json",
-                ]
+            cmd = [
+                sys.executable,
+                "-m",
+                "rhylthyme_cli_runner.cli",
+                "eval-prompts",
+                "--gold",
+                str(GOLD),
+                "--model",
+                args.model,
+                "--patterns",
+                pattern,
+                "--only",
+                slug,
+                "--out",
+                str(cell / "per-program" / slug),
+                "--cache-dir",
+                str(cell / "cache"),
+                "--format",
+                "json",
+            ]
+            procs[pattern] = subprocess.Popen(
+                cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
             )
-            results_file = cell / "per-program" / slug / "results.json"
+        failed = False
+        for pattern, proc in procs.items():
+            _out, err = proc.communicate()
+            results_file = (
+                args.out / args.model / pattern / "per-program" / slug / "results.json"
+            )
             if not results_file.exists():
-                print(f"FAILED {pattern}/{slug}: {proc.stderr.strip()[-400:]}")
-                sys.exit(2)  # never loop on an error that might be costing money
+                print(f"FAILED {pattern}/{slug}: {err.strip()[-400:]}")
+                failed = True
+                continue
             totals = json.loads(results_file.read_text())["meta"]["totals"]
             cost = float(totals.get("cost_usd") or 0.0)
             entry = {
@@ -173,6 +276,8 @@ def main() -> None:
                 f"{pattern:10} {slug:45} ${cost:.3f}  total ${spent(ledger):.2f}  ({entry['seconds']:.0f}s)",
                 flush=True,
             )
+        if failed:
+            sys.exit(2)  # never loop on an error that might be costing money
 
     if args.dry_run:
         return
@@ -186,7 +291,7 @@ def main() -> None:
         ]
         if not ran:
             continue
-        proc = run_cli(
+        done_proc = run_cli(
             [
                 "--gold",
                 str(GOLD),
@@ -207,7 +312,7 @@ def main() -> None:
         )
         ok = (cell / "results.json").exists()
         print(
-            f"consolidated {args.model}/{pattern}: {len(ran)} programs {'ok' if ok else 'FAILED ' + proc.stderr.strip()[-300:]}"
+            f"consolidated {args.model}/{pattern}: {len(ran)} programs {'ok' if ok else 'FAILED ' + done_proc.stderr.strip()[-300:]}"
         )
     print(f"final: ${spent(ledger):.2f} of ${args.cap:.2f}")
 

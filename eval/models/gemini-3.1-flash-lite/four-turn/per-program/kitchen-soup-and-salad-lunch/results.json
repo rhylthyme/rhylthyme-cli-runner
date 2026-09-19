@@ -1,0 +1,289 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "gemini-3.1-flash-lite",
+    "pattern": "four-turn",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/four-turn/cache",
+    "limit": null,
+    "only": [
+      "kitchen-soup-and-salad-lunch"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 4,
+      "input_tokens": 25182,
+      "output_tokens": 3986,
+      "cost_usd": 0.0122745,
+      "fix_iterations": 0
+    },
+    "generated_at": "2026-09-19T17:18:54+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.9333333333333333,
+    "steps_f1": 0.9655172413793104,
+    "durations_accuracy": 0.9285714285714286,
+    "resources_precision": 0.4,
+    "resources_recall": 0.5,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.75,
+    "relationships_recall": 0.7058823529411765,
+    "relationships_f1": 0.7272727272727272,
+    "structure_rand_index": 0.9120879120879121,
+    "end_to_end_pass": 1.0,
+    "unsupported_rate": 0.0
+  },
+  "programs": [
+    {
+      "slug": "kitchen-soup-and-salad-lunch",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.9333333333333333,
+        "steps_f1": 0.9655172413793104,
+        "durations_accuracy": 0.9285714285714286,
+        "resources_precision": 0.4,
+        "resources_recall": 0.5,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.75,
+        "relationships_recall": 0.7058823529411765,
+        "relationships_f1": 0.7272727272727272,
+        "structure_rand_index": 0.9120879120879121,
+        "end_to_end_pass": 1.0,
+        "unsupported_rate": 0.0
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.9333333333333333,
+        "f1": 0.9655172413793104,
+        "tp": 14,
+        "n_gold": 15,
+        "n_pred": 14
+      },
+      "durations": {
+        "accuracy": 0.9285714285714286,
+        "correct": 13,
+        "total": 14
+      },
+      "resources": {
+        "precision": 0.4,
+        "recall": 0.5,
+        "f1": 0.4444444444444445,
+        "tp": 2,
+        "n_gold": 4,
+        "n_pred": 5
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.75,
+        "recall": 0.7058823529411765,
+        "f1": 0.7272727272727272,
+        "tp": 12,
+        "n_gold": 17,
+        "n_pred": 16
+      },
+      "structure": {
+        "rand_index": 0.9120879120879121,
+        "agreements": 83,
+        "pairs": 91,
+        "n_steps": 14
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 4080.0,
+        "pred_makespan": 3930.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "dice-vegetables",
+          "sweat-vegetables",
+          "add-lentils",
+          "simmer-lentils",
+          "blitz-soup",
+          "hold-soup",
+          "serve-lunch"
+        ],
+        "pred_critical_path": [
+          "dice-veggies",
+          "sweat-veggies",
+          "add-ingredients",
+          "simmer-soup",
+          "blitz-soup",
+          "keep-warm",
+          "serve"
+        ],
+        "js_critical_path": [
+          "dice-veggies",
+          "sweat-veggies",
+          "add-ingredients",
+          "simmer-soup",
+          "blitz-soup",
+          "keep-warm",
+          "serve"
+        ],
+        "js_makespan": 3930,
+        "critical_overlap": 1.0,
+        "critical_ok": true,
+        "passed": true
+      },
+      "unsupported_rate": 0.0,
+      "unsupported_steps": [],
+      "matching": [
+        {
+          "gold": "dice-vegetables",
+          "predicted": "dice-veggies",
+          "by": "span"
+        },
+        {
+          "gold": "sweat-vegetables",
+          "predicted": "sweat-veggies",
+          "by": "span"
+        },
+        {
+          "gold": "add-lentils",
+          "predicted": "add-ingredients",
+          "by": "span"
+        },
+        {
+          "gold": "simmer-lentils",
+          "predicted": "simmer-soup",
+          "by": "span"
+        },
+        {
+          "gold": "blitz-soup",
+          "predicted": "blitz-soup",
+          "by": "span"
+        },
+        {
+          "gold": "hold-soup",
+          "predicted": "keep-warm",
+          "by": "span"
+        },
+        {
+          "gold": "wash-leaves",
+          "predicted": "wash-leaves",
+          "by": "span"
+        },
+        {
+          "gold": "shave-fennel",
+          "predicted": "shave-fennel",
+          "by": "span"
+        },
+        {
+          "gold": "whisk-dressing",
+          "predicted": "whisk-dressing",
+          "by": "span"
+        },
+        {
+          "gold": "dress-salad",
+          "predicted": "dress-salad",
+          "by": "span"
+        },
+        {
+          "gold": "slice-bread",
+          "predicted": "slice-bread",
+          "by": "span"
+        },
+        {
+          "gold": "warm-bread",
+          "predicted": "toast-bread",
+          "by": "span"
+        },
+        {
+          "gold": "lay-places",
+          "predicted": "lay-table",
+          "by": "span"
+        },
+        {
+          "gold": "serve-lunch",
+          "predicted": "serve",
+          "by": "span"
+        },
+        {
+          "gold": "wrap-bread",
+          "predicted": null,
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "gemini-3.1-flash-lite",
+        "pattern": "four-turn",
+        "calls": 4,
+        "input_tokens": 25182,
+        "output_tokens": 3986,
+        "cost_usd": 0.0122745,
+        "cache_keys": [
+          "08d81e26bbfea483f629472e65a257dc3a30bd5cf20e3449fca816d000f12f96",
+          "99f6efe97b1aeacf53d60b3a65796d16e056da93be40e86ce2300053570e6123",
+          "8d1dadc8f1dfd0a60c8cbe3ba0dcd768f9f49120fe2f5e71c664f4c00ff58a19",
+          "a3b5acd315eb2c5bf18a59e341b95b704e8a06be28763388927fa32113a1572b"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/four-turn/per-program/kitchen-soup-and-salad-lunch/responses/kitchen-soup-and-salad-lunch.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/four-turn/per-program/kitchen-soup-and-salad-lunch/predicted/kitchen-soup-and-salad-lunch.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 14,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Weekday Lentil Soup and Salad for Four for 4 people",
+            "finish_at": "12:30",
+            "constraints": "one cook, two burners, one toaster oven, one stick blender",
+            "vertical": "kitchen",
+            "turn": "T1",
+            "kind": "recipe",
+            "constraintsLine": "Resource limits: one cook, two burners, one toaster oven, one stick blender.",
+            "deadlineLine": "Everything must be finished by 12:30.",
+            "source": "Source text (read all of it):\n<<<\nWeekday Lentil Soup and Salad for Four\n\nLunch at half past twelve. One cook, two burners, one toaster oven, one stick blender. Nothing here is fussy; the only real constraint is that the cook can stand in one place at a time, so the salad and the bread wait until the soup is quietly simmering.\n\nSoup\nDice an onion, a carrot and two sticks of celery; 8 minutes. Sweat them in oil with a bay leaf for 10 minutes. Stir in the rinsed lentils, a spoonful of tomato paste and a litre of stock; 3 minutes. Simmer until the lentils are soft, 25 to 40 minutes. Blitz a third of the pot with the stick blender and stir it back in; 4 minutes. Season it, then keep it at a bare simmer until you sit down.\n\nSalad\nStart the salad once the soup is simmering. Wash and spin the leaves; 5 minutes. Shave the fennel and the radishes thin; 7 minutes. Whisk the lemon, oil and mustard in the bottom of the bowl; 3 minutes. Five minutes after the soup goes back on the heat, dress and toss the salad; 2 minutes. Dressed any earlier and the leaves collapse.\n\nBread\nCut the loaf into thick slices once the soup is simmering; 3 minutes. Warm them in the toaster oven for 8 minutes. Wrap the warm bread in a cloth and leave it on the table.\n\nTable\nLay four places once the bread is wrapped; 5 minutes. When the soup, the salad and the bread are all ready, carry the pot and the bowl through together; 3 minutes.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Weekday Lentil Soup and Salad for Four for 4 people",
+            "finish_at": "12:30",
+            "constraints": "one cook, two burners, one toaster oven, one stick blender",
+            "vertical": "kitchen",
+            "turn": "T2",
+            "kind": "recipe"
+          },
+          "T3 extraction": {
+            "goal": "Weekday Lentil Soup and Salad for Four for 4 people",
+            "finish_at": "12:30",
+            "constraints": "one cook, two burners, one toaster oven, one stick blender",
+            "vertical": "kitchen",
+            "turn": "T3",
+            "kind": "recipe",
+            "environment": "a kitchen where you have: one cook, two burners, one toaster oven, one stick blender",
+            "deadline": "12:30",
+            "source": "Source text (read all of it):\n<<<\nWeekday Lentil Soup and Salad for Four\n\nLunch at half past twelve. One cook, two burners, one toaster oven, one stick blender. Nothing here is fussy; the only real constraint is that the cook can stand in one place at a time, so the salad and the bread wait until the soup is quietly simmering.\n\nSoup\nDice an onion, a carrot and two sticks of celery; 8 minutes. Sweat them in oil with a bay leaf for 10 minutes. Stir in the rinsed lentils, a spoonful of tomato paste and a litre of stock; 3 minutes. Simmer until the lentils are soft, 25 to 40 minutes. Blitz a third of the pot with the stick blender and stir it back in; 4 minutes. Season it, then keep it at a bare simmer until you sit down.\n\nSalad\nStart the salad once the soup is simmering. Wash and spin the leaves; 5 minutes. Shave the fennel and the radishes thin; 7 minutes. Whisk the lemon, oil and mustard in the bottom of the bowl; 3 minutes. Five minutes after the soup goes back on the heat, dress and toss the salad; 2 minutes. Dressed any earlier and the leaves collapse.\n\nBread\nCut the loaf into thick slices once the soup is simmering; 3 minutes. Warm them in the toaster oven for 8 minutes. Wrap the warm bread in a cloth and leave it on the table.\n\nTable\nLay four places once the bread is wrapped; 5 minutes. When the soup, the salad and the bread are all ready, carry the pot and the bowl through together; 3 minutes.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Weekday Lentil Soup and Salad for Four for 4 people",
+            "finish_at": "12:30",
+            "constraints": "one cook, two burners, one toaster oven, one stick blender",
+            "vertical": "kitchen",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or cook_recipe",
+            "finishAtArg": " with finishAt=\"12:30\""
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

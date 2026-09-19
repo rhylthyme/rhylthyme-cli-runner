@@ -1,12 +1,199 @@
-metric,claude-haiku-4-5|baseline,claude-haiku-4-5|four-turn,claude-sonnet-5|baseline,claude-sonnet-5|four-turn
-Steps F1,0.5627,0.9108,0.5838,0.9018
-Durations accuracy,0.9857,0.9201,0.9857,0.9359
-Relationships F1,0.3001,0.6362,0.2717,0.5509
-Resources recall,0.5976,0.7214,0.6048,0.6222
-Track structure (Rand),0.8901,0.9106,0.8098,0.8148
-Unsupported steps,0.5955,0.0169,0.5224,0.045
-End-to-end pass,0.2857,0.4286,0.4286,0.5714
-Produced a program,1.0,1.0,1.0,0.8571
-Cost per program (USD),0.0463,0.0913,0.2552,0.5078
-Output tokens per program,6491.7143,10683.1429,22573.0,39552.7143
-Validator fix rounds,0.8571,0.4286,1.0,0.8571
+n_programs,metric,model,prompt,value
+7,Steps F1,claude-haiku-4-5,baseline,0.5627
+7,Steps F1,claude-haiku-4-5,four-turn,0.9108
+7,Steps F1,claude-sonnet-5,baseline,0.5838
+7,Steps F1,claude-sonnet-5,four-turn,0.9018
+7,Steps F1,deepseek-flash,baseline,0.3578
+7,Steps F1,deepseek-flash,four-turn,0.9304
+7,Steps F1,gemini-3.1-flash-lite,baseline,0.481
+7,Steps F1,gemini-3.1-flash-lite,four-turn,0.7492
+7,Durations accuracy,claude-haiku-4-5,baseline,0.9857
+7,Durations accuracy,claude-haiku-4-5,four-turn,0.9201
+7,Durations accuracy,claude-sonnet-5,baseline,0.9857
+7,Durations accuracy,claude-sonnet-5,four-turn,0.9359
+7,Durations accuracy,deepseek-flash,baseline,1.0
+7,Durations accuracy,deepseek-flash,four-turn,0.9276
+7,Durations accuracy,gemini-3.1-flash-lite,baseline,0.9031
+7,Durations accuracy,gemini-3.1-flash-lite,four-turn,0.9498
+7,Relationships F1,claude-haiku-4-5,baseline,0.3001
+7,Relationships F1,claude-haiku-4-5,four-turn,0.6362
+7,Relationships F1,claude-sonnet-5,baseline,0.2717
+7,Relationships F1,claude-sonnet-5,four-turn,0.5509
+7,Relationships F1,deepseek-flash,baseline,0.1294
+7,Relationships F1,deepseek-flash,four-turn,0.5377
+7,Relationships F1,gemini-3.1-flash-lite,baseline,0.2565
+7,Relationships F1,gemini-3.1-flash-lite,four-turn,0.4717
+7,Resources recall,claude-haiku-4-5,baseline,0.5976
+7,Resources recall,claude-haiku-4-5,four-turn,0.7214
+7,Resources recall,claude-sonnet-5,baseline,0.6048
+7,Resources recall,claude-sonnet-5,four-turn,0.6222
+7,Resources recall,deepseek-flash,baseline,0.6333
+7,Resources recall,deepseek-flash,four-turn,0.72
+7,Resources recall,gemini-3.1-flash-lite,baseline,0.4595
+7,Resources recall,gemini-3.1-flash-lite,four-turn,0.5905
+7,Track structure (Rand),claude-haiku-4-5,baseline,0.8901
+7,Track structure (Rand),claude-haiku-4-5,four-turn,0.9106
+7,Track structure (Rand),claude-sonnet-5,baseline,0.8098
+7,Track structure (Rand),claude-sonnet-5,four-turn,0.8148
+7,Track structure (Rand),deepseek-flash,baseline,1.0
+7,Track structure (Rand),deepseek-flash,four-turn,0.8709
+7,Track structure (Rand),gemini-3.1-flash-lite,baseline,0.8353
+7,Track structure (Rand),gemini-3.1-flash-lite,four-turn,0.7922
+7,Unsupported steps,claude-haiku-4-5,baseline,0.5955
+7,Unsupported steps,claude-haiku-4-5,four-turn,0.0169
+7,Unsupported steps,claude-sonnet-5,baseline,0.5224
+7,Unsupported steps,claude-sonnet-5,four-turn,0.045
+7,Unsupported steps,deepseek-flash,baseline,0.7508
+7,Unsupported steps,deepseek-flash,four-turn,0.0459
+7,Unsupported steps,gemini-3.1-flash-lite,baseline,0.503
+7,Unsupported steps,gemini-3.1-flash-lite,four-turn,0.0476
+7,End-to-end pass,claude-haiku-4-5,baseline,0.2857
+7,End-to-end pass,claude-haiku-4-5,four-turn,0.4286
+7,End-to-end pass,claude-sonnet-5,baseline,0.4286
+7,End-to-end pass,claude-sonnet-5,four-turn,0.5714
+7,End-to-end pass,deepseek-flash,baseline,0.1429
+7,End-to-end pass,deepseek-flash,four-turn,0.4286
+7,End-to-end pass,gemini-3.1-flash-lite,baseline,0.0
+7,End-to-end pass,gemini-3.1-flash-lite,four-turn,0.1429
+7,Produced a program,claude-haiku-4-5,baseline,1.0
+7,Produced a program,claude-haiku-4-5,four-turn,1.0
+7,Produced a program,claude-sonnet-5,baseline,1.0
+7,Produced a program,claude-sonnet-5,four-turn,0.8571
+7,Produced a program,deepseek-flash,baseline,0.7143
+7,Produced a program,deepseek-flash,four-turn,0.7143
+7,Produced a program,gemini-3.1-flash-lite,baseline,1.0
+7,Produced a program,gemini-3.1-flash-lite,four-turn,1.0
+7,Cost per program (USD),claude-haiku-4-5,baseline,0.0463
+7,Cost per program (USD),claude-haiku-4-5,four-turn,0.0913
+7,Cost per program (USD),claude-sonnet-5,baseline,0.2552
+7,Cost per program (USD),claude-sonnet-5,four-turn,0.5078
+7,Cost per program (USD),deepseek-flash,baseline,0.0474
+7,Cost per program (USD),deepseek-flash,four-turn,0.0814
+7,Cost per program (USD),gemini-3.1-flash-lite,baseline,0.0056
+7,Cost per program (USD),gemini-3.1-flash-lite,four-turn,0.0181
+7,Output tokens per program,claude-haiku-4-5,baseline,6491.7143
+7,Output tokens per program,claude-haiku-4-5,four-turn,10683.1429
+7,Output tokens per program,claude-sonnet-5,baseline,22573.0
+7,Output tokens per program,claude-sonnet-5,four-turn,39552.7143
+7,Output tokens per program,deepseek-flash,baseline,36564.8571
+7,Output tokens per program,deepseek-flash,four-turn,55536.1429
+7,Output tokens per program,gemini-3.1-flash-lite,baseline,2214.1429
+7,Output tokens per program,gemini-3.1-flash-lite,four-turn,6132.1429
+7,Validator fix rounds,claude-haiku-4-5,baseline,0.8571
+7,Validator fix rounds,claude-haiku-4-5,four-turn,0.4286
+7,Validator fix rounds,claude-sonnet-5,baseline,1.0
+7,Validator fix rounds,claude-sonnet-5,four-turn,0.8571
+7,Validator fix rounds,deepseek-flash,baseline,1.5714
+7,Validator fix rounds,deepseek-flash,four-turn,1.7143
+7,Validator fix rounds,gemini-3.1-flash-lite,baseline,0.7143
+7,Validator fix rounds,gemini-3.1-flash-lite,four-turn,0.7143
+16,Steps F1,claude-haiku-4-5,baseline,0.5024
+16,Steps F1,claude-haiku-4-5,four-turn,0.919
+16,Steps F1,deepseek-flash,baseline,0.3906
+16,Steps F1,deepseek-flash,four-turn,0.8819
+16,Steps F1,gemini-3.1-flash-lite,baseline,0.5226
+16,Steps F1,gemini-3.1-flash-lite,four-turn,0.7549
+16,Durations accuracy,claude-haiku-4-5,baseline,0.8635
+16,Durations accuracy,claude-haiku-4-5,four-turn,0.9266
+16,Durations accuracy,deepseek-flash,baseline,0.9
+16,Durations accuracy,deepseek-flash,four-turn,0.9576
+16,Durations accuracy,gemini-3.1-flash-lite,baseline,0.9385
+16,Durations accuracy,gemini-3.1-flash-lite,four-turn,0.9028
+16,Relationships F1,claude-haiku-4-5,baseline,0.2506
+16,Relationships F1,claude-haiku-4-5,four-turn,0.6323
+16,Relationships F1,deepseek-flash,baseline,0.1425
+16,Relationships F1,deepseek-flash,four-turn,0.5653
+16,Relationships F1,gemini-3.1-flash-lite,baseline,0.2662
+16,Relationships F1,gemini-3.1-flash-lite,four-turn,0.4828
+16,Resources recall,claude-haiku-4-5,baseline,0.5466
+16,Resources recall,claude-haiku-4-5,four-turn,0.5266
+16,Resources recall,deepseek-flash,baseline,0.601
+16,Resources recall,deepseek-flash,four-turn,0.6624
+16,Resources recall,gemini-3.1-flash-lite,baseline,0.4713
+16,Resources recall,gemini-3.1-flash-lite,four-turn,0.5329
+16,Track structure (Rand),claude-haiku-4-5,baseline,0.799
+16,Track structure (Rand),claude-haiku-4-5,four-turn,0.9195
+16,Track structure (Rand),deepseek-flash,baseline,0.8749
+16,Track structure (Rand),deepseek-flash,four-turn,0.886
+16,Track structure (Rand),gemini-3.1-flash-lite,baseline,0.8268
+16,Track structure (Rand),gemini-3.1-flash-lite,four-turn,0.7783
+16,Unsupported steps,claude-haiku-4-5,baseline,0.6088
+16,Unsupported steps,claude-haiku-4-5,four-turn,0.0096
+16,Unsupported steps,deepseek-flash,baseline,0.7192
+16,Unsupported steps,deepseek-flash,four-turn,0.0502
+16,Unsupported steps,gemini-3.1-flash-lite,baseline,0.471
+16,Unsupported steps,gemini-3.1-flash-lite,four-turn,0.0825
+16,End-to-end pass,claude-haiku-4-5,baseline,0.125
+16,End-to-end pass,claude-haiku-4-5,four-turn,0.5625
+16,End-to-end pass,deepseek-flash,baseline,0.1875
+16,End-to-end pass,deepseek-flash,four-turn,0.4375
+16,End-to-end pass,gemini-3.1-flash-lite,baseline,0.125
+16,End-to-end pass,gemini-3.1-flash-lite,four-turn,0.3125
+16,Produced a program,claude-haiku-4-5,baseline,1.0
+16,Produced a program,claude-haiku-4-5,four-turn,1.0
+16,Produced a program,deepseek-flash,baseline,0.625
+16,Produced a program,deepseek-flash,four-turn,0.625
+16,Produced a program,gemini-3.1-flash-lite,baseline,1.0
+16,Produced a program,gemini-3.1-flash-lite,four-turn,0.9375
+16,Cost per program (USD),claude-haiku-4-5,baseline,0.0443
+16,Cost per program (USD),claude-haiku-4-5,four-turn,0.0881
+16,Cost per program (USD),deepseek-flash,baseline,0.0475
+16,Cost per program (USD),deepseek-flash,four-turn,0.0786
+16,Cost per program (USD),gemini-3.1-flash-lite,baseline,0.006
+16,Cost per program (USD),gemini-3.1-flash-lite,four-turn,0.0194
+16,Output tokens per program,claude-haiku-4-5,baseline,6003.0625
+16,Output tokens per program,claude-haiku-4-5,four-turn,10062.8125
+16,Output tokens per program,deepseek-flash,baseline,36559.6875
+16,Output tokens per program,deepseek-flash,four-turn,53268.375
+16,Output tokens per program,gemini-3.1-flash-lite,baseline,2407.125
+16,Output tokens per program,gemini-3.1-flash-lite,four-turn,6636.5
+16,Validator fix rounds,claude-haiku-4-5,baseline,1.0
+16,Validator fix rounds,claude-haiku-4-5,four-turn,0.4375
+16,Validator fix rounds,deepseek-flash,baseline,1.5625
+16,Validator fix rounds,deepseek-flash,four-turn,1.5625
+16,Validator fix rounds,gemini-3.1-flash-lite,baseline,0.8125
+16,Validator fix rounds,gemini-3.1-flash-lite,four-turn,0.875
+20,Steps F1,claude-haiku-4-5,baseline,0.4972
+20,Steps F1,claude-haiku-4-5,four-turn,0.9159
+20,Steps F1,gemini-3.1-flash-lite,baseline,0.5298
+20,Steps F1,gemini-3.1-flash-lite,four-turn,0.7984
+20,Durations accuracy,claude-haiku-4-5,baseline,0.8754
+20,Durations accuracy,claude-haiku-4-5,four-turn,0.9194
+20,Durations accuracy,gemini-3.1-flash-lite,baseline,0.9482
+20,Durations accuracy,gemini-3.1-flash-lite,four-turn,0.9102
+20,Relationships F1,claude-haiku-4-5,baseline,0.227
+20,Relationships F1,claude-haiku-4-5,four-turn,0.6175
+20,Relationships F1,gemini-3.1-flash-lite,baseline,0.2564
+20,Relationships F1,gemini-3.1-flash-lite,four-turn,0.5166
+20,Resources recall,claude-haiku-4-5,baseline,0.5914
+20,Resources recall,claude-haiku-4-5,four-turn,0.556
+20,Resources recall,gemini-3.1-flash-lite,baseline,0.5109
+20,Resources recall,gemini-3.1-flash-lite,four-turn,0.5698
+20,Track structure (Rand),claude-haiku-4-5,baseline,0.832
+20,Track structure (Rand),claude-haiku-4-5,four-turn,0.92
+20,Track structure (Rand),gemini-3.1-flash-lite,baseline,0.8178
+20,Track structure (Rand),gemini-3.1-flash-lite,four-turn,0.7775
+20,Unsupported steps,claude-haiku-4-5,baseline,0.6282
+20,Unsupported steps,claude-haiku-4-5,four-turn,0.0076
+20,Unsupported steps,gemini-3.1-flash-lite,baseline,0.4825
+20,Unsupported steps,gemini-3.1-flash-lite,four-turn,0.0676
+20,End-to-end pass,claude-haiku-4-5,baseline,0.1
+20,End-to-end pass,claude-haiku-4-5,four-turn,0.65
+20,End-to-end pass,gemini-3.1-flash-lite,baseline,0.15
+20,End-to-end pass,gemini-3.1-flash-lite,four-turn,0.4
+20,Produced a program,claude-haiku-4-5,baseline,1.0
+20,Produced a program,claude-haiku-4-5,four-turn,1.0
+20,Produced a program,gemini-3.1-flash-lite,baseline,0.95
+20,Produced a program,gemini-3.1-flash-lite,four-turn,0.95
+20,Cost per program (USD),claude-haiku-4-5,baseline,0.046
+20,Cost per program (USD),claude-haiku-4-5,four-turn,0.0909
+20,Cost per program (USD),gemini-3.1-flash-lite,baseline,0.0069
+20,Cost per program (USD),gemini-3.1-flash-lite,four-turn,0.0191
+20,Output tokens per program,claude-haiku-4-5,baseline,6211.05
+20,Output tokens per program,claude-haiku-4-5,four-turn,10295.65
+20,Output tokens per program,gemini-3.1-flash-lite,baseline,2760.4
+20,Output tokens per program,gemini-3.1-flash-lite,four-turn,6545.35
+20,Validator fix rounds,claude-haiku-4-5,baseline,1.05
+20,Validator fix rounds,claude-haiku-4-5,four-turn,0.55
+20,Validator fix rounds,gemini-3.1-flash-lite,baseline,1.0
+20,Validator fix rounds,gemini-3.1-flash-lite,four-turn,0.8

@@ -1,0 +1,443 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "deepseek-flash",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/baseline/cache",
+    "limit": null,
+    "only": [
+      "fitness-hiit-circuit-intervals"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 3,
+      "input_tokens": 15043,
+      "output_tokens": 36880,
+      "cost_usd": 0.048768900000000004,
+      "fix_iterations": 2
+    },
+    "generated_at": "2026-09-19T16:53:17+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.2222222222222222,
+    "steps_f1": 0.3636363636363636,
+    "durations_accuracy": 1.0,
+    "resources_precision": 1.0,
+    "resources_recall": 1.0,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.25,
+    "relationships_recall": 0.07317073170731707,
+    "relationships_f1": 0.11320754716981131,
+    "structure_rand_index": 1.0,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.7777777777777778
+  },
+  "programs": [
+    {
+      "slug": "fitness-hiit-circuit-intervals",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.2222222222222222,
+        "steps_f1": 0.3636363636363636,
+        "durations_accuracy": 1.0,
+        "resources_precision": 1.0,
+        "resources_recall": 1.0,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.25,
+        "relationships_recall": 0.07317073170731707,
+        "relationships_f1": 0.11320754716981131,
+        "structure_rand_index": 1.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.7777777777777778
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.2222222222222222,
+        "f1": 0.3636363636363636,
+        "tp": 6,
+        "n_gold": 27,
+        "n_pred": 6
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 6,
+        "total": 6
+      },
+      "resources": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 5,
+        "n_gold": 5,
+        "n_pred": 5
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.25,
+        "recall": 0.07317073170731707,
+        "f1": 0.11320754716981131,
+        "tp": 3,
+        "n_gold": 41,
+        "n_pred": 12
+      },
+      "structure": {
+        "rand_index": 1.0,
+        "agreements": 15,
+        "pairs": 15,
+        "n_steps": 6
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 1320.0,
+        "pred_makespan": 1320.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "a-warmup",
+          "a-rower-r1",
+          "a-rest-r1",
+          "a-kettlebell-r2",
+          "a-rest-r2",
+          "a-box-r3",
+          "a-rest-r3",
+          "a-sled-r4",
+          "a-cooldown"
+        ],
+        "pred_critical_path": [
+          "a-warmup",
+          "a-r1-rower",
+          "a-r1-rest",
+          "a-r2-kettlebell",
+          "a-r2-rest",
+          "a-r3-box",
+          "a-r3-rest",
+          "a-r4-sled",
+          "a-cooldown"
+        ],
+        "js_critical_path": [
+          "a-warmup",
+          "a-r1-rower",
+          "a-r1-rest",
+          "a-r2-kettlebell",
+          "a-r2-rest",
+          "a-r3-box",
+          "a-r3-rest",
+          "a-r4-sled",
+          "c-cooldown"
+        ],
+        "js_makespan": 1320,
+        "critical_overlap": 0.2222222222222222,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.7777777777777778,
+      "unsupported_steps": [
+        "a-r1-rower",
+        "a-r1-rest",
+        "a-r2-kettlebell",
+        "a-r2-rest",
+        "a-r3-box",
+        "a-r3-rest",
+        "a-r4-sled",
+        "b-r1-kettlebell",
+        "b-r1-rest",
+        "b-r2-box",
+        "b-r2-rest",
+        "b-r3-sled",
+        "b-r3-rest",
+        "b-r4-rower",
+        "c-r1-box",
+        "c-r1-rest",
+        "c-r2-sled",
+        "c-r2-rest",
+        "c-r3-rower",
+        "c-r3-rest",
+        "c-r4-kettlebell"
+      ],
+      "matching": [
+        {
+          "gold": "a-warmup",
+          "predicted": "a-warmup",
+          "by": "name"
+        },
+        {
+          "gold": "a-cooldown",
+          "predicted": "a-cooldown",
+          "by": "name"
+        },
+        {
+          "gold": "b-warmup",
+          "predicted": "b-warmup",
+          "by": "name"
+        },
+        {
+          "gold": "b-cooldown",
+          "predicted": "b-cooldown",
+          "by": "name"
+        },
+        {
+          "gold": "c-warmup",
+          "predicted": "c-warmup",
+          "by": "name"
+        },
+        {
+          "gold": "c-cooldown",
+          "predicted": "c-cooldown",
+          "by": "name"
+        },
+        {
+          "gold": "a-rower-r1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-rest-r1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-kettlebell-r2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-rest-r2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-box-r3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-rest-r3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-sled-r4",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-kettlebell-r1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rest-r1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-box-r2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rest-r2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-sled-r3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rest-r3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rower-r4",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-box-r1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-rest-r1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-sled-r2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-rest-r2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-rower-r3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-rest-r3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-kettlebell-r4",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "a-r1-rower",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "a-r1-rest",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "a-r2-kettlebell",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "a-r2-rest",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "a-r3-box",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "a-r3-rest",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "a-r4-sled",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-r1-kettlebell",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-r1-rest",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-r2-box",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-r2-rest",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-r3-sled",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-r3-rest",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-r4-rower",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "c-r1-box",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "c-r1-rest",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "c-r2-sled",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "c-r2-rest",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "c-r3-rower",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "c-r3-rest",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "c-r4-kettlebell",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "deepseek-flash",
+        "pattern": "baseline",
+        "calls": 3,
+        "input_tokens": 15043,
+        "output_tokens": 36880,
+        "cost_usd": 0.048768900000000004,
+        "cache_keys": [
+          "bff33e9fb62bd13bd400a7992a92c3a80eb78b5636380fb282a5d892fde8b785",
+          "1606f50eaec8264c14b78643f44b11703935b8692c840da3df5358ac10136d22",
+          "40f8ab202bd1caa1d714f4edb6d1324cb2e71739514169f115e954709504e62d"
+        ],
+        "fix_iterations": 2,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/baseline/per-program/fitness-hiit-circuit-intervals/responses/fitness-hiit-circuit-intervals.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/baseline/per-program/fitness-hiit-circuit-intervals/predicted/fitness-hiit-circuit-intervals.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "HIIT Circuit Card \u2014 three athletes, four stations for 3 athletes, 4 rounds, following the source text below",
+            "finish_at": null,
+            "constraints": "one rower, one kettlebell, one box, one sled, three athletes on the floor",
+            "vertical": "gym"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

@@ -1,0 +1,4044 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "deepseek-flash",
+    "pattern": "four-turn",
+    "from_cache": true,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/cache",
+    "limit": null,
+    "only": [
+      "event-conference-session-av-checks",
+      "fitness-hiit-circuit-intervals",
+      "kitchen-backyard-barbecue-smoker-grill",
+      "lab-cell-passaging-hood-incubator",
+      "event-product-launch-run-of-show",
+      "fitness-partner-upper-body-supersets",
+      "kitchen-country-loaf-bread-bake",
+      "lab-elisa-plate-wash",
+      "event-theater-load-in-soundcheck",
+      "fitness-rowing-erg-interval-session",
+      "kitchen-griddle-breakfast-for-six",
+      "lab-microbiology-streak-and-incubate",
+      "event-wedding-reception-timeline",
+      "fitness-swim-practice-lane-assignments",
+      "kitchen-holiday-cookie-batch",
+      "lab-pcr-and-gel"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 16,
+      "calls": 90,
+      "input_tokens": 780279,
+      "output_tokens": 852294,
+      "cost_usd": 1.2568365,
+      "fix_iterations": 25
+    },
+    "generated_at": "2026-09-19T17:51:21+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 0.5719826911027569,
+    "steps_recall": 0.5434027777777778,
+    "steps_f1": 0.5511909628274759,
+    "durations_accuracy": 0.5984778854723708,
+    "resources_precision": 0.42209821428571426,
+    "resources_recall": 0.4139880952380952,
+    "actors_accuracy": 0.375,
+    "relationships_precision": 0.35957357244363825,
+    "relationships_recall": 0.3550324761156785,
+    "relationships_f1": 0.3533275162773659,
+    "structure_rand_index": 0.5537278534230934,
+    "end_to_end_pass": 0.4375,
+    "unsupported_rate": 0.031367626626247314
+  },
+  "programs": [
+    {
+      "slug": "event-conference-session-av-checks",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 1.0,
+        "steps_f1": 1.0,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.6,
+        "resources_recall": 0.5,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.5769230769230769,
+        "relationships_recall": 0.75,
+        "relationships_f1": 0.6521739130434783,
+        "structure_rand_index": 0.8631578947368421,
+        "end_to_end_pass": 1.0,
+        "unsupported_rate": 0.047619047619047616
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 20,
+        "n_gold": 20,
+        "n_pred": 20
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 20,
+        "total": 20
+      },
+      "resources": {
+        "precision": 0.6,
+        "recall": 0.5,
+        "f1": 0.5454545454545454,
+        "tp": 3,
+        "n_gold": 6,
+        "n_pred": 5
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.5769230769230769,
+        "recall": 0.75,
+        "f1": 0.6521739130434783,
+        "tp": 15,
+        "n_gold": 20,
+        "n_pred": 26
+      },
+      "structure": {
+        "rand_index": 0.8631578947368421,
+        "agreements": 164,
+        "pairs": 190,
+        "n_steps": 20
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 15240.0,
+        "pred_makespan": 14940.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "line-check",
+          "projector-test",
+          "mic-check",
+          "load-deck-one",
+          "chair-opens",
+          "talk-one",
+          "qa-one",
+          "load-deck-two",
+          "changeover-one",
+          "talk-two",
+          "qa-two",
+          "serve-coffee",
+          "clear-foyer",
+          "changeover-two",
+          "talk-three",
+          "qa-three",
+          "chair-closes",
+          "strike-av"
+        ],
+        "pred_critical_path": [
+          "line-check",
+          "test-projector",
+          "check-lapel",
+          "load-deck-1",
+          "chair-opens",
+          "talk-1",
+          "qa-1",
+          "changeover-1",
+          "talk-2",
+          "qa-2",
+          "coffee-out",
+          "clear-foyer",
+          "changeover-2",
+          "talk-3",
+          "qa-3",
+          "chair-closes",
+          "strike-av"
+        ],
+        "js_critical_path": [
+          "line-check",
+          "test-projector",
+          "check-lapel",
+          "load-deck-1",
+          "chair-opens",
+          "talk-1",
+          "qa-1",
+          "changeover-1",
+          "talk-2",
+          "qa-2",
+          "coffee-out",
+          "clear-foyer",
+          "changeover-2",
+          "talk-3",
+          "qa-3",
+          "chair-closes",
+          "strike-av"
+        ],
+        "js_makespan": 14940,
+        "critical_overlap": 0.9444444444444444,
+        "critical_ok": true,
+        "passed": true
+      },
+      "unsupported_rate": 0.047619047619047616,
+      "unsupported_steps": [
+        "collect-lapel"
+      ],
+      "matching": [
+        {
+          "gold": "line-check",
+          "predicted": "line-check",
+          "by": "span"
+        },
+        {
+          "gold": "projector-test",
+          "predicted": "test-projector",
+          "by": "span"
+        },
+        {
+          "gold": "mic-check",
+          "predicted": "check-lapel",
+          "by": "span"
+        },
+        {
+          "gold": "strike-av",
+          "predicted": "strike-av",
+          "by": "span"
+        },
+        {
+          "gold": "load-deck-one",
+          "predicted": "load-deck-1",
+          "by": "span"
+        },
+        {
+          "gold": "load-deck-two",
+          "predicted": "load-deck-2",
+          "by": "span"
+        },
+        {
+          "gold": "load-deck-three",
+          "predicted": "load-deck-3",
+          "by": "span"
+        },
+        {
+          "gold": "chair-opens",
+          "predicted": "chair-opens",
+          "by": "span"
+        },
+        {
+          "gold": "talk-one",
+          "predicted": "talk-1",
+          "by": "span"
+        },
+        {
+          "gold": "qa-one",
+          "predicted": "qa-1",
+          "by": "span"
+        },
+        {
+          "gold": "changeover-one",
+          "predicted": "changeover-1",
+          "by": "span"
+        },
+        {
+          "gold": "talk-two",
+          "predicted": "talk-2",
+          "by": "span"
+        },
+        {
+          "gold": "qa-two",
+          "predicted": "qa-2",
+          "by": "span"
+        },
+        {
+          "gold": "changeover-two",
+          "predicted": "changeover-2",
+          "by": "span"
+        },
+        {
+          "gold": "talk-three",
+          "predicted": "talk-3",
+          "by": "span"
+        },
+        {
+          "gold": "qa-three",
+          "predicted": "qa-3",
+          "by": "span"
+        },
+        {
+          "gold": "chair-closes",
+          "predicted": "chair-closes",
+          "by": "span"
+        },
+        {
+          "gold": "set-coffee",
+          "predicted": "set-coffee-station",
+          "by": "span"
+        },
+        {
+          "gold": "serve-coffee",
+          "predicted": "coffee-out",
+          "by": "span"
+        },
+        {
+          "gold": "clear-foyer",
+          "predicted": "clear-foyer",
+          "by": "span"
+        },
+        {
+          "gold": null,
+          "predicted": "collect-lapel",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "deepseek-flash",
+        "pattern": "four-turn",
+        "calls": 5,
+        "input_tokens": 43157,
+        "output_tokens": 47483,
+        "cost_usd": 0.0699267,
+        "cache_keys": [
+          "5872a96102fc0da3fe344f9645423b621294bdbc2aa6594163193db98dccda01",
+          "b0efa86795198a6351d80bbc28451063b974f39e54bc0d93e2cc2b224eee384d",
+          "747f4576f0e842e92e86f049b779017b3ae0e6f8745b276978bd30b6f8803fb0",
+          "f47d70e8fe462594911b43246d393fcd8bef0f3ce6816628307a59c404f46152",
+          "cd01fc32b81a33ce513fec12fd4e321bdb078c5a6ec5d24ce9d59f327c7b019e"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/responses/event-conference-session-av-checks.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/predicted/event-conference-session-av-checks.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 21,
+        "unsupported_step_ids": [
+          "collect-lapel"
+        ],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Session Chair's Sheet \u2014 Room 2B for one room, three speakers",
+            "finish_at": "coffee break at 10:30",
+            "constraints": "one projector, one lapel microphone pack, one AV desk, one lectern, one foyer for catering",
+            "vertical": "events",
+            "turn": "T1",
+            "kind": "run-of-show",
+            "constraintsLine": "Resource limits: one projector, one lapel microphone pack, one AV desk, one lectern, one foyer for catering.",
+            "deadlineLine": "Everything must be finished by coffee break at 10:30.",
+            "source": "Source text (read all of it):\n<<<\nSession Chair's Sheet \u2014 Room 2B, Thursday morning\n\nOne room, one projector, one lapel pack, one AV desk, one chair. Three talks, thirty minutes each, with questions after every one. The chair calls each speaker to the lectern; nothing starts until they do.\n\nBefore the room opens\nLine check at the AV desk: laptop, HDMI, house sound, record feed. 30 minutes.\nTest the projector once the desk is up: resolution, keystone, the cue slide. 15 minutes.\nCheck the lapel pack after the projector: battery, gain, a walk to the back row. 10 minutes.\n\nSlides\nLoad the first deck once the lapel pack is checked; 10 minutes, and leave it on the cue slide.\nLoad the second deck as soon as the first talk's questions are over; 5 minutes.\nLoad the third deck while the coffee is going out; 5 minutes.\n\nThe session\nChair opens the room, housekeeping and fire exits; 5 minutes.\nFirst talk when the chair calls the first speaker: 30 minutes.\nQuestions after the first talk: five to ten minutes, seven is the plan.\nChangeover to the second speaker: unclip the pack, clip it on, 5 minutes.\nSecond talk when the chair calls the second speaker: 30 minutes.\nQuestions after the second talk: five to ten minutes, seven is the plan.\nChangeover to the third speaker once the coffee is cleared from the foyer; 5 minutes.\nThird talk when the chair calls the third speaker: 30 minutes.\nQuestions after the third talk: five to fifteen minutes, ten is the plan.\nChair closes the session; 5 minutes.\n\nCatering\nSet the coffee station in the service corridor from ninety minutes in; 30 minutes.\nCoffee goes out to the foyer when the second talk's questions end; 20 minutes.\nClear the foyer; 10 minutes.\n\nStrike\nStrike the AV desk when the chair closes; 20 minutes, cables coiled, record feed off.\n\nNotes\nThe projector is the contended thing, not the room: a deck cannot be loaded while a talk is on it, so every load sits in a gap. The lapel pack is the other one, and it is the reason changeovers are real steps rather than slack. Question time is the only elastic in the morning; if the first two run long the chair trims the third.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Session Chair's Sheet \u2014 Room 2B for one room, three speakers",
+            "finish_at": "coffee break at 10:30",
+            "constraints": "one projector, one lapel microphone pack, one AV desk, one lectern, one foyer for catering",
+            "vertical": "events",
+            "turn": "T2",
+            "kind": "run-of-show"
+          },
+          "T3 extraction": {
+            "goal": "Session Chair's Sheet \u2014 Room 2B for one room, three speakers",
+            "finish_at": "coffee break at 10:30",
+            "constraints": "one projector, one lapel microphone pack, one AV desk, one lectern, one foyer for catering",
+            "vertical": "events",
+            "turn": "T3",
+            "kind": "run-of-show",
+            "environment": "a venue where you have: one projector, one lapel microphone pack, one AV desk, one lectern, one foyer for catering",
+            "deadline": "coffee break at 10:30",
+            "source": "Source text (read all of it):\n<<<\nSession Chair's Sheet \u2014 Room 2B, Thursday morning\n\nOne room, one projector, one lapel pack, one AV desk, one chair. Three talks, thirty minutes each, with questions after every one. The chair calls each speaker to the lectern; nothing starts until they do.\n\nBefore the room opens\nLine check at the AV desk: laptop, HDMI, house sound, record feed. 30 minutes.\nTest the projector once the desk is up: resolution, keystone, the cue slide. 15 minutes.\nCheck the lapel pack after the projector: battery, gain, a walk to the back row. 10 minutes.\n\nSlides\nLoad the first deck once the lapel pack is checked; 10 minutes, and leave it on the cue slide.\nLoad the second deck as soon as the first talk's questions are over; 5 minutes.\nLoad the third deck while the coffee is going out; 5 minutes.\n\nThe session\nChair opens the room, housekeeping and fire exits; 5 minutes.\nFirst talk when the chair calls the first speaker: 30 minutes.\nQuestions after the first talk: five to ten minutes, seven is the plan.\nChangeover to the second speaker: unclip the pack, clip it on, 5 minutes.\nSecond talk when the chair calls the second speaker: 30 minutes.\nQuestions after the second talk: five to ten minutes, seven is the plan.\nChangeover to the third speaker once the coffee is cleared from the foyer; 5 minutes.\nThird talk when the chair calls the third speaker: 30 minutes.\nQuestions after the third talk: five to fifteen minutes, ten is the plan.\nChair closes the session; 5 minutes.\n\nCatering\nSet the coffee station in the service corridor from ninety minutes in; 30 minutes.\nCoffee goes out to the foyer when the second talk's questions end; 20 minutes.\nClear the foyer; 10 minutes.\n\nStrike\nStrike the AV desk when the chair closes; 20 minutes, cables coiled, record feed off.\n\nNotes\nThe projector is the contended thing, not the room: a deck cannot be loaded while a talk is on it, so every load sits in a gap. The lapel pack is the other one, and it is the reason changeovers are real steps rather than slack. Question time is the only elastic in the morning; if the first two run long the chair trims the third.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Session Chair's Sheet \u2014 Room 2B for one room, three speakers",
+            "finish_at": "coffee break at 10:30",
+            "constraints": "one projector, one lapel microphone pack, one AV desk, one lectern, one foyer for catering",
+            "vertical": "events",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or plan_event",
+            "finishAtArg": " with finishAt=\"coffee break at 10:30\""
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "event-product-launch-run-of-show",
+      "headline": {
+        "steps_precision": 0.9,
+        "steps_recall": 1.0,
+        "steps_f1": 0.9473684210526316,
+        "durations_accuracy": 0.8333333333333334,
+        "resources_precision": 0.8571428571428571,
+        "resources_recall": 1.0,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.42857142857142855,
+        "relationships_recall": 0.5,
+        "relationships_f1": 0.4615384615384615,
+        "structure_rand_index": 0.8954248366013072,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.047619047619047616
+      },
+      "steps": {
+        "precision": 0.9,
+        "recall": 1.0,
+        "f1": 0.9473684210526316,
+        "tp": 18,
+        "n_gold": 18,
+        "n_pred": 20
+      },
+      "durations": {
+        "accuracy": 0.8333333333333334,
+        "correct": 15,
+        "total": 18
+      },
+      "resources": {
+        "precision": 0.8571428571428571,
+        "recall": 1.0,
+        "f1": 0.923076923076923,
+        "tp": 6,
+        "n_gold": 6,
+        "n_pred": 7
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.42857142857142855,
+        "recall": 0.5,
+        "f1": 0.4615384615384615,
+        "tp": 9,
+        "n_gold": 18,
+        "n_pred": 21
+      },
+      "structure": {
+        "rand_index": 0.8954248366013072,
+        "agreements": 137,
+        "pairs": 153,
+        "n_steps": 18
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 13020.0,
+        "pred_makespan": 14520.0,
+        "makespan_ok": false,
+        "gold_critical_path": [
+          "setup-registration",
+          "walkthrough",
+          "doors-open",
+          "usher-to-seats",
+          "host-welcome",
+          "ceo-keynote",
+          "product-video",
+          "product-demo",
+          "qa",
+          "host-close",
+          "breakdown-desk",
+          "strike-stage"
+        ],
+        "pred_critical_path": [
+          "doors-open",
+          "guests-arrive-and-register",
+          "usher-guests-to-seats",
+          "host-welcome",
+          "ceo-keynote",
+          "product-video",
+          "product-demo",
+          "moderated-qa",
+          "host-close",
+          "hall-clear",
+          "strike-stage"
+        ],
+        "js_critical_path": [
+          "set-up-registration-desk",
+          "foyer-walkthrough",
+          "doors-open",
+          "guests-arrive-and-register",
+          "usher-guests-to-seats",
+          "host-welcome",
+          "ceo-keynote",
+          "product-video",
+          "product-demo",
+          "moderated-qa",
+          "host-close",
+          "hall-clear",
+          "strike-stage"
+        ],
+        "js_makespan": 14520,
+        "critical_overlap": 0.75,
+        "critical_ok": true,
+        "passed": false
+      },
+      "unsupported_rate": 0.047619047619047616,
+      "unsupported_steps": [
+        "hall-clear"
+      ],
+      "matching": [
+        {
+          "gold": "line-check",
+          "predicted": "av-line-check",
+          "by": "span"
+        },
+        {
+          "gold": "rehearsal",
+          "predicted": "rehearse-keynote-transitions",
+          "by": "span"
+        },
+        {
+          "gold": "welcome-playlist",
+          "predicted": "welcome-playlist",
+          "by": "span"
+        },
+        {
+          "gold": "strike-stage",
+          "predicted": "strike-stage",
+          "by": "span"
+        },
+        {
+          "gold": "setup-registration",
+          "predicted": "set-up-registration-desk",
+          "by": "span"
+        },
+        {
+          "gold": "walkthrough",
+          "predicted": "foyer-walkthrough",
+          "by": "span"
+        },
+        {
+          "gold": "doors-open",
+          "predicted": "doors-open",
+          "by": "span"
+        },
+        {
+          "gold": "usher-to-seats",
+          "predicted": "usher-guests-to-seats",
+          "by": "span"
+        },
+        {
+          "gold": "breakdown-desk",
+          "predicted": "break-down-registration-desk",
+          "by": "span"
+        },
+        {
+          "gold": "host-welcome",
+          "predicted": "host-welcome",
+          "by": "span"
+        },
+        {
+          "gold": "ceo-keynote",
+          "predicted": "ceo-keynote",
+          "by": "span"
+        },
+        {
+          "gold": "product-video",
+          "predicted": "product-video",
+          "by": "span"
+        },
+        {
+          "gold": "product-demo",
+          "predicted": "product-demo",
+          "by": "span"
+        },
+        {
+          "gold": "qa",
+          "predicted": "moderated-qa",
+          "by": "span"
+        },
+        {
+          "gold": "host-close",
+          "predicted": "host-close",
+          "by": "span"
+        },
+        {
+          "gold": "set-bar",
+          "predicted": "set-up-bar-and-canapes",
+          "by": "span"
+        },
+        {
+          "gold": "bar-service",
+          "predicted": "bar-serves-drinks",
+          "by": "span"
+        },
+        {
+          "gold": "reception",
+          "predicted": "canape-circulation",
+          "by": "span"
+        },
+        {
+          "gold": null,
+          "predicted": "guests-arrive-and-register",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "hall-clear",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "bar-reopen",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "deepseek-flash",
+        "pattern": "four-turn",
+        "calls": 5,
+        "input_tokens": 44221,
+        "output_tokens": 38687,
+        "cost_usd": 0.0596907,
+        "cache_keys": [
+          "60ceecfe9c6e778610c2b6d9ff530b359ea79f4a6dcb8f748c854fee2ffb778f",
+          "14e55b8234ecc491be00f33d7c76cb422168274ce62db79baa6a58e43a0ae2bc",
+          "57569911e7d6ee4e87cfff5ae3e0d49a948ac14e32bdc9936c0b70d50e9a2690",
+          "5a1ebfd40047b45ddc2dac04aee3de28e3669dd6da9bc0fbff38d40dacf2dcfc",
+          "f1538df90c79732d667e5a1076a0d75351fe224cf8a959ea6ccfc2632bf2d89d"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/responses/event-product-launch-run-of-show.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/predicted/event-product-launch-run-of-show.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 20,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Product Launch Evening: Run of Show for 200 guests",
+            "finish_at": "21:00",
+            "constraints": "one stage, one projector, crew call 17:00, doors 18:00, program over by 20:00, venue resets at 21:00",
+            "vertical": "events",
+            "turn": "T1",
+            "kind": "run-of-show",
+            "constraintsLine": "Resource limits: one stage, one projector, crew call 17:00, doors 18:00, program over by 20:00, venue resets at 21:00.",
+            "deadlineLine": "Everything must be finished by 21:00.",
+            "source": "Source text (read all of it):\n<<<\nProduct Launch Evening: Run of Show\n\nVenue: the main hall, 200 seats, one stage with a single projector and a two-microphone PA, and a foyer with a bar. Crew: one producer calling the show, one AV technician, two front-of-house staff and the caterers. Crew call is 5:00 pm, doors are scheduled for 6:00 pm, and the program must be over by 8:00 pm so the reception can run before the venue resets at 9:00 pm.\n\nPre-show\nThe AV technician runs a full line check of the projector, clicker and both microphones; allow 30 minutes. The producer then walks the CEO and the product lead through the stage for a 20-minute rehearsal of the keynote transitions. Meanwhile front-of-house sets up the registration desk and lays out name badges, which takes 45 minutes, then does a 15-minute walkthrough of the foyer and the seating. Catering sets the bar and the canap\u00e9 stations in the foyer over 60 minutes.\n\nDoors\nDoors open on the producer's call, not before front-of-house confirms the walkthrough is done. Guests arrive and register over 30 minutes while a welcome playlist runs in the hall and the bar serves drinks. When registration closes, front-of-house ushers guests to their seats, which takes 5 minutes.\n\nProgram\nThe host opens the program as soon as the hall is seated and welcomes the audience for 5 minutes. The CEO keynote begins on the host's cue and runs 20 minutes; the AV technician brings up the deck. Straight after the keynote the technician plays a 2-minute product video from the booth, and the product lead follows with a 25-minute live demo. A moderated Q&A follows for about 20 minutes, no less than 15 and no more than 25; the moderator closes it when the questions run dry or the clock says so. When the moderator hands back, the host closes the program in 5 minutes and invites everyone to the reception.\n\nReception\nThe foyer bar reopens as soon as the host closes, and catering circulates canap\u00e9s for 45 minutes. Front-of-house breaks down the registration desk once the last guests have left the hall, about 15 minutes, and the AV technician strikes the stage over 30 minutes after the hall is clear.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Product Launch Evening: Run of Show for 200 guests",
+            "finish_at": "21:00",
+            "constraints": "one stage, one projector, crew call 17:00, doors 18:00, program over by 20:00, venue resets at 21:00",
+            "vertical": "events",
+            "turn": "T2",
+            "kind": "run-of-show"
+          },
+          "T3 extraction": {
+            "goal": "Product Launch Evening: Run of Show for 200 guests",
+            "finish_at": "21:00",
+            "constraints": "one stage, one projector, crew call 17:00, doors 18:00, program over by 20:00, venue resets at 21:00",
+            "vertical": "events",
+            "turn": "T3",
+            "kind": "run-of-show",
+            "environment": "a venue where you have: one stage, one projector, crew call 17:00, doors 18:00, program over by 20:00, venue resets at 21:00",
+            "deadline": "21:00",
+            "source": "Source text (read all of it):\n<<<\nProduct Launch Evening: Run of Show\n\nVenue: the main hall, 200 seats, one stage with a single projector and a two-microphone PA, and a foyer with a bar. Crew: one producer calling the show, one AV technician, two front-of-house staff and the caterers. Crew call is 5:00 pm, doors are scheduled for 6:00 pm, and the program must be over by 8:00 pm so the reception can run before the venue resets at 9:00 pm.\n\nPre-show\nThe AV technician runs a full line check of the projector, clicker and both microphones; allow 30 minutes. The producer then walks the CEO and the product lead through the stage for a 20-minute rehearsal of the keynote transitions. Meanwhile front-of-house sets up the registration desk and lays out name badges, which takes 45 minutes, then does a 15-minute walkthrough of the foyer and the seating. Catering sets the bar and the canap\u00e9 stations in the foyer over 60 minutes.\n\nDoors\nDoors open on the producer's call, not before front-of-house confirms the walkthrough is done. Guests arrive and register over 30 minutes while a welcome playlist runs in the hall and the bar serves drinks. When registration closes, front-of-house ushers guests to their seats, which takes 5 minutes.\n\nProgram\nThe host opens the program as soon as the hall is seated and welcomes the audience for 5 minutes. The CEO keynote begins on the host's cue and runs 20 minutes; the AV technician brings up the deck. Straight after the keynote the technician plays a 2-minute product video from the booth, and the product lead follows with a 25-minute live demo. A moderated Q&A follows for about 20 minutes, no less than 15 and no more than 25; the moderator closes it when the questions run dry or the clock says so. When the moderator hands back, the host closes the program in 5 minutes and invites everyone to the reception.\n\nReception\nThe foyer bar reopens as soon as the host closes, and catering circulates canap\u00e9s for 45 minutes. Front-of-house breaks down the registration desk once the last guests have left the hall, about 15 minutes, and the AV technician strikes the stage over 30 minutes after the hall is clear.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Product Launch Evening: Run of Show for 200 guests",
+            "finish_at": "21:00",
+            "constraints": "one stage, one projector, crew call 17:00, doors 18:00, program over by 20:00, venue resets at 21:00",
+            "vertical": "events",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or plan_event",
+            "finishAtArg": " with finishAt=\"21:00\""
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "event-theater-load-in-soundcheck",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.95,
+        "steps_f1": 0.9743589743589743,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.5714285714285714,
+        "resources_recall": 0.5714285714285714,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.9523809523809523,
+        "relationships_recall": 0.9090909090909091,
+        "relationships_f1": 0.9302325581395349,
+        "structure_rand_index": 0.8830409356725146,
+        "end_to_end_pass": 1.0,
+        "unsupported_rate": 0.05
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.95,
+        "f1": 0.9743589743589743,
+        "tp": 19,
+        "n_gold": 20,
+        "n_pred": 19
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 19,
+        "total": 19
+      },
+      "resources": {
+        "precision": 0.5714285714285714,
+        "recall": 0.5714285714285714,
+        "f1": 0.5714285714285714,
+        "tp": 4,
+        "n_gold": 7,
+        "n_pred": 7
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.9523809523809523,
+        "recall": 0.9090909090909091,
+        "f1": 0.9302325581395349,
+        "tp": 20,
+        "n_gold": 22,
+        "n_pred": 21
+      },
+      "structure": {
+        "rand_index": 0.8830409356725146,
+        "agreements": 151,
+        "pairs": 171,
+        "n_steps": 19
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 28200.0,
+        "pred_makespan": 28500.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "lx-truck-in",
+          "backline-truck-in",
+          "set-monitor-world",
+          "ring-out-wedges",
+          "soundcheck",
+          "band-dinner",
+          "clean-house",
+          "doors",
+          "show",
+          "strike-lx"
+        ],
+        "pred_critical_path": [
+          "lighting-truck-in",
+          "backline-truck-in",
+          "set-monitor-world",
+          "ring-out-wedges",
+          "soundcheck",
+          "band-dinner",
+          "clean-house",
+          "house-manager-walk",
+          "doors-walkup",
+          "show",
+          "backline-out"
+        ],
+        "js_critical_path": [
+          "lighting-truck-in",
+          "backline-truck-in",
+          "set-monitor-world",
+          "ring-out-wedges",
+          "soundcheck",
+          "band-dinner",
+          "clean-house",
+          "house-manager-walk",
+          "doors-walkup",
+          "show",
+          "strike-rig"
+        ],
+        "js_makespan": 28500,
+        "critical_overlap": 0.9,
+        "critical_ok": true,
+        "passed": true
+      },
+      "unsupported_rate": 0.05,
+      "unsupported_steps": [
+        "house-manager-walk"
+      ],
+      "matching": [
+        {
+          "gold": "lx-truck-in",
+          "predicted": "lighting-truck-in",
+          "by": "span"
+        },
+        {
+          "gold": "backline-truck-in",
+          "predicted": "backline-truck-in",
+          "by": "span"
+        },
+        {
+          "gold": "clear-dock",
+          "predicted": "clear-dock",
+          "by": "span"
+        },
+        {
+          "gold": "rig-lx",
+          "predicted": "rig-bars",
+          "by": "span"
+        },
+        {
+          "gold": "lx-focus",
+          "predicted": "focus",
+          "by": "span"
+        },
+        {
+          "gold": "lx-cue-build",
+          "predicted": "build-cues",
+          "by": "span"
+        },
+        {
+          "gold": "strike-lx",
+          "predicted": "strike-rig",
+          "by": "span"
+        },
+        {
+          "gold": "fly-pa",
+          "predicted": "fly-pa",
+          "by": "span"
+        },
+        {
+          "gold": "ring-out-house",
+          "predicted": "ring-out-house",
+          "by": "span"
+        },
+        {
+          "gold": "set-monitor-world",
+          "predicted": "set-monitor-world",
+          "by": "span"
+        },
+        {
+          "gold": "ring-out-wedges",
+          "predicted": "ring-out-wedges",
+          "by": "span"
+        },
+        {
+          "gold": "backline-up",
+          "predicted": "backline-up",
+          "by": "span"
+        },
+        {
+          "gold": "soundcheck",
+          "predicted": "soundcheck",
+          "by": "span"
+        },
+        {
+          "gold": "band-dinner",
+          "predicted": "band-dinner",
+          "by": "span"
+        },
+        {
+          "gold": "show",
+          "predicted": "show",
+          "by": "span"
+        },
+        {
+          "gold": "backline-out",
+          "predicted": "backline-out",
+          "by": "span"
+        },
+        {
+          "gold": "set-front-of-house",
+          "predicted": "set-front-of-house",
+          "by": "span"
+        },
+        {
+          "gold": "clean-house",
+          "predicted": "clean-house",
+          "by": "span"
+        },
+        {
+          "gold": "doors",
+          "predicted": "doors-walkup",
+          "by": "span"
+        },
+        {
+          "gold": "stage-sweep",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "house-manager-walk",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "deepseek-flash",
+        "pattern": "four-turn",
+        "calls": 5,
+        "input_tokens": 47165,
+        "output_tokens": 36200,
+        "cost_usd": 0.0575895,
+        "cache_keys": [
+          "4154820d2e4d7abd2fbb0f55bfae9baa53ee4c4da9da2be9f4ca73b8966c570f",
+          "3ce78a1b093ac46859b52298af1f4e410329020f57fbf89e32c94d69f5dcf3ec",
+          "0a4ccd9683ba71bd1de60a955e4650640e0649bf2be6099a57a11944db7c11e3",
+          "d1e65e7fdf0c3e4018dd1b3b1621426c974e3c716efa85bb40f13c9e727b5d18",
+          "d48842735061c4236df6332b71c37fb3f3bde5dd05f74470f8586d24a0c62843"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/responses/event-theater-load-in-soundcheck.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/predicted/event-theater-load-in-soundcheck.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 19,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Load-In Schedule \u2014 The Lyric for one-nighter, touring band, house crew of eight",
+            "finish_at": "doors",
+            "constraints": "one loading dock, one stage, one lighting desk, one PA, one monitor world, one green room",
+            "vertical": "events",
+            "turn": "T1",
+            "kind": "run-of-show",
+            "constraintsLine": "Resource limits: one loading dock, one stage, one lighting desk, one PA, one monitor world, one green room.",
+            "deadlineLine": "Everything must be finished by doors.",
+            "source": "Source text (read all of it):\n<<<\nLoad-In Schedule \u2014 The Lyric, one-nighter\n\nOne loading dock, one stage, one lighting desk, one PA, one monitor world. Crew call is 8am and that is where this schedule starts. The dock takes one truck at a time, so the lighting truck empties before the backline truck pulls in, and nothing goes up on stage while the dock is still moving through it.\n\nDock\nLighting truck in: bars, fixtures, cable, 60 minutes.\nBackline truck in the moment the lighting truck is empty: 45 minutes.\nClear the dock and get the empties out; 15 minutes.\n\nLighting\nRig the bars as soon as the lighting truck is off the dock: 45 minutes on stage.\nFocus from the desk once the rig is up: 60 minutes.\nBuild the cues after focus: 30 minutes if the plot is clean, up to 90 if it is not.\nStrike the rig when the show is down: 60 minutes.\n\nPA\nFly the PA as soon as the lighting truck is off the dock: 75 minutes.\nRing out the house: 20 minutes.\n\nMonitors\nSet monitor world once the backline truck is off the dock: 45 minutes.\nRing out the wedges: 20 minutes.\n\nBand\nBackline up as soon as the dock is clear of the second truck: 45 minutes on stage.\nSoundcheck when the house and the wedges are both rung out: 60 minutes, drums first.\nBand dinner after soundcheck: 60 minutes in the green room.\n\nHouse\nSet front of house from two hours in: 60 minutes, merch, bars, ushers.\nClean the house after the band go to dinner; 30 minutes.\nDoors when the house manager calls them; 30 minutes of walk-up.\nShow on stage once the house is in, and it runs as long as it runs.\nBackline out fifteen minutes after the show is down: 45 minutes on the dock.\n\nNotes\nThe dock is the first bottleneck and the stage is the second. Focus and cue-build both want the desk, so they are strictly sequential. Soundcheck is the only step in the day that waits on two separate departments at once.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Load-In Schedule \u2014 The Lyric for one-nighter, touring band, house crew of eight",
+            "finish_at": "doors",
+            "constraints": "one loading dock, one stage, one lighting desk, one PA, one monitor world, one green room",
+            "vertical": "events",
+            "turn": "T2",
+            "kind": "run-of-show"
+          },
+          "T3 extraction": {
+            "goal": "Load-In Schedule \u2014 The Lyric for one-nighter, touring band, house crew of eight",
+            "finish_at": "doors",
+            "constraints": "one loading dock, one stage, one lighting desk, one PA, one monitor world, one green room",
+            "vertical": "events",
+            "turn": "T3",
+            "kind": "run-of-show",
+            "environment": "a venue where you have: one loading dock, one stage, one lighting desk, one PA, one monitor world, one green room",
+            "deadline": "doors",
+            "source": "Source text (read all of it):\n<<<\nLoad-In Schedule \u2014 The Lyric, one-nighter\n\nOne loading dock, one stage, one lighting desk, one PA, one monitor world. Crew call is 8am and that is where this schedule starts. The dock takes one truck at a time, so the lighting truck empties before the backline truck pulls in, and nothing goes up on stage while the dock is still moving through it.\n\nDock\nLighting truck in: bars, fixtures, cable, 60 minutes.\nBackline truck in the moment the lighting truck is empty: 45 minutes.\nClear the dock and get the empties out; 15 minutes.\n\nLighting\nRig the bars as soon as the lighting truck is off the dock: 45 minutes on stage.\nFocus from the desk once the rig is up: 60 minutes.\nBuild the cues after focus: 30 minutes if the plot is clean, up to 90 if it is not.\nStrike the rig when the show is down: 60 minutes.\n\nPA\nFly the PA as soon as the lighting truck is off the dock: 75 minutes.\nRing out the house: 20 minutes.\n\nMonitors\nSet monitor world once the backline truck is off the dock: 45 minutes.\nRing out the wedges: 20 minutes.\n\nBand\nBackline up as soon as the dock is clear of the second truck: 45 minutes on stage.\nSoundcheck when the house and the wedges are both rung out: 60 minutes, drums first.\nBand dinner after soundcheck: 60 minutes in the green room.\n\nHouse\nSet front of house from two hours in: 60 minutes, merch, bars, ushers.\nClean the house after the band go to dinner; 30 minutes.\nDoors when the house manager calls them; 30 minutes of walk-up.\nShow on stage once the house is in, and it runs as long as it runs.\nBackline out fifteen minutes after the show is down: 45 minutes on the dock.\n\nNotes\nThe dock is the first bottleneck and the stage is the second. Focus and cue-build both want the desk, so they are strictly sequential. Soundcheck is the only step in the day that waits on two separate departments at once.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Load-In Schedule \u2014 The Lyric for one-nighter, touring band, house crew of eight",
+            "finish_at": "doors",
+            "constraints": "one loading dock, one stage, one lighting desk, one PA, one monitor world, one green room",
+            "vertical": "events",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or plan_event",
+            "finishAtArg": " with finishAt=\"doors\""
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "event-wedding-reception-timeline",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 1.0,
+        "steps_f1": 1.0,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.6666666666666666,
+        "resources_recall": 0.5714285714285714,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.65,
+        "relationships_recall": 0.6842105263157895,
+        "relationships_f1": 0.6666666666666667,
+        "structure_rand_index": 0.9005847953216374,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.09523809523809523
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 19,
+        "n_gold": 19,
+        "n_pred": 19
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 19,
+        "total": 19
+      },
+      "resources": {
+        "precision": 0.6666666666666666,
+        "recall": 0.5714285714285714,
+        "f1": 0.6153846153846153,
+        "tp": 4,
+        "n_gold": 7,
+        "n_pred": 6
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.65,
+        "recall": 0.6842105263157895,
+        "f1": 0.6666666666666667,
+        "tp": 13,
+        "n_gold": 19,
+        "n_pred": 20
+      },
+      "structure": {
+        "rand_index": 0.9005847953216374,
+        "agreements": 154,
+        "pairs": 171,
+        "n_steps": 19
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 23400.0,
+        "pred_makespan": 19500.0,
+        "makespan_ok": false,
+        "gold_critical_path": [
+          "flip-room",
+          "dress-tables",
+          "seat-guests",
+          "plate-starters",
+          "serve-starters",
+          "clear-starters",
+          "plate-mains",
+          "serve-mains",
+          "clear-mains",
+          "first-dance",
+          "speeches",
+          "cake-cut",
+          "plate-dessert",
+          "serve-dessert",
+          "dancing"
+        ],
+        "pred_critical_path": [
+          "pass-canapes",
+          "call-to-dinner",
+          "seat-guests",
+          "welcome-toast",
+          "speeches",
+          "cut-cake",
+          "plate-dessert",
+          "serve-dessert",
+          "dancing"
+        ],
+        "js_critical_path": [
+          "pass-canapes",
+          "call-to-dinner",
+          "seat-guests",
+          "plate-starters",
+          "serve-starters",
+          "clear-starters",
+          "plate-mains",
+          "serve-mains",
+          "clear-mains",
+          "first-dance",
+          "speeches",
+          "cut-cake",
+          "plate-dessert",
+          "serve-dessert",
+          "dancing"
+        ],
+        "js_makespan": 19500,
+        "critical_overlap": 0.4,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.09523809523809523,
+      "unsupported_steps": [
+        "stage-courses",
+        "mic-check"
+      ],
+      "matching": [
+        {
+          "gold": "flip-room",
+          "predicted": "flip-room",
+          "by": "span"
+        },
+        {
+          "gold": "dress-tables",
+          "predicted": "dress-tables",
+          "by": "span"
+        },
+        {
+          "gold": "seat-guests",
+          "predicted": "seat-guests",
+          "by": "span"
+        },
+        {
+          "gold": "open-bar",
+          "predicted": "open-bar",
+          "by": "span"
+        },
+        {
+          "gold": "pass-canapes",
+          "predicted": "pass-canapes",
+          "by": "span"
+        },
+        {
+          "gold": "call-to-dinner",
+          "predicted": "call-to-dinner",
+          "by": "span"
+        },
+        {
+          "gold": "plate-starters",
+          "predicted": "plate-starters",
+          "by": "span"
+        },
+        {
+          "gold": "plate-mains",
+          "predicted": "plate-mains",
+          "by": "span"
+        },
+        {
+          "gold": "plate-dessert",
+          "predicted": "plate-dessert",
+          "by": "span"
+        },
+        {
+          "gold": "serve-starters",
+          "predicted": "serve-starters",
+          "by": "span"
+        },
+        {
+          "gold": "clear-starters",
+          "predicted": "clear-starters",
+          "by": "span"
+        },
+        {
+          "gold": "serve-mains",
+          "predicted": "serve-mains",
+          "by": "span"
+        },
+        {
+          "gold": "clear-mains",
+          "predicted": "clear-mains",
+          "by": "span"
+        },
+        {
+          "gold": "serve-dessert",
+          "predicted": "serve-dessert",
+          "by": "span"
+        },
+        {
+          "gold": "welcome-toast",
+          "predicted": "welcome-toast",
+          "by": "span"
+        },
+        {
+          "gold": "first-dance",
+          "predicted": "first-dance",
+          "by": "span"
+        },
+        {
+          "gold": "speeches",
+          "predicted": "speeches",
+          "by": "span"
+        },
+        {
+          "gold": "cake-cut",
+          "predicted": "cut-cake",
+          "by": "span"
+        },
+        {
+          "gold": "dancing",
+          "predicted": "dancing",
+          "by": "span"
+        },
+        {
+          "gold": null,
+          "predicted": "stage-courses",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "mic-check",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "deepseek-flash",
+        "pattern": "four-turn",
+        "calls": 5,
+        "input_tokens": 41592,
+        "output_tokens": 45515,
+        "cost_usd": 0.0670956,
+        "cache_keys": [
+          "37fdfcf2ae1b7e660666e2e707f9f0d6be1d691dae32f64d96e28808fdd05e5d",
+          "a65100db1251171654e76eb29e3c31b65599d7c430b308ab56301981b6503f0b",
+          "d5fb8fb7aec601e7ad6de03348f025d542393aae32658aea44e00ce31207e9a3",
+          "03f439929cba081df1bebef16aeeac8ac70f5ce6c32a529580370da08218ecee",
+          "3969904e2f21effb9abb186e437d45b255afdc57f598ea589b1fa6e759417922"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/responses/event-wedding-reception-timeline.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/predicted/event-wedding-reception-timeline.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 20,
+        "unsupported_step_ids": [
+          "mic-check"
+        ],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Wedding Reception Run Sheet \u2014 Ashgrove Barn for 90 guests, three courses",
+            "finish_at": "band's last set",
+            "constraints": "one kitchen pass, one bar, one microphone, two servers on the floor, one dance floor",
+            "vertical": "events",
+            "turn": "T1",
+            "kind": "run-of-show",
+            "constraintsLine": "Resource limits: one kitchen pass, one bar, one microphone, two servers on the floor, one dance floor.",
+            "deadlineLine": "Everything must be finished by band's last set.",
+            "source": "Source text (read all of it):\n<<<\nWedding Reception Run Sheet \u2014 Ashgrove Barn, 90 guests\n\nThe ceremony breaks at four o'clock and this sheet starts there. One kitchen pass, one bar, one microphone, two servers on the floor, one band. The planner owns the room call; the MC owns everything that goes through the microphone. Nothing on the pass overlaps: the kitchen plates one course at a time and the floor waits for it.\n\nRoom\nFlip the ceremony room to reception seating: 45 minutes, chairs out, rounds in, linen on.\nDress the tables with centrepieces, place cards and candles; 15 minutes once the flip is done.\nSeat the guests when the planner calls the room; 15 minutes to get 90 people down.\n\nFoyer\nOpen the bar as soon as the ceremony breaks; 20 minutes to set and pour the first round.\nPass canapes in the foyer from twenty minutes in, and keep passing for forty minutes to an hour, however long the photographs take.\nCall the room to dinner once the canapes are done; 5 minutes.\n\nKitchen\nStarters plate up fifteen minutes after the room starts seating; 15 minutes on the pass.\nMains go on the pass five minutes after the starter plates are cleared; 30 minutes.\nDessert plates up the moment the cake is cut; 15 minutes.\n\nFloor\nServe the starters; 10 minutes.\nClear the starters twenty minutes after they go out; 10 minutes.\nServe the mains; 15 minutes.\nClear the mains forty minutes after they go out; 10 minutes.\nServe the dessert; 10 minutes.\n\nProgramme\nWelcome toast as soon as the guests are seated; 5 minutes on the microphone.\nFirst dance once the main plates are cleared; 5 minutes.\nSpeeches when the MC cues them: two or three of them, fifteen minutes total, twenty-five at the outside.\nCut the cake straight after the speeches; 10 minutes.\nDancing starts ten minutes after the dessert is served and runs until the band's last set.\n\nNotes for the day\nThe photographs are the only thing we do not control, so the canape window is the slack in the sheet: if the couple are late back from the orchard the bar carries it. Everything downstream of the room call is fixed. If the speeches run long, the kitchen holds the dessert rather than plating it early \u2014 the pass is the bottleneck and a plated dessert sitting under a lamp is worse than a five minute gap on the floor.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Wedding Reception Run Sheet \u2014 Ashgrove Barn for 90 guests, three courses",
+            "finish_at": "band's last set",
+            "constraints": "one kitchen pass, one bar, one microphone, two servers on the floor, one dance floor",
+            "vertical": "events",
+            "turn": "T2",
+            "kind": "run-of-show"
+          },
+          "T3 extraction": {
+            "goal": "Wedding Reception Run Sheet \u2014 Ashgrove Barn for 90 guests, three courses",
+            "finish_at": "band's last set",
+            "constraints": "one kitchen pass, one bar, one microphone, two servers on the floor, one dance floor",
+            "vertical": "events",
+            "turn": "T3",
+            "kind": "run-of-show",
+            "environment": "a venue where you have: one kitchen pass, one bar, one microphone, two servers on the floor, one dance floor",
+            "deadline": "band's last set",
+            "source": "Source text (read all of it):\n<<<\nWedding Reception Run Sheet \u2014 Ashgrove Barn, 90 guests\n\nThe ceremony breaks at four o'clock and this sheet starts there. One kitchen pass, one bar, one microphone, two servers on the floor, one band. The planner owns the room call; the MC owns everything that goes through the microphone. Nothing on the pass overlaps: the kitchen plates one course at a time and the floor waits for it.\n\nRoom\nFlip the ceremony room to reception seating: 45 minutes, chairs out, rounds in, linen on.\nDress the tables with centrepieces, place cards and candles; 15 minutes once the flip is done.\nSeat the guests when the planner calls the room; 15 minutes to get 90 people down.\n\nFoyer\nOpen the bar as soon as the ceremony breaks; 20 minutes to set and pour the first round.\nPass canapes in the foyer from twenty minutes in, and keep passing for forty minutes to an hour, however long the photographs take.\nCall the room to dinner once the canapes are done; 5 minutes.\n\nKitchen\nStarters plate up fifteen minutes after the room starts seating; 15 minutes on the pass.\nMains go on the pass five minutes after the starter plates are cleared; 30 minutes.\nDessert plates up the moment the cake is cut; 15 minutes.\n\nFloor\nServe the starters; 10 minutes.\nClear the starters twenty minutes after they go out; 10 minutes.\nServe the mains; 15 minutes.\nClear the mains forty minutes after they go out; 10 minutes.\nServe the dessert; 10 minutes.\n\nProgramme\nWelcome toast as soon as the guests are seated; 5 minutes on the microphone.\nFirst dance once the main plates are cleared; 5 minutes.\nSpeeches when the MC cues them: two or three of them, fifteen minutes total, twenty-five at the outside.\nCut the cake straight after the speeches; 10 minutes.\nDancing starts ten minutes after the dessert is served and runs until the band's last set.\n\nNotes for the day\nThe photographs are the only thing we do not control, so the canape window is the slack in the sheet: if the couple are late back from the orchard the bar carries it. Everything downstream of the room call is fixed. If the speeches run long, the kitchen holds the dessert rather than plating it early \u2014 the pass is the bottleneck and a plated dessert sitting under a lamp is worse than a five minute gap on the floor.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Wedding Reception Run Sheet \u2014 Ashgrove Barn for 90 guests, three courses",
+            "finish_at": "band's last set",
+            "constraints": "one kitchen pass, one bar, one microphone, two servers on the floor, one dance floor",
+            "vertical": "events",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or plan_event",
+            "finishAtArg": " with finishAt=\"band's last set\""
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "fitness-hiit-circuit-intervals",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 1.0,
+        "steps_f1": 1.0,
+        "durations_accuracy": 1.0,
+        "resources_precision": 1.0,
+        "resources_recall": 1.0,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.48484848484848486,
+        "relationships_recall": 0.3902439024390244,
+        "relationships_f1": 0.4324324324324324,
+        "structure_rand_index": 0.6866096866096866,
+        "end_to_end_pass": 1.0,
+        "unsupported_rate": 0.1
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 27,
+        "n_gold": 27,
+        "n_pred": 27
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 27,
+        "total": 27
+      },
+      "resources": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 5,
+        "n_gold": 5,
+        "n_pred": 5
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.48484848484848486,
+        "recall": 0.3902439024390244,
+        "f1": 0.4324324324324324,
+        "tp": 16,
+        "n_gold": 41,
+        "n_pred": 33
+      },
+      "structure": {
+        "rand_index": 0.6866096866096866,
+        "agreements": 241,
+        "pairs": 351,
+        "n_steps": 27
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 1320.0,
+        "pred_makespan": 1440.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "a-warmup",
+          "a-rower-r1",
+          "a-rest-r1",
+          "a-kettlebell-r2",
+          "a-rest-r2",
+          "a-box-r3",
+          "a-rest-r3",
+          "a-sled-r4",
+          "a-cooldown"
+        ],
+        "pred_critical_path": [
+          "a-stage",
+          "a-warmup",
+          "a-r1-rower",
+          "a-r1-rest",
+          "a-r2-kettlebell",
+          "a-r2-rest",
+          "a-r3-box",
+          "a-r3-rest",
+          "a-r4-sled",
+          "a-cooldown"
+        ],
+        "js_critical_path": [
+          "a-stage",
+          "a-warmup",
+          "a-r1-rower",
+          "a-r1-rest",
+          "a-r2-kettlebell",
+          "a-r2-rest",
+          "a-r3-box",
+          "a-r3-rest",
+          "a-r4-sled",
+          "c-cooldown"
+        ],
+        "js_makespan": 1440,
+        "critical_overlap": 0.6666666666666666,
+        "critical_ok": true,
+        "passed": true
+      },
+      "unsupported_rate": 0.1,
+      "unsupported_steps": [
+        "a-stage",
+        "b-stage",
+        "c-stage"
+      ],
+      "matching": [
+        {
+          "gold": "a-warmup",
+          "predicted": "a-warmup",
+          "by": "span"
+        },
+        {
+          "gold": "a-rower-r1",
+          "predicted": "b-r1-kettlebell",
+          "by": "span"
+        },
+        {
+          "gold": "a-rest-r1",
+          "predicted": "a-r1-rest",
+          "by": "span"
+        },
+        {
+          "gold": "a-kettlebell-r2",
+          "predicted": "a-r2-kettlebell",
+          "by": "span"
+        },
+        {
+          "gold": "a-rest-r2",
+          "predicted": "a-r2-rest",
+          "by": "span"
+        },
+        {
+          "gold": "a-box-r3",
+          "predicted": "c-r3-rower",
+          "by": "span"
+        },
+        {
+          "gold": "a-rest-r3",
+          "predicted": "a-r3-rest",
+          "by": "span"
+        },
+        {
+          "gold": "a-sled-r4",
+          "predicted": "c-r4-kettlebell",
+          "by": "span"
+        },
+        {
+          "gold": "a-cooldown",
+          "predicted": "a-cooldown",
+          "by": "span"
+        },
+        {
+          "gold": "b-warmup",
+          "predicted": "b-warmup",
+          "by": "span"
+        },
+        {
+          "gold": "b-kettlebell-r1",
+          "predicted": "a-r1-rower",
+          "by": "span"
+        },
+        {
+          "gold": "b-rest-r1",
+          "predicted": "b-r1-rest",
+          "by": "span"
+        },
+        {
+          "gold": "b-box-r2",
+          "predicted": "c-r2-sled",
+          "by": "span"
+        },
+        {
+          "gold": "b-rest-r2",
+          "predicted": "b-r2-rest",
+          "by": "span"
+        },
+        {
+          "gold": "b-sled-r3",
+          "predicted": "b-r3-sled",
+          "by": "span"
+        },
+        {
+          "gold": "b-rest-r3",
+          "predicted": "b-r3-rest",
+          "by": "span"
+        },
+        {
+          "gold": "b-rower-r4",
+          "predicted": "b-r4-rower",
+          "by": "span"
+        },
+        {
+          "gold": "b-cooldown",
+          "predicted": "b-cooldown",
+          "by": "span"
+        },
+        {
+          "gold": "c-warmup",
+          "predicted": "c-warmup",
+          "by": "span"
+        },
+        {
+          "gold": "c-box-r1",
+          "predicted": "c-r1-box",
+          "by": "span"
+        },
+        {
+          "gold": "c-rest-r1",
+          "predicted": "c-r1-rest",
+          "by": "span"
+        },
+        {
+          "gold": "c-sled-r2",
+          "predicted": "b-r2-box",
+          "by": "span"
+        },
+        {
+          "gold": "c-rest-r2",
+          "predicted": "c-r2-rest",
+          "by": "span"
+        },
+        {
+          "gold": "c-rower-r3",
+          "predicted": "a-r3-box",
+          "by": "span"
+        },
+        {
+          "gold": "c-rest-r3",
+          "predicted": "c-r3-rest",
+          "by": "span"
+        },
+        {
+          "gold": "c-kettlebell-r4",
+          "predicted": "a-r4-sled",
+          "by": "span"
+        },
+        {
+          "gold": "c-cooldown",
+          "predicted": "c-cooldown",
+          "by": "span"
+        },
+        {
+          "gold": null,
+          "predicted": "a-stage",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-stage",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "c-stage",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "deepseek-flash",
+        "pattern": "four-turn",
+        "calls": 6,
+        "input_tokens": 48851,
+        "output_tokens": 59000,
+        "cost_usd": 0.0854553,
+        "cache_keys": [
+          "6ca743c3eb8c40aee36b624beb9cf88bf99f49d72723b9517f4e8cb19edf1d25",
+          "25b9bb49729b056bf8171694c72ed7ead48d95786d238ba5547508e1316db630",
+          "0835d41fc7eb716749d87e293bd581c7e549a0091a2631aef75806815c739ed7",
+          "b94dea364af86a78aa2611e9e3320152cc03d31196014819b550e65b7a0ac9a6",
+          "696508c1b9fa8e5966fd30cbc99b993166192bd2f1977fd887614650861acc62",
+          "91aefc9bb6299b4596abb74f8838dea5169e29fd473c148799731447a239d383"
+        ],
+        "fix_iterations": 2,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/responses/fitness-hiit-circuit-intervals.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/predicted/fitness-hiit-circuit-intervals.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 0,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "HIIT Circuit Card \u2014 three athletes, four stations for 3 athletes, 4 rounds",
+            "finish_at": null,
+            "constraints": "one rower, one kettlebell, one box, one sled, three athletes on the floor",
+            "vertical": "gym",
+            "turn": "T1",
+            "kind": "workout",
+            "constraintsLine": "Resource limits: one rower, one kettlebell, one box, one sled, three athletes on the floor.",
+            "deadlineLine": "No finishing time was given; finish as early as the work allows.",
+            "source": "Source text (read all of it):\n<<<\nHIIT Circuit Card \u2014 three athletes, four stations\n\nSmall group session, forty-five minutes on the clock including the warm-up and the stretch. There is one rower, one kettlebell, one box and one sled in the corner of the gym, and three of you. That means one station sits empty every round, and it means nobody ever waits on equipment if the rotation is respected.\n\nThe rule\nSixty seconds of work, all out, then sixty seconds of rest. Nobody starts a station until the athlete ahead of them has left it. If you are early, stand at the station and breathe; do not start.\n\nWarm-up\nFive minutes on the floor together: skipping, hip openers, shoulder pass-throughs, two sets of ten air squats. All three of you start at the same time and finish at the same time.\n\nThe stations\nRower: damper on five, pull hard, do not chase the split on the last ten seconds.\nKettlebell swings: one bell, hips not arms, chest tall at the top.\nBox step-overs: alternate the lead leg, full extension at the top, no rebound.\nSled push: the length of the turf and back, low hands, short steps.\n\nThe rotation\nRound 1: A on the rower, B on the kettlebell, C on the box.\nRound 2: A on the kettlebell, B on the box, C on the sled.\nRound 3: A on the box, B on the sled, C on the rower.\nRound 4: A on the sled, B on the rower, C on the kettlebell.\n\nRest\nSixty seconds of rest on the floor after every station. Walk it off, do not sit down, do not lean on the next piece of equipment while somebody is still using it. There is no rest after the fourth station: that one runs straight into the cooldown.\n\nCooldown\nTen minutes on the floor when all three of you have finished the fourth station: easy bike or a walk, then quads, hips and thoracic spine. Nobody leaves early; the cooldown starts together.\n\nCoach's note\nThe sled is the one that wrecks the rotation if somebody drags it. It is the longest reset and it is at the far end of the turf, so the athlete coming off the sled is the one most likely to hold up the person behind them. Watch that hand-off.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "HIIT Circuit Card \u2014 three athletes, four stations for 3 athletes, 4 rounds",
+            "finish_at": null,
+            "constraints": "one rower, one kettlebell, one box, one sled, three athletes on the floor",
+            "vertical": "gym",
+            "turn": "T2",
+            "kind": "workout"
+          },
+          "T3 extraction": {
+            "goal": "HIIT Circuit Card \u2014 three athletes, four stations for 3 athletes, 4 rounds",
+            "finish_at": null,
+            "constraints": "one rower, one kettlebell, one box, one sled, three athletes on the floor",
+            "vertical": "gym",
+            "turn": "T3",
+            "kind": "workout",
+            "environment": "a gym where you have: one rower, one kettlebell, one box, one sled, three athletes on the floor",
+            "deadline": "the earliest time the work allows",
+            "source": "Source text (read all of it):\n<<<\nHIIT Circuit Card \u2014 three athletes, four stations\n\nSmall group session, forty-five minutes on the clock including the warm-up and the stretch. There is one rower, one kettlebell, one box and one sled in the corner of the gym, and three of you. That means one station sits empty every round, and it means nobody ever waits on equipment if the rotation is respected.\n\nThe rule\nSixty seconds of work, all out, then sixty seconds of rest. Nobody starts a station until the athlete ahead of them has left it. If you are early, stand at the station and breathe; do not start.\n\nWarm-up\nFive minutes on the floor together: skipping, hip openers, shoulder pass-throughs, two sets of ten air squats. All three of you start at the same time and finish at the same time.\n\nThe stations\nRower: damper on five, pull hard, do not chase the split on the last ten seconds.\nKettlebell swings: one bell, hips not arms, chest tall at the top.\nBox step-overs: alternate the lead leg, full extension at the top, no rebound.\nSled push: the length of the turf and back, low hands, short steps.\n\nThe rotation\nRound 1: A on the rower, B on the kettlebell, C on the box.\nRound 2: A on the kettlebell, B on the box, C on the sled.\nRound 3: A on the box, B on the sled, C on the rower.\nRound 4: A on the sled, B on the rower, C on the kettlebell.\n\nRest\nSixty seconds of rest on the floor after every station. Walk it off, do not sit down, do not lean on the next piece of equipment while somebody is still using it. There is no rest after the fourth station: that one runs straight into the cooldown.\n\nCooldown\nTen minutes on the floor when all three of you have finished the fourth station: easy bike or a walk, then quads, hips and thoracic spine. Nobody leaves early; the cooldown starts together.\n\nCoach's note\nThe sled is the one that wrecks the rotation if somebody drags it. It is the longest reset and it is at the far end of the turf, so the athlete coming off the sled is the one most likely to hold up the person behind them. Watch that hand-off.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "HIIT Circuit Card \u2014 three athletes, four stations for 3 athletes, 4 rounds",
+            "finish_at": null,
+            "constraints": "one rower, one kettlebell, one box, one sled, three athletes on the floor",
+            "vertical": "gym",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or start_workout",
+            "finishAtArg": ""
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "fitness-partner-upper-body-supersets",
+      "headline": {
+        "steps_precision": 0.7857142857142857,
+        "steps_recall": 0.7857142857142857,
+        "steps_f1": 0.7857142857142857,
+        "durations_accuracy": 0.8636363636363636,
+        "resources_precision": 0.6,
+        "resources_recall": 0.6,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.4166666666666667,
+        "relationships_recall": 0.39473684210526316,
+        "relationships_f1": 0.40540540540540543,
+        "structure_rand_index": 0.9090909090909091,
+        "end_to_end_pass": 1.0,
+        "unsupported_rate": 0.034482758620689655
+      },
+      "steps": {
+        "precision": 0.7857142857142857,
+        "recall": 0.7857142857142857,
+        "f1": 0.7857142857142857,
+        "tp": 22,
+        "n_gold": 28,
+        "n_pred": 28
+      },
+      "durations": {
+        "accuracy": 0.8636363636363636,
+        "correct": 19,
+        "total": 22
+      },
+      "resources": {
+        "precision": 0.6,
+        "recall": 0.6,
+        "f1": 0.6,
+        "tp": 3,
+        "n_gold": 5,
+        "n_pred": 5
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.4166666666666667,
+        "recall": 0.39473684210526316,
+        "f1": 0.40540540540540543,
+        "tp": 15,
+        "n_gold": 38,
+        "n_pred": 36
+      },
+      "structure": {
+        "rand_index": 0.9090909090909091,
+        "agreements": 210,
+        "pairs": 231,
+        "n_steps": 22
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 1405.0,
+        "pred_makespan": 1510.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "a-warmup-row",
+          "a-mobility",
+          "a-bench-1",
+          "a-row-1",
+          "a-rest-a1",
+          "a-bench-2",
+          "a-row-2",
+          "a-rest-a2",
+          "a-press-1",
+          "b-press-1",
+          "b-rest-b1",
+          "b-pullups-2",
+          "b-press-2",
+          "a-cooldown"
+        ],
+        "pred_critical_path": [
+          "setup-station",
+          "a-easy-rowing",
+          "a-arm-circles-pull-aparts",
+          "a-sa-r1-bench-press",
+          "b-sa-r1-bench-press",
+          "b-sa-r1-rest",
+          "b-sa-r2-dumbbell-row",
+          "a-sa-r2-dumbbell-row",
+          "a-sa-r2-rest",
+          "a-sb-r1-overhead-press",
+          "b-sb-r1-overhead-press",
+          "a-sb-r1-rest",
+          "a-sb-r2-overhead-press",
+          "b-sb-r2-overhead-press",
+          "a-cool-down-stretch"
+        ],
+        "js_critical_path": [
+          "setup-station",
+          "a-easy-rowing",
+          "a-arm-circles-pull-aparts",
+          "a-sa-r1-bench-press",
+          "b-sa-r1-bench-press",
+          "b-sa-r1-rest",
+          "b-sa-r2-dumbbell-row",
+          "a-sa-r2-dumbbell-row",
+          "a-sa-r2-rest",
+          "a-sb-r1-overhead-press",
+          "b-sb-r1-overhead-press",
+          "a-sb-r1-rest",
+          "a-sb-r2-overhead-press",
+          "b-sb-r2-overhead-press",
+          "a-cool-down-stretch"
+        ],
+        "js_makespan": 1510,
+        "critical_overlap": 0.5714285714285714,
+        "critical_ok": true,
+        "passed": true
+      },
+      "unsupported_rate": 0.034482758620689655,
+      "unsupported_steps": [
+        "setup-station"
+      ],
+      "matching": [
+        {
+          "gold": "a-warmup-row",
+          "predicted": "a-easy-rowing",
+          "by": "span"
+        },
+        {
+          "gold": "a-mobility",
+          "predicted": "a-arm-circles-pull-aparts",
+          "by": "span"
+        },
+        {
+          "gold": "a-bench-1",
+          "predicted": "a-sa-r1-bench-press",
+          "by": "span"
+        },
+        {
+          "gold": "a-row-1",
+          "predicted": "a-sa-r1-dumbbell-row",
+          "by": "span"
+        },
+        {
+          "gold": "a-rest-a1",
+          "predicted": "a-sa-r1-rest",
+          "by": "span"
+        },
+        {
+          "gold": "a-row-2",
+          "predicted": "a-sa-r2-dumbbell-row",
+          "by": "span"
+        },
+        {
+          "gold": "a-rest-a2",
+          "predicted": "b-sa-r1-rest",
+          "by": "span"
+        },
+        {
+          "gold": "a-press-1",
+          "predicted": "a-sb-r1-overhead-press",
+          "by": "span"
+        },
+        {
+          "gold": "a-pullups-1",
+          "predicted": "a-sb-r1-pull-ups",
+          "by": "span"
+        },
+        {
+          "gold": "a-rest-b1",
+          "predicted": "a-sb-r1-rest",
+          "by": "span"
+        },
+        {
+          "gold": "a-press-2",
+          "predicted": "a-sb-r2-overhead-press",
+          "by": "span"
+        },
+        {
+          "gold": "a-cooldown",
+          "predicted": "a-cool-down-stretch",
+          "by": "span"
+        },
+        {
+          "gold": "b-warmup-row",
+          "predicted": "b-easy-rowing",
+          "by": "span"
+        },
+        {
+          "gold": "b-mobility",
+          "predicted": "b-arm-circles-pull-aparts",
+          "by": "span"
+        },
+        {
+          "gold": "b-row-1",
+          "predicted": "b-sa-r1-dumbbell-row",
+          "by": "span"
+        },
+        {
+          "gold": "b-bench-1",
+          "predicted": "b-sa-r1-bench-press",
+          "by": "span"
+        },
+        {
+          "gold": "b-bench-2",
+          "predicted": "b-sa-r2-bench-press",
+          "by": "span"
+        },
+        {
+          "gold": "b-pullups-1",
+          "predicted": "b-sb-r1-pull-ups",
+          "by": "span"
+        },
+        {
+          "gold": "b-press-1",
+          "predicted": "b-sb-r1-overhead-press",
+          "by": "span"
+        },
+        {
+          "gold": "b-rest-b1",
+          "predicted": "b-sb-r1-rest",
+          "by": "span"
+        },
+        {
+          "gold": "b-pullups-2",
+          "predicted": "b-sb-r2-pull-ups",
+          "by": "span"
+        },
+        {
+          "gold": "b-cooldown",
+          "predicted": "b-cool-down-stretch",
+          "by": "span"
+        },
+        {
+          "gold": "a-bench-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "a-pullups-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rest-a1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-row-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-rest-a2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-press-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "setup-station",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "a-sa-r2-bench-press",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "a-sa-r2-rest",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "a-sb-r2-pull-ups",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-sa-r2-dumbbell-row",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-sa-r2-rest",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "b-sb-r2-overhead-press",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "deepseek-flash",
+        "pattern": "four-turn",
+        "calls": 6,
+        "input_tokens": 49439,
+        "output_tokens": 57060,
+        "cost_usd": 0.0833037,
+        "cache_keys": [
+          "091fd6e8dbb1dc631ef00db1713c1a62e85b8f155695a43172e06b2206407e66",
+          "323806accef99a4580af7406761ad541852b8a0117c6586ce5ee16e62a1e3be2",
+          "f46ec7050da68c6d2ccdfc26bd5d644da0718dbbb329070f1a9af67663a1cffa",
+          "65967777cc4ecddd98d3e63c913adf924f46d2cc18d2f5e58365631e311287a6",
+          "c6e1b3209569a8f540554eb7959e3d9e76f36b7d10b0b51da0c66cd38da9d00d",
+          "828a1a1b7284242703fd1ac96d1207c2aadec1eacc049be5aa19a766024b3da1"
+        ],
+        "fix_iterations": 2,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/responses/fitness-partner-upper-body-supersets.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/predicted/fitness-partner-upper-body-supersets.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 9,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Partner Upper-Body Superset Session for 2 lifters",
+            "finish_at": null,
+            "constraints": "one bench and barbell, one pair of dumbbells, one pull-up bar, two ergs, about 25 minutes",
+            "vertical": "gym",
+            "turn": "T1",
+            "kind": "workout",
+            "constraintsLine": "Resource limits: one bench and barbell, one pair of dumbbells, one pull-up bar, two ergs, about 25 minutes.",
+            "deadlineLine": "No finishing time was given; finish as early as the work allows.",
+            "source": "Source text (read all of it):\n<<<\nPartner Upper-Body Superset Session\n\nTwo lifters, one flat bench with a barbell, one pair of dumbbells, one pull-up bar and two rowing ergs. The whole session should take about 25 minutes. You work as a pair: while Partner A is on the first exercise of a superset, Partner B is on the second, and then you swap; nobody waits for equipment if you keep the order.\n\nWarm-up\nBoth partners start together with 5 minutes of easy rowing on the ergs, followed by 3 minutes of arm circles and band pull-aparts.\n\nSuperset A: bench press and dumbbell row (2 rounds)\nPartner A loads the bar and does a set of 8 bench presses, which takes about 40 seconds. Partner B starts on the dumbbell row at the same time, 8 per side, also about 40 seconds. Then swap: A goes to the rows once B has finished with the dumbbells, and B takes the bench as soon as A racks the bar. After both exercises, rest 90 seconds before the next round. Do 2 rounds, resting after each.\n\nSuperset B: overhead press and pull-ups (2 rounds)\nMove straight on after the last rest. Partner A does 8 strict overhead presses with the dumbbells, about 45 seconds, while Partner B does a set of pull-ups, 6 to 10 reps, about 30 seconds. Swap when both are done: A moves to the pull-up bar, and B takes the dumbbells when A sets them down. Rest 2 minutes between rounds; there is no rest after the second round.\n\nCool-down\nFinish together with 5 minutes of stretching: doorway chest stretch, lat stretch on the pull-up bar, and slow shoulder rolls.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Partner Upper-Body Superset Session for 2 lifters",
+            "finish_at": null,
+            "constraints": "one bench and barbell, one pair of dumbbells, one pull-up bar, two ergs, about 25 minutes",
+            "vertical": "gym",
+            "turn": "T2",
+            "kind": "workout"
+          },
+          "T3 extraction": {
+            "goal": "Partner Upper-Body Superset Session for 2 lifters",
+            "finish_at": null,
+            "constraints": "one bench and barbell, one pair of dumbbells, one pull-up bar, two ergs, about 25 minutes",
+            "vertical": "gym",
+            "turn": "T3",
+            "kind": "workout",
+            "environment": "a gym where you have: one bench and barbell, one pair of dumbbells, one pull-up bar, two ergs, about 25 minutes",
+            "deadline": "the earliest time the work allows",
+            "source": "Source text (read all of it):\n<<<\nPartner Upper-Body Superset Session\n\nTwo lifters, one flat bench with a barbell, one pair of dumbbells, one pull-up bar and two rowing ergs. The whole session should take about 25 minutes. You work as a pair: while Partner A is on the first exercise of a superset, Partner B is on the second, and then you swap; nobody waits for equipment if you keep the order.\n\nWarm-up\nBoth partners start together with 5 minutes of easy rowing on the ergs, followed by 3 minutes of arm circles and band pull-aparts.\n\nSuperset A: bench press and dumbbell row (2 rounds)\nPartner A loads the bar and does a set of 8 bench presses, which takes about 40 seconds. Partner B starts on the dumbbell row at the same time, 8 per side, also about 40 seconds. Then swap: A goes to the rows once B has finished with the dumbbells, and B takes the bench as soon as A racks the bar. After both exercises, rest 90 seconds before the next round. Do 2 rounds, resting after each.\n\nSuperset B: overhead press and pull-ups (2 rounds)\nMove straight on after the last rest. Partner A does 8 strict overhead presses with the dumbbells, about 45 seconds, while Partner B does a set of pull-ups, 6 to 10 reps, about 30 seconds. Swap when both are done: A moves to the pull-up bar, and B takes the dumbbells when A sets them down. Rest 2 minutes between rounds; there is no rest after the second round.\n\nCool-down\nFinish together with 5 minutes of stretching: doorway chest stretch, lat stretch on the pull-up bar, and slow shoulder rolls.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Partner Upper-Body Superset Session for 2 lifters",
+            "finish_at": null,
+            "constraints": "one bench and barbell, one pair of dumbbells, one pull-up bar, two ergs, about 25 minutes",
+            "vertical": "gym",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or start_workout",
+            "finishAtArg": ""
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "fitness-rowing-erg-interval-session",
+      "headline": {
+        "steps_precision": 0.8125,
+        "steps_recall": 0.4642857142857143,
+        "steps_f1": 0.5909090909090908,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.6666666666666666,
+        "resources_recall": 0.6666666666666666,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.5625,
+        "relationships_recall": 0.3103448275862069,
+        "relationships_f1": 0.4,
+        "structure_rand_index": 0.8846153846153846,
+        "end_to_end_pass": 1.0,
+        "unsupported_rate": 0.0
+      },
+      "steps": {
+        "precision": 0.8125,
+        "recall": 0.4642857142857143,
+        "f1": 0.5909090909090908,
+        "tp": 13,
+        "n_gold": 28,
+        "n_pred": 16
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 13,
+        "total": 13
+      },
+      "resources": {
+        "precision": 0.6666666666666666,
+        "recall": 0.6666666666666666,
+        "f1": 0.6666666666666666,
+        "tp": 2,
+        "n_gold": 3,
+        "n_pred": 3
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.5625,
+        "recall": 0.3103448275862069,
+        "f1": 0.4,
+        "tp": 9,
+        "n_gold": 29,
+        "n_pred": 16
+      },
+      "structure": {
+        "rand_index": 0.8846153846153846,
+        "agreements": 69,
+        "pairs": 78,
+        "n_steps": 13
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 4560.0,
+        "pred_makespan": 4860.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "d-warmup",
+          "a-piece-1",
+          "a-piece-2",
+          "a-piece-3",
+          "c-piece-3",
+          "a-drill",
+          "b-drill",
+          "c-drill",
+          "d-drill",
+          "a-cooldown",
+          "debrief"
+        ],
+        "pred_critical_path": [
+          "coach-brief",
+          "warmup-ab",
+          "warmup-cd",
+          "piece-1-ab",
+          "piece-2-ab",
+          "piece-3-ab",
+          "piece-3-cd",
+          "drill-a",
+          "drill-b",
+          "drill-c",
+          "drill-d",
+          "cooldown",
+          "coach-debrief"
+        ],
+        "js_critical_path": [
+          "coach-brief",
+          "warmup-ab",
+          "warmup-cd",
+          "piece-1-ab",
+          "piece-2-ab",
+          "piece-3-ab",
+          "piece-3-cd",
+          "drill-a",
+          "drill-b",
+          "drill-c",
+          "drill-d",
+          "cooldown",
+          "coach-debrief"
+        ],
+        "js_makespan": 4860,
+        "critical_overlap": 0.6363636363636364,
+        "critical_ok": true,
+        "passed": true
+      },
+      "unsupported_rate": 0.0,
+      "unsupported_steps": [],
+      "matching": [
+        {
+          "gold": "a-warmup",
+          "predicted": "warmup-ab",
+          "by": "span"
+        },
+        {
+          "gold": "a-piece-1",
+          "predicted": "piece-1-ab",
+          "by": "span"
+        },
+        {
+          "gold": "a-piece-2",
+          "predicted": "piece-2-ab",
+          "by": "span"
+        },
+        {
+          "gold": "a-piece-3",
+          "predicted": "piece-3-ab",
+          "by": "span"
+        },
+        {
+          "gold": "a-drill",
+          "predicted": "drill-a",
+          "by": "name"
+        },
+        {
+          "gold": "a-cooldown",
+          "predicted": "cooldown",
+          "by": "span"
+        },
+        {
+          "gold": "c-warmup",
+          "predicted": "warmup-cd",
+          "by": "span"
+        },
+        {
+          "gold": "c-piece-1",
+          "predicted": "piece-1-cd",
+          "by": "span"
+        },
+        {
+          "gold": "c-piece-2",
+          "predicted": "piece-2-cd",
+          "by": "span"
+        },
+        {
+          "gold": "c-piece-3",
+          "predicted": "piece-3-cd",
+          "by": "span"
+        },
+        {
+          "gold": "brief-crew",
+          "predicted": "coach-brief",
+          "by": "span"
+        },
+        {
+          "gold": "call-splits",
+          "predicted": "coach-splits",
+          "by": "span"
+        },
+        {
+          "gold": "debrief",
+          "predicted": "coach-debrief",
+          "by": "span"
+        },
+        {
+          "gold": "b-warmup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-piece-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-piece-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-piece-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-drill",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "b-cooldown",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-drill",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "c-cooldown",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "d-warmup",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "d-piece-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "d-piece-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "d-piece-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "d-drill",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "d-cooldown",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "run-drills",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "drill-b",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "drill-c",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "drill-d",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "deepseek-flash",
+        "pattern": "four-turn",
+        "calls": 6,
+        "input_tokens": 42555,
+        "output_tokens": 62683,
+        "cost_usd": 0.0879861,
+        "cache_keys": [
+          "70ab014687988ebe5faee986ca25c054926007c662942f4391a273d9cfc21879",
+          "00384178b3a6a46dca9c5318ce1f9ce7809cfefabeaf22309ec144bf8d1ce1e7",
+          "2a2fbf56c1903e124959d706acbfd2a6cd6e49d6bc809d53e5461532f3193e2a",
+          "e0b672266739840ca0d9d5ae329556e8efbef171ad0dd4605559e5a916c66bfd",
+          "a9b90fa19e5687ffcd26bafcda0623e8db27e7f7549c2b1161598c6f9d87d217",
+          "f022c8cb25fc6f1b0bdccb9d9db39fd05b9708415d47b6a00c7a824923383c1f"
+        ],
+        "fix_iterations": 1,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/responses/fitness-rowing-erg-interval-session.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/predicted/fitness-rowing-erg-interval-session.json",
+        "retries": 1,
+        "t1_score": 2,
+        "t2_score": 1,
+        "t3_step_count": 0,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Erg Session \u2014 four rowers, two machines for 4 rowers, 2 ergs, 3 pieces",
+            "finish_at": null,
+            "constraints": "two ergs, four rowers, one coach, one rower on the coached drill at a time",
+            "vertical": "gym",
+            "turn": "T1",
+            "kind": "workout",
+            "constraintsLine": "Resource limits: two ergs, four rowers, one coach, one rower on the coached drill at a time.",
+            "deadlineLine": "No finishing time was given; finish as early as the work allows.",
+            "source": "Source text (read all of it):\n<<<\nErg Session \u2014 four rowers, two machines\n\nTwo ergs in the bay and four of us, so we row in pairs and the pair that is off the machines is the pair that is resting. A and B are the first pair, C and D the second. Nobody sits on a machine they are not rowing.\n\nWarm-up\nA and B warm up first: 10 minutes, rate 18, light pressure, half slide to full slide.\nC and D come in ten minutes later and take the machines for their own 10 minute warm-up.\n\nThe pieces\nThree pieces, four minutes each, rate 26 to 28, target split on the monitor.\nA and B take the first piece as soon as C and D are off the machines.\nC and D take the first piece straight off the back of A and B's first piece.\nA and B start their second piece four minutes after their first one ends.\nC and D take the second piece as soon as A and B are off.\nA and B start their third piece four minutes after their second one ends.\nC and D take the third piece as soon as A and B are off.\n\nTechnique drill\nThree minutes each, one at a time, coach on the machine with you: pause at the finish, pause at half slide, then build. A goes first once C and D are off the last piece, then B, then C, then D.\n\nCooldown\nTen minutes on the floor together once the last drill is done: legs up the wall, hips, lats, then a cup of tea.\n\nCoach\nBrief the crew on the boards before anyone gets on: 5 minutes.\nCall splits from the first piece: 20 minutes on the clock, watch the catch not the monitor.\nRun the drills: 12 minutes, one rower at a time, straight through.\nDebrief after the cooldown: 10 minutes, what the splits said and what Saturday looks like.\n\nNote\nThe rests are not steps for the first pair: they are the gap between one piece ending and the next one starting, because the machines are handed over in that gap and the second pair is using them. The second pair's rests are the first pair's pieces. That is the whole design of the session.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Erg Session \u2014 four rowers, two machines for 4 rowers, 2 ergs, 3 pieces",
+            "finish_at": null,
+            "constraints": "two ergs, four rowers, one coach, one rower on the coached drill at a time",
+            "vertical": "gym",
+            "turn": "T2",
+            "kind": "workout"
+          },
+          "T3 extraction": {
+            "goal": "Erg Session \u2014 four rowers, two machines for 4 rowers, 2 ergs, 3 pieces",
+            "finish_at": null,
+            "constraints": "two ergs, four rowers, one coach, one rower on the coached drill at a time",
+            "vertical": "gym",
+            "turn": "T3",
+            "kind": "workout",
+            "environment": "a gym where you have: two ergs, four rowers, one coach, one rower on the coached drill at a time",
+            "deadline": "the earliest time the work allows",
+            "source": "Source text (read all of it):\n<<<\nErg Session \u2014 four rowers, two machines\n\nTwo ergs in the bay and four of us, so we row in pairs and the pair that is off the machines is the pair that is resting. A and B are the first pair, C and D the second. Nobody sits on a machine they are not rowing.\n\nWarm-up\nA and B warm up first: 10 minutes, rate 18, light pressure, half slide to full slide.\nC and D come in ten minutes later and take the machines for their own 10 minute warm-up.\n\nThe pieces\nThree pieces, four minutes each, rate 26 to 28, target split on the monitor.\nA and B take the first piece as soon as C and D are off the machines.\nC and D take the first piece straight off the back of A and B's first piece.\nA and B start their second piece four minutes after their first one ends.\nC and D take the second piece as soon as A and B are off.\nA and B start their third piece four minutes after their second one ends.\nC and D take the third piece as soon as A and B are off.\n\nTechnique drill\nThree minutes each, one at a time, coach on the machine with you: pause at the finish, pause at half slide, then build. A goes first once C and D are off the last piece, then B, then C, then D.\n\nCooldown\nTen minutes on the floor together once the last drill is done: legs up the wall, hips, lats, then a cup of tea.\n\nCoach\nBrief the crew on the boards before anyone gets on: 5 minutes.\nCall splits from the first piece: 20 minutes on the clock, watch the catch not the monitor.\nRun the drills: 12 minutes, one rower at a time, straight through.\nDebrief after the cooldown: 10 minutes, what the splits said and what Saturday looks like.\n\nNote\nThe rests are not steps for the first pair: they are the gap between one piece ending and the next one starting, because the machines are handed over in that gap and the second pair is using them. The second pair's rests are the first pair's pieces. That is the whole design of the session.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Erg Session \u2014 four rowers, two machines for 4 rowers, 2 ergs, 3 pieces",
+            "finish_at": null,
+            "constraints": "two ergs, four rowers, one coach, one rower on the coached drill at a time",
+            "vertical": "gym",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or start_workout",
+            "finishAtArg": ""
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "fitness-swim-practice-lane-assignments",
+      "headline": {
+        "steps_precision": 0.9166666666666666,
+        "steps_recall": 0.55,
+        "steps_f1": 0.6874999999999999,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.6666666666666666,
+        "resources_recall": 0.5,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.2777777777777778,
+        "relationships_recall": 0.22727272727272727,
+        "relationships_f1": 0.25,
+        "structure_rand_index": 0.9454545454545454,
+        "end_to_end_pass": 1.0,
+        "unsupported_rate": 0.07692307692307693
+      },
+      "steps": {
+        "precision": 0.9166666666666666,
+        "recall": 0.55,
+        "f1": 0.6874999999999999,
+        "tp": 11,
+        "n_gold": 20,
+        "n_pred": 12
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 11,
+        "total": 11
+      },
+      "resources": {
+        "precision": 0.6666666666666666,
+        "recall": 0.5,
+        "f1": 0.5714285714285715,
+        "tp": 2,
+        "n_gold": 4,
+        "n_pred": 3
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.2777777777777778,
+        "recall": 0.22727272727272727,
+        "f1": 0.25,
+        "tp": 5,
+        "n_gold": 22,
+        "n_pred": 18
+      },
+      "structure": {
+        "rand_index": 0.9454545454545454,
+        "agreements": 52,
+        "pairs": 55,
+        "n_steps": 11
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 8700.0,
+        "pred_makespan": 9000.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "brief-squad",
+          "watch-warmup",
+          "whiteboard-talk",
+          "kick-3",
+          "main-3",
+          "sprint-1",
+          "sprint-2",
+          "sprint-3",
+          "cool-1",
+          "debrief"
+        ],
+        "pred_critical_path": [
+          "brief-squad",
+          "warmup-swim",
+          "whiteboard-main-set",
+          "kick-set",
+          "main-set-lane3",
+          "time-sprints",
+          "cooldown-swim",
+          "debrief"
+        ],
+        "js_critical_path": [
+          "brief-squad",
+          "warmup-swim",
+          "whiteboard-main-set",
+          "kick-set",
+          "main-set-lane3",
+          "time-sprints",
+          "cooldown-swim",
+          "debrief"
+        ],
+        "js_makespan": 9000,
+        "critical_overlap": 0.5,
+        "critical_ok": true,
+        "passed": true
+      },
+      "unsupported_rate": 0.07692307692307693,
+      "unsupported_steps": [
+        "position-blocks"
+      ],
+      "matching": [
+        {
+          "gold": "warmup-1",
+          "predicted": "warmup-swim",
+          "by": "span"
+        },
+        {
+          "gold": "kick-1",
+          "predicted": "kick-set",
+          "by": "span"
+        },
+        {
+          "gold": "main-1",
+          "predicted": "main-set-lane1",
+          "by": "span"
+        },
+        {
+          "gold": "cool-1",
+          "predicted": "cooldown-swim",
+          "by": "span"
+        },
+        {
+          "gold": "main-2",
+          "predicted": "main-set-lane2",
+          "by": "span"
+        },
+        {
+          "gold": "main-3",
+          "predicted": "main-set-lane3",
+          "by": "span"
+        },
+        {
+          "gold": "brief-squad",
+          "predicted": "brief-squad",
+          "by": "span"
+        },
+        {
+          "gold": "watch-warmup",
+          "predicted": "watch-warmup",
+          "by": "span"
+        },
+        {
+          "gold": "whiteboard-talk",
+          "predicted": "whiteboard-main-set",
+          "by": "span"
+        },
+        {
+          "gold": "time-sprints",
+          "predicted": "time-sprints",
+          "by": "span"
+        },
+        {
+          "gold": "debrief",
+          "predicted": "debrief",
+          "by": "span"
+        },
+        {
+          "gold": "sprint-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "warmup-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "kick-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "sprint-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cool-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "warmup-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "kick-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "sprint-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cool-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "position-blocks",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "sprint-set",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "deepseek-flash",
+        "pattern": "four-turn",
+        "calls": 6,
+        "input_tokens": 60058,
+        "output_tokens": 37313,
+        "cost_usd": 0.062793,
+        "cache_keys": [
+          "128517cb40fd3c1e5118a426ad3146d8f66768a545680ddcffd96dab5eef2cc8",
+          "b65dbac807f7cdb7c77e5539d8b4d8e8b9ff19e800ded7627c75e7ee89f670a9",
+          "808ef684e4b6662b4325cf28303f887036e089b1c2ced772b7a2f47741571e51",
+          "b6b7b63320dfba90e6139ee8243835735e68bdc0cb29b5a1bfcb24106cc03f3b",
+          "151124508ce0490cad2b14a613a9d789a75a786866d7402c6dcb27dcbe92a53f",
+          "442b7ac4c527686150c7929e457dd7eccae8c7eff0eb59398c34531228e5a076"
+        ],
+        "fix_iterations": 2,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/responses/fitness-swim-practice-lane-assignments.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/predicted/fitness-swim-practice-lane-assignments.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 13,
+        "unsupported_step_ids": [
+          "position-blocks"
+        ],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Practice Plan \u2014 Thursday AM, three lanes for one squad of twelve, three lanes, one coach",
+            "finish_at": "150 minutes of pool time",
+            "constraints": "three lanes, one set of starting blocks, one coach on deck, two and a half hours of pool time",
+            "vertical": "gym",
+            "turn": "T1",
+            "kind": "workout",
+            "constraintsLine": "Resource limits: three lanes, one set of starting blocks, one coach on deck, two and a half hours of pool time.",
+            "deadlineLine": "Everything must be finished by 150 minutes of pool time.",
+            "source": "Source text (read all of it):\n<<<\nPractice Plan \u2014 Thursday AM, three lanes\n\nWe have three lanes for two and a half hours and one set of starting blocks. Lane 1 is the sprint group, lane 2 the middle distance, lane 3 the distance group. Everything except the sprint set runs in all three lanes at once; the sprint set runs one lane at a time off the blocks, so lanes wait their turn.\n\nOn deck\nBrief the squad on the pool deck: what the morning is, who is in which lane, 5 minutes.\nWatch the warm-up from the deck and fix anything ugly; 15 minutes.\n\nWarm-up\nAll three lanes start together: 20 minutes, 800 easy, mixed stroke, breathing every five on the last hundred.\n\nWhiteboard\nCall the lanes to the wall when the warm-up is done and walk the main set on the whiteboard; 5 minutes. Nobody pushes off until the board is done.\n\nKick set\n20 minutes of kick, boards for lanes 1 and 2, vertical kick for lane 3, once the whiteboard talk is over.\n\nMain set\nLane 1: 30 to 50 minutes, 40 minutes is the plan.\nLane 2: 30 to 50 minutes, 45 minutes is the plan.\nLane 3: 30 to 50 minutes, 50 minutes is the plan.\nEvery lane swims its own main set and the sprint set does not start until the last lane is in.\n\nSprint set\nOne set of blocks, one lane at a time, 10 minutes each.\nLane 1 goes first, off the blocks, dive starts, 25s flat out.\nLane 2 goes second, same thing, on the lane 1 group's last dive.\nLane 3 goes third and gets the extra rest it will need.\nTime the sprints from the deck: 30 minutes, stopwatch and the wall clock.\n\nCooldown\nAll three lanes cool down together once the last sprint is in: 10 minutes, 300 easy backstroke and breaststroke.\n\nDebrief\n10 minutes on the deck at the end: splits, what to fix, Saturday's meet.\n\nNote\nThe main set is the only place a lane can run long and the only place the plan gives them room to. Everything after it is a join: the blocks cannot be shared and the cooldown starts together or it does not start at all.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Practice Plan \u2014 Thursday AM, three lanes for one squad of twelve, three lanes, one coach",
+            "finish_at": "150 minutes of pool time",
+            "constraints": "three lanes, one set of starting blocks, one coach on deck, two and a half hours of pool time",
+            "vertical": "gym",
+            "turn": "T2",
+            "kind": "workout"
+          },
+          "T3 extraction": {
+            "goal": "Practice Plan \u2014 Thursday AM, three lanes for one squad of twelve, three lanes, one coach",
+            "finish_at": "150 minutes of pool time",
+            "constraints": "three lanes, one set of starting blocks, one coach on deck, two and a half hours of pool time",
+            "vertical": "gym",
+            "turn": "T3",
+            "kind": "workout",
+            "environment": "a gym where you have: three lanes, one set of starting blocks, one coach on deck, two and a half hours of pool time",
+            "deadline": "150 minutes of pool time",
+            "source": "Source text (read all of it):\n<<<\nPractice Plan \u2014 Thursday AM, three lanes\n\nWe have three lanes for two and a half hours and one set of starting blocks. Lane 1 is the sprint group, lane 2 the middle distance, lane 3 the distance group. Everything except the sprint set runs in all three lanes at once; the sprint set runs one lane at a time off the blocks, so lanes wait their turn.\n\nOn deck\nBrief the squad on the pool deck: what the morning is, who is in which lane, 5 minutes.\nWatch the warm-up from the deck and fix anything ugly; 15 minutes.\n\nWarm-up\nAll three lanes start together: 20 minutes, 800 easy, mixed stroke, breathing every five on the last hundred.\n\nWhiteboard\nCall the lanes to the wall when the warm-up is done and walk the main set on the whiteboard; 5 minutes. Nobody pushes off until the board is done.\n\nKick set\n20 minutes of kick, boards for lanes 1 and 2, vertical kick for lane 3, once the whiteboard talk is over.\n\nMain set\nLane 1: 30 to 50 minutes, 40 minutes is the plan.\nLane 2: 30 to 50 minutes, 45 minutes is the plan.\nLane 3: 30 to 50 minutes, 50 minutes is the plan.\nEvery lane swims its own main set and the sprint set does not start until the last lane is in.\n\nSprint set\nOne set of blocks, one lane at a time, 10 minutes each.\nLane 1 goes first, off the blocks, dive starts, 25s flat out.\nLane 2 goes second, same thing, on the lane 1 group's last dive.\nLane 3 goes third and gets the extra rest it will need.\nTime the sprints from the deck: 30 minutes, stopwatch and the wall clock.\n\nCooldown\nAll three lanes cool down together once the last sprint is in: 10 minutes, 300 easy backstroke and breaststroke.\n\nDebrief\n10 minutes on the deck at the end: splits, what to fix, Saturday's meet.\n\nNote\nThe main set is the only place a lane can run long and the only place the plan gives them room to. Everything after it is a join: the blocks cannot be shared and the cooldown starts together or it does not start at all.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Practice Plan \u2014 Thursday AM, three lanes for one squad of twelve, three lanes, one coach",
+            "finish_at": "150 minutes of pool time",
+            "constraints": "three lanes, one set of starting blocks, one coach on deck, two and a half hours of pool time",
+            "vertical": "gym",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or start_workout",
+            "finishAtArg": " with finishAt=\"150 minutes of pool time\""
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "kitchen-backyard-barbecue-smoker-grill",
+      "headline": {
+        "steps_precision": 0.8947368421052632,
+        "steps_recall": 0.9444444444444444,
+        "steps_f1": 0.918918918918919,
+        "durations_accuracy": 0.9411764705882353,
+        "resources_precision": 0.5,
+        "resources_recall": 0.5,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.7368421052631579,
+        "relationships_recall": 0.7368421052631579,
+        "relationships_f1": 0.7368421052631579,
+        "structure_rand_index": 1.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.0
+      },
+      "steps": {
+        "precision": 0.8947368421052632,
+        "recall": 0.9444444444444444,
+        "f1": 0.918918918918919,
+        "tp": 17,
+        "n_gold": 18,
+        "n_pred": 19
+      },
+      "durations": {
+        "accuracy": 0.9411764705882353,
+        "correct": 16,
+        "total": 17
+      },
+      "resources": {
+        "precision": 0.5,
+        "recall": 0.5,
+        "f1": 0.5,
+        "tp": 3,
+        "n_gold": 6,
+        "n_pred": 6
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.7368421052631579,
+        "recall": 0.7368421052631579,
+        "f1": 0.7368421052631579,
+        "tp": 14,
+        "n_gold": 19,
+        "n_pred": 19
+      },
+      "structure": {
+        "rand_index": 1.0,
+        "agreements": 136,
+        "pairs": 136,
+        "n_steps": 17
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 43320.0,
+        "pred_makespan": 41100.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "light-smoker",
+          "smoke-unwrapped",
+          "wrap-pork",
+          "smoke-wrapped",
+          "rest-in-cooler",
+          "light-kettle",
+          "grill-sausages",
+          "grill-corn",
+          "toast-buns",
+          "set-table",
+          "call-everyone"
+        ],
+        "pred_critical_path": [
+          "light-smoker",
+          "smoke-shoulder-unwrapped",
+          "wrap-shoulder",
+          "smoke-shoulder-wrapped",
+          "hold-shoulder-in-cooler",
+          "pull-pork"
+        ],
+        "js_critical_path": [
+          "light-smoker",
+          "smoke-shoulder-unwrapped",
+          "wrap-shoulder",
+          "smoke-shoulder-wrapped",
+          "hold-shoulder-in-cooler",
+          "pull-pork"
+        ],
+        "js_makespan": 41100,
+        "critical_overlap": 0.36363636363636365,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.0,
+      "unsupported_steps": [],
+      "matching": [
+        {
+          "gold": "trim-and-rub",
+          "predicted": "trim-and-rub-shoulder",
+          "by": "span"
+        },
+        {
+          "gold": "light-smoker",
+          "predicted": "light-smoker",
+          "by": "span"
+        },
+        {
+          "gold": "wrap-pork",
+          "predicted": "wrap-shoulder",
+          "by": "span"
+        },
+        {
+          "gold": "smoke-wrapped",
+          "predicted": "smoke-shoulder-wrapped",
+          "by": "span"
+        },
+        {
+          "gold": "rest-in-cooler",
+          "predicted": "hold-shoulder-in-cooler",
+          "by": "span"
+        },
+        {
+          "gold": "pull-pork",
+          "predicted": "pull-pork",
+          "by": "span"
+        },
+        {
+          "gold": "fry-bacon-onion",
+          "predicted": "fry-bacon-and-onion",
+          "by": "span"
+        },
+        {
+          "gold": "simmer-beans",
+          "predicted": "simmer-beans",
+          "by": "span"
+        },
+        {
+          "gold": "shred-cabbage",
+          "predicted": "shred-slaw",
+          "by": "span"
+        },
+        {
+          "gold": "whisk-slaw-dressing",
+          "predicted": "whisk-dressing",
+          "by": "span"
+        },
+        {
+          "gold": "chill-slaw",
+          "predicted": "dress-slaw",
+          "by": "span"
+        },
+        {
+          "gold": "light-kettle",
+          "predicted": "light-kettle",
+          "by": "span"
+        },
+        {
+          "gold": "grill-sausages",
+          "predicted": "grill-sausages",
+          "by": "span"
+        },
+        {
+          "gold": "grill-corn",
+          "predicted": "grill-corn",
+          "by": "span"
+        },
+        {
+          "gold": "toast-buns",
+          "predicted": "toast-buns",
+          "by": "span"
+        },
+        {
+          "gold": "set-table",
+          "predicted": "set-table",
+          "by": "span"
+        },
+        {
+          "gold": "call-everyone",
+          "predicted": "call-and-lay-out",
+          "by": "span"
+        },
+        {
+          "gold": "smoke-unwrapped",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "smoke-shoulder-unwrapped",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "chill-slaw",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "deepseek-flash",
+        "pattern": "four-turn",
+        "calls": 6,
+        "input_tokens": 52957,
+        "output_tokens": 57757,
+        "cost_usd": 0.0851955,
+        "cache_keys": [
+          "6c6d9a488e0ccb983746b636cfdf56c2548dab7c57ff6e020e4700f733e81871",
+          "5a3797b13a1a643bc27443cfe2c648bc0104cc61f2f48750d958a8a4a05f5b33",
+          "cc6722bb056d6bbb67b8f0e521ad2648409fe1ec3a0c5e043bc7f42800b24573",
+          "356fed916c1fb6b79f1d9579243540d53dc2e9402d13eaaab64a8e47644489dc",
+          "8db971258fa17d5625b6e35f95cb3f950566c1462ae2f3355ea347b5dc6a2561",
+          "1a4527a222bf4fa6e3265a155d7fe45a68dbe2ed05a3236f096cf8d62f81a17b"
+        ],
+        "fix_iterations": 2,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/responses/kitchen-backyard-barbecue-smoker-grill.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/predicted/kitchen-backyard-barbecue-smoker-grill.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 19,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Backyard Barbecue: Smoker and Grill for a shoulder, sausages and sides for about twelve",
+            "finish_at": null,
+            "constraints": "one offset smoker, one kettle grill, one side burner, one cooler for holding, two cooks",
+            "vertical": "kitchen",
+            "turn": "T1",
+            "kind": "recipe",
+            "constraintsLine": "Resource limits: one offset smoker, one kettle grill, one side burner, one cooler for holding, two cooks.",
+            "deadlineLine": "No finishing time was given; finish as early as the work allows.",
+            "source": "Source text (read all of it):\n<<<\nBackyard Barbecue: Smoker and Grill\n\nTwo cooks, one offset smoker, one kettle grill, one side burner and a cooler for holding. The pork owns the smoker all day; everything else happens in the last two hours.\n\nPork shoulder\nLight the smoker and bring it to 250\u00b0F; 45 minutes. While it comes up, trim the shoulder and rub it heavily with salt, pepper and paprika; 25 minutes. Put the shoulder on once the smoker holds temperature and smoke it unwrapped for 6 hours, until the bark is dark and set. Wrap it tightly in butcher paper; 10 minutes. Back on the smoker, wrapped, until the thickest part probes soft \u2014 usually another 3 hours, sometimes four. Hold it wrapped in a cooler for one to three hours; it will not get cold and it only gets better. Pull the meat by hand; 30 minutes.\n\nBeans\nWhen the pork goes into the cooler, fry the bacon and onion in the pot on the side burner for 12 minutes, then add the beans, molasses and a ladle of drippings and let them tick over on the lowest flame until you serve.\n\nSlaw\nStart the slaw at the same time. Shred the cabbage and carrot; 20 minutes. Whisk the buttermilk dressing; 8 minutes. Dress the slaw and put it in the refrigerator for at least 45 minutes so the cabbage softens.\n\nGrill\nLight the kettle an hour before you eat; 25 minutes to a clean bed of coals. Grill the sausages for 14 minutes. Grill the corn for 10 minutes. Toast the buns for 3 minutes, last, so they stay warm.\n\nTable\nSet out plates, pickles and sauce once the buns are off; 10 minutes. Call everyone over when both cooks say it is ready; 5 minutes to lay it all out.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Backyard Barbecue: Smoker and Grill for a shoulder, sausages and sides for about twelve",
+            "finish_at": null,
+            "constraints": "one offset smoker, one kettle grill, one side burner, one cooler for holding, two cooks",
+            "vertical": "kitchen",
+            "turn": "T2",
+            "kind": "recipe"
+          },
+          "T3 extraction": {
+            "goal": "Backyard Barbecue: Smoker and Grill for a shoulder, sausages and sides for about twelve",
+            "finish_at": null,
+            "constraints": "one offset smoker, one kettle grill, one side burner, one cooler for holding, two cooks",
+            "vertical": "kitchen",
+            "turn": "T3",
+            "kind": "recipe",
+            "environment": "a kitchen where you have: one offset smoker, one kettle grill, one side burner, one cooler for holding, two cooks",
+            "deadline": "the earliest time the work allows",
+            "source": "Source text (read all of it):\n<<<\nBackyard Barbecue: Smoker and Grill\n\nTwo cooks, one offset smoker, one kettle grill, one side burner and a cooler for holding. The pork owns the smoker all day; everything else happens in the last two hours.\n\nPork shoulder\nLight the smoker and bring it to 250\u00b0F; 45 minutes. While it comes up, trim the shoulder and rub it heavily with salt, pepper and paprika; 25 minutes. Put the shoulder on once the smoker holds temperature and smoke it unwrapped for 6 hours, until the bark is dark and set. Wrap it tightly in butcher paper; 10 minutes. Back on the smoker, wrapped, until the thickest part probes soft \u2014 usually another 3 hours, sometimes four. Hold it wrapped in a cooler for one to three hours; it will not get cold and it only gets better. Pull the meat by hand; 30 minutes.\n\nBeans\nWhen the pork goes into the cooler, fry the bacon and onion in the pot on the side burner for 12 minutes, then add the beans, molasses and a ladle of drippings and let them tick over on the lowest flame until you serve.\n\nSlaw\nStart the slaw at the same time. Shred the cabbage and carrot; 20 minutes. Whisk the buttermilk dressing; 8 minutes. Dress the slaw and put it in the refrigerator for at least 45 minutes so the cabbage softens.\n\nGrill\nLight the kettle an hour before you eat; 25 minutes to a clean bed of coals. Grill the sausages for 14 minutes. Grill the corn for 10 minutes. Toast the buns for 3 minutes, last, so they stay warm.\n\nTable\nSet out plates, pickles and sauce once the buns are off; 10 minutes. Call everyone over when both cooks say it is ready; 5 minutes to lay it all out.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Backyard Barbecue: Smoker and Grill for a shoulder, sausages and sides for about twelve",
+            "finish_at": null,
+            "constraints": "one offset smoker, one kettle grill, one side burner, one cooler for holding, two cooks",
+            "vertical": "kitchen",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or cook_recipe",
+            "finishAtArg": ""
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "slug": "kitchen-country-loaf-bread-bake",
+      "headline": {
+        "steps_precision": 0.0,
+        "steps_recall": 0.0,
+        "steps_f1": 0.0,
+        "durations_accuracy": 0.0,
+        "resources_precision": 0.0,
+        "resources_recall": 0.0,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.0,
+        "relationships_recall": 0.0,
+        "relationships_f1": 0.0,
+        "structure_rand_index": 0.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.0
+      },
+      "steps": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 24,
+        "n_pred": 0
+      },
+      "durations": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 24
+      },
+      "resources": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 4,
+        "n_pred": 0
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 26,
+        "n_pred": 0
+      },
+      "structure": {
+        "rand_index": 0.0,
+        "agreements": 0,
+        "pairs": 0,
+        "n_steps": 0
+      },
+      "end_to_end": {
+        "python_valid": false,
+        "python_errors": [],
+        "js_status": "skipped",
+        "js_valid": null,
+        "js_errors": [],
+        "gold_makespan": 0.0,
+        "pred_makespan": 0.0,
+        "makespan_ok": false,
+        "gold_critical_path": [],
+        "pred_critical_path": [],
+        "js_critical_path": null,
+        "js_makespan": null,
+        "critical_overlap": 0.0,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.0,
+      "unsupported_steps": [],
+      "matching": [],
+      "extras": {
+        "model": "deepseek-flash",
+        "pattern": "four-turn",
+        "calls": 6,
+        "input_tokens": 47594,
+        "output_tokens": 68615,
+        "cost_usd": 0.0966162,
+        "cache_keys": [
+          "8a34eb3f893a226373dcc5430dc832de36180fe0c46a9bacfe34139d6e6d510d",
+          "0a6ca9cb7ce56a4b68868ee7a42829a283e5483eb2d4a610a956293e3ed3af58",
+          "8d925c2fe162695ecc9d08675553f54f2d5724196947e329dc0e8ad43baa4437",
+          "7c8d03621aa43c5c4d671c9d3a63a2f7cbc139c8a39c1e991848f3b7e75b7ce7",
+          "4604f68bf2b383afbda8fd9cbea91741bf80d0cfd953a41dcd63ba2e681bc687",
+          "2ebe25d82242afd988392107995c1d71df241eff6b1f963f0ea8db477f118633"
+        ],
+        "fix_iterations": 2,
+        "validation_errors": [
+          "no JSON object with a `tracks` array was found in the reply"
+        ],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/responses/kitchen-country-loaf-bread-bake.json",
+        "predicted_path": null,
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 0,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Country Loaf: Two Boules, One Dutch Oven for one batch, two 900 g boules",
+            "finish_at": null,
+            "constraints": "one oven, one dutch oven, one refrigerator, one baker, the two loaves bake one after the other",
+            "vertical": "kitchen",
+            "turn": "T1",
+            "kind": "recipe",
+            "constraintsLine": "Resource limits: one oven, one dutch oven, one refrigerator, one baker, the two loaves bake one after the other.",
+            "deadlineLine": "No finishing time was given; finish as early as the work allows.",
+            "source": "Source text (read all of it):\n<<<\nCountry Loaf: Two Boules, One Dutch Oven\n\nOne batch of dough, two loaves, and a single dutch oven that has to bake them one after the other. One oven, one baker, one refrigerator. Times count from eight in the morning; the loaves come out of the fridge the next day.\n\nLevain\nMix 50 g of ripe starter with 100 g of flour and 100 g of water in a jar; 5 minutes. Leave the jar at room temperature until it domes and smells sweet, 4 to 6 hours.\n\nDough\nWeigh the flour, water and salt for the whole bake first thing; 10 minutes. At half past eight, whisk 900 g of flour into 680 g of water; 5 minutes. Let it autolyse for 1 hour. When the levain is ripe, squeeze it into the autolysed dough with 20 g of salt and work it by hand for 10 minutes. Bulk ferment at 24\u00b0C until the dough has risen by half, 3 to 5 hours. Fold the dough in the bowl half an hour after mixing, again half an hour later, and a third time after another half hour; each fold takes 2 minutes.\n\nDivide and shape\nTip the dough out, cut it in two and preshape each piece into a loose round; 10 minutes. Let the rounds rest on the bench for 25 minutes. Shape both boules tightly and settle them into floured bannetons; 10 minutes. Retard them in the refrigerator, 10 to 14 hours.\n\nBake\nThree quarters of an hour before the dough comes out, put the dutch oven in the oven and heat both to 250\u00b0C. Score the first loaf and lower it in; 3 minutes. Bake the first loaf covered for 20 minutes, then uncover it and bake for another 20 minutes until the crust is dark. Cool it on a rack for at least an hour before cutting. Re-heat the empty dutch oven for 10 minutes. Score the second loaf and lower it in; 3 minutes. Bake the second loaf covered for 20 minutes, then uncover it for a final 20 minutes. Cool the second loaf on the rack beside the first.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Country Loaf: Two Boules, One Dutch Oven for one batch, two 900 g boules",
+            "finish_at": null,
+            "constraints": "one oven, one dutch oven, one refrigerator, one baker, the two loaves bake one after the other",
+            "vertical": "kitchen",
+            "turn": "T2",
+            "kind": "recipe"
+          },
+          "T3 extraction": {
+            "goal": "Country Loaf: Two Boules, One Dutch Oven for one batch, two 900 g boules",
+            "finish_at": null,
+            "constraints": "one oven, one dutch oven, one refrigerator, one baker, the two loaves bake one after the other",
+            "vertical": "kitchen",
+            "turn": "T3",
+            "kind": "recipe",
+            "environment": "a kitchen where you have: one oven, one dutch oven, one refrigerator, one baker, the two loaves bake one after the other",
+            "deadline": "the earliest time the work allows",
+            "source": "Source text (read all of it):\n<<<\nCountry Loaf: Two Boules, One Dutch Oven\n\nOne batch of dough, two loaves, and a single dutch oven that has to bake them one after the other. One oven, one baker, one refrigerator. Times count from eight in the morning; the loaves come out of the fridge the next day.\n\nLevain\nMix 50 g of ripe starter with 100 g of flour and 100 g of water in a jar; 5 minutes. Leave the jar at room temperature until it domes and smells sweet, 4 to 6 hours.\n\nDough\nWeigh the flour, water and salt for the whole bake first thing; 10 minutes. At half past eight, whisk 900 g of flour into 680 g of water; 5 minutes. Let it autolyse for 1 hour. When the levain is ripe, squeeze it into the autolysed dough with 20 g of salt and work it by hand for 10 minutes. Bulk ferment at 24\u00b0C until the dough has risen by half, 3 to 5 hours. Fold the dough in the bowl half an hour after mixing, again half an hour later, and a third time after another half hour; each fold takes 2 minutes.\n\nDivide and shape\nTip the dough out, cut it in two and preshape each piece into a loose round; 10 minutes. Let the rounds rest on the bench for 25 minutes. Shape both boules tightly and settle them into floured bannetons; 10 minutes. Retard them in the refrigerator, 10 to 14 hours.\n\nBake\nThree quarters of an hour before the dough comes out, put the dutch oven in the oven and heat both to 250\u00b0C. Score the first loaf and lower it in; 3 minutes. Bake the first loaf covered for 20 minutes, then uncover it and bake for another 20 minutes until the crust is dark. Cool it on a rack for at least an hour before cutting. Re-heat the empty dutch oven for 10 minutes. Score the second loaf and lower it in; 3 minutes. Bake the second loaf covered for 20 minutes, then uncover it for a final 20 minutes. Cool the second loaf on the rack beside the first.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Country Loaf: Two Boules, One Dutch Oven for one batch, two 900 g boules",
+            "finish_at": null,
+            "constraints": "one oven, one dutch oven, one refrigerator, one baker, the two loaves bake one after the other",
+            "vertical": "kitchen",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or cook_recipe",
+            "finishAtArg": ""
+          }
+        }
+      },
+      "error": "no JSON object with a `tracks` array was found in the reply"
+    },
+    {
+      "slug": "kitchen-griddle-breakfast-for-six",
+      "headline": {
+        "steps_precision": 0.0,
+        "steps_recall": 0.0,
+        "steps_f1": 0.0,
+        "durations_accuracy": 0.0,
+        "resources_precision": 0.0,
+        "resources_recall": 0.0,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.0,
+        "relationships_recall": 0.0,
+        "relationships_f1": 0.0,
+        "structure_rand_index": 0.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.0
+      },
+      "steps": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 19,
+        "n_pred": 0
+      },
+      "durations": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 19
+      },
+      "resources": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 6,
+        "n_pred": 0
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 23,
+        "n_pred": 0
+      },
+      "structure": {
+        "rand_index": 0.0,
+        "agreements": 0,
+        "pairs": 0,
+        "n_steps": 0
+      },
+      "end_to_end": {
+        "python_valid": false,
+        "python_errors": [],
+        "js_status": "skipped",
+        "js_valid": null,
+        "js_errors": [],
+        "gold_makespan": 0.0,
+        "pred_makespan": 0.0,
+        "makespan_ok": false,
+        "gold_critical_path": [],
+        "pred_critical_path": [],
+        "js_critical_path": null,
+        "js_makespan": null,
+        "critical_overlap": 0.0,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.0,
+      "unsupported_steps": [],
+      "matching": [],
+      "extras": {
+        "model": "deepseek-flash",
+        "pattern": "four-turn",
+        "calls": 6,
+        "input_tokens": 53077,
+        "output_tokens": 65768,
+        "cost_usd": 0.09484469999999998,
+        "cache_keys": [
+          "7952b093f51f621d41f75caba8863151cd6436e26785d0d1d7f1d10dcf6a9ced",
+          "761447dc7447e144a292ef54dc164487051783a298647c5e3e58097a51781123",
+          "37cf3aecd7b7d248eb95d2d1a4b200e1f2c4ce96addfd494e6061ca670c0faf9",
+          "869c8bda2cbcbddd38ab0a622e6febf33a309c6f3d04e243e3277d94bed8ba59",
+          "f4414b48f0530be7caff7b1fd5acad1cfd1f22f6125ce0d1518e6294efaf95b0",
+          "7864417a4015389618c24cc03d341628d4a818b0fdb27bb22475b5ed4f91339d"
+        ],
+        "fix_iterations": 2,
+        "validation_errors": [
+          "no JSON object with a `tracks` array was found in the reply"
+        ],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/responses/kitchen-griddle-breakfast-for-six.json",
+        "predicted_path": null,
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 18,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Breakfast for Six on One Griddle for 6 people",
+            "finish_at": "09:00",
+            "constraints": "one griddle, one two-slice toaster, one coffee maker, one oven on its lowest setting, one cook",
+            "vertical": "kitchen",
+            "turn": "T1",
+            "kind": "recipe",
+            "constraintsLine": "Resource limits: one griddle, one two-slice toaster, one coffee maker, one oven on its lowest setting, one cook.",
+            "deadlineLine": "Everything must be finished by 09:00.",
+            "source": "Source text (read all of it):\n<<<\nBreakfast for Six on One Griddle\n\nOne electric griddle, a two-slice toaster, a burr grinder, a drip coffee maker and an oven turned to its lowest setting to hold things warm. One cook, six people, everyone eating at nine.\n\nPrep\nWhisk the dry pancake ingredients together, then beat in the buttermilk and eggs; 10 minutes. Let the batter stand for 20 minutes while the griddle does its first job. Crack a dozen eggs into a jug and season them; 5 minutes. Set the table and lay out six places; 10 minutes. Put six plates in the oven at its lowest setting and leave them there until you call everyone.\n\nGriddle\nEverything cooks on the one griddle, in order. Heat the griddle to 375\u00b0F; 8 minutes. Lay the bacon out and cook it for 14 minutes, turning once, then move it to the warm oven. Scrape the griddle and wipe off the fat; 3 minutes. Pancakes go on as soon as the griddle is clean and the batter has rested, in three passes: the first pass takes 6 minutes, the second another 6, and the third 6 more. Slide each pass into the oven as it comes off. Drop the griddle to 300\u00b0F and give it 4 minutes to settle, then scramble the eggs slowly for 7 minutes.\n\nToast\nThe toaster takes two slices at a time. Start the first batch of toast when the last pancake pass goes on; 3 minutes. Run a second batch straight after; 3 minutes. Butter all of it; 4 minutes.\n\nCoffee\nStart the grinder ten minutes after the bacon goes on so the pot is fresh. Grind the beans; 2 minutes. Brew a full pot; 9 minutes.\n\nServe\nCall everyone when the eggs, the toast and the coffee are all ready, and carry the warm plates through; 5 minutes.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Breakfast for Six on One Griddle for 6 people",
+            "finish_at": "09:00",
+            "constraints": "one griddle, one two-slice toaster, one coffee maker, one oven on its lowest setting, one cook",
+            "vertical": "kitchen",
+            "turn": "T2",
+            "kind": "recipe"
+          },
+          "T3 extraction": {
+            "goal": "Breakfast for Six on One Griddle for 6 people",
+            "finish_at": "09:00",
+            "constraints": "one griddle, one two-slice toaster, one coffee maker, one oven on its lowest setting, one cook",
+            "vertical": "kitchen",
+            "turn": "T3",
+            "kind": "recipe",
+            "environment": "a kitchen where you have: one griddle, one two-slice toaster, one coffee maker, one oven on its lowest setting, one cook",
+            "deadline": "09:00",
+            "source": "Source text (read all of it):\n<<<\nBreakfast for Six on One Griddle\n\nOne electric griddle, a two-slice toaster, a burr grinder, a drip coffee maker and an oven turned to its lowest setting to hold things warm. One cook, six people, everyone eating at nine.\n\nPrep\nWhisk the dry pancake ingredients together, then beat in the buttermilk and eggs; 10 minutes. Let the batter stand for 20 minutes while the griddle does its first job. Crack a dozen eggs into a jug and season them; 5 minutes. Set the table and lay out six places; 10 minutes. Put six plates in the oven at its lowest setting and leave them there until you call everyone.\n\nGriddle\nEverything cooks on the one griddle, in order. Heat the griddle to 375\u00b0F; 8 minutes. Lay the bacon out and cook it for 14 minutes, turning once, then move it to the warm oven. Scrape the griddle and wipe off the fat; 3 minutes. Pancakes go on as soon as the griddle is clean and the batter has rested, in three passes: the first pass takes 6 minutes, the second another 6, and the third 6 more. Slide each pass into the oven as it comes off. Drop the griddle to 300\u00b0F and give it 4 minutes to settle, then scramble the eggs slowly for 7 minutes.\n\nToast\nThe toaster takes two slices at a time. Start the first batch of toast when the last pancake pass goes on; 3 minutes. Run a second batch straight after; 3 minutes. Butter all of it; 4 minutes.\n\nCoffee\nStart the grinder ten minutes after the bacon goes on so the pot is fresh. Grind the beans; 2 minutes. Brew a full pot; 9 minutes.\n\nServe\nCall everyone when the eggs, the toast and the coffee are all ready, and carry the warm plates through; 5 minutes.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Breakfast for Six on One Griddle for 6 people",
+            "finish_at": "09:00",
+            "constraints": "one griddle, one two-slice toaster, one coffee maker, one oven on its lowest setting, one cook",
+            "vertical": "kitchen",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or cook_recipe",
+            "finishAtArg": " with finishAt=\"09:00\""
+          }
+        }
+      },
+      "error": "no JSON object with a `tracks` array was found in the reply"
+    },
+    {
+      "slug": "kitchen-holiday-cookie-batch",
+      "headline": {
+        "steps_precision": 0.0,
+        "steps_recall": 0.0,
+        "steps_f1": 0.0,
+        "durations_accuracy": 0.0,
+        "resources_precision": 0.0,
+        "resources_recall": 0.0,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.0,
+        "relationships_recall": 0.0,
+        "relationships_f1": 0.0,
+        "structure_rand_index": 0.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.0
+      },
+      "steps": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 20,
+        "n_pred": 0
+      },
+      "durations": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 20
+      },
+      "resources": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 6,
+        "n_pred": 0
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 26,
+        "n_pred": 0
+      },
+      "structure": {
+        "rand_index": 0.0,
+        "agreements": 0,
+        "pairs": 0,
+        "n_steps": 0
+      },
+      "end_to_end": {
+        "python_valid": false,
+        "python_errors": [],
+        "js_status": "skipped",
+        "js_valid": null,
+        "js_errors": [],
+        "gold_makespan": 0.0,
+        "pred_makespan": 0.0,
+        "makespan_ok": false,
+        "gold_critical_path": [],
+        "pred_critical_path": [],
+        "js_critical_path": null,
+        "js_makespan": null,
+        "critical_overlap": 0.0,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.0,
+      "unsupported_steps": [],
+      "matching": [],
+      "extras": {
+        "model": "deepseek-flash",
+        "pattern": "four-turn",
+        "calls": 6,
+        "input_tokens": 52493,
+        "output_tokens": 59727,
+        "cost_usd": 0.08742029999999999,
+        "cache_keys": [
+          "ac9d1b8a2f84cd2ab94e027e01a2156a6e4189f491bcf4176740d6bd0bc11d6f",
+          "ca925f25d1b0fb78a9a1d0482d3fd5a85ba8474dead12e04421657195cfa7e6d",
+          "22db0d6389eeef05aab7fdde015b00319312810d73f745faeaaf89d6d9b45f69",
+          "05057476f3c3d05eef3f4621acfc7e5df7fb8ed9eddf885a93d273d3734dbbce",
+          "f0033793468a14c0d27a9c2ad30db0a0865ad3b2181bfaf44dec6a08bd8dfb2a",
+          "92ef65f4f19517d04aaf5733fb933e46e29583d9d49c47de8668254d54ee116a"
+        ],
+        "fix_iterations": 2,
+        "validation_errors": [
+          "no JSON object with a `tracks` array was found in the reply"
+        ],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/responses/kitchen-holiday-cookie-batch.json",
+        "predicted_path": null,
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 21,
+        "unsupported_step_ids": [
+          "wash-bowl-1",
+          "wash-bowl-2"
+        ],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Holiday Cookie Batch: Three Doughs, One Oven for three doughs, roughly a hundred cookies",
+            "finish_at": null,
+            "constraints": "one stand mixer, one oven, two sheet pans that must cool between batches, one baker",
+            "vertical": "kitchen",
+            "turn": "T1",
+            "kind": "recipe",
+            "constraintsLine": "Resource limits: one stand mixer, one oven, two sheet pans that must cool between batches, one baker.",
+            "deadlineLine": "No finishing time was given; finish as early as the work allows.",
+            "source": "Source text (read all of it):\n<<<\nHoliday Cookie Batch: Three Doughs, One Oven\n\nThree doughs, one stand mixer, one oven and two sheet pans. A pan has to cool before it is reloaded or the next batch spreads, so the oven waits on the pans as often as the pans wait on the oven. One baker, one afternoon, everything boxed by evening.\n\nDoughs\nCream the butter and sugar for the sugar cookies and beat in the flour; 12 minutes in the mixer. Wrap the dough and chill it for 1 hour.\nWash the bowl, then make the chocolate chip dough the same way; 12 minutes. That one goes straight onto a pan.\nWash the bowl again and make the gingerbread dough with molasses and spice; 15 minutes. Chill it for 2 hours.\n\nOrder\nThe oven runs one pan at a time, in this order: chocolate chip, sugar, gingerbread. Nothing goes in until its dough is cut and a cool pan is free.\n\nBaking\nHeat the oven to 350\u00b0F; 15 minutes. Scoop the chocolate chip dough onto the first pan; 6 minutes. Bake it for 11 minutes. Slide the pan onto a rack and let it cool for 12 minutes before you touch the cookies, and let the pan itself cool for 20 minutes before it goes back in.\n\nRoll and cut the chilled sugar cookies onto the second pan; 14 minutes. Bake for 9 minutes as soon as the chocolate chip pan is out. Let the sugar cookies cool on the rack for 10 minutes; the second pan needs its own 20 minutes before anything else touches it.\n\nRoll the gingerbread a quarter inch thick and cut it out; 18 minutes. Bake for 10 minutes once the sugar cookies are out and the first pan has cooled. Cool the gingerbread for 15 minutes. Ice the gingerbread when it is cold; 25 minutes.\n\nBox everything; 10 minutes.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Holiday Cookie Batch: Three Doughs, One Oven for three doughs, roughly a hundred cookies",
+            "finish_at": null,
+            "constraints": "one stand mixer, one oven, two sheet pans that must cool between batches, one baker",
+            "vertical": "kitchen",
+            "turn": "T2",
+            "kind": "recipe"
+          },
+          "T3 extraction": {
+            "goal": "Holiday Cookie Batch: Three Doughs, One Oven for three doughs, roughly a hundred cookies",
+            "finish_at": null,
+            "constraints": "one stand mixer, one oven, two sheet pans that must cool between batches, one baker",
+            "vertical": "kitchen",
+            "turn": "T3",
+            "kind": "recipe",
+            "environment": "a kitchen where you have: one stand mixer, one oven, two sheet pans that must cool between batches, one baker",
+            "deadline": "the earliest time the work allows",
+            "source": "Source text (read all of it):\n<<<\nHoliday Cookie Batch: Three Doughs, One Oven\n\nThree doughs, one stand mixer, one oven and two sheet pans. A pan has to cool before it is reloaded or the next batch spreads, so the oven waits on the pans as often as the pans wait on the oven. One baker, one afternoon, everything boxed by evening.\n\nDoughs\nCream the butter and sugar for the sugar cookies and beat in the flour; 12 minutes in the mixer. Wrap the dough and chill it for 1 hour.\nWash the bowl, then make the chocolate chip dough the same way; 12 minutes. That one goes straight onto a pan.\nWash the bowl again and make the gingerbread dough with molasses and spice; 15 minutes. Chill it for 2 hours.\n\nOrder\nThe oven runs one pan at a time, in this order: chocolate chip, sugar, gingerbread. Nothing goes in until its dough is cut and a cool pan is free.\n\nBaking\nHeat the oven to 350\u00b0F; 15 minutes. Scoop the chocolate chip dough onto the first pan; 6 minutes. Bake it for 11 minutes. Slide the pan onto a rack and let it cool for 12 minutes before you touch the cookies, and let the pan itself cool for 20 minutes before it goes back in.\n\nRoll and cut the chilled sugar cookies onto the second pan; 14 minutes. Bake for 9 minutes as soon as the chocolate chip pan is out. Let the sugar cookies cool on the rack for 10 minutes; the second pan needs its own 20 minutes before anything else touches it.\n\nRoll the gingerbread a quarter inch thick and cut it out; 18 minutes. Bake for 10 minutes once the sugar cookies are out and the first pan has cooled. Cool the gingerbread for 15 minutes. Ice the gingerbread when it is cold; 25 minutes.\n\nBox everything; 10 minutes.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Holiday Cookie Batch: Three Doughs, One Oven for three doughs, roughly a hundred cookies",
+            "finish_at": null,
+            "constraints": "one stand mixer, one oven, two sheet pans that must cool between batches, one baker",
+            "vertical": "kitchen",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or cook_recipe",
+            "finishAtArg": ""
+          }
+        }
+      },
+      "error": "no JSON object with a `tracks` array was found in the reply"
+    },
+    {
+      "slug": "lab-cell-passaging-hood-incubator",
+      "headline": {
+        "steps_precision": 0.0,
+        "steps_recall": 0.0,
+        "steps_f1": 0.0,
+        "durations_accuracy": 0.0,
+        "resources_precision": 0.0,
+        "resources_recall": 0.0,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.0,
+        "relationships_recall": 0.0,
+        "relationships_f1": 0.0,
+        "structure_rand_index": 0.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.0
+      },
+      "steps": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 21,
+        "n_pred": 0
+      },
+      "durations": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 21
+      },
+      "resources": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 6,
+        "n_pred": 0
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 26,
+        "n_pred": 0
+      },
+      "structure": {
+        "rand_index": 0.0,
+        "agreements": 0,
+        "pairs": 0,
+        "n_steps": 0
+      },
+      "end_to_end": {
+        "python_valid": false,
+        "python_errors": [],
+        "js_status": "skipped",
+        "js_valid": null,
+        "js_errors": [],
+        "gold_makespan": 0.0,
+        "pred_makespan": 0.0,
+        "makespan_ok": false,
+        "gold_critical_path": [],
+        "pred_critical_path": [],
+        "js_critical_path": null,
+        "js_makespan": null,
+        "critical_overlap": 0.0,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.0,
+      "unsupported_steps": [],
+      "matching": [],
+      "extras": {
+        "model": "deepseek-flash",
+        "pattern": "four-turn",
+        "calls": 6,
+        "input_tokens": 57312,
+        "output_tokens": 60151,
+        "cost_usd": 0.08937479999999999,
+        "cache_keys": [
+          "1aaf23f178f31b134d9255e8870b546502cf5edfe45f7e4efc12ac3e377d23d8",
+          "fadb858533f8576a209c05576eb10a73fdc7790b6d13a9c075e92a37274f6918",
+          "e6e8a78d1d7edefbdebaec2a7b7087d44aa54bb550d48202aeeda425457db9ef",
+          "1446d70efebefecf77a530b64f9cebe7c14467bb3e7bcb62f23e79ff2d30ee1e",
+          "05a019c58fb02516455fb3fec8183a2a9841b304d4e5c151b56751a9a8b6a22e",
+          "39b818c350fcf6b55d11402136a66cf4c5f047f11ffc47c24eec1668119d2997"
+        ],
+        "fix_iterations": 2,
+        "validation_errors": [
+          "no JSON object with a `tracks` array was found in the reply"
+        ],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/responses/lab-cell-passaging-hood-incubator.json",
+        "predicted_path": null,
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 25,
+        "unsupported_step_ids": [
+          "prewarm-reagents",
+          "transfer-tube-b"
+        ],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Passaging Two Flasks of Adherent HEK293 Cells for two T75 flasks split 1:6 into four",
+            "finish_at": null,
+            "constraints": "one biosafety cabinet, one 37 \u00b0C water bath, one CO\u2082 incubator, one benchtop centrifuge, one microscope with haemocytometer, one operator",
+            "vertical": "lab",
+            "turn": "T1",
+            "kind": "protocol",
+            "constraintsLine": "Resource limits: one biosafety cabinet, one 37 \u00b0C water bath, one CO\u2082 incubator, one benchtop centrifuge, one microscope with haemocytometer, one operator.",
+            "deadlineLine": "No finishing time was given; finish as early as the work allows.",
+            "source": "Source text (read all of it):\n<<<\nPassaging Two Flasks of Adherent HEK293 Cells\n\nTwo T75 flasks at about 90 % confluence are split 1:6 into four new flasks. The room has one biosafety cabinet, one 37 \u00b0C water bath, one CO\u2082 incubator, one benchtop centrifuge and one microscope with a haemocytometer. Only one flask can be open in the cabinet at a time, so the two flasks queue for it while the centrifuge and the microscope stay free. Work with pre-warmed medium, PBS and trypsin-EDTA throughout; nothing cold touches the cells. One operator.\n\nPreparation\n1. Wipe down the cabinet, lay out pipettes and tubes, and let the blower run; 10 minutes.\n2. Check both flasks on the microscope for confluence and contamination; 10 minutes.\n\nFlask A\n3. Aspirate the spent medium and rinse the monolayer with 5 mL of PBS; 4 minutes in the cabinet.\n4. Add 2 mL of trypsin-EDTA, rock the flask and return it to the incubator for 5 minutes.\n5. Knock the flask, check detachment and neutralise with 8 mL of medium; 5 minutes in the cabinet.\n6. Transfer the suspension to a 15 mL tube and spin at 300 \u00d7 g for 5 minutes.\n7. Aspirate the supernatant and resuspend the pellet in 10 mL of fresh medium; 4 minutes.\n8. Count the cells on the haemocytometer; 6 minutes.\n9. Seed two new T75 flasks at 1:6 and label them; 6 minutes in the cabinet.\n10. Return the new flasks to the incubator and leave them to settle overnight, at least 16 hours.\n\nFlask B\n11. Start flask B the moment flask A leaves the cabinet: aspirate and rinse with 5 mL of PBS; 4 minutes.\n12. Trypsinise flask B in the incubator for 5 minutes.\n13. Neutralise flask B as soon as flask A is out of the cabinet again; 5 minutes.\n14. Spin flask B at 300 \u00d7 g for 5 minutes once the centrifuge is free.\n15. Resuspend the flask B pellet in 10 mL of fresh medium; 4 minutes.\n16. Count flask B on the haemocytometer once flask A has been counted; 6 minutes.\n17. Seed two more T75 flasks at 1:6 and label them; 6 minutes.\n18. Return them to the incubator to settle overnight alongside the first pair.\n\nFinishing\n19. Wipe the cabinet down, discard the waste and switch the blower to standby; 10 minutes.\n20. Write the passage number, the split ratio and the counts into the culture log; 5 minutes.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Passaging Two Flasks of Adherent HEK293 Cells for two T75 flasks split 1:6 into four",
+            "finish_at": null,
+            "constraints": "one biosafety cabinet, one 37 \u00b0C water bath, one CO\u2082 incubator, one benchtop centrifuge, one microscope with haemocytometer, one operator",
+            "vertical": "lab",
+            "turn": "T2",
+            "kind": "protocol"
+          },
+          "T3 extraction": {
+            "goal": "Passaging Two Flasks of Adherent HEK293 Cells for two T75 flasks split 1:6 into four",
+            "finish_at": null,
+            "constraints": "one biosafety cabinet, one 37 \u00b0C water bath, one CO\u2082 incubator, one benchtop centrifuge, one microscope with haemocytometer, one operator",
+            "vertical": "lab",
+            "turn": "T3",
+            "kind": "protocol",
+            "environment": "a lab where you have: one biosafety cabinet, one 37 \u00b0C water bath, one CO\u2082 incubator, one benchtop centrifuge, one microscope with haemocytometer, one operator",
+            "deadline": "the earliest time the work allows",
+            "source": "Source text (read all of it):\n<<<\nPassaging Two Flasks of Adherent HEK293 Cells\n\nTwo T75 flasks at about 90 % confluence are split 1:6 into four new flasks. The room has one biosafety cabinet, one 37 \u00b0C water bath, one CO\u2082 incubator, one benchtop centrifuge and one microscope with a haemocytometer. Only one flask can be open in the cabinet at a time, so the two flasks queue for it while the centrifuge and the microscope stay free. Work with pre-warmed medium, PBS and trypsin-EDTA throughout; nothing cold touches the cells. One operator.\n\nPreparation\n1. Wipe down the cabinet, lay out pipettes and tubes, and let the blower run; 10 minutes.\n2. Check both flasks on the microscope for confluence and contamination; 10 minutes.\n\nFlask A\n3. Aspirate the spent medium and rinse the monolayer with 5 mL of PBS; 4 minutes in the cabinet.\n4. Add 2 mL of trypsin-EDTA, rock the flask and return it to the incubator for 5 minutes.\n5. Knock the flask, check detachment and neutralise with 8 mL of medium; 5 minutes in the cabinet.\n6. Transfer the suspension to a 15 mL tube and spin at 300 \u00d7 g for 5 minutes.\n7. Aspirate the supernatant and resuspend the pellet in 10 mL of fresh medium; 4 minutes.\n8. Count the cells on the haemocytometer; 6 minutes.\n9. Seed two new T75 flasks at 1:6 and label them; 6 minutes in the cabinet.\n10. Return the new flasks to the incubator and leave them to settle overnight, at least 16 hours.\n\nFlask B\n11. Start flask B the moment flask A leaves the cabinet: aspirate and rinse with 5 mL of PBS; 4 minutes.\n12. Trypsinise flask B in the incubator for 5 minutes.\n13. Neutralise flask B as soon as flask A is out of the cabinet again; 5 minutes.\n14. Spin flask B at 300 \u00d7 g for 5 minutes once the centrifuge is free.\n15. Resuspend the flask B pellet in 10 mL of fresh medium; 4 minutes.\n16. Count flask B on the haemocytometer once flask A has been counted; 6 minutes.\n17. Seed two more T75 flasks at 1:6 and label them; 6 minutes.\n18. Return them to the incubator to settle overnight alongside the first pair.\n\nFinishing\n19. Wipe the cabinet down, discard the waste and switch the blower to standby; 10 minutes.\n20. Write the passage number, the split ratio and the counts into the culture log; 5 minutes.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Passaging Two Flasks of Adherent HEK293 Cells for two T75 flasks split 1:6 into four",
+            "finish_at": null,
+            "constraints": "one biosafety cabinet, one 37 \u00b0C water bath, one CO\u2082 incubator, one benchtop centrifuge, one microscope with haemocytometer, one operator",
+            "vertical": "lab",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or run_protocol",
+            "finishAtArg": ""
+          }
+        }
+      },
+      "error": "no JSON object with a `tracks` array was found in the reply"
+    },
+    {
+      "slug": "lab-elisa-plate-wash",
+      "headline": {
+        "steps_precision": 0.0,
+        "steps_recall": 0.0,
+        "steps_f1": 0.0,
+        "durations_accuracy": 0.0,
+        "resources_precision": 0.0,
+        "resources_recall": 0.0,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.0,
+        "relationships_recall": 0.0,
+        "relationships_f1": 0.0,
+        "structure_rand_index": 0.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.0
+      },
+      "steps": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 22,
+        "n_pred": 0
+      },
+      "durations": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 22
+      },
+      "resources": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 5,
+        "n_pred": 0
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 25,
+        "n_pred": 0
+      },
+      "structure": {
+        "rand_index": 0.0,
+        "agreements": 0,
+        "pairs": 0,
+        "n_steps": 0
+      },
+      "end_to_end": {
+        "python_valid": false,
+        "python_errors": [],
+        "js_status": "skipped",
+        "js_valid": null,
+        "js_errors": [],
+        "gold_makespan": 0.0,
+        "pred_makespan": 0.0,
+        "makespan_ok": false,
+        "gold_critical_path": [],
+        "pred_critical_path": [],
+        "js_critical_path": null,
+        "js_makespan": null,
+        "critical_overlap": 0.0,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.0,
+      "unsupported_steps": [],
+      "matching": [],
+      "extras": {
+        "model": "deepseek-flash",
+        "pattern": "four-turn",
+        "calls": 6,
+        "input_tokens": 57487,
+        "output_tokens": 66208,
+        "cost_usd": 0.09669569999999998,
+        "cache_keys": [
+          "cf8f52fbbb1bf18b5d1eae80c3a894e9a41d31c04584f7e32ca650bcbce5ad18",
+          "f57d6127320a013289eb4bd8ae29a1a3a2ade64a2c5d424d01abdc9631ed7b2b",
+          "e5c4f4f6ad5a1a74a3e36783c3ecc6f910145f653f7eea0b3ed5a76596cfd904",
+          "01ea60082dd4133a3b31a675fc132fb0539954ec393c0394847485ae1a87c687",
+          "e84dcde48b3b288a6f5aafba65ce92968c9ca00305b76f60ee314390c6b7379b",
+          "b7c50a1229c104cbacb1d4324970f4e91a0f419bb45ca33a5cb79a3541650711"
+        ],
+        "fix_iterations": 2,
+        "validation_errors": [
+          "no JSON object with a `tracks` array was found in the reply"
+        ],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/responses/lab-elisa-plate-wash.json",
+        "predicted_path": null,
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 0,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Sandwich ELISA on Two Plates, One Washer for two 96-well plates, staggered 30 minutes",
+            "finish_at": null,
+            "constraints": "one plate washer, one 37 \u00b0C incubator holding two plates, one plate reader, one operator",
+            "vertical": "lab",
+            "turn": "T1",
+            "kind": "protocol",
+            "constraintsLine": "Resource limits: one plate washer, one 37 \u00b0C incubator holding two plates, one plate reader, one operator.",
+            "deadlineLine": "No finishing time was given; finish as early as the work allows.",
+            "source": "Source text (read all of it):\n<<<\nSandwich ELISA on Two Plates, One Washer\n\nTwo 96-well plates are run half an hour apart through a sandwich ELISA for a secreted cytokine. There is one automated plate washer, one 37 \u00b0C plate incubator that holds two plates, one plate reader and one operator. The washer is the bottleneck: no two plates can be in it at once, and every incubation is bracketed by a wash.\n\nDay 1\n1. Coat plate 1 with 100 \u00b5L per well of capture antibody in carbonate buffer, seal it and leave it in the cold room at 4 \u00b0C overnight. Take it out when you are ready to start, not before.\n2. Coat plate 2 the same way half an hour later, so the two plates stay half an hour apart all day.\n\nDay 2, reagents\n3. Fifteen hours into the coat, make up the seven-point standard curve in assay diluent; 30 minutes.\n4. Dilute the samples 1:4 into assay diluent and lay out the plate map; 30 minutes.\n\nDay 2, plate 1\n5. Wash the plate four times with 300 \u00b5L of wash buffer; 5 minutes on the washer.\n6. Block with 200 \u00b5L per well of assay diluent for 1 hour at 37 \u00b0C.\n7. Wash four times; 5 minutes on the washer.\n8. Add 100 \u00b5L of standards and samples and incubate for 2 hours at 37 \u00b0C. Nothing goes on the plate until the dilutions are laid out.\n9. Wash four times; 5 minutes on the washer.\n10. Add 100 \u00b5L of biotinylated detection antibody and incubate for 1 hour at 37 \u00b0C.\n11. Wash four times; 5 minutes on the washer.\n12. Add 100 \u00b5L of TMB substrate, develop in the dark for exactly 15 minutes and stop with 50 \u00b5L of 2 N sulfuric acid.\n13. Read the absorbance at 450 nm with a 570 nm reference; 5 minutes on the reader.\n\nDay 2, plate 2\n14. Wash plate 2 four times as soon as the washer is free; 5 minutes.\n15. Block plate 2 with 200 \u00b5L of assay diluent for 1 hour at 37 \u00b0C.\n16. Wash plate 2 again once plate 1 is off the washer; 5 minutes.\n17. Add the standards and samples to plate 2 and incubate for 2 hours at 37 \u00b0C.\n18. Wash plate 2; 5 minutes.\n19. Add the detection antibody to plate 2 and incubate for 1 hour at 37 \u00b0C.\n20. Wash plate 2 a final time; 5 minutes.\n21. Develop plate 2 with TMB for exactly 15 minutes and stop it.\n22. Read plate 2 at 450 nm; 5 minutes.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Sandwich ELISA on Two Plates, One Washer for two 96-well plates, staggered 30 minutes",
+            "finish_at": null,
+            "constraints": "one plate washer, one 37 \u00b0C incubator holding two plates, one plate reader, one operator",
+            "vertical": "lab",
+            "turn": "T2",
+            "kind": "protocol"
+          },
+          "T3 extraction": {
+            "goal": "Sandwich ELISA on Two Plates, One Washer for two 96-well plates, staggered 30 minutes",
+            "finish_at": null,
+            "constraints": "one plate washer, one 37 \u00b0C incubator holding two plates, one plate reader, one operator",
+            "vertical": "lab",
+            "turn": "T3",
+            "kind": "protocol",
+            "environment": "a lab where you have: one plate washer, one 37 \u00b0C incubator holding two plates, one plate reader, one operator",
+            "deadline": "the earliest time the work allows",
+            "source": "Source text (read all of it):\n<<<\nSandwich ELISA on Two Plates, One Washer\n\nTwo 96-well plates are run half an hour apart through a sandwich ELISA for a secreted cytokine. There is one automated plate washer, one 37 \u00b0C plate incubator that holds two plates, one plate reader and one operator. The washer is the bottleneck: no two plates can be in it at once, and every incubation is bracketed by a wash.\n\nDay 1\n1. Coat plate 1 with 100 \u00b5L per well of capture antibody in carbonate buffer, seal it and leave it in the cold room at 4 \u00b0C overnight. Take it out when you are ready to start, not before.\n2. Coat plate 2 the same way half an hour later, so the two plates stay half an hour apart all day.\n\nDay 2, reagents\n3. Fifteen hours into the coat, make up the seven-point standard curve in assay diluent; 30 minutes.\n4. Dilute the samples 1:4 into assay diluent and lay out the plate map; 30 minutes.\n\nDay 2, plate 1\n5. Wash the plate four times with 300 \u00b5L of wash buffer; 5 minutes on the washer.\n6. Block with 200 \u00b5L per well of assay diluent for 1 hour at 37 \u00b0C.\n7. Wash four times; 5 minutes on the washer.\n8. Add 100 \u00b5L of standards and samples and incubate for 2 hours at 37 \u00b0C. Nothing goes on the plate until the dilutions are laid out.\n9. Wash four times; 5 minutes on the washer.\n10. Add 100 \u00b5L of biotinylated detection antibody and incubate for 1 hour at 37 \u00b0C.\n11. Wash four times; 5 minutes on the washer.\n12. Add 100 \u00b5L of TMB substrate, develop in the dark for exactly 15 minutes and stop with 50 \u00b5L of 2 N sulfuric acid.\n13. Read the absorbance at 450 nm with a 570 nm reference; 5 minutes on the reader.\n\nDay 2, plate 2\n14. Wash plate 2 four times as soon as the washer is free; 5 minutes.\n15. Block plate 2 with 200 \u00b5L of assay diluent for 1 hour at 37 \u00b0C.\n16. Wash plate 2 again once plate 1 is off the washer; 5 minutes.\n17. Add the standards and samples to plate 2 and incubate for 2 hours at 37 \u00b0C.\n18. Wash plate 2; 5 minutes.\n19. Add the detection antibody to plate 2 and incubate for 1 hour at 37 \u00b0C.\n20. Wash plate 2 a final time; 5 minutes.\n21. Develop plate 2 with TMB for exactly 15 minutes and stop it.\n22. Read plate 2 at 450 nm; 5 minutes.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Sandwich ELISA on Two Plates, One Washer for two 96-well plates, staggered 30 minutes",
+            "finish_at": null,
+            "constraints": "one plate washer, one 37 \u00b0C incubator holding two plates, one plate reader, one operator",
+            "vertical": "lab",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or run_protocol",
+            "finishAtArg": ""
+          }
+        }
+      },
+      "error": "no JSON object with a `tracks` array was found in the reply"
+    },
+    {
+      "slug": "lab-microbiology-streak-and-incubate",
+      "headline": {
+        "steps_precision": 0.0,
+        "steps_recall": 0.0,
+        "steps_f1": 0.0,
+        "durations_accuracy": 0.0,
+        "resources_precision": 0.0,
+        "resources_recall": 0.0,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.0,
+        "relationships_recall": 0.0,
+        "relationships_f1": 0.0,
+        "structure_rand_index": 0.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.0
+      },
+      "steps": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 18,
+        "n_pred": 0
+      },
+      "durations": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 18
+      },
+      "resources": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 5,
+        "n_pred": 0
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "tp": 0,
+        "n_gold": 19,
+        "n_pred": 0
+      },
+      "structure": {
+        "rand_index": 0.0,
+        "agreements": 0,
+        "pairs": 0,
+        "n_steps": 0
+      },
+      "end_to_end": {
+        "python_valid": false,
+        "python_errors": [],
+        "js_status": "skipped",
+        "js_valid": null,
+        "js_errors": [],
+        "gold_makespan": 0.0,
+        "pred_makespan": 0.0,
+        "makespan_ok": false,
+        "gold_critical_path": [],
+        "pred_critical_path": [],
+        "js_critical_path": null,
+        "js_makespan": null,
+        "critical_overlap": 0.0,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.0,
+      "unsupported_steps": [],
+      "matching": [],
+      "extras": {
+        "model": "deepseek-flash",
+        "pattern": "four-turn",
+        "calls": 6,
+        "input_tokens": 52386,
+        "output_tokens": 64364,
+        "cost_usd": 0.09295260000000001,
+        "cache_keys": [
+          "fb9da2e6bb6ba794280348997dac539263f3b64d7014e9339731796e3f3e053d",
+          "b28439dd8627965cd9954b6a5124b9fe4670e40f9bb2359b3e284242d5d18564",
+          "6d5c6f78fd78f69b7614b8c8d2cbd1c9df6722ee0445679bed277d655589ff2b",
+          "60bee7304d9cb69b481baaa30f5a77a89db36b7927443b81e452c8dbb141544c",
+          "1a3160daa9ed4c94d2a55770b97ee5716ac8b3a4f23dc57cfdc551b90f4103d0",
+          "9de1d3b40bf3251349b8dcf05fa98ebd5b3a1519ea7b5776acc09d97d46aba58"
+        ],
+        "fix_iterations": 2,
+        "validation_errors": [
+          "no JSON object with a `tracks` array was found in the reply"
+        ],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/responses/lab-microbiology-streak-and-incubate.json",
+        "predicted_path": null,
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 18,
+        "unsupported_step_ids": [
+          "supervisor-signoff"
+        ],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Streaking Three Cultures onto Selective Media for three isolates, one purity plate",
+            "finish_at": null,
+            "constraints": "one loop station at the burner, one 37 \u00b0C incubator shelf holding two plates, one staining rack, one microscope, one technician, a supervisor signs off the readings",
+            "vertical": "lab",
+            "turn": "T1",
+            "kind": "protocol",
+            "constraintsLine": "Resource limits: one loop station at the burner, one 37 \u00b0C incubator shelf holding two plates, one staining rack, one microscope, one technician, a supervisor signs off the readings.",
+            "deadlineLine": "No finishing time was given; finish as early as the work allows.",
+            "source": "Source text (read all of it):\n<<<\nStreaking Three Cultures onto Selective Media\n\nThree overnight broths are streaked for single colonies on selective agar, incubated at 37 \u00b0C and read the next morning. The bench has one Bunsen burner with a single loop station, one 37 \u00b0C incubator with room for two plates on the free shelf, one staining rack and one microscope. One technician works the bench; a supervisor reads the plates before anything is subcultured.\n\nSetup\n1. Wipe the bench with 70 % ethanol and light the burner; 10 minutes.\n2. Label three selective plates with the isolate number, the medium and the date; 10 minutes.\n\nStreaking\n3. Streak isolate 1 for single colonies in four quadrants, flaming the loop between each; 10 minutes.\n4. Streak isolate 2 the same way; 10 minutes.\n5. Streak isolate 3 the same way; 10 minutes.\n6. Invert plates 1 and 2 and put them on the incubator shelf overnight, 16 to 20 hours.\n7. Only two plates fit on the shelf, so hold plate 3 at room temperature on the bench until plate 1 comes out.\n8. Incubate plate 3 at 37 \u00b0C for 6 hours once the shelf is free.\n\nReading\n9. Read plate 1 in the morning: count the colonies, note the colour and record the selective growth; 15 minutes.\n10. Read plate 2 the same way; 15 minutes.\n11. Read plate 3 at the end of its run; 15 minutes.\n\nSubculture and stain\n12. Pick a single well-separated colony from each of plates 1 and 2 into fresh broth; 10 minutes at the loop station.\n13. Do not streak the purity plate until the supervisor has signed off the readings. Streaking it takes 15 minutes.\n14. Incubate the purity plate at 37 \u00b0C for 8 hours.\n15. Make a smear from the picked colony and heat-fix it; 10 minutes.\n16. Gram stain the smear on the rack: crystal violet, iodine, decolourise, safranin; 15 minutes.\n17. Read the stain under oil immersion and record the morphology; 15 minutes.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Streaking Three Cultures onto Selective Media for three isolates, one purity plate",
+            "finish_at": null,
+            "constraints": "one loop station at the burner, one 37 \u00b0C incubator shelf holding two plates, one staining rack, one microscope, one technician, a supervisor signs off the readings",
+            "vertical": "lab",
+            "turn": "T2",
+            "kind": "protocol"
+          },
+          "T3 extraction": {
+            "goal": "Streaking Three Cultures onto Selective Media for three isolates, one purity plate",
+            "finish_at": null,
+            "constraints": "one loop station at the burner, one 37 \u00b0C incubator shelf holding two plates, one staining rack, one microscope, one technician, a supervisor signs off the readings",
+            "vertical": "lab",
+            "turn": "T3",
+            "kind": "protocol",
+            "environment": "a lab where you have: one loop station at the burner, one 37 \u00b0C incubator shelf holding two plates, one staining rack, one microscope, one technician, a supervisor signs off the readings",
+            "deadline": "the earliest time the work allows",
+            "source": "Source text (read all of it):\n<<<\nStreaking Three Cultures onto Selective Media\n\nThree overnight broths are streaked for single colonies on selective agar, incubated at 37 \u00b0C and read the next morning. The bench has one Bunsen burner with a single loop station, one 37 \u00b0C incubator with room for two plates on the free shelf, one staining rack and one microscope. One technician works the bench; a supervisor reads the plates before anything is subcultured.\n\nSetup\n1. Wipe the bench with 70 % ethanol and light the burner; 10 minutes.\n2. Label three selective plates with the isolate number, the medium and the date; 10 minutes.\n\nStreaking\n3. Streak isolate 1 for single colonies in four quadrants, flaming the loop between each; 10 minutes.\n4. Streak isolate 2 the same way; 10 minutes.\n5. Streak isolate 3 the same way; 10 minutes.\n6. Invert plates 1 and 2 and put them on the incubator shelf overnight, 16 to 20 hours.\n7. Only two plates fit on the shelf, so hold plate 3 at room temperature on the bench until plate 1 comes out.\n8. Incubate plate 3 at 37 \u00b0C for 6 hours once the shelf is free.\n\nReading\n9. Read plate 1 in the morning: count the colonies, note the colour and record the selective growth; 15 minutes.\n10. Read plate 2 the same way; 15 minutes.\n11. Read plate 3 at the end of its run; 15 minutes.\n\nSubculture and stain\n12. Pick a single well-separated colony from each of plates 1 and 2 into fresh broth; 10 minutes at the loop station.\n13. Do not streak the purity plate until the supervisor has signed off the readings. Streaking it takes 15 minutes.\n14. Incubate the purity plate at 37 \u00b0C for 8 hours.\n15. Make a smear from the picked colony and heat-fix it; 10 minutes.\n16. Gram stain the smear on the rack: crystal violet, iodine, decolourise, safranin; 15 minutes.\n17. Read the stain under oil immersion and record the morphology; 15 minutes.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Streaking Three Cultures onto Selective Media for three isolates, one purity plate",
+            "finish_at": null,
+            "constraints": "one loop station at the burner, one 37 \u00b0C incubator shelf holding two plates, one staining rack, one microscope, one technician, a supervisor signs off the readings",
+            "vertical": "lab",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or run_protocol",
+            "finishAtArg": ""
+          }
+        }
+      },
+      "error": "no JSON object with a `tracks` array was found in the reply"
+    },
+    {
+      "slug": "lab-pcr-and-gel",
+      "headline": {
+        "steps_precision": 0.8421052631578947,
+        "steps_recall": 1.0,
+        "steps_f1": 0.9142857142857143,
+        "durations_accuracy": 0.9375,
+        "resources_precision": 0.625,
+        "resources_recall": 0.7142857142857143,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.6666666666666666,
+        "relationships_recall": 0.7777777777777778,
+        "relationships_f1": 0.717948717948718,
+        "structure_rand_index": 0.8916666666666667,
+        "end_to_end_pass": 1.0,
+        "unsupported_rate": 0.05
+      },
+      "steps": {
+        "precision": 0.8421052631578947,
+        "recall": 1.0,
+        "f1": 0.9142857142857143,
+        "tp": 16,
+        "n_gold": 16,
+        "n_pred": 19
+      },
+      "durations": {
+        "accuracy": 0.9375,
+        "correct": 15,
+        "total": 16
+      },
+      "resources": {
+        "precision": 0.625,
+        "recall": 0.7142857142857143,
+        "f1": 0.6666666666666666,
+        "tp": 5,
+        "n_gold": 7,
+        "n_pred": 8
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.6666666666666666,
+        "recall": 0.7777777777777778,
+        "f1": 0.717948717948718,
+        "tp": 14,
+        "n_gold": 18,
+        "n_pred": 21
+      },
+      "structure": {
+        "rand_index": 0.8916666666666667,
+        "agreements": 107,
+        "pairs": 120,
+        "n_steps": 16
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 12660.0,
+        "pred_makespan": 12720.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "thaw-reagents",
+          "assemble-mix",
+          "aliquot-and-spin",
+          "load-cycler",
+          "run-pcr",
+          "spin-products",
+          "load-gel",
+          "run-gel",
+          "image-gel",
+          "record-results"
+        ],
+        "pred_critical_path": [
+          "thaw-reagents",
+          "assemble-master-mix",
+          "aliquot-and-add-colonies",
+          "spin-colony-tubes",
+          "load-thermocycler",
+          "run-cycling",
+          "spin-pcr-tubes",
+          "add-loading-dye",
+          "load-wells",
+          "run-gel",
+          "image-gel",
+          "record-results"
+        ],
+        "js_critical_path": [
+          "thaw-reagents",
+          "assemble-master-mix",
+          "aliquot-and-add-colonies",
+          "spin-colony-tubes",
+          "load-thermocycler",
+          "run-cycling",
+          "spin-pcr-tubes",
+          "add-loading-dye",
+          "load-wells",
+          "run-gel",
+          "image-gel",
+          "record-results"
+        ],
+        "js_makespan": 12720,
+        "critical_overlap": 1.0,
+        "critical_ok": true,
+        "passed": true
+      },
+      "unsupported_rate": 0.05,
+      "unsupported_steps": [
+        "prepare-rig-buffer"
+      ],
+      "matching": [
+        {
+          "gold": "thaw-reagents",
+          "predicted": "thaw-reagents",
+          "by": "span"
+        },
+        {
+          "gold": "assemble-mix",
+          "predicted": "assemble-master-mix",
+          "by": "span"
+        },
+        {
+          "gold": "aliquot-and-spin",
+          "predicted": "aliquot-and-add-colonies",
+          "by": "span"
+        },
+        {
+          "gold": "load-cycler",
+          "predicted": "load-thermocycler",
+          "by": "span"
+        },
+        {
+          "gold": "run-pcr",
+          "predicted": "run-cycling",
+          "by": "span"
+        },
+        {
+          "gold": "melt-agarose",
+          "predicted": "weigh-agarose",
+          "by": "span"
+        },
+        {
+          "gold": "cool-agarose",
+          "predicted": "cool-flask",
+          "by": "span"
+        },
+        {
+          "gold": "pour-gel",
+          "predicted": "stain-and-pour-gel",
+          "by": "span"
+        },
+        {
+          "gold": "set-gel",
+          "predicted": "set-gel",
+          "by": "span"
+        },
+        {
+          "gold": "place-gel",
+          "predicted": "decomb-into-rig",
+          "by": "span"
+        },
+        {
+          "gold": "prepare-ladder",
+          "predicted": "thaw-ladder",
+          "by": "span"
+        },
+        {
+          "gold": "spin-products",
+          "predicted": "add-loading-dye",
+          "by": "span"
+        },
+        {
+          "gold": "load-gel",
+          "predicted": "load-wells",
+          "by": "span"
+        },
+        {
+          "gold": "run-gel",
+          "predicted": "run-gel",
+          "by": "span"
+        },
+        {
+          "gold": "image-gel",
+          "predicted": "image-gel",
+          "by": "span"
+        },
+        {
+          "gold": "record-results",
+          "predicted": "record-results",
+          "by": "span"
+        },
+        {
+          "gold": null,
+          "predicted": "spin-colony-tubes",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "microwave-agarose",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "prepare-rig-buffer",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "spin-pcr-tubes",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "deepseek-flash",
+        "pattern": "four-turn",
+        "calls": 4,
+        "input_tokens": 29935,
+        "output_tokens": 25763,
+        "cost_usd": 0.0398961,
+        "cache_keys": [
+          "1eaa64808c45a5d0f3f857fc55fb838b0269f98fa43725c0c3fbdfc409d6bfb0",
+          "c02f354c1792dde167c415c4cecdd5b3a036a748ce883bfc0294737ee55504ba",
+          "13b0c2c654da5900e075ae49d979042168df9e5d2ad27b68e0ea6ea6dadc9aa2",
+          "2339f0850831c9540fbc9fa506a531a76210eeb03336594939e19a999d3dbe34"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/responses/lab-pcr-and-gel.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/predicted/lab-pcr-and-gel.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 19,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Colony PCR Screen with a Diagnostic Gel for eight clones, one gel",
+            "finish_at": null,
+            "constraints": "one thermocycler, one microcentrifuge, one microwave, one gel rig, one transilluminator, one operator",
+            "vertical": "lab",
+            "turn": "T1",
+            "kind": "protocol",
+            "constraintsLine": "Resource limits: one thermocycler, one microcentrifuge, one microwave, one gel rig, one transilluminator, one operator.",
+            "deadlineLine": "No finishing time was given; finish as early as the work allows.",
+            "source": "Source text (read all of it):\n<<<\nColony PCR Screen with a Diagnostic Gel\n\nEight candidate clones are screened by PCR and the products are run on a single agarose gel. The bench has one thermocycler, one microcentrifuge, a microwave, one gel rig and one transilluminator, and one person runs the whole thing. The cycling block is long enough to cast and set the gel while it runs, so start the agarose partway through the run rather than waiting for the machine to finish.\n\nPart 1: Reaction setup\n1. Thaw the primers, dNTPs and 10\u00d7 buffer on ice; 15 minutes. Keep the polymerase in the cold block until the last moment.\n2. Assemble a 25 \u00b5L master mix on ice for eight reactions plus one spare; 10 minutes of pipetting.\n3. Aliquot 25 \u00b5L into eight strip tubes, add 1 \u00b5L of each colony suspension and spin them down for 30 seconds in the microcentrifuge; 5 minutes.\n\nPart 2: Cycling\n4. Load the strip tubes into the thermocycler and start the program; 3 minutes.\n5. Run 95 \u00b0C for 3 minutes, then 35 cycles of 95 \u00b0C for 30 seconds, 58 \u00b0C for 30 seconds and 72 \u00b0C for 45 seconds, then a final 72 \u00b0C for 5 minutes. The block reports 1 hour 50 minutes.\n\nPart 3: Agarose gel\n6. Twenty-five minutes into the cycling run, weigh 1.0 g of agarose into 100 mL of 1\u00d7 TAE and microwave for 3 minutes, swirling once, until no lens of undissolved agarose is left.\n7. Cool the flask on the bench for 12 minutes, until it is comfortable to hold.\n8. Add 5 \u00b5L of DNA stain, pour the gel into the casting tray and seat the 10-well comb; 3 minutes.\n9. Let the gel set for 35 minutes at room temperature. Do not rush this; a soft gel tears at the wells.\n10. Remove the comb and place the gel in the rig under 1\u00d7 TAE; 2 minutes.\n\nPart 4: Run and read\n11. Ten minutes after the gel is poured to set, thaw the 100 bp ladder and mix it with 6\u00d7 loading dye; 5 minutes.\n12. When the cycling finishes, spin the tubes down and add 5 \u00b5L of loading dye to each; 5 minutes.\n13. Load 10 \u00b5L per well alongside 5 \u00b5L of ladder; 8 minutes. Nothing goes into a well until the gel is in the rig and the ladder is ready.\n14. Run the gel at 120 V for 40 minutes, until the dye front is two-thirds down.\n15. Image the gel on the transilluminator; 5 minutes.\n16. Record which clones carry the insert and mark the plate; 10 minutes.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Colony PCR Screen with a Diagnostic Gel for eight clones, one gel",
+            "finish_at": null,
+            "constraints": "one thermocycler, one microcentrifuge, one microwave, one gel rig, one transilluminator, one operator",
+            "vertical": "lab",
+            "turn": "T2",
+            "kind": "protocol"
+          },
+          "T3 extraction": {
+            "goal": "Colony PCR Screen with a Diagnostic Gel for eight clones, one gel",
+            "finish_at": null,
+            "constraints": "one thermocycler, one microcentrifuge, one microwave, one gel rig, one transilluminator, one operator",
+            "vertical": "lab",
+            "turn": "T3",
+            "kind": "protocol",
+            "environment": "a lab where you have: one thermocycler, one microcentrifuge, one microwave, one gel rig, one transilluminator, one operator",
+            "deadline": "the earliest time the work allows",
+            "source": "Source text (read all of it):\n<<<\nColony PCR Screen with a Diagnostic Gel\n\nEight candidate clones are screened by PCR and the products are run on a single agarose gel. The bench has one thermocycler, one microcentrifuge, a microwave, one gel rig and one transilluminator, and one person runs the whole thing. The cycling block is long enough to cast and set the gel while it runs, so start the agarose partway through the run rather than waiting for the machine to finish.\n\nPart 1: Reaction setup\n1. Thaw the primers, dNTPs and 10\u00d7 buffer on ice; 15 minutes. Keep the polymerase in the cold block until the last moment.\n2. Assemble a 25 \u00b5L master mix on ice for eight reactions plus one spare; 10 minutes of pipetting.\n3. Aliquot 25 \u00b5L into eight strip tubes, add 1 \u00b5L of each colony suspension and spin them down for 30 seconds in the microcentrifuge; 5 minutes.\n\nPart 2: Cycling\n4. Load the strip tubes into the thermocycler and start the program; 3 minutes.\n5. Run 95 \u00b0C for 3 minutes, then 35 cycles of 95 \u00b0C for 30 seconds, 58 \u00b0C for 30 seconds and 72 \u00b0C for 45 seconds, then a final 72 \u00b0C for 5 minutes. The block reports 1 hour 50 minutes.\n\nPart 3: Agarose gel\n6. Twenty-five minutes into the cycling run, weigh 1.0 g of agarose into 100 mL of 1\u00d7 TAE and microwave for 3 minutes, swirling once, until no lens of undissolved agarose is left.\n7. Cool the flask on the bench for 12 minutes, until it is comfortable to hold.\n8. Add 5 \u00b5L of DNA stain, pour the gel into the casting tray and seat the 10-well comb; 3 minutes.\n9. Let the gel set for 35 minutes at room temperature. Do not rush this; a soft gel tears at the wells.\n10. Remove the comb and place the gel in the rig under 1\u00d7 TAE; 2 minutes.\n\nPart 4: Run and read\n11. Ten minutes after the gel is poured to set, thaw the 100 bp ladder and mix it with 6\u00d7 loading dye; 5 minutes.\n12. When the cycling finishes, spin the tubes down and add 5 \u00b5L of loading dye to each; 5 minutes.\n13. Load 10 \u00b5L per well alongside 5 \u00b5L of ladder; 8 minutes. Nothing goes into a well until the gel is in the rig and the ladder is ready.\n14. Run the gel at 120 V for 40 minutes, until the dye front is two-thirds down.\n15. Image the gel on the transilluminator; 5 minutes.\n16. Record which clones carry the insert and mark the plate; 10 minutes.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Colony PCR Screen with a Diagnostic Gel for eight clones, one gel",
+            "finish_at": null,
+            "constraints": "one thermocycler, one microcentrifuge, one microwave, one gel rig, one transilluminator, one operator",
+            "vertical": "lab",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or run_protocol",
+            "finishAtArg": ""
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": [
+    "kitchen-country-loaf-bread-bake",
+    "kitchen-griddle-breakfast-for-six",
+    "kitchen-holiday-cookie-batch",
+    "lab-cell-passaging-hood-incubator",
+    "lab-elisa-plate-wash",
+    "lab-microbiology-streak-and-incubate"
+  ]
+}

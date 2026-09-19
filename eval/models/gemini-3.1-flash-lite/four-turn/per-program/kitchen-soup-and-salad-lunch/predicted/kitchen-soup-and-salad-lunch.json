@@ -1,0 +1,346 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "weekday-lentil-soup",
+  "name": "Weekday Lentil Soup and Salad",
+  "environmentType": "kitchen",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "soup",
+      "name": "Soup",
+      "steps": [
+        {
+          "stepId": "dice-veggies",
+          "name": "Dice onion, carrot, and celery",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Dice an onion, a carrot and two sticks of celery",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "sweat-veggies",
+          "name": "Sweat vegetables",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "dice-veggies"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Sweat them in oil with a bay leaf",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "add-ingredients",
+          "name": "Stir in lentils, paste, and stock",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "sweat-veggies"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Stir in the rinsed lentils, a spoonful of tomato paste and a litre of stock",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "simmer-soup",
+          "name": "Simmer soup",
+          "task": "burner",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 1500,
+            "maxSeconds": 2400,
+            "defaultSeconds": 1950
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "add-ingredients"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Simmer until the lentils are soft",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "blitz-soup",
+          "name": "Blitz soup",
+          "task": "blender",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "simmer-soup"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Blitz a third of the pot with the stick blender and stir it back in",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "keep-warm",
+          "name": "Keep soup warm",
+          "task": "burner",
+          "duration": {
+            "type": "indefinite",
+            "defaultSeconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "blitz-soup"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "keep it at a bare simmer until you sit down",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "sides",
+      "name": "Sides",
+      "steps": [
+        {
+          "stepId": "wash-leaves",
+          "name": "Wash leaves",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "simmer-soup",
+            "event": "start"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Wash and spin the leaves",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "shave-fennel",
+          "name": "Shave fennel",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 420
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-leaves"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Shave the fennel and the radishes thin",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "whisk-dressing",
+          "name": "Whisk dressing",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "shave-fennel"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Whisk the lemon, oil and mustard in the bottom of the bowl",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "slice-bread",
+          "name": "Slice loaf",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "whisk-dressing"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Cut the loaf into thick slices",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "toast-bread",
+          "name": "Toast bread",
+          "task": "toaster",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "slice-bread"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Warm them in the toaster oven",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "dress-salad",
+          "name": "Dress salad",
+          "task": "prep",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStepWithBuffer",
+            "stepId": "simmer-soup",
+            "bufferSeconds": 300
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Five minutes after the soup goes back on the heat, dress and toss the salad",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "service",
+      "name": "Service",
+      "steps": [
+        {
+          "stepId": "lay-table",
+          "name": "Lay table",
+          "task": "table",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "toast-bread"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Lay four places",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "serve",
+          "name": "Serve",
+          "task": "table",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "keep-warm"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "dress-salad"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "lay-table"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "carry the pot and the bowl through together",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "prep",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "burner",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "toaster",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "blender",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "table",
+      "maxConcurrent": 1
+    }
+  ]
+}

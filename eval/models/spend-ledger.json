@@ -139,6 +139,730 @@
    "output_tokens": 42026,
    "calls": 3,
    "seconds": 433.5
+  },
+  {
+   "model": "deepseek-flash",
+   "pattern": "four-turn",
+   "slug": "event-conference-session-av-checks",
+   "cost_usd": 0.0699267,
+   "input_tokens": 43157,
+   "output_tokens": 47483,
+   "calls": 5,
+   "seconds": 207.4
+  },
+  {
+   "model": "deepseek-flash",
+   "pattern": "baseline",
+   "slug": "event-conference-session-av-checks",
+   "cost_usd": 0.0584094,
+   "input_tokens": 13650,
+   "output_tokens": 45262,
+   "calls": 3,
+   "seconds": 206.9
+  },
+  {
+   "model": "deepseek-flash",
+   "pattern": "four-turn",
+   "slug": "fitness-hiit-circuit-intervals",
+   "cost_usd": 0.0854553,
+   "input_tokens": 48851,
+   "output_tokens": 59000,
+   "calls": 6,
+   "seconds": 262.9
+  },
+  {
+   "model": "deepseek-flash",
+   "pattern": "baseline",
+   "slug": "fitness-hiit-circuit-intervals",
+   "cost_usd": 0.048768900000000004,
+   "input_tokens": 15043,
+   "output_tokens": 36880,
+   "calls": 3,
+   "seconds": 263.0
+  },
+  {
+   "model": "deepseek-flash",
+   "pattern": "four-turn",
+   "slug": "kitchen-backyard-barbecue-smoker-grill",
+   "cost_usd": 0.0851955,
+   "input_tokens": 52957,
+   "output_tokens": 57757,
+   "calls": 6,
+   "seconds": 270.8
+  },
+  {
+   "model": "deepseek-flash",
+   "pattern": "baseline",
+   "slug": "kitchen-backyard-barbecue-smoker-grill",
+   "cost_usd": 0.0195843,
+   "input_tokens": 4373,
+   "output_tokens": 15227,
+   "calls": 1,
+   "seconds": 270.8
+  },
+  {
+   "model": "deepseek-flash",
+   "pattern": "four-turn",
+   "slug": "lab-cell-passaging-hood-incubator",
+   "cost_usd": 0.08937479999999999,
+   "input_tokens": 57312,
+   "output_tokens": 60151,
+   "calls": 6,
+   "seconds": 253.6
+  },
+  {
+   "model": "deepseek-flash",
+   "pattern": "baseline",
+   "slug": "lab-cell-passaging-hood-incubator",
+   "cost_usd": 0.0498309,
+   "input_tokens": 13899,
+   "output_tokens": 38051,
+   "calls": 3,
+   "seconds": 253.6
+  },
+  {
+   "model": "deepseek-flash",
+   "pattern": "four-turn",
+   "slug": "event-product-launch-run-of-show",
+   "cost_usd": 0.0596907,
+   "input_tokens": 44221,
+   "output_tokens": 38687,
+   "calls": 5,
+   "seconds": 158.8
+  },
+  {
+   "model": "deepseek-flash",
+   "pattern": "baseline",
+   "slug": "event-product-launch-run-of-show",
+   "cost_usd": 0.0321474,
+   "input_tokens": 9022,
+   "output_tokens": 24534,
+   "calls": 2,
+   "seconds": 158.8
+  },
+  {
+   "model": "deepseek-flash",
+   "pattern": "four-turn",
+   "slug": "fitness-partner-upper-body-supersets",
+   "cost_usd": 0.0833037,
+   "input_tokens": 49439,
+   "output_tokens": 57060,
+   "calls": 6,
+   "seconds": 236.9
+  },
+  {
+   "model": "deepseek-flash",
+   "pattern": "baseline",
+   "slug": "fitness-partner-upper-body-supersets",
+   "cost_usd": 0.0615546,
+   "input_tokens": 13182,
+   "output_tokens": 48000,
+   "calls": 3,
+   "seconds": 236.9
+  },
+  {
+   "model": "deepseek-flash",
+   "pattern": "four-turn",
+   "slug": "kitchen-country-loaf-bread-bake",
+   "cost_usd": 0.0966162,
+   "input_tokens": 47594,
+   "output_tokens": 68615,
+   "calls": 6,
+   "seconds": 320.9
+  },
+  {
+   "model": "deepseek-flash",
+   "pattern": "baseline",
+   "slug": "kitchen-country-loaf-bread-bake",
+   "cost_usd": 0.0616509,
+   "input_tokens": 13503,
+   "output_tokens": 48000,
+   "calls": 3,
+   "seconds": 320.9
+  },
+  {
+   "model": "deepseek-flash",
+   "pattern": "four-turn",
+   "slug": "lab-elisa-plate-wash",
+   "cost_usd": 0.09669569999999998,
+   "input_tokens": 57487,
+   "output_tokens": 66208,
+   "calls": 6,
+   "seconds": 289.3
+  },
+  {
+   "model": "deepseek-flash",
+   "pattern": "baseline",
+   "slug": "lab-elisa-plate-wash",
+   "cost_usd": 0.034813800000000006,
+   "input_tokens": 9226,
+   "output_tokens": 26705,
+   "calls": 2,
+   "seconds": 289.3
+  },
+  {
+   "model": "deepseek-flash",
+   "pattern": "four-turn",
+   "slug": "event-theater-load-in-soundcheck",
+   "cost_usd": 0.0575895,
+   "input_tokens": 47165,
+   "output_tokens": 36200,
+   "calls": 5,
+   "seconds": 158.5
+  },
+  {
+   "model": "deepseek-flash",
+   "pattern": "baseline",
+   "slug": "event-theater-load-in-soundcheck",
+   "cost_usd": 0.0530502,
+   "input_tokens": 13494,
+   "output_tokens": 40835,
+   "calls": 3,
+   "seconds": 180.4
+  },
+  {
+   "model": "deepseek-flash",
+   "pattern": "four-turn",
+   "slug": "fitness-rowing-erg-interval-session",
+   "cost_usd": 0.0879861,
+   "input_tokens": 42555,
+   "output_tokens": 62683,
+   "calls": 6,
+   "seconds": 281.4
+  },
+  {
+   "model": "deepseek-flash",
+   "pattern": "baseline",
+   "slug": "fitness-rowing-erg-interval-session",
+   "cost_usd": 0.0507081,
+   "input_tokens": 13887,
+   "output_tokens": 38785,
+   "calls": 3,
+   "seconds": 281.4
+  },
+  {
+   "model": "deepseek-flash",
+   "pattern": "four-turn",
+   "slug": "kitchen-griddle-breakfast-for-six",
+   "cost_usd": 0.09484469999999998,
+   "input_tokens": 53077,
+   "output_tokens": 65768,
+   "calls": 6,
+   "seconds": 311.2
+  },
+  {
+   "model": "deepseek-flash",
+   "pattern": "baseline",
+   "slug": "kitchen-griddle-breakfast-for-six",
+   "cost_usd": 0.0615987,
+   "input_tokens": 13329,
+   "output_tokens": 48000,
+   "calls": 3,
+   "seconds": 311.2
+  },
+  {
+   "model": "deepseek-flash",
+   "pattern": "four-turn",
+   "slug": "lab-microbiology-streak-and-incubate",
+   "cost_usd": 0.09295260000000001,
+   "input_tokens": 52386,
+   "output_tokens": 64364,
+   "calls": 6,
+   "seconds": 294.0
+  },
+  {
+   "model": "deepseek-flash",
+   "pattern": "baseline",
+   "slug": "lab-microbiology-streak-and-incubate",
+   "cost_usd": 0.0606315,
+   "input_tokens": 15205,
+   "output_tokens": 46725,
+   "calls": 3,
+   "seconds": 294.0
+  },
+  {
+   "model": "deepseek-flash",
+   "pattern": "four-turn",
+   "slug": "event-wedding-reception-timeline",
+   "cost_usd": 0.0670956,
+   "input_tokens": 41592,
+   "output_tokens": 45515,
+   "calls": 5,
+   "seconds": 198.5
+  },
+  {
+   "model": "deepseek-flash",
+   "pattern": "baseline",
+   "slug": "event-wedding-reception-timeline",
+   "cost_usd": 0.040907400000000003,
+   "input_tokens": 9050,
+   "output_tokens": 31827,
+   "calls": 2,
+   "seconds": 198.5
+  },
+  {
+   "model": "deepseek-flash",
+   "pattern": "four-turn",
+   "slug": "fitness-swim-practice-lane-assignments",
+   "cost_usd": 0.062793,
+   "input_tokens": 60058,
+   "output_tokens": 37313,
+   "calls": 6,
+   "seconds": 156.8
+  },
+  {
+   "model": "deepseek-flash",
+   "pattern": "baseline",
+   "slug": "fitness-swim-practice-lane-assignments",
+   "cost_usd": 0.0350685,
+   "input_tokens": 11819,
+   "output_tokens": 26269,
+   "calls": 2,
+   "seconds": 156.8
+  },
+  {
+   "model": "deepseek-flash",
+   "pattern": "four-turn",
+   "slug": "kitchen-holiday-cookie-batch",
+   "cost_usd": 0.08742029999999999,
+   "input_tokens": 52493,
+   "output_tokens": 59727,
+   "calls": 6,
+   "seconds": 254.7
+  },
+  {
+   "model": "deepseek-flash",
+   "pattern": "baseline",
+   "slug": "kitchen-holiday-cookie-batch",
+   "cost_usd": 0.0615816,
+   "input_tokens": 13272,
+   "output_tokens": 48000,
+   "calls": 3,
+   "seconds": 254.7
+  },
+  {
+   "model": "deepseek-flash",
+   "pattern": "four-turn",
+   "slug": "lab-pcr-and-gel",
+   "cost_usd": 0.0398961,
+   "input_tokens": 29935,
+   "output_tokens": 25763,
+   "calls": 4,
+   "seconds": 102.4
+  },
+  {
+   "model": "deepseek-flash",
+   "pattern": "baseline",
+   "slug": "lab-pcr-and-gel",
+   "cost_usd": 0.0291624,
+   "input_tokens": 9788,
+   "output_tokens": 21855,
+   "calls": 2,
+   "seconds": 102.4
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "four-turn",
+   "slug": "event-conference-session-av-checks",
+   "cost_usd": 0.0154545,
+   "input_tokens": 27252,
+   "output_tokens": 5761,
+   "calls": 4,
+   "seconds": 17.2
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "baseline",
+   "slug": "event-conference-session-av-checks",
+   "cost_usd": 0.00660375,
+   "input_tokens": 10713,
+   "output_tokens": 2617,
+   "calls": 2,
+   "seconds": 17.3
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "four-turn",
+   "slug": "fitness-hiit-circuit-intervals",
+   "cost_usd": 0.01031525,
+   "input_tokens": 25415,
+   "output_tokens": 2641,
+   "calls": 4,
+   "seconds": 12.6
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "baseline",
+   "slug": "fitness-hiit-circuit-intervals",
+   "cost_usd": 0.00444025,
+   "input_tokens": 9931,
+   "output_tokens": 1305,
+   "calls": 2,
+   "seconds": 12.6
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "four-turn",
+   "slug": "kitchen-backyard-barbecue-smoker-grill",
+   "cost_usd": 0.02657525,
+   "input_tokens": 52451,
+   "output_tokens": 8975,
+   "calls": 6,
+   "seconds": 27.9
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "baseline",
+   "slug": "kitchen-backyard-barbecue-smoker-grill",
+   "cost_usd": 0.006977,
+   "input_tokens": 10502,
+   "output_tokens": 2901,
+   "calls": 2,
+   "seconds": 27.9
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "four-turn",
+   "slug": "lab-cell-passaging-hood-incubator",
+   "cost_usd": 0.02225225,
+   "input_tokens": 40679,
+   "output_tokens": 8055,
+   "calls": 5,
+   "seconds": 25.2
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "baseline",
+   "slug": "lab-cell-passaging-hood-incubator",
+   "cost_usd": 0.0030225,
+   "input_tokens": 4662,
+   "output_tokens": 1238,
+   "calls": 1,
+   "seconds": 25.2
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "four-turn",
+   "slug": "event-product-launch-run-of-show",
+   "cost_usd": 0.02034575,
+   "input_tokens": 39311,
+   "output_tokens": 7012,
+   "calls": 5,
+   "seconds": 22.4
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "baseline",
+   "slug": "event-product-launch-run-of-show",
+   "cost_usd": 0.0032765,
+   "input_tokens": 4592,
+   "output_tokens": 1419,
+   "calls": 1,
+   "seconds": 22.4
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "four-turn",
+   "slug": "fitness-partner-upper-body-supersets",
+   "cost_usd": 0.01020575,
+   "input_tokens": 24617,
+   "output_tokens": 2701,
+   "calls": 4,
+   "seconds": 11.3
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "baseline",
+   "slug": "fitness-partner-upper-body-supersets",
+   "cost_usd": 0.00433375,
+   "input_tokens": 4405,
+   "output_tokens": 2155,
+   "calls": 1,
+   "seconds": 11.3
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "four-turn",
+   "slug": "kitchen-country-loaf-bread-bake",
+   "cost_usd": 0.0216,
+   "input_tokens": 39720,
+   "output_tokens": 7780,
+   "calls": 5,
+   "seconds": 23.6
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "baseline",
+   "slug": "kitchen-country-loaf-bread-bake",
+   "cost_usd": 0.01025825,
+   "input_tokens": 17849,
+   "output_tokens": 3864,
+   "calls": 3,
+   "seconds": 23.6
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "four-turn",
+   "slug": "lab-elisa-plate-wash",
+   "cost_usd": 0.016102,
+   "input_tokens": 28294,
+   "output_tokens": 6019,
+   "calls": 4,
+   "seconds": 17.6
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "baseline",
+   "slug": "lab-elisa-plate-wash",
+   "cost_usd": 0.00294925,
+   "input_tokens": 4711,
+   "output_tokens": 1181,
+   "calls": 1,
+   "seconds": 17.6
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "four-turn",
+   "slug": "event-theater-load-in-soundcheck",
+   "cost_usd": 0.031385,
+   "input_tokens": 57080,
+   "output_tokens": 11410,
+   "calls": 6,
+   "seconds": 31.2
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "baseline",
+   "slug": "event-theater-load-in-soundcheck",
+   "cost_usd": 0.007187,
+   "input_tokens": 10868,
+   "output_tokens": 2980,
+   "calls": 2,
+   "seconds": 31.2
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "four-turn",
+   "slug": "fitness-rowing-erg-interval-session",
+   "cost_usd": 0.0119225,
+   "input_tokens": 25892,
+   "output_tokens": 3633,
+   "calls": 4,
+   "seconds": 12.9
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "baseline",
+   "slug": "fitness-rowing-erg-interval-session",
+   "cost_usd": 0.00318425,
+   "input_tokens": 4523,
+   "output_tokens": 1369,
+   "calls": 1,
+   "seconds": 12.9
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "four-turn",
+   "slug": "kitchen-griddle-breakfast-for-six",
+   "cost_usd": 0.01842175,
+   "input_tokens": 37357,
+   "output_tokens": 6055,
+   "calls": 5,
+   "seconds": 18.9
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "baseline",
+   "slug": "kitchen-griddle-breakfast-for-six",
+   "cost_usd": 0.0073005,
+   "input_tokens": 10572,
+   "output_tokens": 3105,
+   "calls": 2,
+   "seconds": 18.9
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "four-turn",
+   "slug": "lab-microbiology-streak-and-incubate",
+   "cost_usd": 0.023475,
+   "input_tokens": 51840,
+   "output_tokens": 7010,
+   "calls": 6,
+   "seconds": 22.8
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "baseline",
+   "slug": "lab-microbiology-streak-and-incubate",
+   "cost_usd": 0.006641,
+   "input_tokens": 10544,
+   "output_tokens": 2670,
+   "calls": 2,
+   "seconds": 22.8
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "four-turn",
+   "slug": "event-wedding-reception-timeline",
+   "cost_usd": 0.021731,
+   "input_tokens": 39920,
+   "output_tokens": 7834,
+   "calls": 5,
+   "seconds": 22.3
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "baseline",
+   "slug": "event-wedding-reception-timeline",
+   "cost_usd": 0.007515,
+   "input_tokens": 10938,
+   "output_tokens": 3187,
+   "calls": 2,
+   "seconds": 22.3
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "four-turn",
+   "slug": "fitness-swim-practice-lane-assignments",
+   "cost_usd": 0.01831575,
+   "input_tokens": 37653,
+   "output_tokens": 5935,
+   "calls": 5,
+   "seconds": 22.8
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "baseline",
+   "slug": "fitness-swim-practice-lane-assignments",
+   "cost_usd": 0.0089475,
+   "input_tokens": 17088,
+   "output_tokens": 3117,
+   "calls": 3,
+   "seconds": 22.8
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "four-turn",
+   "slug": "kitchen-holiday-cookie-batch",
+   "cost_usd": 0.02196425,
+   "input_tokens": 38897,
+   "output_tokens": 8160,
+   "calls": 5,
+   "seconds": 23.3
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "baseline",
+   "slug": "kitchen-holiday-cookie-batch",
+   "cost_usd": 0.0064265,
+   "input_tokens": 10262,
+   "output_tokens": 2574,
+   "calls": 2,
+   "seconds": 23.3
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "four-turn",
+   "slug": "lab-pcr-and-gel",
+   "cost_usd": 0.02087025,
+   "input_tokens": 40263,
+   "output_tokens": 7203,
+   "calls": 5,
+   "seconds": 22.8
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "baseline",
+   "slug": "lab-pcr-and-gel",
+   "cost_usd": 0.0069855,
+   "input_tokens": 10950,
+   "output_tokens": 2832,
+   "calls": 2,
+   "seconds": 22.8
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "four-turn",
+   "slug": "kitchen-sheet-pan-chicken-dinner",
+   "cost_usd": 0.011985,
+   "input_tokens": 25128,
+   "output_tokens": 3802,
+   "calls": 4,
+   "seconds": 13.8
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "baseline",
+   "slug": "kitchen-sheet-pan-chicken-dinner",
+   "cost_usd": 0.010802,
+   "input_tokens": 17840,
+   "output_tokens": 4228,
+   "calls": 3,
+   "seconds": 13.8
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "four-turn",
+   "slug": "lab-plasmid-miniprep-digest",
+   "cost_usd": 0.0233365,
+   "input_tokens": 42598,
+   "output_tokens": 8458,
+   "calls": 5,
+   "seconds": 24.2
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "baseline",
+   "slug": "lab-plasmid-miniprep-digest",
+   "cost_usd": 0.0121915,
+   "input_tokens": 19582,
+   "output_tokens": 4864,
+   "calls": 3,
+   "seconds": 24.3
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "four-turn",
+   "slug": "kitchen-soup-and-salad-lunch",
+   "cost_usd": 0.0122745,
+   "input_tokens": 25182,
+   "output_tokens": 3986,
+   "calls": 4,
+   "seconds": 14.6
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "baseline",
+   "slug": "kitchen-soup-and-salad-lunch",
+   "cost_usd": 0.00610925,
+   "input_tokens": 10073,
+   "output_tokens": 2394,
+   "calls": 2,
+   "seconds": 14.6
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "four-turn",
+   "slug": "lab-western-blot-transfer-block",
+   "cost_usd": 0.0230055,
+   "input_tokens": 41160,
+   "output_tokens": 8477,
+   "calls": 5,
+   "seconds": 24.3
+  },
+  {
+   "model": "gemini-3.1-flash-lite",
+   "pattern": "baseline",
+   "slug": "lab-western-blot-transfer-block",
+   "cost_usd": 0.01271625,
+   "input_tokens": 19617,
+   "output_tokens": 5208,
+   "calls": 3,
+   "seconds": 24.3
   }
- ]
+ ],
+ "notes": {
+  "deepseek-flash": "cost_usd is a peak list-price estimate; the DeepSeek account was actually charged $0.85 for these 16 programs (off-peak rates, cached input).",
+  "claude-haiku-4-5": "the 24-program Haiku runs predate this ledger: $1.10 baseline + $2.20 four-turn (eval/baseline.json, eval/four-turn.json)."
+ }
 }

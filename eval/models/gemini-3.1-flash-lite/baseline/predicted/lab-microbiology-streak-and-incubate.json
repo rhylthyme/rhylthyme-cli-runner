@@ -1,0 +1,211 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "streaking-three-cultures",
+  "name": "Streaking Three Cultures onto Selective Media",
+  "description": "Streaking, incubating, and subculturing three isolates with resource-constrained incubation.",
+  "environmentType": "laboratory",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "prep-track",
+      "name": "Setup and Streaking",
+      "steps": [
+        {
+          "stepId": "wipe-bench",
+          "name": "Wipe bench and light burner",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "label-plates",
+          "name": "Label plates",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wipe-bench"
+          }
+        },
+        {
+          "stepId": "streak-isolates",
+          "name": "Streak isolates",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "replicates": {
+            "count": 3,
+            "mode": "serial",
+            "maxInFlight": 2
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "label-plates"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "incubation-track",
+      "name": "Incubation",
+      "steps": [
+        {
+          "stepId": "incubate-p1-p2",
+          "name": "Incubate plate 1 and 2",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 57600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "streak-isolates",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "incubate-p3",
+          "name": "Incubate plate 3",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 21600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "incubate-p1-p2",
+            "instances": "all"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "analysis-track",
+      "name": "Reading and Staining",
+      "steps": [
+        {
+          "stepId": "read-plates",
+          "name": "Read plates",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "incubate-p1-p2",
+            "instances": "each"
+          }
+        },
+        {
+          "stepId": "subculture",
+          "name": "Pick and subculture",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "read-plates",
+            "instances": "all"
+          }
+        },
+        {
+          "stepId": "streak-purity",
+          "name": "Streak purity plate",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "subculture"
+          }
+        },
+        {
+          "stepId": "incubate-purity",
+          "name": "Incubate purity plate",
+          "task": "incubator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 28800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "streak-purity"
+          }
+        },
+        {
+          "stepId": "smear-stain",
+          "name": "Make smear and Gram stain",
+          "task": "rack",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1500
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "incubate-purity"
+          }
+        },
+        {
+          "stepId": "microscopy",
+          "name": "Read stain",
+          "task": "microscope",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "smear-stain"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "burner",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "bench",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "incubator",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "rack",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "microscope",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "ingredients": [
+      {
+        "name": "Selective agar plates",
+        "measure": "4"
+      }
+    ],
+    "serves": "3 cultures",
+    "sourceUrl": "rhylthyme://lab/streaking-three-cultures"
+  }
+}

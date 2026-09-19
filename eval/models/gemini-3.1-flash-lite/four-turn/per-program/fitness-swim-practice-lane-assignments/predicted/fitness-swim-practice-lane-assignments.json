@@ -1,0 +1,364 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "thursday-am-swim-fixed",
+  "name": "Thursday AM Swim Practice",
+  "environmentType": "gym",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "coach-track",
+      "name": "Coach Tasks",
+      "steps": [
+        {
+          "stepId": "briefing",
+          "name": "Brief the squad",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Brief the squad on the pool deck: what the morning is, who is in which lane, 5 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "watch-warmup",
+          "name": "Watch warm-up",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "briefing"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Watch the warm-up from the deck and fix anything ugly; 15 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "whiteboard",
+          "name": "Walk the main set",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "watch-warmup"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "walk the main set on the whiteboard; 5 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "wait-for-lanes",
+          "name": "Sync Barrier",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "lane-1-main"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "lane-2-main"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "lane-3-main"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": null,
+            "inferred": true
+          }
+        },
+        {
+          "stepId": "sprint-set",
+          "name": "Sprint set",
+          "task": "blocks",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "replicates": {
+            "count": 3,
+            "mode": "serial"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wait-for-lanes"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Time the sprints from the deck: 30 minutes, stopwatch and the wall clock.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "cooldown",
+          "name": "Cooldown",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "sprint-set",
+            "instances": "all"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "10 minutes, 300 easy backstroke and breaststroke.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "debrief",
+          "name": "Debrief",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cooldown"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "10 minutes on the deck at the end: splits, what to fix, Saturday's meet.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "lane-1",
+      "name": "Lane 1 Group",
+      "steps": [
+        {
+          "stepId": "l1-warmup",
+          "name": "Warmup L1",
+          "task": "lanes",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "briefing"
+          },
+          "metadata": {
+            "sourceSpan": null,
+            "inferred": true
+          }
+        },
+        {
+          "stepId": "l1-kick",
+          "name": "Kick L1",
+          "task": "lanes",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "whiteboard"
+          },
+          "metadata": {
+            "sourceSpan": null,
+            "inferred": true
+          }
+        },
+        {
+          "stepId": "lane-1-main",
+          "name": "Main Set L1",
+          "task": "lanes",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2400
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "l1-kick"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Lane 1: 30 to 50 minutes, 40 minutes is the plan.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "lane-2",
+      "name": "Lane 2 Group",
+      "steps": [
+        {
+          "stepId": "l2-warmup",
+          "name": "Warmup L2",
+          "task": "lanes",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "briefing"
+          },
+          "metadata": {
+            "sourceSpan": null,
+            "inferred": true
+          }
+        },
+        {
+          "stepId": "l2-kick",
+          "name": "Kick L2",
+          "task": "lanes",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "whiteboard"
+          },
+          "metadata": {
+            "sourceSpan": null,
+            "inferred": true
+          }
+        },
+        {
+          "stepId": "lane-2-main",
+          "name": "Main Set L2",
+          "task": "lanes",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "l2-kick"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Lane 2: 30 to 50 minutes, 45 minutes is the plan.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "lane-3",
+      "name": "Lane 3 Group",
+      "steps": [
+        {
+          "stepId": "l3-warmup",
+          "name": "Warmup L3",
+          "task": "lanes",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "briefing"
+          },
+          "metadata": {
+            "sourceSpan": null,
+            "inferred": true
+          }
+        },
+        {
+          "stepId": "l3-kick",
+          "name": "Kick L3",
+          "task": "lanes",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "whiteboard"
+          },
+          "metadata": {
+            "sourceSpan": null,
+            "inferred": true
+          }
+        },
+        {
+          "stepId": "lane-3-main",
+          "name": "Main Set L3",
+          "task": "lanes",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3000
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "l3-kick"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Lane 3: 30 to 50 minutes, 50 minutes is the plan.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "coach",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "lanes",
+      "maxConcurrent": 3
+    },
+    {
+      "task": "blocks",
+      "maxConcurrent": 1
+    }
+  ]
+}

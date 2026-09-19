@@ -1,0 +1,269 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "product-launch-2024",
+  "name": "Product Launch Evening",
+  "environmentType": "event",
+  "actors": 6,
+  "tracks": [
+    {
+      "trackId": "tech",
+      "name": "AV Technician",
+      "steps": [
+        {
+          "stepId": "line-check",
+          "name": "Line check",
+          "task": "tech-work",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "rehearsal",
+          "name": "Rehearsal",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "line-check"
+          }
+        },
+        {
+          "stepId": "standby-doors",
+          "name": "Standby",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rehearsal"
+          }
+        },
+        {
+          "stepId": "play-deck",
+          "name": "Keynote AV",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "standby-doors"
+          }
+        },
+        {
+          "stepId": "video",
+          "name": "Product video",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "play-deck"
+          }
+        },
+        {
+          "stepId": "demo",
+          "name": "Live demo",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1500
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "video"
+          }
+        },
+        {
+          "stepId": "qa",
+          "name": "Q&A",
+          "task": "stage",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 900,
+            "maxSeconds": 1500,
+            "defaultSeconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "demo"
+          }
+        },
+        {
+          "stepId": "closing-av",
+          "name": "Closing segment",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "qa"
+          }
+        },
+        {
+          "stepId": "strike",
+          "name": "Strike stage",
+          "task": "stage",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "closing-av"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "foh",
+      "name": "Front of House",
+      "steps": [
+        {
+          "stepId": "reg-setup",
+          "name": "Setup registration",
+          "task": "foh-work",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "walkthrough",
+          "name": "Walkthrough",
+          "task": "foh-work",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "reg-setup"
+          }
+        },
+        {
+          "stepId": "doors",
+          "name": "Doors open / Register guests",
+          "task": "foh-work",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1800
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "walkthrough"
+          }
+        },
+        {
+          "stepId": "seat",
+          "name": "Seat guests",
+          "task": "foh-work",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "doors"
+          }
+        },
+        {
+          "stepId": "monitor",
+          "name": "Monitor show",
+          "task": "foh-work",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3420
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "seat"
+          }
+        },
+        {
+          "stepId": "breakdown",
+          "name": "Breakdown registration",
+          "task": "foh-work",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "monitor"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "catering",
+      "name": "Catering",
+      "steps": [
+        {
+          "stepId": "set-catering",
+          "name": "Set bar/canape",
+          "task": "catering-work",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "service",
+          "name": "Reception service",
+          "task": "catering-work",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "set-catering"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "stage",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "tech-work",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "foh-work",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "catering-work",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "serves": "200",
+    "attribution": "Product Launch Planning"
+  }
+}

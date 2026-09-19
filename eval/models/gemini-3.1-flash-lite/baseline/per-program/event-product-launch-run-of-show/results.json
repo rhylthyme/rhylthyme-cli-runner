@@ -1,0 +1,333 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "gemini-3.1-flash-lite",
+    "pattern": "baseline",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/cache",
+    "limit": null,
+    "only": [
+      "event-product-launch-run-of-show"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 1,
+      "input_tokens": 4592,
+      "output_tokens": 1419,
+      "cost_usd": 0.0032765,
+      "fix_iterations": 0
+    },
+    "generated_at": "2026-09-19T17:13:54+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.3888888888888889,
+    "steps_f1": 0.56,
+    "durations_accuracy": 1.0,
+    "resources_precision": 0.25,
+    "resources_recall": 0.16666666666666666,
+    "actors_accuracy": 0.0,
+    "relationships_precision": 0.5714285714285714,
+    "relationships_recall": 0.2222222222222222,
+    "relationships_f1": 0.32,
+    "structure_rand_index": 0.7142857142857143,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.5882352941176471
+  },
+  "programs": [
+    {
+      "slug": "event-product-launch-run-of-show",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.3888888888888889,
+        "steps_f1": 0.56,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.25,
+        "resources_recall": 0.16666666666666666,
+        "actors_accuracy": 0.0,
+        "relationships_precision": 0.5714285714285714,
+        "relationships_recall": 0.2222222222222222,
+        "relationships_f1": 0.32,
+        "structure_rand_index": 0.7142857142857143,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.5882352941176471
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.3888888888888889,
+        "f1": 0.56,
+        "tp": 7,
+        "n_gold": 18,
+        "n_pred": 7
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 7,
+        "total": 7
+      },
+      "resources": {
+        "precision": 0.25,
+        "recall": 0.16666666666666666,
+        "f1": 0.2,
+        "tp": 1,
+        "n_gold": 6,
+        "n_pred": 4
+      },
+      "actors": {
+        "accuracy": 0.0,
+        "correct": 0,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.5714285714285714,
+        "recall": 0.2222222222222222,
+        "f1": 0.32,
+        "tp": 4,
+        "n_gold": 18,
+        "n_pred": 7
+      },
+      "structure": {
+        "rand_index": 0.7142857142857143,
+        "agreements": 15,
+        "pairs": 21,
+        "n_steps": 7
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 13020.0,
+        "pred_makespan": 13020.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "setup-registration",
+          "walkthrough",
+          "doors-open",
+          "usher-to-seats",
+          "host-welcome",
+          "ceo-keynote",
+          "product-video",
+          "product-demo",
+          "qa",
+          "host-close",
+          "breakdown-desk",
+          "strike-stage"
+        ],
+        "pred_critical_path": [
+          "line-check",
+          "rehearsal",
+          "standby-doors",
+          "play-deck",
+          "video",
+          "demo",
+          "qa",
+          "closing-av",
+          "strike"
+        ],
+        "js_critical_path": [
+          "line-check",
+          "rehearsal",
+          "standby-doors",
+          "play-deck",
+          "video",
+          "demo",
+          "qa",
+          "closing-av",
+          "strike"
+        ],
+        "js_makespan": 13020,
+        "critical_overlap": 0.25,
+        "critical_ok": false,
+        "passed": false
+      },
+      "unsupported_rate": 0.5882352941176471,
+      "unsupported_steps": [
+        "standby-doors",
+        "play-deck",
+        "demo",
+        "closing-av",
+        "doors",
+        "seat",
+        "monitor",
+        "breakdown",
+        "set-catering",
+        "service"
+      ],
+      "matching": [
+        {
+          "gold": "line-check",
+          "predicted": "line-check",
+          "by": "name"
+        },
+        {
+          "gold": "rehearsal",
+          "predicted": "rehearsal",
+          "by": "name"
+        },
+        {
+          "gold": "strike-stage",
+          "predicted": "strike",
+          "by": "name"
+        },
+        {
+          "gold": "setup-registration",
+          "predicted": "reg-setup",
+          "by": "name"
+        },
+        {
+          "gold": "walkthrough",
+          "predicted": "walkthrough",
+          "by": "name"
+        },
+        {
+          "gold": "product-video",
+          "predicted": "video",
+          "by": "name"
+        },
+        {
+          "gold": "qa",
+          "predicted": "qa",
+          "by": "name"
+        },
+        {
+          "gold": "welcome-playlist",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "doors-open",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "usher-to-seats",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "breakdown-desk",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "host-welcome",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "ceo-keynote",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "product-demo",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "host-close",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "set-bar",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "bar-service",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "reception",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "standby-doors",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "play-deck",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "demo",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "closing-av",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "doors",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "seat",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "monitor",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "breakdown",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "set-catering",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "service",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "gemini-3.1-flash-lite",
+        "pattern": "baseline",
+        "calls": 1,
+        "input_tokens": 4592,
+        "output_tokens": 1419,
+        "cost_usd": 0.0032765,
+        "cache_keys": [
+          "f88c06e2986a2f639911f3482135e75d1385021a4f575069c4e4d65bcb55aab5"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/per-program/event-product-launch-run-of-show/responses/event-product-launch-run-of-show.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/baseline/per-program/event-product-launch-run-of-show/predicted/event-product-launch-run-of-show.json",
+        "turns": 1,
+        "turn_slots": {
+          "plan_schedule": {
+            "goal": "Product Launch Evening: Run of Show for 200 guests, following the source text below",
+            "finish_at": "21:00",
+            "constraints": "one stage, one projector, crew call 17:00, doors 18:00, program over by 20:00, venue resets at 21:00",
+            "vertical": "events"
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

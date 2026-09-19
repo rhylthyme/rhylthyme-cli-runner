@@ -1,0 +1,210 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "sheet-pan-chicken",
+  "name": "Sheet-Pan Chicken with Potatoes and Broccoli",
+  "description": "A Tuesday dinner for four involving multi-stage sheet pan roasting.",
+  "environmentType": "kitchen",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "oven-track",
+      "name": "Oven",
+      "steps": [
+        {
+          "stepId": "preheat",
+          "name": "Heat oven to 425°F",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "roast-potatoes-initial",
+          "name": "Roast potatoes",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "preheat"
+          }
+        },
+        {
+          "stepId": "roast-chicken-and-potatoes",
+          "name": "Roast chicken and potatoes",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "roast-potatoes-initial"
+          }
+        },
+        {
+          "stepId": "final-roast",
+          "name": "Final roast with broccoli",
+          "task": "oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 900
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "roast-chicken-and-potatoes"
+          }
+        },
+        {
+          "stepId": "rest-chicken",
+          "name": "Rest chicken",
+          "task": "none",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "final-roast"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "prep-track",
+      "name": "Prep and Stove",
+      "steps": [
+        {
+          "stepId": "prep-potatoes",
+          "name": "Prep potatoes",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "preheat"
+          }
+        },
+        {
+          "stepId": "prep-chicken",
+          "name": "Prep chicken",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep-potatoes"
+          }
+        },
+        {
+          "stepId": "add-broccoli",
+          "name": "Rotate and add broccoli",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "roast-chicken-and-potatoes"
+          }
+        },
+        {
+          "stepId": "reduce-sauce",
+          "name": "Reduce sauce",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 360
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "final-roast"
+          }
+        },
+        {
+          "stepId": "finish-sauce",
+          "name": "Whisk in butter",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "reduce-sauce"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "salad-track",
+      "name": "Salad and Plating",
+      "steps": [
+        {
+          "stepId": "prep-salad",
+          "name": "Wash and prep salad",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 540
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "roast-chicken-and-potatoes"
+          }
+        },
+        {
+          "stepId": "plating",
+          "name": "Slice and plate",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 360
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "rest-chicken"
+          }
+        },
+        {
+          "stepId": "dress-salad",
+          "name": "Dress salad",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "plating"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "oven",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "burner",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "cook",
+      "maxConcurrent": 1
+    }
+  ]
+}

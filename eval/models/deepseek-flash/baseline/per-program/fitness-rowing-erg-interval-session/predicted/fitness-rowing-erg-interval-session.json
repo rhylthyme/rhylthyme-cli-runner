@@ -1,0 +1,172 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "erg-session-four-rowers-two-machines",
+  "name": "Erg Session — Four Rowers, Two Machines",
+  "description": "Four rowers (A, B, C, D), two ergs, one coach. A+B warm up on the machines, C+D take them ten minutes later. Three 4-minute pieces per pair at rate 26-28, target split on the monitor: A+B row first, C+D take each piece straight off the back of A+B's, and A+B's 4-minute rests are exactly C+D's pieces. The rests are deliberately NOT steps — they are the handover gaps between one piece ending and the next starting, which is the whole design of the session. Then 3-minute coached technique drills one rower at a time in the order A, B, C, D, ten minutes on the floor together, then the debrief. Limits are constraints, not copied steps: the bay of two ergs holds exactly one pair at a time (erg-bay, maxConcurrent 1 — a pair occupies both machines, and nobody sits on a machine they are not rowing), one coach so only one rower is on the coached drill at a time (coach, maxConcurrent 1), and all four rowers share the floor (floor, maxConcurrent 4). The three pieces per pair are one replicated step each: A+B hold an 8-minute stagger (4 min rowing + their 4 min rest = C+D's piece), and C+D's pieces are an each-chain that fires instance-for-instance off the back of A+B's, so the machines are never idle and never shared.",
+  "environmentType": "gym",
+  "actors": 4,
+  "tracks": [
+    {
+      "trackId": "erg-bay",
+      "name": "Erg bay — two machines, one pair at a time",
+      "steps": [
+        {
+          "stepId": "erg-warmup-ab",
+          "name": "A+B warm-up — 10 min, rate 18, light pressure, half to full slide",
+          "task": "erg-bay",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "coach-brief"
+          }
+        },
+        {
+          "stepId": "erg-warmup-cd",
+          "name": "C+D warm-up — 10 min, on the machines A+B have just left",
+          "task": "erg-bay",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "erg-warmup-ab"
+          }
+        },
+        {
+          "stepId": "erg-piece-ab",
+          "name": "Piece (A+B) — 4 min, rate 26-28, target split; 4 min rest follows (C+D row it)",
+          "task": "erg-bay",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "replicates": {
+            "count": 3,
+            "mode": "stagger",
+            "delay": "8m"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "erg-warmup-cd"
+          }
+        },
+        {
+          "stepId": "erg-piece-cd",
+          "name": "Piece (C+D) — straight off the back of A+B's piece, then hand back",
+          "task": "erg-bay",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "erg-piece-ab",
+            "instances": "each"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "coach",
+      "name": "Coach",
+      "steps": [
+        {
+          "stepId": "coach-brief",
+          "name": "Brief the crew on the boards — before anyone gets on",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "coach-splits",
+          "name": "Call splits from the first piece — 20 min on the clock, watch the catch not the monitor",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "erg-piece-ab",
+            "event": "start",
+            "instances": "any"
+          }
+        },
+        {
+          "stepId": "coach-drills",
+          "name": "Run the drills — 3 min each, one rower at a time: A, then B, then C, then D",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "replicates": {
+            "count": 4,
+            "mode": "serial"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "erg-piece-cd",
+            "instances": "all"
+          }
+        },
+        {
+          "stepId": "coach-debrief",
+          "name": "Debrief — what the splits said and what Saturday looks like",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "floor-cooldown"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "floor",
+      "name": "Floor — all four rowers together",
+      "steps": [
+        {
+          "stepId": "floor-cooldown",
+          "name": "Cooldown — 10 min on the floor, legs up the wall, hips, lats, cup of tea",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "coach-drills",
+            "instances": "all"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "erg-bay",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "coach",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "floor",
+      "maxConcurrent": 4
+    }
+  ]
+}

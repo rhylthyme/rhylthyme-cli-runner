@@ -1,0 +1,222 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "weekday-lentil-soup-salad",
+  "name": "Weekday Lentil Soup and Salad",
+  "description": "Lunch for four, finishing at 12:30.",
+  "environmentType": "kitchen",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "soup",
+      "name": "Soup",
+      "steps": [
+        {
+          "stepId": "prep-veg",
+          "name": "Dice onion, carrot, celery",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "sweat",
+          "name": "Sweat vegetables",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep-veg"
+          }
+        },
+        {
+          "stepId": "boil",
+          "name": "Add ingredients and simmer",
+          "task": "burner",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2400
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "sweat"
+          }
+        },
+        {
+          "stepId": "blitz",
+          "name": "Blitz and stir",
+          "task": "stick-blender",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "boil"
+          }
+        },
+        {
+          "stepId": "serve-soup",
+          "name": "Carry to table",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "assemble-lunch"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "salad-bread",
+      "name": "Salad and Bread",
+      "steps": [
+        {
+          "stepId": "wash-salad",
+          "name": "Wash leaves",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "boil"
+          }
+        },
+        {
+          "stepId": "slice-veg",
+          "name": "Shave fennel/radishes",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 420
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash-salad"
+          }
+        },
+        {
+          "stepId": "whisk-dressing",
+          "name": "Whisk dressing",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "slice-veg"
+          }
+        },
+        {
+          "stepId": "toss-salad",
+          "name": "Dress salad",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "whisk-dressing"
+          }
+        },
+        {
+          "stepId": "slice-bread",
+          "name": "Slice bread",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "toss-salad"
+          }
+        },
+        {
+          "stepId": "toast-bread",
+          "name": "Toast bread",
+          "task": "toaster-oven",
+          "duration": {
+            "type": "fixed",
+            "seconds": 480
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "slice-bread"
+          }
+        },
+        {
+          "stepId": "lay-table",
+          "name": "Lay table",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "toast-bread"
+          }
+        },
+        {
+          "stepId": "assemble-lunch",
+          "name": "Final assembly",
+          "task": "cook",
+          "duration": {
+            "type": "fixed",
+            "seconds": 0
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "blitz"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "lay-table"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "cook",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "burner",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "toaster-oven",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "stick-blender",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "serves": "4",
+    "sourceUrl": "rhylthyme://guide/authoring"
+  }
+}

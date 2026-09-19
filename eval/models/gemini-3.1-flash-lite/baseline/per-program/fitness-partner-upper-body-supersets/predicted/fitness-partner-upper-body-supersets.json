@@ -1,0 +1,380 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "partner-upper-body-superset",
+  "name": "Partner Upper-Body Superset Session",
+  "description": "25-minute partner workout utilizing shared equipment for concurrent supersets.",
+  "environmentType": "gym",
+  "actors": 2,
+  "tracks": [
+    {
+      "trackId": "partner-a",
+      "name": "Partner A",
+      "steps": [
+        {
+          "stepId": "warmup-erg-a",
+          "name": "Warm-up Row",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "warmup-mobilize-a",
+          "name": "Arm circles/bands",
+          "task": "space",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warmup-erg-a"
+          }
+        },
+        {
+          "stepId": "a-bench-1",
+          "name": "Superset A: Bench Press",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warmup-mobilize-a"
+          }
+        },
+        {
+          "stepId": "a-row-1",
+          "name": "Superset A: Row",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "a-bench-1"
+          }
+        },
+        {
+          "stepId": "a-rest-1",
+          "name": "Rest",
+          "task": "space",
+          "duration": {
+            "type": "fixed",
+            "seconds": 90
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "a-row-1"
+          }
+        },
+        {
+          "stepId": "a-bench-2",
+          "name": "Superset A: Bench Press",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "a-rest-1"
+          }
+        },
+        {
+          "stepId": "a-row-2",
+          "name": "Superset A: Row",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "a-bench-2"
+          }
+        },
+        {
+          "stepId": "a-press-1",
+          "name": "Superset B: Overhead Press",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 45
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "a-row-2"
+          }
+        },
+        {
+          "stepId": "a-pullup-1",
+          "name": "Superset B: Pull-ups",
+          "task": "pullup-bar",
+          "duration": {
+            "type": "fixed",
+            "seconds": 45
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "a-press-1"
+          }
+        },
+        {
+          "stepId": "a-rest-b1",
+          "name": "Rest",
+          "task": "space",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "a-pullup-1"
+          }
+        },
+        {
+          "stepId": "a-press-2",
+          "name": "Superset B: Overhead Press",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 45
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "a-rest-b1"
+          }
+        },
+        {
+          "stepId": "a-pullup-2",
+          "name": "Superset B: Pull-ups",
+          "task": "pullup-bar",
+          "duration": {
+            "type": "fixed",
+            "seconds": 45
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "a-press-2"
+          }
+        },
+        {
+          "stepId": "cooldown-a",
+          "name": "Cool-down",
+          "task": "space",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "a-pullup-2"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "partner-b",
+      "name": "Partner B",
+      "steps": [
+        {
+          "stepId": "warmup-erg-b",
+          "name": "Warm-up Row",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "warmup-mobilize-b",
+          "name": "Arm circles/bands",
+          "task": "space",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warmup-erg-b"
+          }
+        },
+        {
+          "stepId": "b-row-1",
+          "name": "Superset A: Row",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warmup-mobilize-b"
+          }
+        },
+        {
+          "stepId": "b-bench-1",
+          "name": "Superset A: Bench Press",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "b-row-1"
+          }
+        },
+        {
+          "stepId": "b-rest-1",
+          "name": "Rest",
+          "task": "space",
+          "duration": {
+            "type": "fixed",
+            "seconds": 90
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "b-bench-1"
+          }
+        },
+        {
+          "stepId": "b-row-2",
+          "name": "Superset A: Row",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "b-rest-1"
+          }
+        },
+        {
+          "stepId": "b-bench-2",
+          "name": "Superset A: Bench Press",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "b-row-2"
+          }
+        },
+        {
+          "stepId": "b-pullup-1",
+          "name": "Superset B: Pull-ups",
+          "task": "pullup-bar",
+          "duration": {
+            "type": "fixed",
+            "seconds": 45
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "b-bench-2"
+          }
+        },
+        {
+          "stepId": "b-press-1",
+          "name": "Superset B: Overhead Press",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 45
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "b-pullup-1"
+          }
+        },
+        {
+          "stepId": "b-rest-b1",
+          "name": "Rest",
+          "task": "space",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "b-press-1"
+          }
+        },
+        {
+          "stepId": "b-pullup-2",
+          "name": "Superset B: Pull-ups",
+          "task": "pullup-bar",
+          "duration": {
+            "type": "fixed",
+            "seconds": 45
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "b-rest-b1"
+          }
+        },
+        {
+          "stepId": "b-press-2",
+          "name": "Superset B: Overhead Press",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 45
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "b-pullup-2"
+          }
+        },
+        {
+          "stepId": "cooldown-b",
+          "name": "Cool-down",
+          "task": "space",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "b-press-2"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "bench",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "dumbbells",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "pullup-bar",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "erg",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "space",
+      "maxConcurrent": 2
+    }
+  ]
+}

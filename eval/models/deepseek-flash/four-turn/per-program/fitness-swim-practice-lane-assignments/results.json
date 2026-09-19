@@ -1,0 +1,335 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "deepseek-flash",
+    "pattern": "four-turn",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/cache",
+    "limit": null,
+    "only": [
+      "fitness-swim-practice-lane-assignments"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 6,
+      "input_tokens": 60058,
+      "output_tokens": 37313,
+      "cost_usd": 0.062793,
+      "fix_iterations": 2
+    },
+    "generated_at": "2026-09-19T17:44:16+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 0.9166666666666666,
+    "steps_recall": 0.55,
+    "steps_f1": 0.6874999999999999,
+    "durations_accuracy": 1.0,
+    "resources_precision": 0.6666666666666666,
+    "resources_recall": 0.5,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.2777777777777778,
+    "relationships_recall": 0.22727272727272727,
+    "relationships_f1": 0.25,
+    "structure_rand_index": 0.9454545454545454,
+    "end_to_end_pass": 1.0,
+    "unsupported_rate": 0.07692307692307693
+  },
+  "programs": [
+    {
+      "slug": "fitness-swim-practice-lane-assignments",
+      "headline": {
+        "steps_precision": 0.9166666666666666,
+        "steps_recall": 0.55,
+        "steps_f1": 0.6874999999999999,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.6666666666666666,
+        "resources_recall": 0.5,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.2777777777777778,
+        "relationships_recall": 0.22727272727272727,
+        "relationships_f1": 0.25,
+        "structure_rand_index": 0.9454545454545454,
+        "end_to_end_pass": 1.0,
+        "unsupported_rate": 0.07692307692307693
+      },
+      "steps": {
+        "precision": 0.9166666666666666,
+        "recall": 0.55,
+        "f1": 0.6874999999999999,
+        "tp": 11,
+        "n_gold": 20,
+        "n_pred": 12
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 11,
+        "total": 11
+      },
+      "resources": {
+        "precision": 0.6666666666666666,
+        "recall": 0.5,
+        "f1": 0.5714285714285715,
+        "tp": 2,
+        "n_gold": 4,
+        "n_pred": 3
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.2777777777777778,
+        "recall": 0.22727272727272727,
+        "f1": 0.25,
+        "tp": 5,
+        "n_gold": 22,
+        "n_pred": 18
+      },
+      "structure": {
+        "rand_index": 0.9454545454545454,
+        "agreements": 52,
+        "pairs": 55,
+        "n_steps": 11
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 8700.0,
+        "pred_makespan": 9000.0,
+        "makespan_ok": true,
+        "gold_critical_path": [
+          "brief-squad",
+          "watch-warmup",
+          "whiteboard-talk",
+          "kick-3",
+          "main-3",
+          "sprint-1",
+          "sprint-2",
+          "sprint-3",
+          "cool-1",
+          "debrief"
+        ],
+        "pred_critical_path": [
+          "brief-squad",
+          "warmup-swim",
+          "whiteboard-main-set",
+          "kick-set",
+          "main-set-lane3",
+          "time-sprints",
+          "cooldown-swim",
+          "debrief"
+        ],
+        "js_critical_path": [
+          "brief-squad",
+          "warmup-swim",
+          "whiteboard-main-set",
+          "kick-set",
+          "main-set-lane3",
+          "time-sprints",
+          "cooldown-swim",
+          "debrief"
+        ],
+        "js_makespan": 9000,
+        "critical_overlap": 0.5,
+        "critical_ok": true,
+        "passed": true
+      },
+      "unsupported_rate": 0.07692307692307693,
+      "unsupported_steps": [
+        "position-blocks"
+      ],
+      "matching": [
+        {
+          "gold": "warmup-1",
+          "predicted": "warmup-swim",
+          "by": "span"
+        },
+        {
+          "gold": "kick-1",
+          "predicted": "kick-set",
+          "by": "span"
+        },
+        {
+          "gold": "main-1",
+          "predicted": "main-set-lane1",
+          "by": "span"
+        },
+        {
+          "gold": "cool-1",
+          "predicted": "cooldown-swim",
+          "by": "span"
+        },
+        {
+          "gold": "main-2",
+          "predicted": "main-set-lane2",
+          "by": "span"
+        },
+        {
+          "gold": "main-3",
+          "predicted": "main-set-lane3",
+          "by": "span"
+        },
+        {
+          "gold": "brief-squad",
+          "predicted": "brief-squad",
+          "by": "span"
+        },
+        {
+          "gold": "watch-warmup",
+          "predicted": "watch-warmup",
+          "by": "span"
+        },
+        {
+          "gold": "whiteboard-talk",
+          "predicted": "whiteboard-main-set",
+          "by": "span"
+        },
+        {
+          "gold": "time-sprints",
+          "predicted": "time-sprints",
+          "by": "span"
+        },
+        {
+          "gold": "debrief",
+          "predicted": "debrief",
+          "by": "span"
+        },
+        {
+          "gold": "sprint-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "warmup-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "kick-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "sprint-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cool-2",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "warmup-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "kick-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "sprint-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "cool-3",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "position-blocks",
+          "by": null
+        },
+        {
+          "gold": null,
+          "predicted": "sprint-set",
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "deepseek-flash",
+        "pattern": "four-turn",
+        "calls": 6,
+        "input_tokens": 60058,
+        "output_tokens": 37313,
+        "cost_usd": 0.062793,
+        "cache_keys": [
+          "128517cb40fd3c1e5118a426ad3146d8f66768a545680ddcffd96dab5eef2cc8",
+          "b65dbac807f7cdb7c77e5539d8b4d8e8b9ff19e800ded7627c75e7ee89f670a9",
+          "808ef684e4b6662b4325cf28303f887036e089b1c2ced772b7a2f47741571e51",
+          "b6b7b63320dfba90e6139ee8243835735e68bdc0cb29b5a1bfcb24106cc03f3b",
+          "151124508ce0490cad2b14a613a9d789a75a786866d7402c6dcb27dcbe92a53f",
+          "442b7ac4c527686150c7929e457dd7eccae8c7eff0eb59398c34531228e5a076"
+        ],
+        "fix_iterations": 2,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/per-program/fitness-swim-practice-lane-assignments/responses/fitness-swim-practice-lane-assignments.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/deepseek-flash/four-turn/per-program/fitness-swim-practice-lane-assignments/predicted/fitness-swim-practice-lane-assignments.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 13,
+        "unsupported_step_ids": [
+          "position-blocks"
+        ],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Practice Plan \u2014 Thursday AM, three lanes for one squad of twelve, three lanes, one coach",
+            "finish_at": "150 minutes of pool time",
+            "constraints": "three lanes, one set of starting blocks, one coach on deck, two and a half hours of pool time",
+            "vertical": "gym",
+            "turn": "T1",
+            "kind": "workout",
+            "constraintsLine": "Resource limits: three lanes, one set of starting blocks, one coach on deck, two and a half hours of pool time.",
+            "deadlineLine": "Everything must be finished by 150 minutes of pool time.",
+            "source": "Source text (read all of it):\n<<<\nPractice Plan \u2014 Thursday AM, three lanes\n\nWe have three lanes for two and a half hours and one set of starting blocks. Lane 1 is the sprint group, lane 2 the middle distance, lane 3 the distance group. Everything except the sprint set runs in all three lanes at once; the sprint set runs one lane at a time off the blocks, so lanes wait their turn.\n\nOn deck\nBrief the squad on the pool deck: what the morning is, who is in which lane, 5 minutes.\nWatch the warm-up from the deck and fix anything ugly; 15 minutes.\n\nWarm-up\nAll three lanes start together: 20 minutes, 800 easy, mixed stroke, breathing every five on the last hundred.\n\nWhiteboard\nCall the lanes to the wall when the warm-up is done and walk the main set on the whiteboard; 5 minutes. Nobody pushes off until the board is done.\n\nKick set\n20 minutes of kick, boards for lanes 1 and 2, vertical kick for lane 3, once the whiteboard talk is over.\n\nMain set\nLane 1: 30 to 50 minutes, 40 minutes is the plan.\nLane 2: 30 to 50 minutes, 45 minutes is the plan.\nLane 3: 30 to 50 minutes, 50 minutes is the plan.\nEvery lane swims its own main set and the sprint set does not start until the last lane is in.\n\nSprint set\nOne set of blocks, one lane at a time, 10 minutes each.\nLane 1 goes first, off the blocks, dive starts, 25s flat out.\nLane 2 goes second, same thing, on the lane 1 group's last dive.\nLane 3 goes third and gets the extra rest it will need.\nTime the sprints from the deck: 30 minutes, stopwatch and the wall clock.\n\nCooldown\nAll three lanes cool down together once the last sprint is in: 10 minutes, 300 easy backstroke and breaststroke.\n\nDebrief\n10 minutes on the deck at the end: splits, what to fix, Saturday's meet.\n\nNote\nThe main set is the only place a lane can run long and the only place the plan gives them room to. Everything after it is a join: the blocks cannot be shared and the cooldown starts together or it does not start at all.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Practice Plan \u2014 Thursday AM, three lanes for one squad of twelve, three lanes, one coach",
+            "finish_at": "150 minutes of pool time",
+            "constraints": "three lanes, one set of starting blocks, one coach on deck, two and a half hours of pool time",
+            "vertical": "gym",
+            "turn": "T2",
+            "kind": "workout"
+          },
+          "T3 extraction": {
+            "goal": "Practice Plan \u2014 Thursday AM, three lanes for one squad of twelve, three lanes, one coach",
+            "finish_at": "150 minutes of pool time",
+            "constraints": "three lanes, one set of starting blocks, one coach on deck, two and a half hours of pool time",
+            "vertical": "gym",
+            "turn": "T3",
+            "kind": "workout",
+            "environment": "a gym where you have: three lanes, one set of starting blocks, one coach on deck, two and a half hours of pool time",
+            "deadline": "150 minutes of pool time",
+            "source": "Source text (read all of it):\n<<<\nPractice Plan \u2014 Thursday AM, three lanes\n\nWe have three lanes for two and a half hours and one set of starting blocks. Lane 1 is the sprint group, lane 2 the middle distance, lane 3 the distance group. Everything except the sprint set runs in all three lanes at once; the sprint set runs one lane at a time off the blocks, so lanes wait their turn.\n\nOn deck\nBrief the squad on the pool deck: what the morning is, who is in which lane, 5 minutes.\nWatch the warm-up from the deck and fix anything ugly; 15 minutes.\n\nWarm-up\nAll three lanes start together: 20 minutes, 800 easy, mixed stroke, breathing every five on the last hundred.\n\nWhiteboard\nCall the lanes to the wall when the warm-up is done and walk the main set on the whiteboard; 5 minutes. Nobody pushes off until the board is done.\n\nKick set\n20 minutes of kick, boards for lanes 1 and 2, vertical kick for lane 3, once the whiteboard talk is over.\n\nMain set\nLane 1: 30 to 50 minutes, 40 minutes is the plan.\nLane 2: 30 to 50 minutes, 45 minutes is the plan.\nLane 3: 30 to 50 minutes, 50 minutes is the plan.\nEvery lane swims its own main set and the sprint set does not start until the last lane is in.\n\nSprint set\nOne set of blocks, one lane at a time, 10 minutes each.\nLane 1 goes first, off the blocks, dive starts, 25s flat out.\nLane 2 goes second, same thing, on the lane 1 group's last dive.\nLane 3 goes third and gets the extra rest it will need.\nTime the sprints from the deck: 30 minutes, stopwatch and the wall clock.\n\nCooldown\nAll three lanes cool down together once the last sprint is in: 10 minutes, 300 easy backstroke and breaststroke.\n\nDebrief\n10 minutes on the deck at the end: splits, what to fix, Saturday's meet.\n\nNote\nThe main set is the only place a lane can run long and the only place the plan gives them room to. Everything after it is a join: the blocks cannot be shared and the cooldown starts together or it does not start at all.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Practice Plan \u2014 Thursday AM, three lanes for one squad of twelve, three lanes, one coach",
+            "finish_at": "150 minutes of pool time",
+            "constraints": "three lanes, one set of starting blocks, one coach on deck, two and a half hours of pool time",
+            "vertical": "gym",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or start_workout",
+            "finishAtArg": " with finishAt=\"150 minutes of pool time\""
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

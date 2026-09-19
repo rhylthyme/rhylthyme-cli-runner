@@ -1,0 +1,720 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "partner-upper-body-superset",
+  "name": "Partner Upper-Body Superset Session (2 lifters, ~25 min)",
+  "description": "Two lifters, one bench + barbell, one pair of dumbbells, one pull-up bar, two rowing ergs. Shared warm-up, then two supersets in which the partners occupy the two exercises simultaneously and swap on equipment release, then a shared cool-down. 40 s sets against 40 s sets; the 30 s pull-up set holds for the 45 s press.",
+  "environmentType": "gym",
+  "actors": 2,
+  "tracks": [
+    {
+      "trackId": "setup",
+      "name": "Station set-up",
+      "steps": [
+        {
+          "stepId": "setup-station",
+          "name": "Load the bar and stage the dumbbells",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 90
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": null,
+            "inferred": true
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "partner-a",
+      "name": "Partner A",
+      "steps": [
+        {
+          "stepId": "a-easy-rowing",
+          "name": "Easy rowing warm-up (5 min)",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "setup-station"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Both partners start together with 5 minutes of easy rowing on the ergs",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "a-arm-circles-pull-aparts",
+          "name": "Arm circles and band pull-aparts (3 min)",
+          "task": "mat",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "a-easy-rowing"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "followed by 3 minutes of arm circles and band pull-aparts",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "a-sa-r1-bench-press",
+          "name": "Superset A round 1: bench press, 8 reps",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "a-arm-circles-pull-aparts"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Partner A loads the bar and does a set of 8 bench presses, which takes about 40 seconds",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "a-sa-r1-dumbbell-row",
+          "name": "Superset A round 1: dumbbell row, 8 per side (after Partner B sets the dumbbells down)",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "b-sa-r1-dumbbell-row"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "A goes to the rows once B has finished with the dumbbells",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "a-sa-r1-rest",
+          "name": "Rest 90 s after Superset A round 1",
+          "task": "mat",
+          "duration": {
+            "type": "fixed",
+            "seconds": 90
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "a-sa-r1-dumbbell-row"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "After both exercises, rest 90 seconds before the next round",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "a-sa-r2-bench-press",
+          "name": "Superset A round 2: bench press, 8 reps",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "a-sa-r1-rest"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Do 2 rounds, resting after each",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "a-sa-r2-dumbbell-row",
+          "name": "Superset A round 2: dumbbell row, 8 per side (after Partner B sets the dumbbells down)",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "b-sa-r2-dumbbell-row"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "A goes to the rows once B has finished with the dumbbells",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "a-sa-r2-rest",
+          "name": "Rest 90 s after Superset A round 2",
+          "task": "mat",
+          "duration": {
+            "type": "fixed",
+            "seconds": 90
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "a-sa-r2-dumbbell-row"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Do 2 rounds, resting after each",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "a-sb-r1-overhead-press",
+          "name": "Superset B round 1: overhead press, 8 reps",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 45
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "a-sa-r2-rest"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Move straight on after the last rest. Partner A does 8 strict overhead presses with the dumbbells, about 45 seconds",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "a-sb-r1-pull-ups",
+          "name": "Superset B round 1: pull-ups, 6-10 reps (after Partner B leaves the bar)",
+          "task": "pullup-bar",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 25,
+            "maxSeconds": 45,
+            "defaultSeconds": 30
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "a-sb-r1-overhead-press"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "b-sb-r1-pull-ups"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Swap when both are done: A moves to the pull-up bar",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "a-sb-r1-rest",
+          "name": "Rest 2 min between Superset B rounds",
+          "task": "mat",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "a-sb-r1-pull-ups"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "b-sb-r1-overhead-press"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Rest 2 minutes between rounds",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "a-sb-r2-overhead-press",
+          "name": "Superset B round 2: overhead press, 8 reps",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 45
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "a-sb-r1-rest"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Partner A does 8 strict overhead presses with the dumbbells, about 45 seconds",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "a-sb-r2-pull-ups",
+          "name": "Superset B round 2: pull-ups, 6-10 reps (no rest after)",
+          "task": "pullup-bar",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 25,
+            "maxSeconds": 45,
+            "defaultSeconds": 30
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "a-sb-r2-overhead-press"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "b-sb-r2-pull-ups"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "there is no rest after the second round",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "a-cool-down-stretch",
+          "name": "Cool-down: doorway chest stretch, lat stretch on the bar, shoulder rolls (5 min)",
+          "task": "mat",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "a-sb-r2-pull-ups"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "b-sb-r2-overhead-press"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Finish together with 5 minutes of stretching: doorway chest stretch, lat stretch on the pull-up bar, and slow shoulder rolls",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "partner-b",
+      "name": "Partner B",
+      "steps": [
+        {
+          "stepId": "b-easy-rowing",
+          "name": "Easy rowing warm-up (5 min)",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "setup-station"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Both partners start together with 5 minutes of easy rowing on the ergs",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "b-arm-circles-pull-aparts",
+          "name": "Arm circles and band pull-aparts (3 min)",
+          "task": "mat",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "b-easy-rowing"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "followed by 3 minutes of arm circles and band pull-aparts",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "b-sa-r1-dumbbell-row",
+          "name": "Superset A round 1: dumbbell row, 8 per side",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "b-arm-circles-pull-aparts"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Partner B starts on the dumbbell row at the same time, 8 per side, also about 40 seconds",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "b-sa-r1-bench-press",
+          "name": "Superset A round 1: bench press, 8 reps (as soon as Partner A racks the bar)",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "a-sa-r1-bench-press"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "B takes the bench as soon as A racks the bar",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "b-sa-r1-rest",
+          "name": "Rest 90 s after Superset A round 1",
+          "task": "mat",
+          "duration": {
+            "type": "fixed",
+            "seconds": 90
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "b-sa-r1-bench-press"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "After both exercises, rest 90 seconds before the next round",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "b-sa-r2-dumbbell-row",
+          "name": "Superset A round 2: dumbbell row, 8 per side",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "b-sa-r1-rest"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Do 2 rounds, resting after each",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "b-sa-r2-bench-press",
+          "name": "Superset A round 2: bench press, 8 reps (as soon as Partner A racks the bar)",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 40
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "a-sa-r2-bench-press"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "B takes the bench as soon as A racks the bar",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "b-sa-r2-rest",
+          "name": "Rest 90 s after Superset A round 2 (the last rest)",
+          "task": "mat",
+          "duration": {
+            "type": "fixed",
+            "seconds": 90
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "b-sa-r2-bench-press"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Do 2 rounds, resting after each",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "b-sb-r1-pull-ups",
+          "name": "Superset B round 1: pull-ups, 6-10 reps",
+          "task": "pullup-bar",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 25,
+            "maxSeconds": 45,
+            "defaultSeconds": 30
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "b-sa-r2-rest"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Partner B does a set of pull-ups, 6 to 10 reps, about 30 seconds",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "b-sb-r1-overhead-press",
+          "name": "Superset B round 1: overhead press, 8 reps (once Partner A sets the dumbbells down)",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 45
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "b-sb-r1-pull-ups"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "a-sb-r1-overhead-press"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "B takes the dumbbells when A sets them down",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "b-sb-r1-rest",
+          "name": "Rest 2 min between Superset B rounds",
+          "task": "mat",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "b-sb-r1-overhead-press"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "a-sb-r1-pull-ups"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Rest 2 minutes between rounds",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "b-sb-r2-pull-ups",
+          "name": "Superset B round 2: pull-ups, 6-10 reps",
+          "task": "pullup-bar",
+          "duration": {
+            "type": "variable",
+            "minSeconds": 25,
+            "maxSeconds": 45,
+            "defaultSeconds": 30
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "b-sb-r1-rest"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Partner B does a set of pull-ups, 6 to 10 reps, about 30 seconds",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "b-sb-r2-overhead-press",
+          "name": "Superset B round 2: overhead press, 8 reps (no rest after)",
+          "task": "dumbbells",
+          "duration": {
+            "type": "fixed",
+            "seconds": 45
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "b-sb-r2-pull-ups"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "a-sb-r2-overhead-press"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "there is no rest after the second round",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "b-cool-down-stretch",
+          "name": "Cool-down: doorway chest stretch, lat stretch on the bar, shoulder rolls (5 min)",
+          "task": "mat",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "compound",
+            "logic": "all",
+            "triggers": [
+              {
+                "type": "afterStep",
+                "stepId": "b-sb-r2-overhead-press"
+              },
+              {
+                "type": "afterStep",
+                "stepId": "a-sb-r2-pull-ups"
+              }
+            ]
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Finish together with 5 minutes of stretching: doorway chest stretch, lat stretch on the pull-up bar, and slow shoulder rolls",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "erg",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "mat",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "bench",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "dumbbells",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "pullup-bar",
+      "maxConcurrent": 1
+    }
+  ],
+  "metadata": {
+    "serves": "2 lifters",
+    "targetDuration": "~25 min (traced makespan 25 min 10 s including 90 s station set-up)",
+    "sourceUrl": "",
+    "attribution": "Partner Upper-Body Superset Session"
+  }
+}

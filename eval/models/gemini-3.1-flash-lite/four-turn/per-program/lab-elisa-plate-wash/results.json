@@ -1,0 +1,331 @@
+{
+  "meta": {
+    "mode": "live",
+    "model": "gemini-3.1-flash-lite",
+    "pattern": "four-turn",
+    "from_cache": false,
+    "cache_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/four-turn/cache",
+    "limit": null,
+    "only": [
+      "lab-elisa-plate-wash"
+    ],
+    "concurrency": 1,
+    "max_fix_iterations": 2,
+    "max_tokens": 16000,
+    "threshold": 0.5,
+    "totals": {
+      "programs": 1,
+      "calls": 4,
+      "input_tokens": 28294,
+      "output_tokens": 6019,
+      "cost_usd": 0.016102,
+      "fix_iterations": 0
+    },
+    "generated_at": "2026-09-19T17:15:04+00:00",
+    "gold_dir": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-examples/gold"
+  },
+  "summary": {
+    "steps_precision": 1.0,
+    "steps_recall": 0.9090909090909091,
+    "steps_f1": 0.9523809523809523,
+    "durations_accuracy": 1.0,
+    "resources_precision": 0.5,
+    "resources_recall": 0.4,
+    "actors_accuracy": 1.0,
+    "relationships_precision": 0.85,
+    "relationships_recall": 0.68,
+    "relationships_f1": 0.7555555555555556,
+    "structure_rand_index": 1.0,
+    "end_to_end_pass": 0.0,
+    "unsupported_rate": 0.0
+  },
+  "programs": [
+    {
+      "slug": "lab-elisa-plate-wash",
+      "headline": {
+        "steps_precision": 1.0,
+        "steps_recall": 0.9090909090909091,
+        "steps_f1": 0.9523809523809523,
+        "durations_accuracy": 1.0,
+        "resources_precision": 0.5,
+        "resources_recall": 0.4,
+        "actors_accuracy": 1.0,
+        "relationships_precision": 0.85,
+        "relationships_recall": 0.68,
+        "relationships_f1": 0.7555555555555556,
+        "structure_rand_index": 1.0,
+        "end_to_end_pass": 0.0,
+        "unsupported_rate": 0.0
+      },
+      "steps": {
+        "precision": 1.0,
+        "recall": 0.9090909090909091,
+        "f1": 0.9523809523809523,
+        "tp": 20,
+        "n_gold": 22,
+        "n_pred": 20
+      },
+      "durations": {
+        "accuracy": 1.0,
+        "correct": 20,
+        "total": 20
+      },
+      "resources": {
+        "precision": 0.5,
+        "recall": 0.4,
+        "f1": 0.4444444444444445,
+        "tp": 2,
+        "n_gold": 5,
+        "n_pred": 4
+      },
+      "actors": {
+        "accuracy": 1.0,
+        "correct": 1,
+        "total": 1
+      },
+      "relationships": {
+        "precision": 0.85,
+        "recall": 0.68,
+        "f1": 0.7555555555555556,
+        "tp": 17,
+        "n_gold": 25,
+        "n_pred": 20
+      },
+      "structure": {
+        "rand_index": 1.0,
+        "agreements": 190,
+        "pairs": 190,
+        "n_steps": 20
+      },
+      "end_to_end": {
+        "python_valid": true,
+        "python_errors": [],
+        "js_status": "ran",
+        "js_valid": true,
+        "js_errors": [],
+        "gold_makespan": 76200.0,
+        "pred_makespan": 22200.0,
+        "makespan_ok": false,
+        "gold_critical_path": [
+          "coat-plate-2",
+          "wash-2-coat",
+          "block-2",
+          "wash-2-block",
+          "samples-2",
+          "wash-2-samples",
+          "detection-2",
+          "wash-2-detection",
+          "develop-2",
+          "read-2"
+        ],
+        "pred_critical_path": [
+          "wash-p2-1",
+          "block-p2",
+          "wash-p2-2",
+          "incubate-p2-samples",
+          "wash-p2-3",
+          "incubate-p2-detection",
+          "wash-p2-4",
+          "develop-p2",
+          "read-p2"
+        ],
+        "js_critical_path": [
+          "wash-p2-1",
+          "block-p2",
+          "wash-p2-2",
+          "incubate-p2-samples",
+          "wash-p2-3",
+          "incubate-p2-detection",
+          "wash-p2-4",
+          "develop-p2",
+          "read-p2"
+        ],
+        "js_makespan": 22200,
+        "critical_overlap": 0.9,
+        "critical_ok": true,
+        "passed": false
+      },
+      "unsupported_rate": 0.0,
+      "unsupported_steps": [],
+      "matching": [
+        {
+          "gold": "make-standards",
+          "predicted": "make-standard-curve",
+          "by": "span"
+        },
+        {
+          "gold": "dilute-samples",
+          "predicted": "dilute-samples",
+          "by": "span"
+        },
+        {
+          "gold": "wash-1-coat",
+          "predicted": "wash-p1-1",
+          "by": "span"
+        },
+        {
+          "gold": "block-1",
+          "predicted": "block-p1",
+          "by": "span"
+        },
+        {
+          "gold": "wash-1-block",
+          "predicted": "wash-p1-2",
+          "by": "span"
+        },
+        {
+          "gold": "samples-1",
+          "predicted": "incubate-p1-samples",
+          "by": "span"
+        },
+        {
+          "gold": "wash-1-samples",
+          "predicted": "wash-p1-3",
+          "by": "span"
+        },
+        {
+          "gold": "detection-1",
+          "predicted": "incubate-p1-detection",
+          "by": "span"
+        },
+        {
+          "gold": "wash-1-detection",
+          "predicted": "wash-p1-4",
+          "by": "span"
+        },
+        {
+          "gold": "develop-1",
+          "predicted": "develop-p1",
+          "by": "span"
+        },
+        {
+          "gold": "read-1",
+          "predicted": "read-p1",
+          "by": "span"
+        },
+        {
+          "gold": "wash-2-coat",
+          "predicted": "wash-p2-1",
+          "by": "span"
+        },
+        {
+          "gold": "block-2",
+          "predicted": "block-p2",
+          "by": "span"
+        },
+        {
+          "gold": "wash-2-block",
+          "predicted": "wash-p2-2",
+          "by": "span"
+        },
+        {
+          "gold": "samples-2",
+          "predicted": "incubate-p2-samples",
+          "by": "span"
+        },
+        {
+          "gold": "wash-2-samples",
+          "predicted": "wash-p2-3",
+          "by": "span"
+        },
+        {
+          "gold": "detection-2",
+          "predicted": "incubate-p2-detection",
+          "by": "span"
+        },
+        {
+          "gold": "wash-2-detection",
+          "predicted": "wash-p2-4",
+          "by": "span"
+        },
+        {
+          "gold": "develop-2",
+          "predicted": "develop-p2",
+          "by": "span"
+        },
+        {
+          "gold": "read-2",
+          "predicted": "read-p2",
+          "by": "span"
+        },
+        {
+          "gold": "coat-plate-1",
+          "predicted": null,
+          "by": null
+        },
+        {
+          "gold": "coat-plate-2",
+          "predicted": null,
+          "by": null
+        }
+      ],
+      "extras": {
+        "model": "gemini-3.1-flash-lite",
+        "pattern": "four-turn",
+        "calls": 4,
+        "input_tokens": 28294,
+        "output_tokens": 6019,
+        "cost_usd": 0.016102,
+        "cache_keys": [
+          "eb2dee2f74d5df344cd273bbddf115e486cbeb7a0053a81a9859c20202ffc35d",
+          "647f935783c7176d13cd468cbfffd9d8b2d7e887f9d407df515685cf72d538a6",
+          "fdd98f45d1549b66f1fb26b957944ec5cbf6271fcfc42cbe25ff24904fb63a43",
+          "ba87d55b68c78ae3a28b21fe34de700a0d357eb1940f4ae65e4521554a691b94"
+        ],
+        "fix_iterations": 0,
+        "validation_errors": [],
+        "response_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/four-turn/per-program/lab-elisa-plate-wash/responses/lab-elisa-plate-wash.json",
+        "predicted_path": "/Volumes/My12tb/dev/rhylthyme-split/rhylthyme-cli-runner/eval/models/gemini-3.1-flash-lite/four-turn/per-program/lab-elisa-plate-wash/predicted/lab-elisa-plate-wash.json",
+        "retries": 0,
+        "t1_score": 2,
+        "t2_score": 2,
+        "t3_step_count": 22,
+        "unsupported_step_ids": [],
+        "turns": 4,
+        "turn_slots": {
+          "T1 read-back": {
+            "goal": "Sandwich ELISA on Two Plates, One Washer for two 96-well plates, staggered 30 minutes",
+            "finish_at": null,
+            "constraints": "one plate washer, one 37 \u00b0C incubator holding two plates, one plate reader, one operator",
+            "vertical": "lab",
+            "turn": "T1",
+            "kind": "protocol",
+            "constraintsLine": "Resource limits: one plate washer, one 37 \u00b0C incubator holding two plates, one plate reader, one operator.",
+            "deadlineLine": "No finishing time was given; finish as early as the work allows.",
+            "source": "Source text (read all of it):\n<<<\nSandwich ELISA on Two Plates, One Washer\n\nTwo 96-well plates are run half an hour apart through a sandwich ELISA for a secreted cytokine. There is one automated plate washer, one 37 \u00b0C plate incubator that holds two plates, one plate reader and one operator. The washer is the bottleneck: no two plates can be in it at once, and every incubation is bracketed by a wash.\n\nDay 1\n1. Coat plate 1 with 100 \u00b5L per well of capture antibody in carbonate buffer, seal it and leave it in the cold room at 4 \u00b0C overnight. Take it out when you are ready to start, not before.\n2. Coat plate 2 the same way half an hour later, so the two plates stay half an hour apart all day.\n\nDay 2, reagents\n3. Fifteen hours into the coat, make up the seven-point standard curve in assay diluent; 30 minutes.\n4. Dilute the samples 1:4 into assay diluent and lay out the plate map; 30 minutes.\n\nDay 2, plate 1\n5. Wash the plate four times with 300 \u00b5L of wash buffer; 5 minutes on the washer.\n6. Block with 200 \u00b5L per well of assay diluent for 1 hour at 37 \u00b0C.\n7. Wash four times; 5 minutes on the washer.\n8. Add 100 \u00b5L of standards and samples and incubate for 2 hours at 37 \u00b0C. Nothing goes on the plate until the dilutions are laid out.\n9. Wash four times; 5 minutes on the washer.\n10. Add 100 \u00b5L of biotinylated detection antibody and incubate for 1 hour at 37 \u00b0C.\n11. Wash four times; 5 minutes on the washer.\n12. Add 100 \u00b5L of TMB substrate, develop in the dark for exactly 15 minutes and stop with 50 \u00b5L of 2 N sulfuric acid.\n13. Read the absorbance at 450 nm with a 570 nm reference; 5 minutes on the reader.\n\nDay 2, plate 2\n14. Wash plate 2 four times as soon as the washer is free; 5 minutes.\n15. Block plate 2 with 200 \u00b5L of assay diluent for 1 hour at 37 \u00b0C.\n16. Wash plate 2 again once plate 1 is off the washer; 5 minutes.\n17. Add the standards and samples to plate 2 and incubate for 2 hours at 37 \u00b0C.\n18. Wash plate 2; 5 minutes.\n19. Add the detection antibody to plate 2 and incubate for 1 hour at 37 \u00b0C.\n20. Wash plate 2 a final time; 5 minutes.\n21. Develop plate 2 with TMB for exactly 15 minutes and stop it.\n22. Read plate 2 at 450 nm; 5 minutes.\n>>>"
+          },
+          "T2 model check": {
+            "goal": "Sandwich ELISA on Two Plates, One Washer for two 96-well plates, staggered 30 minutes",
+            "finish_at": null,
+            "constraints": "one plate washer, one 37 \u00b0C incubator holding two plates, one plate reader, one operator",
+            "vertical": "lab",
+            "turn": "T2",
+            "kind": "protocol"
+          },
+          "T3 extraction": {
+            "goal": "Sandwich ELISA on Two Plates, One Washer for two 96-well plates, staggered 30 minutes",
+            "finish_at": null,
+            "constraints": "one plate washer, one 37 \u00b0C incubator holding two plates, one plate reader, one operator",
+            "vertical": "lab",
+            "turn": "T3",
+            "kind": "protocol",
+            "environment": "a lab where you have: one plate washer, one 37 \u00b0C incubator holding two plates, one plate reader, one operator",
+            "deadline": "the earliest time the work allows",
+            "source": "Source text (read all of it):\n<<<\nSandwich ELISA on Two Plates, One Washer\n\nTwo 96-well plates are run half an hour apart through a sandwich ELISA for a secreted cytokine. There is one automated plate washer, one 37 \u00b0C plate incubator that holds two plates, one plate reader and one operator. The washer is the bottleneck: no two plates can be in it at once, and every incubation is bracketed by a wash.\n\nDay 1\n1. Coat plate 1 with 100 \u00b5L per well of capture antibody in carbonate buffer, seal it and leave it in the cold room at 4 \u00b0C overnight. Take it out when you are ready to start, not before.\n2. Coat plate 2 the same way half an hour later, so the two plates stay half an hour apart all day.\n\nDay 2, reagents\n3. Fifteen hours into the coat, make up the seven-point standard curve in assay diluent; 30 minutes.\n4. Dilute the samples 1:4 into assay diluent and lay out the plate map; 30 minutes.\n\nDay 2, plate 1\n5. Wash the plate four times with 300 \u00b5L of wash buffer; 5 minutes on the washer.\n6. Block with 200 \u00b5L per well of assay diluent for 1 hour at 37 \u00b0C.\n7. Wash four times; 5 minutes on the washer.\n8. Add 100 \u00b5L of standards and samples and incubate for 2 hours at 37 \u00b0C. Nothing goes on the plate until the dilutions are laid out.\n9. Wash four times; 5 minutes on the washer.\n10. Add 100 \u00b5L of biotinylated detection antibody and incubate for 1 hour at 37 \u00b0C.\n11. Wash four times; 5 minutes on the washer.\n12. Add 100 \u00b5L of TMB substrate, develop in the dark for exactly 15 minutes and stop with 50 \u00b5L of 2 N sulfuric acid.\n13. Read the absorbance at 450 nm with a 570 nm reference; 5 minutes on the reader.\n\nDay 2, plate 2\n14. Wash plate 2 four times as soon as the washer is free; 5 minutes.\n15. Block plate 2 with 200 \u00b5L of assay diluent for 1 hour at 37 \u00b0C.\n16. Wash plate 2 again once plate 1 is off the washer; 5 minutes.\n17. Add the standards and samples to plate 2 and incubate for 2 hours at 37 \u00b0C.\n18. Wash plate 2; 5 minutes.\n19. Add the detection antibody to plate 2 and incubate for 1 hour at 37 \u00b0C.\n20. Wash plate 2 a final time; 5 minutes.\n21. Develop plate 2 with TMB for exactly 15 minutes and stop it.\n22. Read plate 2 at 450 nm; 5 minutes.\n>>>"
+          },
+          "T4 relationships": {
+            "goal": "Sandwich ELISA on Two Plates, One Washer for two 96-well plates, staggered 30 minutes",
+            "finish_at": null,
+            "constraints": "one plate washer, one 37 \u00b0C incubator holding two plates, one plate reader, one operator",
+            "vertical": "lab",
+            "turn": "T4",
+            "catalogTools": "search_public_recipes or run_protocol",
+            "finishAtArg": ""
+          }
+        }
+      },
+      "error": null
+    }
+  ],
+  "missing": []
+}

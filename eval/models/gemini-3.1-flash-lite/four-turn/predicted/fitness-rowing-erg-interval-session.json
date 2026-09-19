@@ -1,0 +1,291 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "erg-session-four-rowers",
+  "name": "Four Rower Erg Session",
+  "environmentType": "gym",
+  "actors": 5,
+  "tracks": [
+    {
+      "trackId": "coach-track",
+      "name": "Coach",
+      "steps": [
+        {
+          "stepId": "briefing",
+          "name": "Brief the crew",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "programStart"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Brief the crew on the boards before anyone gets on: 5 minutes.",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "drills",
+          "name": "Technique drills",
+          "task": "drill_station",
+          "duration": {
+            "type": "fixed",
+            "seconds": 720
+          },
+          "replicates": {
+            "count": 4,
+            "mode": "serial"
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "piece-3-cd"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Run the drills: 12 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "cooldown",
+          "name": "Group cooldown",
+          "task": "floor",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "drills",
+            "instances": "all"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Ten minutes on the floor together",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "debrief",
+          "name": "Debrief",
+          "task": "coach",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cooldown"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Debrief after the cooldown: 10 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "pair-ab",
+      "name": "Pair AB",
+      "steps": [
+        {
+          "stepId": "warmup-ab",
+          "name": "Warm-up A and B",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "briefing"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "A and B warm up first: 10 minutes",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "piece-1-ab",
+          "name": "Piece 1 AB",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "warmup-cd"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Three pieces, four minutes each",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "piece-2-ab",
+          "name": "Piece 2 AB",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStepWithBuffer",
+            "stepId": "piece-1-ab",
+            "bufferSeconds": 240
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Three pieces, four minutes each",
+              "occurrence": 3
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "piece-3-ab",
+          "name": "Piece 3 AB",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStepWithBuffer",
+            "stepId": "piece-2-ab",
+            "bufferSeconds": 240
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Three pieces, four minutes each",
+              "occurrence": 5
+            },
+            "inferred": false
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "pair-cd",
+      "name": "Pair CD",
+      "steps": [
+        {
+          "stepId": "warmup-cd",
+          "name": "Warm-up CD",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "programStartOffset",
+            "offsetSeconds": 900
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "C and D come in ten minutes later",
+              "occurrence": 1
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "piece-1-cd",
+          "name": "Piece 1 CD",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "piece-1-ab"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Three pieces, four minutes each",
+              "occurrence": 2
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "piece-2-cd",
+          "name": "Piece 2 CD",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "piece-2-ab"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Three pieces, four minutes each",
+              "occurrence": 4
+            },
+            "inferred": false
+          }
+        },
+        {
+          "stepId": "piece-3-cd",
+          "name": "Piece 3 CD",
+          "task": "erg",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "piece-3-ab"
+          },
+          "metadata": {
+            "sourceSpan": {
+              "quote": "Three pieces, four minutes each",
+              "occurrence": 6
+            },
+            "inferred": false
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "coach",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "erg",
+      "maxConcurrent": 2
+    },
+    {
+      "task": "drill_station",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "floor",
+      "maxConcurrent": 1
+    }
+  ]
+}

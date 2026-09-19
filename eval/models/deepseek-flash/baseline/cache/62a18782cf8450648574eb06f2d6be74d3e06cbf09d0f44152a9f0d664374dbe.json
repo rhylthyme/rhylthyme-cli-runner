@@ -1,0 +1,29 @@
+{
+ "key": "62a18782cf8450648574eb06f2d6be74d3e06cbf09d0f44152a9f0d664374dbe",
+ "model": "deepseek-flash",
+ "pattern": "baseline",
+ "slug": "event-conference-session-av-checks",
+ "recorded_at": "2026-09-19T16:48:03+00:00",
+ "system_sha256": "409c29d0de8c38f044425aecd4fbd7a47972a7e7079f2b859d11a00e51506bdf",
+ "messages": [
+  {
+   "role": "user",
+   "content": "Plan this as a Rhylthyme run-of-show and deliver a live timeline: Session Chair's Sheet — Room 2B for one room, three speakers, following the source text below\nResource limits: one projector, one lapel microphone pack, one AV desk, one lectern, one foyer for catering.\nEverything must be finished by coffee break at 10:30.\nSteps:\n1. Check the public catalog first (search_public_recipes or plan_event). If a good match exists, use it and stop — its result already has the live URL.\n2. Otherwise read rhylthyme://guide/authoring and build a program: one track per parallel line of work, sequential steps chained with afterStep, realistic durations, and a resourceConstraint for every task.\n3. Express the limits as constraints, not as copied JSON. A machine that runs one job at a time is `resourceConstraints[].maxConcurrent`. Work repeated n times (n trays, n samples, n aircraft) is `replicates: {count: n, mode: \"serial\" | \"parallel\" | \"stagger\"}` on ONE step — never n hand-copied steps or tracks. Chain what follows each repetition with `{\"type\":\"afterStep\",\"stepId\":\"<step>\",\"instances\":\"each\"}`, and give the step that waits for all of them `\"instances\":\"all\"`. When a holding area between them only fits k at a time (a rack that holds two trays, a rotor that holds six tubes, a taxiway that holds two aircraft), set `replicates.maxInFlight: k` so the upstream step is held back instead of stranding the downstream one.\n4. Run validate_program and fix every error it reports.\n5. Run analyze_schedule with finishAt=\"coffee break at 10:30\" to check the makespan, critical path and resource conflicts; adjust offsets so tracks finish together. Its `bindingConstraints` say which limit is actually gating the makespan.\n6. Call visualize_schedule and give the user the live URL plus the Gantt/itinerary from the result. Do not describe the schedule in prose.\n\nSource text to schedule (read all of it):\n<<<\nSession Chair's Sheet — Room 2B, Thursday morning\n\nOne room, one projector, one lapel pack, one AV desk, one chair. Three talks, thirty minutes each, with questions after every one. The chair calls each speaker to the lectern; nothing starts until they do.\n\nBefore the room opens\nLine check at the AV desk: laptop, HDMI, house sound, record feed. 30 minutes.\nTest the projector once the desk is up: resolution, keystone, the cue slide. 15 minutes.\nCheck the lapel pack after the projector: battery, gain, a walk to the back row. 10 minutes.\n\nSlides\nLoad the first deck once the lapel pack is checked; 10 minutes, and leave it on the cue slide.\nLoad the second deck as soon as the first talk's questions are over; 5 minutes.\nLoad the third deck while the coffee is going out; 5 minutes.\n\nThe session\nChair opens the room, housekeeping and fire exits; 5 minutes.\nFirst talk when the chair calls the first speaker: 30 minutes.\nQuestions after the first talk: five to ten minutes, seven is the plan.\nChangeover to the second speaker: unclip the pack, clip it on, 5 minutes.\nSecond talk when the chair calls the second speaker: 30 minutes.\nQuestions after the second talk: five to ten minutes, seven is the plan.\nChangeover to the third speaker once the coffee is cleared from the foyer; 5 minutes.\nThird talk when the chair calls the third speaker: 30 minutes.\nQuestions after the third talk: five to fifteen minutes, ten is the plan.\nChair closes the session; 5 minutes.\n\nCatering\nSet the coffee station in the service corridor from ninety minutes in; 30 minutes.\nCoffee goes out to the foyer when the second talk's questions end; 20 minutes.\nClear the foyer; 10 minutes.\n\nStrike\nStrike the AV desk when the chair closes; 20 minutes, cables coiled, record feed off.\n\nNotes\nThe projector is the contended thing, not the room: a deck cannot be loaded while a talk is on it, so every load sits in a gap. The lapel pack is the other one, and it is the reason changeovers are real steps rather than slack. Question time is the only elastic in the morning; if the first two run long the chair trims the third.\n>>>"
+  },
+  {
+   "role": "assistant",
+   "content": ""
+  },
+  {
+   "role": "user",
+   "content": "validate_program reported 1 error(s):\n- no JSON object with a `tracks` array was found in the reply\n\nFix every error and reply with the complete corrected program JSON in a single ```json fenced block."
+  }
+ ],
+ "completion": {
+  "text": "",
+  "input_tokens": 4550,
+  "output_tokens": 16000,
+  "model": "deepseek-flash",
+  "stop_reason": "max_tokens"
+ }
+}

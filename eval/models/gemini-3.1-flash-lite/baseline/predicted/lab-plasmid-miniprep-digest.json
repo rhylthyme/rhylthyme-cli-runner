@@ -1,0 +1,292 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "plasmid-miniprep-digest-gel",
+  "name": "Plasmid Miniprep, Restriction Digest and Gel Check",
+  "description": "Full workflow from 5mL culture to agarose gel imaging.",
+  "environmentType": "laboratory",
+  "actors": 1,
+  "tracks": [
+    {
+      "trackId": "miniprep",
+      "name": "Miniprep / Digest",
+      "steps": [
+        {
+          "stepId": "pellet",
+          "name": "Pellet culture",
+          "task": "centrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "resuspend",
+          "name": "Resuspend",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "pellet"
+          }
+        },
+        {
+          "stepId": "lysis",
+          "name": "Lysis",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "resuspend"
+          }
+        },
+        {
+          "stepId": "clear",
+          "name": "Neutralize and clear",
+          "task": "microcentrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "lysis"
+          }
+        },
+        {
+          "stepId": "bind",
+          "name": "Bind column",
+          "task": "microcentrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "clear"
+          }
+        },
+        {
+          "stepId": "wash",
+          "name": "Wash and dry",
+          "task": "microcentrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 240
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "bind"
+          }
+        },
+        {
+          "stepId": "elute",
+          "name": "Elute",
+          "task": "microcentrifuge",
+          "duration": {
+            "type": "fixed",
+            "seconds": 60
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "wash"
+          }
+        },
+        {
+          "stepId": "quantify",
+          "name": "Quantify",
+          "task": "spectrophotometer",
+          "duration": {
+            "type": "fixed",
+            "seconds": 180
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "elute"
+          }
+        },
+        {
+          "stepId": "setup-digest",
+          "name": "Set up digest",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "quantify"
+          }
+        },
+        {
+          "stepId": "digest",
+          "name": "Digest incubation",
+          "task": "heat-block-37",
+          "duration": {
+            "type": "fixed",
+            "seconds": 3600
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "setup-digest"
+          }
+        },
+        {
+          "stepId": "inactivate",
+          "name": "Heat-inactivate",
+          "task": "heat-block-65",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1200
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "digest"
+          }
+        },
+        {
+          "stepId": "prep-ladder",
+          "name": "Prep ladder/dye",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "inactivate"
+          }
+        },
+        {
+          "stepId": "load-gel",
+          "name": "Load gel",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "prep-ladder"
+          }
+        },
+        {
+          "stepId": "run-gel",
+          "name": "Run gel",
+          "task": "gel-rig",
+          "duration": {
+            "type": "fixed",
+            "seconds": 2700
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "load-gel"
+          }
+        },
+        {
+          "stepId": "image-gel",
+          "name": "Image gel",
+          "task": "transilluminator",
+          "duration": {
+            "type": "fixed",
+            "seconds": 300
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "run-gel"
+          }
+        }
+      ]
+    },
+    {
+      "trackId": "gel-prep",
+      "name": "Gel Preparation",
+      "steps": [
+        {
+          "stepId": "melt",
+          "name": "Microwave agarose",
+          "task": "microwave",
+          "duration": {
+            "type": "fixed",
+            "seconds": 120
+          },
+          "startTrigger": {
+            "type": "programStart"
+          }
+        },
+        {
+          "stepId": "cool",
+          "name": "Cool and pour",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 720
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "melt"
+          }
+        },
+        {
+          "stepId": "set",
+          "name": "Set gel",
+          "task": "bench",
+          "duration": {
+            "type": "fixed",
+            "seconds": 1920
+          },
+          "startTrigger": {
+            "type": "afterStep",
+            "stepId": "cool"
+          }
+        }
+      ]
+    }
+  ],
+  "resourceConstraints": [
+    {
+      "task": "centrifuge",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "microcentrifuge",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "heat-block-37",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "heat-block-65",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "gel-rig",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "microwave",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "spectrophotometer",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "transilluminator",
+      "maxConcurrent": 1
+    },
+    {
+      "task": "bench",
+      "maxConcurrent": 1
+    }
+  ]
+}
