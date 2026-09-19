@@ -272,3 +272,21 @@ def test_driver_flattens_vendor_prefixed_model_ids(clean_env, tmp_path, monkeypa
     )
     assert proc.returncode == 0, proc.stderr
     assert proc.stdout.count("would run") == 4
+
+
+def test_timeout_is_configurable_and_retry_on_timeout_is_opt_in(clean_env, monkeypatch):
+    import socket
+
+    monkeypatch.setenv("RHYLTHYME_EVAL_TIMEOUT", "0.3")
+    # A socket that accepts and never answers: every request times out.
+    srv = socket.socket()
+    srv.bind(("127.0.0.1", 0))
+    srv.listen(8)
+    url = f"http://127.0.0.1:{srv.getsockname()[1]}/v1"
+    try:
+        client = llm.OpenAICompatClient(url, "k", retries=2)
+        assert client.timeout == 0.3
+        with pytest.raises(RuntimeError, match="did not answer"):
+            client.complete([{"role": "user", "content": "x"}], model="m", max_tokens=5)
+    finally:
+        srv.close()

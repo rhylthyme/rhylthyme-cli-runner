@@ -262,7 +262,8 @@ class OpenAICompatClient:
     ):
         self.base_url = base_url.rstrip("/")
         self.api_key = api_key
-        self.timeout = timeout
+        # RHYLTHYME_EVAL_TIMEOUT (seconds) overrides the per-call timeout.
+        self.timeout = float(os.environ.get("RHYLTHYME_EVAL_TIMEOUT") or timeout)
         self.retries = retries
 
     def complete(
@@ -311,6 +312,17 @@ class OpenAICompatClient:
                     continue
                 raise RuntimeError(
                     f"{self.base_url} returned HTTP {exc.code}: {detail}"
+                ) from exc
+            except (TimeoutError, urllib.error.URLError) as exc:
+                # A stalled provider. Retrying can double-bill a request that
+                # did complete remotely, so it is opt-in (cheap models only).
+                if (
+                    os.environ.get("RHYLTHYME_EVAL_RETRY_TIMEOUTS")
+                    and attempt < self.retries
+                ):
+                    continue
+                raise RuntimeError(
+                    f"{self.base_url} did not answer within {self.timeout:.0f}s: {exc}"
                 ) from exc
         choice = (data.get("choices") or [{}])[0]
         usage = data.get("usage") or {}

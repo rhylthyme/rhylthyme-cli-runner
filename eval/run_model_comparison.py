@@ -116,6 +116,12 @@ def main() -> None:
         "models count their reasoning against it: DeepSeek and Sonnet lost programs at 16000.",
     )
     ap.add_argument(
+        "--jobs",
+        type=int,
+        default=1,
+        help="Programs to run at the same time (each runs all its prompts).",
+    )
+    ap.add_argument(
         "--first-guess",
         type=float,
         default=None,
@@ -198,38 +204,14 @@ def main() -> None:
         )
 
     # Slug outer, pattern inner: every program gets all its prompts or none,
-    # so a run the cap cuts short is still a paired comparison.
-    for slug in slugs:
-        todo = [p for p in patterns if (args.model, p, slug) not in done]
-        if not todo:
-            continue
-        need = sum(reserve_for(p) for p in todo)
-        if spent(ledger) + need > args.cap:
-            print(
-                f"STOP before {slug}: ${spent(ledger):.2f} spent + ${need:.2f} reserve > ${args.cap:.2f} cap"
-            )
-            break
-        if start_balance is not None and not args.dry_run:
-            now = deepseek_balance()
-            if now is None:
-                print(f"STOP before {slug}: could not read the DeepSeek balance")
-                break
-            real = start_balance - now
-            if real + args.real_reserve > args.real_budget:
-                print(
-                    f"STOP before {slug}: ${real:.2f} really charged + ${args.real_reserve:.2f} reserve"
-                    f" > ${args.real_budget:.2f} real budget"
-                )
-                break
-            print(
-                f"  balance ${now:.2f} (really charged so far ${real:.2f})", flush=True
-            )
-        if args.dry_run:
-            for pattern in todo:
-                print(f"would run {pattern}/{slug}")
-            continue
-        # A program's prompts run side by side (they share nothing), which
-        # halves the wall time; the budget checks above cover the pair.
+    # so a run the cap cuts short is still a paired comparison. --jobs runs
+    # several programs at once; the budget check then reserves for the batch.
+    import threading
+    from concurrent.futures import ThreadPoolExecutor
+
+    lock = threading.Lock()
+
+    def run_slug(slug: str, todo: list) -> bool:
         started = time.time()
         procs = {}
         for pattern in todo:
@@ -258,15 +240,15 @@ def main() -> None:
             procs[pattern] = subprocess.Popen(
                 cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
             )
-        failed = False
+        ok = True
         for pattern, proc in procs.items():
             _out, err = proc.communicate()
             results_file = (
                 args.out / model_dir / pattern / "per-program" / slug / "results.json"
             )
             if not results_file.exists():
-                print(f"FAILED {pattern}/{slug}: {err.strip()[-400:]}")
-                failed = True
+                print(f"FAILED {pattern}/{slug}: {err.strip()[-400:]}", flush=True)
+                ok = False
                 continue
             totals = json.loads(results_file.read_text())["meta"]["totals"]
             cost = float(totals.get("cost_usd") or 0.0)
@@ -280,13 +262,54 @@ def main() -> None:
                 "calls": totals.get("calls"),
                 "seconds": round(time.time() - started, 1),
             }
-            ledger["entries"].append(entry)
-            args.ledger.write_text(json.dumps(ledger, indent=1) + "\n")
+            with lock:
+                ledger["entries"].append(entry)
+                args.ledger.write_text(json.dumps(ledger, indent=1) + "\n")
+                print(
+                    f"{pattern:10} {slug:45} ${cost:.3f}  total ${spent(ledger):.2f}  ({entry['seconds']:.0f}s)",
+                    flush=True,
+                )
+        return ok
+
+    pending = [
+        (s, [p for p in patterns if (args.model, p, s) not in done]) for s in slugs
+    ]
+    pending = [(s, todo) for s, todo in pending if todo]
+    jobs = max(1, args.jobs)
+    while pending:
+        batch = []
+        need = 0.0
+        for slug, todo in pending[:jobs]:
+            cost_next = sum(reserve_for(p) for p in todo)
+            if spent(ledger) + need + cost_next > args.cap:
+                break
+            batch.append((slug, todo))
+            need += cost_next
+        if not batch:
             print(
-                f"{pattern:10} {slug:45} ${cost:.3f}  total ${spent(ledger):.2f}  ({entry['seconds']:.0f}s)",
-                flush=True,
+                f"STOP before {pending[0][0]}: ${spent(ledger):.2f} spent + reserve > ${args.cap:.2f} cap"
             )
-        if failed:
+            break
+        if start_balance is not None and not args.dry_run:
+            now = deepseek_balance()
+            real = None if now is None else start_balance - now
+            if real is None or real + args.real_reserve * len(batch) > args.real_budget:
+                print(
+                    f"STOP before {batch[0][0]}: real-budget guard (charged so far: {real})"
+                )
+                break
+            print(
+                f"  balance ${now:.2f} (really charged so far ${real:.2f})", flush=True
+            )
+        pending = pending[len(batch) :]
+        if args.dry_run:
+            for slug, todo in batch:
+                for pattern in todo:
+                    print(f"would run {pattern}/{slug}")
+            continue
+        with ThreadPoolExecutor(max_workers=len(batch)) as pool:
+            results = list(pool.map(lambda st: run_slug(*st), batch))
+        if not all(results):
             sys.exit(2)  # never loop on an error that might be costing money
 
     if args.dry_run:
