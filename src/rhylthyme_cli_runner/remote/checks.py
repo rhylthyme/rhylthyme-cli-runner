@@ -252,6 +252,9 @@ def check_initialize(client, endpoint, opts, state) -> str:
     return f"{info['name']} {info.get('version', '?')}, protocol {result['protocolVersion']}"
 
 
+TOOL_DEFINITION_BUDGET_CHARS = 16000
+
+
 def check_tools(client, endpoint, opts, state) -> str:
     tools = client.request("tools/list").get("tools") or []
     names = {t.get("name") for t in tools}
@@ -270,7 +273,26 @@ def check_tools(client, endpoint, opts, state) -> str:
             schema.get("type") == "object",
             f"tool {t.get('name')} inputSchema is not an object",
         )
-    return f"{len(tools)} tools"
+    # What a host pastes into the model's context on every turn. A server
+    # that costs too much to keep connected does not get used.
+    seen = sum(
+        len(
+            json.dumps(
+                {
+                    "name": t.get("name"),
+                    "description": t.get("description"),
+                    "inputSchema": t.get("inputSchema"),
+                }
+            )
+        )
+        for t in tools
+    )
+    detail = f"{len(tools)} tools, about {round(seen / 4 / 100) * 100:,} tokens of definitions"
+    if seen > TOOL_DEFINITION_BUDGET_CHARS:
+        raise CheckWarning(
+            f"{detail}; budget is about {TOOL_DEFINITION_BUDGET_CHARS // 4:,}"
+        )
+    return detail
 
 
 def check_validate_good(client, endpoint, opts, state) -> str:

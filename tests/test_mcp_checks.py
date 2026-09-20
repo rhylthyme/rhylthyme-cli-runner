@@ -152,7 +152,8 @@ class FakeServer:
                 "tools": [
                     {
                         "name": n,
-                        "description": f"{n} tool",
+                        "description": f"{n} tool"
+                        + (" " + "x" * 2000 if "fat-tools" in self.broken else ""),
                         "inputSchema": {"type": "object"},
                     }
                     for n in sorted(names)
@@ -349,6 +350,14 @@ def test_each_check_catches_its_regression(server, broken, check, needle):
 def test_empty_vertical_catalog_is_a_warning_not_a_failure(server):
     report = run(server(["empty-catalog"]))
     assert statuses(report, "catalog") == {"generic": "pass", "lab": "warn"}
+    assert report.ok
+
+
+def test_oversized_tool_definitions_are_a_warning(server):
+    report = run(server(["fat-tools"]), endpoints=("generic",))
+    assert statuses(report, "tools") == {"generic": "warn"}
+    detail = next(r.detail for r in report.results if r.name == "tools")
+    assert "tokens of definitions" in detail and "budget" in detail
     assert report.ok
 
 
