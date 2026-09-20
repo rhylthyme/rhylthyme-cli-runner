@@ -107,6 +107,7 @@ class McpClient:
     user_agent: str = f"rhylthyme-cli/{_pkg_version}"
     _ids: Any = field(default_factory=lambda: itertools.count(1), repr=False)
     _initialized: bool = field(default=False, repr=False)
+    last_headers: Dict[str, str] = field(default_factory=dict, repr=False)
 
     def send_raw(
         self,
@@ -135,12 +136,14 @@ class McpClient:
         )
         try:
             with urllib.request.urlopen(req, timeout=timeout or self.timeout) as resp:
+                self.last_headers = {k.lower(): v for k, v in resp.headers.items()}
                 return (
                     resp.status,
                     resp.headers.get("Content-Type", ""),
                     resp.read().decode("utf-8"),
                 )
         except urllib.error.HTTPError as e:
+            self.last_headers = {k.lower(): v for k, v in e.headers.items()}
             return (
                 e.code,
                 e.headers.get("Content-Type", ""),

@@ -10,6 +10,7 @@ import threading
 import time
 import urllib.parse
 import urllib.request
+from datetime import datetime
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 import pytest
@@ -133,6 +134,35 @@ class FakeMcp:
                             + "\n```"
                         )
                         result = {"content": [{"type": "text", "text": text}]}
+                elif body["params"]["name"] == "analyze_schedule":
+                    clock = body["params"]["arguments"].get("finishAt")
+                    result = {
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": "**Makespan:** 1h\n**Wall clock:** utc\n"
+                                "**Resource conflicts (1):**\n- oven\n\n"
+                                "**Wall-clock itinerary:**\n```\nutc rows\n```",
+                            }
+                        ],
+                        "structuredContent": {
+                            "makespanSeconds": 3600,
+                            "resourceConflicts": [{"task": "oven"}],
+                            "wallClock": clock
+                            and {
+                                "startAt": "2026-11-26T22:00:00.000Z",
+                                "finishAt": "2026-11-26T23:00:00.000Z",
+                            },
+                            "steps": [
+                                {
+                                    "stepId": "roast",
+                                    "name": "Roast",
+                                    "startSeconds": 0,
+                                    "startAt": clock and "2026-11-26T22:00:00.000Z",
+                                }
+                            ],
+                        },
+                    }
                 else:
                     result = {
                         "content": [
@@ -416,3 +446,68 @@ def test_generate_run_hands_the_saved_program_to_run(
     assert seen["program_file"] == str(saved)
     assert json.loads(saved.read_text())["programId"] == "dinner"
     assert seen["time_scale"] == 1.0  # run's own defaults are filled in
+
+
+def test_publish_needs_no_login_and_routes_by_environment_type(
+    fake_mcp, config_home, tmp_path
+):
+    lab = dict(PROGRAM, environmentType="laboratory")
+    f = tmp_path / "blot.json"
+    f.write_text(json.dumps(lab))
+    result = CliRunner().invoke(cli, ["publish", str(f), "-q"])
+    assert result.exit_code == 0, result.output
+    assert result.output.strip() == "https://kitchen.rhylthyme.com?share=abc"
+    path, name, args = fake_mcp.tool_calls()[-1]
+    assert (path, name) == ("/lab/mcp", "visualize_schedule")
+    assert args["program"]["environmentType"] == "laboratory" and "token" not in args
+
+    as_json = CliRunner().invoke(cli, ["publish", str(f), "-e", "generic", "--json"])
+    assert json.loads(as_json.output)["makespanSeconds"] == 3600
+    assert fake_mcp.tool_calls()[-1][0] == "/mcp"
+
+    bad = tmp_path / "bad.json"
+    bad.write_text(json.dumps({"name": "no tracks"}))
+    refused = CliRunner().invoke(cli, ["publish", str(bad)])
+    assert refused.exit_code != 0 and "not a Rhylthyme program" in refused.output
+
+
+def test_analyze_reports_conflicts_and_local_clock_times(
+    fake_mcp, config_home, tmp_path
+):
+    f = tmp_path / "dinner.json"
+    f.write_text(json.dumps(PROGRAM))
+    plain = CliRunner().invoke(cli, ["analyze", str(f)])
+    assert plain.exit_code == 0, plain.output
+    assert "Resource conflicts (1)" in plain.output
+    path, name, args = fake_mcp.tool_calls()[-1]
+    assert (path, name) == ("/mcp", "analyze_schedule")
+    assert set(args) == {"program"}, "no token, no clock unless asked"
+
+    timed = CliRunner().invoke(cli, ["analyze", str(f), "--finish-at", "19:00"])
+    assert timed.exit_code == 0, timed.output
+    sent = fake_mcp.tool_calls()[-1][2]["finishAt"]
+    assert datetime.fromisoformat(sent).utcoffset() is not None
+    assert datetime.fromisoformat(sent).strftime("%H:%M") == "19:00"
+    assert "utc" not in timed.output, "the server's UTC lines are replaced"
+    assert "(local time)" in timed.output and "Roast" in timed.output
+
+    strict = CliRunner().invoke(cli, ["analyze", str(f), "--strict"])
+    assert strict.exit_code == 1
+    as_json = CliRunner().invoke(cli, ["analyze", str(f), "--json"])
+    assert json.loads(as_json.output)["makespanSeconds"] == 3600
+
+
+def test_clock_to_iso():
+    from rhylthyme_cli_runner.remote.cli import _clock_to_iso
+
+    now = datetime(2026, 11, 26, 14, 0).astimezone()
+    assert _clock_to_iso("19:00", now).startswith("2026-11-26T19:00:00")
+    assert _clock_to_iso("7:30pm", now).startswith("2026-11-26T19:30:00")
+    assert _clock_to_iso("9am", now).startswith(
+        "2026-11-27T09:00:00"
+    ), "already past: tomorrow"
+    assert _clock_to_iso("12am", now).startswith("2026-11-27T00:00:00")
+    iso = "2026-11-26T18:00:00-05:00"
+    assert _clock_to_iso(iso, now) == iso
+    assert _clock_to_iso("25:00", now) == "25:00", "left for the server to reject"
+    assert _clock_to_iso("7", now) == "7", "a bare number is not a time"

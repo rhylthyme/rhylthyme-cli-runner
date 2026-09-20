@@ -178,7 +178,10 @@ class Step:
                 elif "defaultSeconds" in self.duration_data:
                     self.optimal_duration = self.duration_data.get("defaultSeconds")
                 else:
-                    self.optimal_duration = (self.min_duration + self.max_duration) / 2
+                    self.optimal_duration = (
+                        self._seconds(self.min_duration)
+                        + self._seconds(self.max_duration)
+                    ) / 2
             else:  # indefinite or unknown
                 self.min_duration = 0
                 self.max_duration = float("inf")
@@ -221,6 +224,19 @@ class Step:
 
         return dependencies
 
+    @staticmethod
+    def _seconds(value: Any) -> float:
+        """Durations may be numbers or time strings ("90m", "1h30m")."""
+        if isinstance(value, (int, float)):
+            return float(value)
+        if isinstance(value, str):
+            from .program_runner import parse_time_string
+
+            return float(parse_time_string(value))
+        if isinstance(value, dict):  # indefinite: plan on its default
+            return Step._seconds(value.get("defaultSeconds", 0))
+        return 0.0
+
     def calculate_duration(self) -> float:
         """
         Calculate the duration of the step for planning purposes.
@@ -229,7 +245,7 @@ class Step:
         Returns:
             Duration in seconds
         """
-        return float(self.optimal_duration)
+        return self._seconds(self.optimal_duration)
 
     def get_min_duration(self) -> float:
         """
@@ -238,7 +254,7 @@ class Step:
         Returns:
             Minimum duration in seconds
         """
-        return float(self.min_duration)
+        return self._seconds(self.min_duration)
 
     def get_max_duration(self) -> float:
         """
@@ -247,7 +263,7 @@ class Step:
         Returns:
             Maximum duration in seconds
         """
-        return float(self.max_duration)
+        return self._seconds(self.max_duration)
 
     def get_trigger_info(self) -> dict:
         """

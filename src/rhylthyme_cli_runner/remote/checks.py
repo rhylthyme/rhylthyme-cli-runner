@@ -199,6 +199,26 @@ def _is_hosted(base_url: str) -> bool:
     return (urlparse(base_url).hostname or "").endswith("rhylthyme.com")
 
 
+def _http_get_text(url: str, timeout: float = 30) -> tuple:
+    req = urllib.request.Request(
+        url,
+        headers={"User-Agent": "rhylthyme-cli/mcp-test", "Accept": "application/json"},
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            return (
+                resp.status,
+                resp.headers.get("Content-Type", ""),
+                resp.read().decode("utf-8", "replace"),
+            )
+    except urllib.error.HTTPError as e:
+        return (
+            e.code,
+            e.headers.get("Content-Type", ""),
+            e.read().decode("utf-8", "replace"),
+        )
+
+
 def _http_get(url: str, timeout: float = 30) -> tuple:
     req = urllib.request.Request(url, headers={"User-Agent": "rhylthyme-cli/mcp-test"})
     try:
@@ -390,18 +410,76 @@ def check_bad_requests(client, endpoint, opts, state) -> str:
 
 
 def check_login_gate(client, endpoint, opts, state) -> str:
-    r = client.call_tool(
-        "import_text",
-        {"text": "toast", "environmentType": "generic"},
-        raise_on_error=False,
+    """Account tools refuse without a credential: an OAuth 401 challenge, or a login hint."""
+    status, headers_ctype, body = client.send_raw(
+        {
+            "jsonrpc": "2.0",
+            "id": 1,
+            "method": "tools/call",
+            "params": {
+                "name": "import_text",
+                "arguments": {"text": "toast", "environmentType": "generic"},
+            },
+        },
+        timeout=opts.timeout,
     )
-    _need(r.is_error, "import_text ran without a token")
-    _need(
-        "login" in r.text.lower(), "the refusal does not tell the model to call login"
-    )
+    challenge = client.last_headers.get(
+        "www-authenticate", ""
+    )  # before the next request replaces it
     hint = client.call_tool("login", {})
     _need("/mcp/auth" in hint.text, "login (no token) does not return the sign-in URL")
+    if status == 401:
+        _need(
+            "resource_metadata=" in challenge,
+            "401 without a WWW-Authenticate resource_metadata challenge",
+        )
+        return "import_text answers 401 with an OAuth challenge; login still returns the sign-in URL"
+    _need(status == 200, f"import_text without a credential -> HTTP {status}")
+    result = parse_rpc_body(body).get("result") or {}
+    text = " ".join(c.get("text", "") for c in result.get("content") or [])
+    _need(result.get("isError"), "import_text ran without a token")
+    _need("login" in text.lower(), "the refusal does not tell the model to call login")
     return "import_text refuses without a token; login returns the sign-in URL"
+
+
+def check_oauth(client, endpoint, opts, state) -> str:
+    """OAuth discovery: protected-resource metadata names an authorization server that publishes its own."""
+    from urllib.parse import urlparse
+
+    u = urlparse(client.url)
+    origin = f"{u.scheme}://{u.netloc}"
+    status, _ctype, raw = _http_get_text(
+        f"{origin}/.well-known/oauth-protected-resource{u.path}"
+    )
+    if status in (404, 405, 501):
+        raise CheckSkipped("this server does not advertise OAuth")
+    _need(status == 200, f"protected-resource metadata -> HTTP {status}")
+    meta = json.loads(raw)
+    _need(
+        meta.get("resource") == client.url,
+        f"resource is {meta.get('resource')!r}, expected {client.url!r}",
+    )
+    servers = meta.get("authorization_servers") or []
+    _need(servers, "no authorization_servers listed")
+    iss = urlparse(servers[0])
+    as_url = f"{iss.scheme}://{iss.netloc}/.well-known/oauth-authorization-server{iss.path.rstrip('/')}"
+    status, _ctype, raw = _http_get_text(as_url)
+    if status != 200:
+        raise CheckWarning(
+            f"authorization server metadata at {as_url} -> HTTP {status} (is the OAuth server enabled?)"
+        )
+    as_meta = json.loads(raw)
+    for key in ("authorization_endpoint", "token_endpoint"):
+        _need(as_meta.get(key), f"authorization server metadata has no {key}")
+    if not as_meta.get("registration_endpoint"):
+        raise CheckWarning(
+            "no registration_endpoint: hosts such as Claude need dynamic client registration"
+        )
+    _need(
+        "S256" in (as_meta.get("code_challenge_methods_supported") or ["S256"]),
+        "PKCE S256 not supported",
+    )
+    return f"authorization server {iss.netloc}; registration and PKCE available"
 
 
 def check_catalog(client, endpoint, opts, state) -> str:
@@ -508,6 +586,7 @@ CHECKS: List[tuple] = [
     ("json-accept", check_json_accept),
     ("bad-requests", check_bad_requests),
     ("login-gate", check_login_gate),
+    ("oauth", check_oauth),
     ("catalog", check_catalog),
     ("publish", check_publish),
     ("generate", check_generate),

@@ -1,4 +1,4 @@
-"""``rhylthyme login | logout | whoami | generate``.
+"""``rhylthyme login | logout | whoami | generate | publish | mcp-test``.
 
 ``generate`` is the natural-language path: it sends the request to the
 hosted MCP server's ``import_text`` tool (four model turns, run and paid
@@ -11,9 +11,11 @@ run`` for the terminal runner.
 from __future__ import annotations
 
 import json
+import re
 import sys
 import time
 import webbrowser
+from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Optional
 
@@ -384,6 +386,209 @@ def mcp_test(
         ctx.exit(1)
 
 
+def _load_program(program_file: str) -> dict:
+    path = Path(program_file)
+    program = None
+    try:
+        if path.suffix.lower() in (".yaml", ".yml"):
+            import yaml
+
+            program = yaml.safe_load(path.read_text())
+        else:
+            program = json.loads(path.read_text())
+    except Exception as e:  # noqa: BLE001
+        _fail(f"Could not read {program_file}: {e}")
+    if not isinstance(program, dict) or not isinstance(program.get("tracks"), list):
+        _fail(f"{program_file} is not a Rhylthyme program (no `tracks` list).")
+    assert isinstance(program, dict)
+    return program
+
+
+def _clock_to_iso(value: str, now: Optional[datetime] = None) -> str:
+    """``19:00`` or ``7:30pm`` -> the next such local time, as ISO 8601 with
+    an offset. Anything else is passed through for the server to parse."""
+    text = value.strip().lower().replace(" ", "")
+    m = re.fullmatch(r"(\d{1,2})(?::(\d{2}))?(am|pm)?", text)
+    if not m or (not m.group(2) and not m.group(3)):
+        return value
+    hour, minute = int(m.group(1)), int(m.group(2) or 0)
+    if m.group(3) == "pm" and hour < 12:
+        hour += 12
+    if m.group(3) == "am" and hour == 12:
+        hour = 0
+    if hour > 23 or minute > 59:
+        return value
+    now = now or datetime.now().astimezone()
+    when = now.replace(hour=hour, minute=minute, second=0, microsecond=0)
+    if when <= now:
+        when += timedelta(days=1)
+    return when.isoformat()
+
+
+def _local(iso: Optional[str]) -> str:
+    if not iso:
+        return ""
+    try:
+        return (
+            datetime.fromisoformat(iso.replace("Z", "+00:00"))
+            .astimezone()
+            .strftime("%a %H:%M")
+        )
+    except ValueError:
+        return iso
+
+
+@click.command("analyze")
+@click.argument("program_file", type=click.Path(exists=True, dir_okay=False))
+@click.option(
+    "--finish-at",
+    "finish_at",
+    default=None,
+    help="When everything must be finished: 19:00, 7:30pm or an ISO 8601 datetime. Start times are worked backwards from it.",
+)
+@click.option(
+    "--start-at",
+    "start_at",
+    default=None,
+    help="When the program starts (same formats). Ignored with --finish-at.",
+)
+@click.option(
+    "--json", "json_output", is_flag=True, help="Print the full analysis as JSON."
+)
+@click.option(
+    "--strict", is_flag=True, help="Exit non-zero when there are resource conflicts."
+)
+def analyze(program_file, finish_at, start_at, json_output, strict):
+    """Total length, critical path, resource conflicts and clock times. No sign-in needed.
+
+    \b
+    Computed by the hosted MCP server (analyze_schedule); nothing is published.
+      rhylthyme analyze dinner.json --finish-at 19:00
+      rhylthyme analyze two-protocols.json --strict
+    """
+    program = _load_program(program_file)
+    args: dict = {"program": program}
+    if finish_at:
+        args["finishAt"] = _clock_to_iso(finish_at)
+    elif start_at:
+        args["startAt"] = _clock_to_iso(start_at)
+    client = McpClient(url=endpoint_for(None))
+    result = None
+    try:
+        result = client.call_tool("analyze_schedule", args, timeout=90)
+    except ToolError as e:
+        _fail(e.text)
+    except McpError as e:
+        _fail(str(e))
+    assert result is not None
+    info = result.structured or {}
+    conflicts = info.get("resourceConflicts") or []
+    if json_output:
+        click.echo(json.dumps(info, indent=2))
+    else:
+        # The server's clock lines are UTC; say them in local time instead.
+        text = result.text.split("**Wall-clock itinerary:**")[0]
+        lines = [ln for ln in text.splitlines() if not ln.startswith("**Wall clock:**")]
+        click.echo("\n".join(lines).strip())
+        clock = info.get("wallClock") or {}
+        steps = [st for st in info.get("steps") or [] if st.get("startAt")]
+        if clock and steps:
+            click.echo(
+                f"\nStart {_local(clock.get('startAt'))}, finish {_local(clock.get('finishAt'))} (local time)"
+            )
+            for st in sorted(steps, key=lambda x: (x.get("startSeconds") or 0)):
+                click.echo(
+                    f"  {_local(st['startAt'])}  {st.get('name') or st.get('stepId')}"
+                )
+    if strict and conflicts:
+        click.get_current_context().exit(1)
+
+
+ENV_BY_TYPE = {
+    "kitchen": "kitchen",
+    "bakery": "kitchen",
+    "restaurant": "kitchen",
+    "commercial-kitchen": "kitchen",
+    "laboratory": "lab",
+    "lab": "lab",
+    "hospital": "lab",
+    "event": "events",
+    "events": "events",
+    "gym": "gym",
+    "fitness": "gym",
+}
+
+
+@click.command("publish")
+@click.argument("program_file", type=click.Path(exists=True, dir_okay=False))
+@click.option(
+    "-e",
+    "--env",
+    "environment",
+    type=click.Choice(ENVIRONMENTS),
+    default=None,
+    help="Timeline site to publish to (default: from the program's environmentType).",
+)
+@click.option(
+    "--open", "open_url", is_flag=True, help="Open the live timeline in a browser."
+)
+@click.option(
+    "--json",
+    "json_output",
+    is_flag=True,
+    help="Print {url, imageUrl, makespanSeconds, warnings} as JSON.",
+)
+@click.option("-q", "--quiet", is_flag=True, help="Print only the live-timeline URL.")
+def publish(program_file, environment, open_url, json_output, quiet):
+    """Publish a program file as a live, shareable timeline. No sign-in needed.
+
+    \b
+    The hosted MCP server validates the program first and refuses an invalid
+    one, so run `rhylthyme validate` locally and fix what it reports.
+      rhylthyme publish dinner.json
+      rhylthyme publish blot.json -e lab -q
+    """
+    program = _load_program(program_file)
+    env = environment or ENV_BY_TYPE.get(
+        str(program.get("environmentType") or "").lower(), "generic"
+    )
+    client = McpClient(url=endpoint_for(env))
+    try:
+        published = client.call_tool(
+            "visualize_schedule", {"program": program}, timeout=90
+        )
+    except ToolError as e:
+        _fail(e.text)
+    except McpError as e:
+        _fail(str(e))
+    info = published.structured or {}
+    url = info.get("url")
+    if json_output:
+        click.echo(
+            json.dumps(
+                {
+                    k: info.get(k)
+                    for k in (
+                        "url",
+                        "shareId",
+                        "imageUrl",
+                        "makespanSeconds",
+                        "warnings",
+                    )
+                },
+                indent=2,
+            )
+        )
+    elif quiet:
+        click.echo(url or "")
+    else:
+        click.echo(published.text.strip())
+        if url:
+            click.echo(f"\nLive timeline: {url}")
+    if open_url and url:
+        webbrowser.open(url)
+
+
 def register(cli_group: click.Group) -> None:
-    for command in (login, logout, whoami, generate, mcp_test):
+    for command in (login, logout, whoami, generate, publish, analyze, mcp_test):
         cli_group.add_command(command)

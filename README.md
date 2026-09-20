@@ -137,9 +137,30 @@ rhylthyme run examples/programs/breakfast_schedule.json --environment kitchen
 rhylthyme run examples/programs/breakfast_schedule.json --no-validate
 ```
 
+### Analyze and Publish a Program
+
+Neither needs an account; both are computed by the hosted MCP server.
+
+```bash
+# Total length, critical path, resource conflicts
+rhylthyme analyze examples/programs/breakfast_schedule.json
+
+# When does each step start if breakfast is at 8:30?
+rhylthyme analyze examples/programs/breakfast_schedule.json --finish-at 8:30am
+
+# A live, shareable timeline with timers; prints the URL
+rhylthyme publish examples/programs/breakfast_schedule.json
+```
+
+`validate` checks structure only. Two steps that want the only oven at the
+same time pass validation; `analyze` reports them, and `--strict` makes that
+a non-zero exit.
+
 ### Optimize a Program
 
-Create an optimized version of a program to reduce resource contention:
+`plan` is an older stagger heuristic that reads the pre-0.2 program format; on
+programs written with `stepId` and `task` (all current examples) it writes the
+program back unchanged. Use `analyze` to find contention.
 
 ```bash
 # Optimize a program and save to new file
@@ -166,6 +187,29 @@ rhylthyme validate-environments
 # Show information about a specific environment type
 rhylthyme environment-info kitchen
 ```
+
+## Claude Skill
+
+[`skills/rhylthyme`](skills/rhylthyme) is an [Agent Skill](https://docs.claude.com/en/docs/agents-and-tools/agent-skills/overview)
+that teaches Claude (Claude Code, the Claude apps, the Agent SDK) to turn a
+protocol, recipe or run sheet into a validated program with this CLI, check
+it for conflicts, and hand back a live timeline. It follows the layout of
+[K-Dense scientific skills](https://github.com/K-Dense-AI/claude-scientific-skills):
+a `SKILL.md` plus `references/`.
+
+```bash
+# Claude Code, for one user
+mkdir -p ~/.claude/skills
+cp -r skills/rhylthyme ~/.claude/skills/
+
+# or for one project
+mkdir -p .claude/skills && cp -r skills/rhylthyme .claude/skills/
+```
+
+Then ask, for example, "time a Western blot so imaging is at 4 pm" or "two PCR
+protocols, one thermocycler: when do I start each?". `tests/test_skill.py`
+validates every program in the skill and checks that every command it names
+exists.
 
 ## Program File Examples
 
@@ -304,9 +348,33 @@ Runs programs with interactive terminal UI.
 - `--validate / --no-validate`: Validate before running (default: True)
 - `--auto-start`: Automatically start without manual trigger
 
+### `rhylthyme analyze`
+
+Total length, critical path, what gates each link of it, resource conflicts
+and tracks that finish early. No sign-in; nothing is published.
+
+**Options:**
+- `--finish-at TEXT`: when everything must be finished (`19:00`, `7:30pm` or ISO 8601); prints local clock times per step
+- `--start-at TEXT`: when the program starts; ignored with `--finish-at`
+- `--strict`: exit non-zero when there are resource conflicts
+- `--json`: the full analysis
+
+### `rhylthyme publish`
+
+Publishes a program file as a live timeline and prints its URL. No sign-in.
+A published timeline is reachable by anyone who has the link.
+
+**Options:**
+- `-e, --env`: `generic`, `kitchen`, `lab`, `events`, `gym` (default: from `environmentType`)
+- `-q, --quiet`: print only the URL
+- `--json`: `url`, `shareId`, `imageUrl`, `makespanSeconds`, `warnings`
+- `--open`: open it in a browser
+
 ### `rhylthyme plan`
 
-Optimizes program schedules to reduce resource contention.
+An older stagger heuristic. It reads the pre-0.2 program format and leaves
+programs written with `stepId` and `task` unchanged; use `analyze` to find
+contention and edit the triggers.
 
 **Options:**
 - `--verbose, -v`: Show detailed planning information

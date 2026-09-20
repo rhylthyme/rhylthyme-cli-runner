@@ -41,6 +41,38 @@ class FakeServer:
                 self.end_headers()
                 self.wfile.write(data)
 
+            def do_GET(self):
+                origin = f"http://{self.headers['Host']}"
+                if "no-oauth" in fake.broken:
+                    return self._send(404, "application/json", "{}")
+                if self.path.startswith("/.well-known/oauth-protected-resource"):
+                    path = (
+                        self.path[len("/.well-known/oauth-protected-resource") :]
+                        or "/mcp"
+                    )
+                    return self._send(
+                        200,
+                        "application/json",
+                        json.dumps(
+                            {
+                                "resource": origin + path,
+                                "authorization_servers": [origin + "/auth/v1"],
+                            }
+                        ),
+                    )
+                if self.path == "/.well-known/oauth-authorization-server/auth/v1":
+                    meta = {
+                        "issuer": origin + "/auth/v1",
+                        "authorization_endpoint": origin + "/a",
+                        "token_endpoint": origin + "/t",
+                        "registration_endpoint": origin + "/r",
+                        "code_challenge_methods_supported": ["S256"],
+                    }
+                    if "oauth-no-registration" in fake.broken:
+                        meta.pop("registration_endpoint")
+                    return self._send(200, "application/json", json.dumps(meta))
+                return self._send(404, "application/json", "{}")
+
             def do_POST(self):
                 body = json.loads(self.rfile.read(int(self.headers["Content-Length"])))
                 fake.user_agents.add(self.headers.get("User-Agent"))
@@ -52,6 +84,21 @@ class FakeServer:
                     )
                 if "id" not in body:
                     return self._send(202, "application/json", "")
+                if (
+                    "oauth-401" in fake.broken
+                    and body.get("method") == "tools/call"
+                    and body["params"]["name"] == "import_text"
+                    and not body["params"]["arguments"].get("token")
+                ):
+                    self.send_response(401)
+                    self.send_header(
+                        "WWW-Authenticate",
+                        'Bearer resource_metadata="http://x/.well-known/oauth-protected-resource/mcp"',
+                    )
+                    self.send_header("Content-Length", "2")
+                    self.end_headers()
+                    self.wfile.write(b"{}")
+                    return
                 vertical = (
                     self.path.split("/")[1] if self.path.count("/") == 2 else "generic"
                 )
@@ -269,7 +316,7 @@ def test_healthy_server_passes_every_default_check(server):
         if r.status in ("fail", "warn")
     ]
     assert bad == []
-    assert report.ok and report.count("pass") == 11 * 5
+    assert report.ok and report.count("pass") == 12 * 5
     assert {r.name for r in report.results if r.status == "skip"} == {
         "publish",
         "generate",
@@ -305,6 +352,18 @@ def test_empty_vertical_catalog_is_a_warning_not_a_failure(server):
     assert report.ok
 
 
+def test_oauth_check_skips_warns_and_accepts_a_401_challenge(server):
+    assert statuses(run(server(["no-oauth"]), endpoints=("generic",)), "oauth") == {
+        "generic": "skip"
+    }
+    assert statuses(
+        run(server(["oauth-no-registration"]), endpoints=("generic",)), "oauth"
+    ) == {"generic": "warn"}
+    assert statuses(
+        run(server(["oauth-401"]), endpoints=("generic",)), "login-gate"
+    ) == {"generic": "pass"}
+
+
 def test_unreachable_endpoint_fails_initialize_and_skips_the_rest():
     report = checks.run_suite(
         checks.SuiteOptions(
@@ -330,7 +389,7 @@ def test_cli_exit_codes_json_and_filters(server, monkeypatch):
 
     ok = runner.invoke(cli, ["mcp-test", "--url", healthy.url, "-e", "generic"])
     assert ok.exit_code == 0, ok.output
-    assert "11 passed, 0 warning(s), 0 failed, 2 skipped" in ok.output
+    assert "12 passed, 0 warning(s), 0 failed, 2 skipped" in ok.output
 
     bad = runner.invoke(
         cli, ["mcp-test", "--url", broken.url, "-e", "generic", "--json"]
