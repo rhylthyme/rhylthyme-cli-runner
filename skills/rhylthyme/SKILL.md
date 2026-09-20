@@ -56,6 +56,12 @@ rhylthyme --version
 If that version is not on PyPI yet, install from source:
 `pip install "git+https://github.com/rhylthyme/rhylthyme-cli-runner"`.
 
+**Installed as the `rhylthyme` Claude plugin?** Then the hosted MCP tools come
+with it, and `validate_program`, `analyze_schedule` and `visualize_schedule`
+do what `rhylthyme validate`, `analyze` and `publish` do, with nothing to
+install. Use the tools when they are available and the command line when you
+need a file on disk, the terminal runner, or recorded runs.
+
 No account is needed to validate, analyze, run or publish. `analyze`,
 `publish` and `generate` call the hosted server at mcp.rhylthyme.com and need
 network access; `validate`, `run`, `runs` and `calibrate` are local. Only `rhylthyme

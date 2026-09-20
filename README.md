@@ -197,6 +197,16 @@ it for conflicts, and hand back a live timeline. It follows the layout of
 [K-Dense scientific skills](https://github.com/K-Dense-AI/claude-scientific-skills):
 a `SKILL.md` plus `references/`.
 
+The easiest install is the Claude Code plugin, which also connects the hosted
+MCP server:
+
+```
+/plugin marketplace add rhylthyme/rhylthyme-mcp
+/plugin install rhylthyme@rhylthyme
+```
+
+Or copy the skill by hand:
+
 ```bash
 # Claude Code, for one user
 mkdir -p ~/.claude/skills
