@@ -1,0 +1,44 @@
+{
+  "schemaVersion": "0.3.0-alpha",
+  "programId": "birthday-party",
+  "name": "Eighth birthday party",
+  "environmentType": "event",
+  "actors": 3,
+  "tracks": [
+    { "trackId": "party", "name": "The party", "steps": [
+      { "stepId": "arrivals", "name": "Guests arrive", "task": "yard",
+        "duration": { "type": "fixed", "seconds": "30m" }, "startTrigger": { "type": "programStartOffset", "offsetSeconds": "60m" } },
+      { "stepId": "games", "name": "Party games", "task": "yard",
+        "duration": { "type": "variable", "minSeconds": "25m", "maxSeconds": "40m", "defaultSeconds": "30m" },
+        "startTrigger": { "type": "afterStep", "stepId": "arrivals" } },
+      { "stepId": "pizza", "name": "Pizza", "task": "table",
+        "duration": { "type": "fixed", "seconds": "25m" }, "startTrigger": { "type": "afterStep", "stepId": "games" } },
+      { "stepId": "cake", "name": "Candles and cake", "task": "table",
+        "duration": { "type": "fixed", "seconds": "15m" }, "startTrigger": { "type": "afterStep", "stepId": "pizza" } },
+      { "stepId": "pinata", "name": "Piñata, until it breaks", "task": "yard",
+        "duration": { "type": "indefinite", "defaultSeconds": "15m" }, "startTrigger": { "type": "afterStep", "stepId": "cake" } },
+      { "stepId": "bags", "name": "Party bags and goodbyes", "task": "yard",
+        "duration": { "type": "fixed", "seconds": "15m" }, "startTrigger": { "type": "afterStep", "stepId": "pinata" } } ] },
+    { "trackId": "kitchen", "name": "Kitchen", "steps": [
+      { "stepId": "bake", "name": "Bake the cake", "task": "oven",
+        "duration": { "type": "fixed", "seconds": "35m" }, "startTrigger": { "type": "programStart" } },
+      { "stepId": "cool", "name": "Cake cools", "task": "counter",
+        "duration": { "type": "fixed", "seconds": "40m" }, "startTrigger": { "type": "afterStep", "stepId": "bake" } },
+      { "stepId": "frost", "name": "Frost and decorate", "task": "counter",
+        "duration": { "type": "fixed", "seconds": "20m" }, "startTrigger": { "type": "afterStep", "stepId": "cool" } },
+      { "stepId": "heat-pizza", "name": "Pizzas in the oven", "task": "oven",
+        "duration": { "type": "fixed", "seconds": "15m" }, "startTrigger": { "type": "afterStep", "stepId": "games", "event": "start", "offsetSeconds": "15m" } } ] },
+    { "trackId": "setup", "name": "Setup crew", "steps": [
+      { "stepId": "balloons", "name": "Balloons and banner", "task": "yard-crew",
+        "duration": { "type": "fixed", "seconds": "30m" }, "startTrigger": { "type": "programStartOffset", "offsetSeconds": "10m" } },
+      { "stepId": "hang-pinata", "name": "Hang the piñata", "task": "yard-crew",
+        "duration": { "type": "fixed", "seconds": "10m" }, "startTrigger": { "type": "afterStep", "stepId": "balloons" } },
+      { "stepId": "fill-bags", "name": "Fill party bags", "task": "yard-crew",
+        "duration": { "type": "fixed", "seconds": "20m" }, "startTrigger": { "type": "afterStep", "stepId": "pizza", "event": "start" } } ] }
+  ],
+  "resourceConstraints": [
+    { "task": "yard", "maxConcurrent": 1 }, { "task": "table", "maxConcurrent": 1 },
+    { "task": "oven", "maxConcurrent": 1 }, { "task": "counter", "maxConcurrent": 1 },
+    { "task": "yard-crew", "maxConcurrent": 1 }
+  ]
+}
