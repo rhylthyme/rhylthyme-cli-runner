@@ -8,3 +8,7 @@ pytest_examples.log
 src/rhylthyme_cli_runner.egg-info/
 src/rhylthyme_cli_runner/__pycache__/
 tests/__pycache__/
+
+# Bytecode
+__pycache__/
+*.pyc
