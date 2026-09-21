@@ -21,9 +21,10 @@ cycles, overlapping steps within a track, negative offsets, replicate rules).
 
 Exit status is non-zero when any file is invalid.
 
-### `rhylthyme publish PROGRAM_FILE`
+### `rhylthyme publish PROGRAM`
 
-Publishes a live, shareable timeline through the hosted MCP server. The server
+`PROGRAM` is a file, an http(s) URL, or `-` for standard input (the same for
+`analyze`). Publishes a live, shareable timeline through the hosted MCP server. The server
 validates again and refuses an invalid program.
 
 | Option | Meaning |
@@ -31,12 +32,13 @@ validates again and refuses an invalid program.
 | `-e, --env` | `generic`, `kitchen`, `lab`, `events`, `gym`; default comes from the program's `environmentType` |
 | `-q, --quiet` | print only the URL |
 | `--json` | print `url`, `shareId`, `imageUrl`, `makespanSeconds`, `warnings` |
+| `--image PATH` | also save a PNG of the timeline |
 | `--open` | open the timeline in a browser |
 
 Without `-q` or `--json` it prints a summary: total time, resources, an ASCII
 Gantt chart, a chronological itinerary and a schedule check.
 
-### `rhylthyme analyze PROGRAM_FILE`
+### `rhylthyme analyze PROGRAM`
 
 Resolves the program onto a clock on the hosted MCP server and reports total
 length, critical path, what gates each link of it, resource conflicts,

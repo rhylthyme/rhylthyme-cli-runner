@@ -511,3 +511,58 @@ def test_clock_to_iso():
     assert _clock_to_iso(iso, now) == iso
     assert _clock_to_iso("25:00", now) == "25:00", "left for the server to reject"
     assert _clock_to_iso("7", now) == "7", "a bare number is not a time"
+
+
+def test_publish_and_analyze_read_a_url_or_stdin(
+    fake_mcp, config_home, tmp_path, monkeypatch
+):
+    import threading
+    from http.server import BaseHTTPRequestHandler, HTTPServer
+
+    class Files(BaseHTTPRequestHandler):
+        def log_message(self, *a):
+            pass
+
+        def do_GET(self):
+            if self.path == "/dinner.json":
+                body, status = json.dumps(PROGRAM).encode(), 200
+            elif self.path == "/timeline.png":
+                body, status = b"\x89PNG fake", 200
+            else:
+                body, status = b"nope", 404
+            self.send_response(status)
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
+
+    server = HTTPServer(("127.0.0.1", 0), Files)
+    threading.Thread(target=server.serve_forever, daemon=True).start()
+    base = f"http://127.0.0.1:{server.server_address[1]}"
+    try:
+        from_url = CliRunner().invoke(cli, ["publish", f"{base}/dinner.json", "-q"])
+        assert from_url.exit_code == 0, from_url.output
+        assert from_url.output.strip() == "https://kitchen.rhylthyme.com?share=abc"
+        assert fake_mcp.tool_calls()[-1][2]["program"]["programId"] == "dinner"
+
+        piped = CliRunner().invoke(cli, ["analyze", "-"], input=json.dumps(PROGRAM))
+        assert piped.exit_code == 0, piped.output
+        assert fake_mcp.tool_calls()[-1][1] == "analyze_schedule"
+
+        missing = CliRunner().invoke(cli, ["publish", f"{base}/nope.json"])
+        assert missing.exit_code != 0 and "404" in missing.output
+        assert (
+            CliRunner()
+            .invoke(cli, ["publish", str(tmp_path / "absent.json")])
+            .exit_code
+            != 0
+        )
+    finally:
+        server.shutdown()
+        server.server_close()
+
+
+def test_clock_and_sources_reject_other_schemes():
+    from rhylthyme_cli_runner.remote.cli import _fetch_bytes
+
+    with pytest.raises(ValueError):
+        _fetch_bytes("file:///etc/passwd")

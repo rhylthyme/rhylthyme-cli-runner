@@ -49,7 +49,7 @@ calendar booking.
 ## Installation
 
 ```bash
-pip install "rhylthyme-cli-runner>=0.2.2a0"   # Python 3.12+
+pip install "rhylthyme-cli-runner>=0.2.3a0"   # Python 3.12+
 rhylthyme --version
 ```
 
@@ -163,6 +163,7 @@ check the total length and the finish-together arithmetic against the source.
 rhylthyme publish program.json        # summary, ASCII Gantt, itinerary and the URL
 rhylthyme publish program.json -q     # just the URL
 rhylthyme publish program.json --json # url, imageUrl, makespanSeconds, warnings
+rhylthyme publish program.json -q --image timeline.png   # the URL, and a picture to show
 ```
 
 No account needed. The server validates again and refuses an invalid program.

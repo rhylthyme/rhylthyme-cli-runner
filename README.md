@@ -55,7 +55,7 @@ Start Sat 12:50, finish Sat 16:00 (local time)
 
 ```bash
 # 4. a live timeline for the fridge door (or a phone): timers, cues, and you end the piñata when it breaks
-rhylthyme publish birthday-party.json --open
+rhylthyme publish birthday-party.json --open --image party-preview.png
 
 # 5. a picture for the group chat, on the wall clock (needs Node; nothing to install)
 npx -y github:rhylthyme/rhylthyme-timeline birthday-party.json -o birthday-party.png \
@@ -471,13 +471,15 @@ and tracks that finish early. No sign-in; nothing is published.
 
 ### `rhylthyme publish`
 
-Publishes a program file as a live timeline and prints its URL. No sign-in.
+Publishes a program (a file, an http(s) URL, or `-` for standard input) as a
+live timeline and prints its URL. No sign-in.
 A published timeline is reachable by anyone who has the link.
 
 **Options:**
 - `-e, --env`: `generic`, `kitchen`, `lab`, `events`, `gym` (default: from `environmentType`)
 - `-q, --quiet`: print only the URL
 - `--json`: `url`, `shareId`, `imageUrl`, `makespanSeconds`, `warnings`
+- `--image PATH`: also save a PNG of the timeline
 - `--open`: open it in a browser
 
 ### `rhylthyme plan`

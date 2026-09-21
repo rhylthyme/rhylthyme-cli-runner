@@ -386,16 +386,47 @@ def mcp_test(
         ctx.exit(1)
 
 
+MAX_PROGRAM_BYTES = 2 * 1024 * 1024
+
+
+def _fetch_bytes(url: str, limit: int = 8 * 1024 * 1024) -> bytes:
+    import urllib.request
+
+    if not url.startswith(("http://", "https://")):
+        raise ValueError("not an http(s) URL")
+    request = urllib.request.Request(url, headers={"User-Agent": "rhylthyme-cli"})
+    with urllib.request.urlopen(
+        request, timeout=60
+    ) as response:  # nosec B310 - scheme checked above
+        data = response.read(limit + 1)
+    if len(data) > limit:
+        raise ValueError(f"larger than {limit // (1024 * 1024)} MB")
+    return data
+
+
+def _read_source(source: str) -> str:
+    """The text of a program given as a file path, an http(s) URL, or `-`
+    for standard input."""
+    if source == "-":
+        return sys.stdin.read()
+    if source.startswith(("http://", "https://")):
+        return _fetch_bytes(source, MAX_PROGRAM_BYTES).decode("utf-8")
+    path = Path(source)
+    if not path.is_file():
+        raise FileNotFoundError("no such file")
+    return path.read_text()
+
+
 def _load_program(program_file: str) -> dict:
-    path = Path(program_file)
     program = None
     try:
-        if path.suffix.lower() in (".yaml", ".yml"):
+        text = _read_source(program_file)
+        if program_file.lower().split("?")[0].endswith((".yaml", ".yml")):
             import yaml
 
-            program = yaml.safe_load(path.read_text())
+            program = yaml.safe_load(text)
         else:
-            program = json.loads(path.read_text())
+            program = json.loads(text)
     except Exception as e:  # noqa: BLE001
         _fail(f"Could not read {program_file}: {e}")
     if not isinstance(program, dict) or not isinstance(program.get("tracks"), list):
@@ -439,7 +470,7 @@ def _local(iso: Optional[str]) -> str:
 
 
 @click.command("analyze")
-@click.argument("program_file", type=click.Path(exists=True, dir_okay=False))
+@click.argument("program_file", metavar="PROGRAM")
 @click.option(
     "--finish-at",
     "finish_at",
@@ -460,6 +491,8 @@ def _local(iso: Optional[str]) -> str:
 )
 def analyze(program_file, finish_at, start_at, json_output, strict):
     """Total length, critical path, resource conflicts and clock times. No sign-in needed.
+
+    PROGRAM is a JSON or YAML file, an http(s) URL, or - for standard input.
 
     \b
     Computed by the hosted MCP server (analyze_schedule); nothing is published.
@@ -520,7 +553,7 @@ ENV_BY_TYPE = {
 
 
 @click.command("publish")
-@click.argument("program_file", type=click.Path(exists=True, dir_okay=False))
+@click.argument("program_file", metavar="PROGRAM")
 @click.option(
     "-e",
     "--env",
@@ -539,14 +572,24 @@ ENV_BY_TYPE = {
     help="Print {url, imageUrl, makespanSeconds, warnings} as JSON.",
 )
 @click.option("-q", "--quiet", is_flag=True, help="Print only the live-timeline URL.")
-def publish(program_file, environment, open_url, json_output, quiet):
-    """Publish a program file as a live, shareable timeline. No sign-in needed.
+@click.option(
+    "--image",
+    "image_path",
+    type=click.Path(dir_okay=False),
+    default=None,
+    help="Also save a PNG of the timeline here.",
+)
+def publish(program_file, environment, open_url, json_output, quiet, image_path):
+    """Publish a program as a live, shareable timeline. No sign-in needed.
+
+    PROGRAM is a JSON or YAML file, an http(s) URL, or - for standard input.
 
     \b
     The hosted MCP server validates the program first and refuses an invalid
     one, so run `rhylthyme validate` locally and fix what it reports.
       rhylthyme publish dinner.json
       rhylthyme publish blot.json -e lab -q
+      rhylthyme publish https://example.org/party.json --image party.png --open
     """
     program = _load_program(program_file)
     env = environment or ENV_BY_TYPE.get(
@@ -585,6 +628,13 @@ def publish(program_file, environment, open_url, json_output, quiet):
         click.echo(published.text.strip())
         if url:
             click.echo(f"\nLive timeline: {url}")
+    if image_path and info.get("imageUrl"):
+        try:
+            Path(image_path).write_bytes(_fetch_bytes(info["imageUrl"]))
+            if not json_output and not quiet:
+                click.echo(f"Picture: {image_path}")
+        except Exception as e:  # noqa: BLE001
+            click.echo(f"Could not save the picture: {e}", err=True)
     if open_url and url:
         webbrowser.open(url)
 
