@@ -69,3 +69,14 @@ def test_every_command_the_skill_names_exists():
     assert {"validate", "analyze", "publish", "run", "calibrate", "generate"} <= named
     missing = named - set(cli.commands)
     assert not missing, missing
+
+
+def test_the_readme_recipe_program_is_valid_and_is_what_the_readme_shows():
+    root = SKILL.parent.parent
+    recipe = root / "examples" / "recipe" / "birthday-party.json"
+    result = CliRunner().invoke(cli, ["validate", str(recipe), "--strict"])
+    assert result.exit_code == 0, result.output
+    readme = (root / "README.md").read_text()
+    assert "examples/recipe/birthday-party.json" in readme
+    for step in json.loads(recipe.read_text())["tracks"][0]["steps"]:
+        assert step["name"] in readme, f"README itinerary is missing {step['name']!r}"
