@@ -76,6 +76,15 @@ def find_renderer() -> Optional[Path]:
         candidate = Path(explicit).expanduser()
         # Absolute: `node -e` has no script directory to resolve against.
         return candidate.resolve() if candidate.is_file() else None
+    # The pip package (rhylthyme-timeline) carries the renderer.
+    try:
+        from rhylthyme_timeline import renderer_path
+
+        packaged = renderer_path()
+        if packaged.is_file():
+            return packaged
+    except ImportError:
+        pass
     here = Path(__file__).resolve()
     for parent in here.parents:
         for relative in _RENDERER_PATHS:
