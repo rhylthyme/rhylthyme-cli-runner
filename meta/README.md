@@ -16,7 +16,7 @@ This package installs three others:
 | Package | Gives you |
 |---|---|
 | [rhylthyme-cli-runner](https://pypi.org/project/rhylthyme-cli-runner/) | the `rhylthyme` command: `validate` (offline), `analyze --finish-at 19:00` (conflicts, critical path, when to start each step), `publish` (a live timeline URL), `run` (timers in the terminal), `runs` and `calibrate` (learn real durations) |
-| [rhylthyme-importers](https://pypi.org/project/rhylthyme-importers/) | `rhylthyme-import`: recipes from TheMealDB, Spoonacular and recipe sites; protocols from protocols.io, Opentrons and Benchling; CookLang with `pip install "rhylthyme[cooklang]"` |
+| [rhylthyme-importers](https://pypi.org/project/rhylthyme-importers/) | `rhylthyme-import`: recipes from TheMealDB, Spoonacular and recipe sites; protocols from protocols.io, Opentrons and Benchling; CookLang files |
 | [rhylthyme-timeline](https://pypi.org/project/rhylthyme-timeline/) | `rhylthyme-render`: publication-quality SVG, PNG and PDF figures of a schedule (needs Node.js) |
 
 No account or API key is needed for any of these.

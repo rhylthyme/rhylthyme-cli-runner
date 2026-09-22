@@ -74,6 +74,10 @@ def _import_one(importer, source: str, text: Optional[str]):
         if hasattr(importer, "allow_local_files"):
             importer.allow_local_files = True
         return importer.import_from_url(str(path))
+    if not source.startswith(("http://", "https://")) and (
+        path.suffix or "/" in source
+    ):
+        raise click.ClickException(f"No such file: {source}")
     return importer.import_from_url(source)
 
 

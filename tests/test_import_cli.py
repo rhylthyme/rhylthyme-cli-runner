@@ -240,3 +240,11 @@ def test_a_text_importer_gets_a_urls_body(fake, monkeypatch):
     )
     assert r.exit_code == 0, r.output
     assert fake.calls[-1] == ("text", "def run(protocol): pass\n", None)
+
+
+def test_a_missing_local_file_says_so(fake, tmp_path):
+    r = CliRunner().invoke(
+        cli, ["import", str(tmp_path / "Neapolitan Pizza.cook"), "-i", "fake"]
+    )
+    assert r.exit_code != 0 and "No such file" in r.output
+    assert fake.calls == []

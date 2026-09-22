@@ -19,7 +19,7 @@ def read_readme():
 
 setup(
     name="rhylthyme-cli-runner",
-    version="0.2.5a0",
+    version="0.2.6a0",
     description="CLI runner for Rhylthyme real-time program schedules",
     long_description=read_readme(),
     long_description_content_type="text/markdown",
