@@ -4,7 +4,7 @@ Command-line interface for validating and running Rhylthyme real-time program sc
 and for turning a plain-language request into one through the hosted Rhylthyme MCP server.
 
 ```bash
-pip install rhylthyme-cli-runner
+pip install rhylthyme
 rhylthyme login
 rhylthyme generate "roast chicken, potatoes and green beans for 6" -e kitchen --by 19:00 --with "one oven"
 ```
@@ -16,7 +16,7 @@ the oven, when do the balloons go up, and do the pizzas and the cake ever want
 the oven at the same time?
 
 ```bash
-pip install rhylthyme-cli-runner
+pip install rhylthyme
 
 # 1. a program: the party, the kitchen and the setup crew, 13 steps
 curl -sO https://raw.githubusercontent.com/rhylthyme/rhylthyme-cli-runner/main/examples/recipe/birthday-party.json
@@ -81,7 +81,7 @@ is the **server an AI assistant talks to**.
 |---|---|---|
 | What it is | The MCP **server**: the tools an AI assistant calls | A command-line **program**: the `rhylthyme` command |
 | Who uses it | Claude, ChatGPT, Cursor or any MCP client, on a person's behalf | A person at a terminal, a script, or CI |
-| Where it runs | Hosted at `mcp.rhylthyme.com`; nothing to install | On your machine: `pip install rhylthyme-cli-runner` |
+| Where it runs | Hosted at `mcp.rhylthyme.com`; nothing to install | On your machine: `pip install rhylthyme` |
 | Language | JavaScript (Node 20+) | Python 3.12+ |
 | Input | A program the assistant builds in conversation | A program file on disk (JSON or YAML) |
 | Validate a program | `validate_program` | `rhylthyme validate` (works offline) |
@@ -129,7 +129,8 @@ pip install -e ".[dev]"
 ### From PyPI
 
 ```bash
-pip install rhylthyme-cli-runner
+pip install rhylthyme            # this package, the importers and the renderer
+pip install rhylthyme-cli-runner   # this package alone
 ```
 
 ## Getting the Examples
