@@ -51,6 +51,23 @@ in-flight windows and tracks that finish early. Nothing is published.
 | `--strict` | exit non-zero when there are resource conflicts |
 | `--json` | the full analysis: `makespanSeconds`, `steps` (start and end per step), `criticalPath`, `bindingConstraints`, `resourceConflicts`, `inFlight`, `wallClock`, `validation` |
 
+### `rhylthyme import URL_OR_ID_OR_FILE`
+
+Imports a recipe (recipe sites, TheMealDB, Spoonacular, CookLang), a
+protocol (protocols.io, Opentrons, Benchling) or a slide deck as a program,
+validates it and writes `<programId>.json`. Needs the `rhylthyme-importers`
+package.
+
+| Option | Meaning |
+|---|---|
+| `-i IMPORTER` | which importer; default is chosen from the URL (`rhylthyme importers` lists them) |
+| `-o PATH`, `--stdout` | where the program goes |
+| `--publish`, `--open` | also publish a live timeline |
+| `--no-validate` | keep an import that does not validate |
+
+`rhylthyme search QUERY -i themealdb|spoonacular|protocolsio` finds things
+to import.
+
 ### `rhylthyme run PROGRAM_FILE`
 
 Interactive terminal runner. Needs a real terminal.

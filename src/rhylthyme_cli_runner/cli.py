@@ -544,6 +544,16 @@ def _register_remote_commands():
 _register_remote_commands()
 
 
+def _register_import_commands():
+    """Attach `import`, `search`, `importers` (rhylthyme_cli_runner.import_cli)."""
+    from .import_cli import register as register_import
+
+    register_import(cli)
+
+
+_register_import_commands()
+
+
 def main():
     """Entry point for the CLI."""
     cli()

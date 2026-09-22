@@ -49,11 +49,11 @@ calendar booking.
 ## Installation
 
 ```bash
-pip install "rhylthyme-cli-runner>=0.2.3a0"   # Python 3.12+
+pip install rhylthyme                        # Python 3.12+; the CLI, importers and renderer
 rhylthyme --version
 ```
 
-If that version is not on PyPI yet, install from source:
+The command itself is the `rhylthyme-cli-runner` package; from source:
 `pip install "git+https://github.com/rhylthyme/rhylthyme-cli-runner"`.
 
 **Installed as the `rhylthyme` Claude plugin?** Then the hosted MCP tools come

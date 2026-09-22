@@ -85,11 +85,12 @@ is the **server an AI assistant talks to**.
 | Language | JavaScript (Node 20+) | Python 3.12+ |
 | Input | A program the assistant builds in conversation | A program file on disk (JSON or YAML) |
 | Validate a program | `validate_program` | `rhylthyme validate` (works offline) |
+| Import a recipe or protocol | `import_from_source` | `rhylthyme import` |
 | Timing, conflicts, deadlines | `analyze_schedule` | `rhylthyme analyze` (asks the server) |
 | Publish a live timeline | `visualize_schedule` | `rhylthyme publish` (asks the server) |
 | Run a schedule with timers | no: it hands back a link to the web timeline | `rhylthyme run`, an interactive terminal runner |
 | Recorded runs, calibration | reads runs saved to an account | records runs locally; `rhylthyme runs`, `rhylthyme calibrate` |
-| Catalog search, imports, account library | yes | no |
+| Catalog search, account library | yes | no |
 | Also in the repository | the `rhylthyme-mcp` PyPI package (a stdio bridge to the hosted server), the Claude plugin marketplace | the Claude skill's source, the prompt-evaluation harness and its results, `rhylthyme mcp-test` |
 
 How they fit together: this tool is one of the MCP server's clients.
@@ -481,6 +482,26 @@ A published timeline is reachable by anyone who has the link.
 - `--json`: `url`, `shareId`, `imageUrl`, `makespanSeconds`, `warnings`
 - `--image PATH`: also save a PNG of the timeline
 - `--open`: open it in a browser
+
+### `rhylthyme import`
+
+Imports a recipe, protocol or slide deck as a program, validates it, and
+writes `<programId>.json`. Needs `rhylthyme-importers` (included in
+`pip install rhylthyme`).
+
+```bash
+rhylthyme import https://www.seriouseats.com/the-best-chili-recipe   # any of ~580 recipe sites
+rhylthyme import 52772 -i themealdb --publish                        # a TheMealDB id, straight to a live timeline
+rhylthyme import https://www.protocols.io/view/western-blot-...      # needs PROTOCOLS_IO_TOKEN
+rhylthyme import protocol.py -o protocol.json                        # an Opentrons file
+rhylthyme import "Neapolitan Pizza.cook" -i cooklang
+rhylthyme importers                                                  # what is installed
+rhylthyme search "pad thai" -i spoonacular                           # then import a hit's URL
+```
+
+**Options:** `-i IMPORTER` (default: chosen from the URL), `-o PATH`,
+`--stdout`, `--publish` (and `--open`), `--no-validate`. `-` reads pasted
+source from stdin (with `-i`).
 
 ### `rhylthyme plan`
 
