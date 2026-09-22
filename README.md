@@ -57,8 +57,8 @@ Start Sat 12:50, finish Sat 16:00 (local time)
 # 4. a live timeline for the fridge door (or a phone): timers, cues, and you end the piñata when it breaks
 rhylthyme publish birthday-party.json --open --image party-preview.png
 
-# 5. a picture for the group chat, on the wall clock (needs Node; nothing to install)
-npx -y github:rhylthyme/rhylthyme-timeline birthday-party.json -o birthday-party.png \
+# 5. a picture for the group chat, on the wall clock (needs Node.js)
+rhylthyme render birthday-party.json -o birthday-party.png \
   --style web --palette vivid --label-overflow outside --start-at "$(date +%F)T12:50:00"
 ```
 
@@ -494,7 +494,7 @@ writes `<programId>.json`. Needs `rhylthyme-importers` (included in
 rhylthyme import https://www.seriouseats.com/the-best-chili-recipe   # any of ~580 recipe sites
 rhylthyme import 52772 -i themealdb --publish                        # a TheMealDB id, straight to a live timeline
 rhylthyme import https://www.protocols.io/view/western-blot-...      # needs PROTOCOLS_IO_TOKEN
-rhylthyme import protocol.py -o protocol.json                        # an Opentrons file
+rhylthyme import https://raw.githubusercontent.com/Opentrons/Protocols/develop/protocols/007992/rna_isolation.ot2.apiv2.py   # an Opentrons protocol
 rhylthyme import "Neapolitan Pizza.cook" -i cooklang
 rhylthyme importers                                                  # what is installed
 rhylthyme search "pad thai" -i spoonacular                           # then import a hit's URL
@@ -503,6 +503,17 @@ rhylthyme search "pad thai" -i spoonacular                           # then impo
 **Options:** `-i IMPORTER` (default: chosen from the URL), `-o PATH`,
 `--stdout`, `--publish` (and `--open`), `--no-validate`. `-` reads pasted
 source from stdin (with `-i`).
+
+### `rhylthyme render`
+
+Draws a program as an SVG, PNG or PDF figure through the `rhylthyme-timeline`
+package (included in `pip install rhylthyme`; needs Node.js 18+). Every
+option of `rhylthyme-render` is accepted: `rhylthyme render --help`.
+
+```bash
+rhylthyme render dinner.json -o dinner.png --style web --palette vivid --color-by task
+rhylthyme render blot.json -o figure.pdf --style publication --legend right
+```
 
 ### `rhylthyme plan`
 

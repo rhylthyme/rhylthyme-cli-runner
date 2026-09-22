@@ -554,6 +554,16 @@ def _register_import_commands():
 _register_import_commands()
 
 
+def _register_render_command():
+    """Attach `render` (rhylthyme_cli_runner.render_cli)."""
+    from .render_cli import register as register_render
+
+    register_render(cli)
+
+
+_register_render_command()
+
+
 def main():
     """Entry point for the CLI."""
     cli()

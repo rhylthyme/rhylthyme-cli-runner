@@ -68,6 +68,12 @@ package.
 `rhylthyme search QUERY -i themealdb|spoonacular|protocolsio` finds things
 to import.
 
+### `rhylthyme render PROGRAM_FILE -o OUT.svg|png|pdf [options]`
+
+A static figure of the schedule (needs Node.js). `--style web|publication`,
+`--palette`, `--color-by task`, `--start-at ISO`, `--legend right`;
+`rhylthyme render --help` lists everything.
+
 ### `rhylthyme run PROGRAM_FILE`
 
 Interactive terminal runner. Needs a real terminal.

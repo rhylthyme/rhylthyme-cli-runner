@@ -49,6 +49,18 @@ def _pick(registry, source: str, importer_name: Optional[str]):
 
 
 def _import_one(importer, source: str, text: Optional[str]):
+    # An importer that works on text (Opentrons) gets a URL's body fetched
+    # for it; the URL-native importers fetch for themselves.
+    url_native = bool(getattr(importer, "supported_domains", None))
+    if (
+        text is None
+        and source.startswith(("http://", "https://"))
+        and hasattr(importer, "import_from_source")
+        and not url_native
+    ):
+        from .remote.cli import _fetch_bytes
+
+        text = _fetch_bytes(source).decode("utf-8")
     if text is not None and hasattr(importer, "import_from_source"):
         return importer.import_from_source(text)
     if text is not None and hasattr(importer, "import_from_content"):
@@ -129,7 +141,7 @@ def import_command(
     .cook or .pptx file. `-` reads the source text from stdin (with -i).
       rhylthyme import https://www.seriouseats.com/the-best-chili-recipe
       rhylthyme import 52772 -i themealdb --publish
-      rhylthyme import protocol.py -o protocol.json
+      rhylthyme import https://raw.githubusercontent.com/Opentrons/Protocols/develop/protocols/007992/rna_isolation.ot2.apiv2.py
       rhylthyme importers          # what is installed
     """
     registry = _registry()

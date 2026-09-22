@@ -226,3 +226,17 @@ def test_without_the_importers_package_the_message_says_how_to_get_it(monkeypatc
     monkeypatch.setitem(sys.modules, "rhylthyme_importers", None)
     r = CliRunner().invoke(cli, ["import", "https://fake.example/dinner"])
     assert r.exit_code != 0 and "pip install rhylthyme-importers" in r.output
+
+
+def test_a_text_importer_gets_a_urls_body(fake, monkeypatch):
+    from rhylthyme_cli_runner.remote import cli as remote
+
+    monkeypatch.setattr(
+        remote, "_fetch_bytes", lambda url, limit=0: b"def run(protocol): pass\n"
+    )
+    fake.supported_domains = []  # a file/text importer, like Opentrons
+    r = CliRunner().invoke(
+        cli, ["import", "https://fake.example/protocol.py", "-i", "fake", "--stdout"]
+    )
+    assert r.exit_code == 0, r.output
+    assert fake.calls[-1] == ("text", "def run(protocol): pass\n", None)
