@@ -252,7 +252,7 @@ def check_initialize(client, endpoint, opts, state) -> str:
     return f"{info['name']} {info.get('version', '?')}, protocol {result['protocolVersion']}"
 
 
-TOOL_DEFINITION_BUDGET_CHARS = 16000
+TOOL_DEFINITION_BUDGET_CHARS = 17000
 
 
 def check_tools(client, endpoint, opts, state) -> str:

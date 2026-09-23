@@ -501,8 +501,17 @@ rhylthyme search "pad thai" -i spoonacular                           # then impo
 ```
 
 **Options:** `-i IMPORTER` (default: chosen from the URL), `-o PATH`,
-`--stdout`, `--publish` (and `--open`), `--no-validate`. `-` reads pasted
-source from stdin (with `-i`).
+`--stdout`, `--publish` (and `--open`), `--no-validate`, `--review`. `-` reads
+pasted source from stdin (with `-i`).
+
+`--review` sends the import and its source to a model on the server (GPT-5.6
+Luna, the model that related steps best in the paper's evaluation) and prints
+what looks wrong: a default duration on "simmer until thick", a step the
+parser dropped, steps chained that the source runs in parallel, a total that
+disagrees with the source. It needs `rhylthyme login`, spends one model call
+(capped per day), and changes nothing: the findings are yours to apply. On
+rhylthyme.com the same review runs automatically after every import when you
+are signed in.
 
 ### `rhylthyme render`
 

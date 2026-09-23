@@ -89,6 +89,10 @@ F1 from about 0.2 to about 0.6 on every model tested):
    together.
 
 Then validate (capability 2) and fix every finding before doing anything else.
+An imported program deserves a second opinion: `rhylthyme import ... --review`
+(or the `review_program` MCP tool) has a model read it against the source and
+report wrong durations, dropped steps and bad ordering; apply what it says,
+then validate again.
 
 A complete, valid program:
 

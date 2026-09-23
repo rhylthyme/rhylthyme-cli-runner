@@ -134,8 +134,21 @@ def _validation(program: dict):
 @click.option(
     "--no-validate", is_flag=True, help="Skip validation of the imported program."
 )
+@click.option(
+    "--review",
+    "do_review",
+    is_flag=True,
+    help="Have a model read the import against its source and report what looks wrong (needs `rhylthyme login`).",
+)
 def import_command(
-    source, importer_name, output, to_stdout, do_publish, open_url, no_validate
+    source,
+    importer_name,
+    output,
+    to_stdout,
+    do_publish,
+    open_url,
+    no_validate,
+    do_review,
 ):
     """Import a recipe, protocol or deck as a program.
 
@@ -145,6 +158,7 @@ def import_command(
     .cook or .pptx file. `-` reads the source text from stdin (with -i).
       rhylthyme import https://www.seriouseats.com/the-best-chili-recipe
       rhylthyme import 52772 -i themealdb --publish
+      rhylthyme import recipe.cook -i cooklang --review   # a second opinion on durations, order, gaps
       rhylthyme import https://raw.githubusercontent.com/Opentrons/Protocols/develop/protocols/007992/rna_isolation.ot2.apiv2.py
       rhylthyme importers          # what is installed
     """
@@ -157,8 +171,22 @@ def import_command(
             )
         text = sys.stdin.read()
     importer = _pick(registry, source, importer_name)
+    token = None
+    if do_review:
+        # Before any work: the review needs an account, say so now.
+        from .remote import auth
+
+        try:
+            token = auth.access_token()
+        except auth.AuthError as e:
+            raise click.ClickException(
+                f"{e} (--review sends the import to a model on the server, which needs your account.)"
+            )
     click.echo(f"Importing with {importer.name}…", err=True)
     result = _import_one(importer, source, text)
+    source_text = (
+        text if text is not None else _source_text_for_review(importer, source)
+    )
     if not result.success:
         raise click.ClickException(result.error or "import failed")
     program = result.program
@@ -167,9 +195,10 @@ def import_command(
         v = _validation(program)
         errors = v.get("errors") or v.get("logic_errors") or []
         if not v.get("is_valid", v.get("valid", True)):
-            for e in errors[:8]:
+            for finding in errors[:8]:
                 click.echo(
-                    f"  ✗ {e if isinstance(e, str) else e.get('message', e)}", err=True
+                    f"  ✗ {finding if isinstance(finding, str) else finding.get('message', finding)}",
+                    err=True,
                 )
             raise click.ClickException(
                 "The imported program does not validate; not published. Re-run with --no-validate to keep it anyway."
@@ -191,6 +220,14 @@ def import_command(
         target.write_text(payload + "\n")
         click.echo(f"Saved {target}", err=True)
 
+    if do_review:
+        _review(
+            program,
+            token,
+            source_text=source_text,
+            source_url=source if source.startswith(("http://", "https://")) else None,
+        )
+
     if do_publish:
         from .remote.cli import publish as publish_command
 
@@ -210,6 +247,67 @@ def import_command(
             )
         finally:
             Path(tmp_path).unlink(missing_ok=True)
+
+
+def _source_text_for_review(importer, source: str) -> Optional[str]:
+    """The text the import came from, when the CLI has it: a local file, or
+    a URL the CLI fetched for a text importer. Recipe-site imports do not
+    keep the page, so the reviewer gets the URL instead."""
+    path = Path(source)
+    if path.is_file() and path.suffix.lower() in (".cook", ".py", ".txt", ".md"):
+        try:
+            return path.read_text()
+        except OSError:
+            return None
+    if (
+        source.startswith(("http://", "https://"))
+        and hasattr(importer, "import_from_source")
+        and not getattr(importer, "supported_domains", None)
+    ):
+        try:
+            from .remote.cli import _fetch_bytes
+
+            return _fetch_bytes(source).decode("utf-8")
+        except Exception:  # noqa: BLE001
+            return None
+    return None
+
+
+def _review(
+    program: dict, token: str, *, source_text: Optional[str], source_url: Optional[str]
+) -> None:
+    from .remote import mcp_client as MC
+
+    click.echo("Reviewing…", err=True)
+    client = MC.McpClient(url=MC.endpoint_for(None))
+    args = {"program": program, "token": token}
+    if source_text:
+        args["source_text"] = source_text
+    elif source_url:
+        args["source_url"] = source_url
+    try:
+        result = client.call_tool("review_program", args, timeout=150)
+    except MC.ToolError as e:
+        raise click.ClickException(f"Review failed: {e.text}")
+    except MC.McpError as e:
+        raise click.ClickException(f"Review failed: {e}")
+    review = result.structured or {}
+    findings = review.get("findings") or []
+    mark = {"error": "✗", "warning": "!", "note": "·"}
+    click.echo("")
+    click.echo(
+        review.get("summary")
+        or ("Review: no problems found." if not findings else "Review:")
+    )
+    for f in findings:
+        where = f" [{f['stepId']}]" if f.get("stepId") else ""
+        click.echo(f"  {mark.get(f.get('severity'), '·')}{where} {f.get('message')}")
+        if f.get("suggestion"):
+            click.echo(f"      → {f['suggestion']}")
+    if findings:
+        click.echo(
+            "\nThe file is unchanged; edit it and `rhylthyme validate` again.", err=True
+        )
 
 
 @click.command("search")

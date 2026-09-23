@@ -248,3 +248,66 @@ def test_a_missing_local_file_says_so(fake, tmp_path):
     )
     assert r.exit_code != 0 and "No such file" in r.output
     assert fake.calls == []
+
+
+def test_review_needs_a_login_before_any_work(fake, monkeypatch):
+    monkeypatch.delenv("RHYLTHYME_TOKEN", raising=False)
+    from rhylthyme_cli_runner.remote import auth
+
+    monkeypatch.setattr(auth, "load_credentials", lambda path=None: None)
+    r = CliRunner().invoke(
+        cli, ["import", "https://fake.example/dinner", "--review", "--stdout"]
+    )
+    assert r.exit_code != 0 and "rhylthyme login" in r.output
+    assert fake.calls == [], "nothing was imported"
+
+
+def test_review_sends_the_program_and_source_and_prints_findings(
+    fake, monkeypatch, tmp_path
+):
+    monkeypatch.setenv("RHYLTHYME_TOKEN", "tok-1")
+    from rhylthyme_cli_runner.remote import mcp_client as MC
+
+    seen = {}
+
+    class FakeMcp:
+        def __init__(self, url=None, **kw):
+            seen["url"] = url
+
+        def call_tool(self, name, args, timeout=None, **kw):
+            seen["tool"], seen["args"] = name, args
+            return MC.ToolResult(
+                content=[{"type": "text", "text": "x"}],
+                structured={
+                    "summary": "One problem.",
+                    "usable": False,
+                    "findings": [
+                        {
+                            "severity": "error",
+                            "stepId": "s1",
+                            "message": "Too short.",
+                            "suggestion": "90m",
+                        },
+                        {"severity": "note", "message": "Fine."},
+                    ],
+                },
+            )
+
+    monkeypatch.setattr(MC, "McpClient", FakeMcp)
+    src = tmp_path / "dinner.cook"
+    src.write_text("Simmer @sauce for ~{90%minutes}.\n")
+    fake.supported_domains = []
+    r = CliRunner().invoke(
+        cli,
+        ["import", str(src), "-i", "fake", "--review", "-o", str(tmp_path / "d.json")],
+    )
+    assert r.exit_code == 0, r.output
+    assert seen["tool"] == "review_program"
+    assert seen["args"]["token"] == "tok-1"
+    assert seen["args"]["program"]["programId"] == "fake-dinner"
+    assert seen["args"]["source_text"].startswith("Simmer @sauce")
+    assert (
+        "One problem." in r.output
+        and "✗ [s1] Too short." in r.output
+        and "→ 90m" in r.output
+    )

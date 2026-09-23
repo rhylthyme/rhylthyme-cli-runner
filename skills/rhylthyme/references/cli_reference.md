@@ -64,6 +64,7 @@ package.
 | `-o PATH`, `--stdout` | where the program goes |
 | `--publish`, `--open` | also publish a live timeline |
 | `--no-validate` | keep an import that does not validate |
+| `--review` | a model reads the import against its source and lists what looks wrong (durations, dropped steps, order, total); needs `rhylthyme login`; changes nothing |
 
 `rhylthyme search QUERY -i themealdb|spoonacular|protocolsio` finds things
 to import.
