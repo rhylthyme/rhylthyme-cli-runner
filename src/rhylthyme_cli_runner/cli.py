@@ -256,6 +256,15 @@ def validate(program_files, schema, environment, verbose, json_output, strict):
         "answers, which are what the record stores in context.userTags"
     ),
 )
+@click.option(
+    "--workcell",
+    type=click.Path(exists=True, dir_okay=False),
+    default=None,
+    help=(
+        "Workcell file mapping the program's instrument tools to galago-tools "
+        "servers; required for programs with instrument steps (runs simulated)"
+    ),
+)
 def run(
     program_file,
     schema,
@@ -270,6 +279,7 @@ def run(
     history_file,
     no_history,
     predict_context,
+    workcell,
 ):
     """
     Run a program file with the interactive UI.
@@ -311,6 +321,7 @@ def run(
         history_file=history_file,
         use_history=not no_history,
         predict_context=predict_context,
+        workcell=workcell,
     )
 
 

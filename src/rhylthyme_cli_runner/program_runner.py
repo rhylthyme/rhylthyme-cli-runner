@@ -26,6 +26,12 @@ from typing import Any, Dict, List, Optional, Sequence, Set, Tuple, Union
 import yaml  # Add import for YAML support
 from colorama import Fore, Style
 
+from .instruments import (
+    InstrumentSetupError,
+    attach_instruments,
+    program_uses_instruments,
+)
+
 # Instance naming produced by the replicate expander: "Bake tray (2 of 3)".
 # The runner splits it back apart so that grouped rows can show the base name
 # once ("Bake tray ×3") and per-instance rows a canonical "[2 of 3]" label.
@@ -221,6 +227,16 @@ class Step:
                         duration.get("defaultSeconds", self.min_seconds + 60)
                     )
                     self.manual_trigger_name = duration.get("triggerName")
+
+        # A galago instrument command (rhylthyme-galago): sent when the step
+        # starts; the step ends when the instrument replies, never on a timer.
+        # With no authored duration it plans as indefinite.
+        self.instrument = step_data.get("instrument")
+        self.instrument_reply: Optional[Dict[str, Any]] = None
+        if self.instrument and self.duration_type is None:
+            self.duration_type = DurationType.INDEFINITE
+            self.min_seconds = 0.0
+            self.default_seconds = 60.0
 
         # Extract start trigger information
         start_trigger_data = step_data["startTrigger"]
@@ -817,6 +833,9 @@ class ProgramRunner:
         self.paused_wall_seconds = 0.0
 
         self.command_queue: queue.Queue[str] = queue.Queue()
+        # Instrument replies, posted from executor threads by
+        # post_instrument_reply() and applied in process_commands().
+        self.instrument_replies: queue.Queue = queue.Queue()
 
         # Initialize tracks - will be populated later during step processing
         tracks = program.get("tracks", [])
@@ -1000,8 +1019,49 @@ class ProgramRunner:
             self.is_running = False
             self.status_message = "Program execution completed."
 
+    def post_instrument_reply(self, step_id: str, reply: Dict[str, Any]) -> None:
+        """
+        Hand an instrument's reply to the runner. Thread-safe; applied on the
+        next update().
+
+        Args:
+            step_id: The instrument step the reply is for
+            reply: {"ok": bool, "code": str, "errorMessage": str, "metadata": dict}
+        """
+        self.instrument_replies.put((step_id, reply))
+
+    def _apply_instrument_reply(self, step_id: str, reply: Dict[str, Any]) -> None:
+        step = self.steps.get(step_id)
+        if step is None or step.status != StepStatus.RUNNING:
+            # Ended some other way first (aborted, completed by hand)
+            logging.info(f"Ignoring instrument reply for {step_id}: not running")
+            return
+        step.instrument_reply = reply
+        self.emit_event(
+            "instrument_reply",
+            {"step_id": step_id, "time": self.current_time, **reply},
+        )
+        if reply.get("ok"):
+            self.complete_step(step, self.current_time, ended_by="instrument")
+            return
+        instrument = step.instrument or {}
+        reason = (
+            f"{instrument.get('tool')}.{instrument.get('command')} failed: "
+            f"{reply.get('code')}"
+        )
+        if reply.get("errorMessage"):
+            reason += f" ({reply['errorMessage']})"
+        self.status_message = reason
+        self.abort_step(step, self.current_time, reason=reason)
+
     def process_commands(self) -> None:
         """Process commands from the command queue."""
+        while not self.instrument_replies.empty():
+            try:
+                step_id, reply = self.instrument_replies.get_nowait()
+            except queue.Empty:
+                break
+            self._apply_instrument_reply(step_id, reply)
         while not self.command_queue.empty():
             try:
                 command = self.command_queue.get_nowait()
@@ -1221,7 +1281,7 @@ class ProgramRunner:
         executor ends them); indefinite steps never end on their own.
         """
         for step in self.steps.values():
-            if step.status != StepStatus.RUNNING:
+            if step.status != StepStatus.RUNNING or step.instrument:
                 continue
             if step.duration_type == DurationType.FIXED:
                 if step.is_ready_to_complete(self.current_time):
@@ -3156,6 +3216,7 @@ def run_program(
     history_file: Optional[str] = None,
     use_history: bool = True,
     predict_context: Optional[Sequence[str]] = None,
+    workcell: Optional[str] = None,
 ) -> Optional[str]:
     """
     Run a program file with the interactive UI.
@@ -3182,6 +3243,9 @@ def run_program(
             "predicted"``
         predict_context: ``key=value`` context to predict for
             (``--predict-context``), defaulting to the factor answers
+        workcell: Workcell file mapping the program's instrument tools to
+            galago-tools servers (``--workcell``); required when any step has
+            an ``instrument``. Tools always run simulated for now.
 
     Returns:
         Path of the written run record, or None if none was written.
@@ -3276,6 +3340,22 @@ def run_program(
     # Create the program runner
     runner = ProgramRunner(program, time_scale=time_scale, auto_start=auto_start)
 
+    # Instrument steps: configure the workcell's tools before the clock starts
+    instruments = None
+    if workcell or program_uses_instruments(program):
+        if not workcell:
+            print(
+                "This program has instrument steps; pass --workcell FILE "
+                "naming the galago tools to run them on."
+            )
+            sys.exit(1)
+        try:
+            instruments = attach_instruments(runner, workcell)
+        except InstrumentSetupError as e:
+            print(f"Cannot start instruments:\n{e}")
+            sys.exit(1)
+        print("\n".join(instruments.report()))
+
     # Predicted offsets: history is read once, before the clock starts, and the
     # predictions are frozen for the whole run.
     if predicted_offsets:
@@ -3311,6 +3391,13 @@ def run_program(
         print("Program execution interrupted.")
         outcome = "abandoned"
     finally:
+        if instruments is not None:
+            pending = instruments.shutdown()
+            if pending:
+                print(
+                    "Instrument commands still running when the runner stopped: "
+                    + ", ".join(pending)
+                )
         if recorder is not None:
             written = recorder.finalize(outcome=outcome)
             if written:
