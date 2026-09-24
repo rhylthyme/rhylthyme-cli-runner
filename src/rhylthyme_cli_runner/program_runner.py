@@ -107,7 +107,7 @@ except ImportError:
         return True, []
 
     def perform_additional_validations(
-        program: Dict[str, Any], strict: bool = False
+        program: Dict[str, Any], strict: bool = False, workcell: Any = None
     ) -> List[str]:
         return []
 
@@ -3305,7 +3305,9 @@ def run_program(
         try:
             schema = load_program_file(schema_file)
             is_valid, schema_errors = validate_program(program, schema)
-            additional_errors = perform_additional_validations(program)
+            additional_errors = perform_additional_validations(
+                program, workcell=workcell
+            )
 
             if not is_valid or additional_errors:
                 print(f"Program validation failed for {program_file}:")

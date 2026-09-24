@@ -17,6 +17,7 @@ import yaml
 from jsonschema import SchemaError, ValidationError, validate
 
 from .instance_checks import Finding, validate_instances
+from .instruments import instrument_findings
 
 # Import environment loader for environment-based validation
 try:
@@ -183,21 +184,24 @@ def _legacy_finding(message: str) -> Finding:
 
 
 def perform_additional_validations_structured(
-    program: Dict[str, Any], strict: bool = False
+    program: Dict[str, Any], strict: bool = False, workcell: Any = None
 ) -> List[Finding]:
     """
     All logic checks as structured findings: the pre-existing checks (each
     rendered by ``str()`` exactly as before) followed by the schema 0.3.0
     `instances` / `replicates` checks from :mod:`instance_checks`, which
-    include warnings. Pass the UNEXPANDED program for the latter to fire.
+    include warnings, and the instrument-step checks (galago commands, against
+    ``workcell`` — a path or dict — when given). Pass the UNEXPANDED program
+    for the `instances` checks to fire.
     """
     findings = [_legacy_finding(msg) for msg in _legacy_logic_errors(program, strict)]
     findings.extend(validate_instances(program))
+    findings.extend(instrument_findings(program, workcell))
     return findings
 
 
 def perform_additional_validations(
-    program: Dict[str, Any], strict: bool = False
+    program: Dict[str, Any], strict: bool = False, workcell: Any = None
 ) -> List[str]:
     """
     Perform additional validations that go beyond basic schema validation.
@@ -208,7 +212,7 @@ def perform_additional_validations(
     """
     return [
         str(f)
-        for f in perform_additional_validations_structured(program, strict)
+        for f in perform_additional_validations_structured(program, strict, workcell)
         if f.severity == "error"
     ]
 
@@ -624,6 +628,7 @@ def validate_program_file_structured(
     schema_file: str = "program_schema.json",
     verbose: bool = False,
     strict: bool = False,
+    workcell: Any = None,
 ) -> dict:
     """
     Validate a program file and return a structured result for machine-readable output.
@@ -636,7 +641,9 @@ def validate_program_file_structured(
     is_valid, schema_errors = validate_program(program, schema)
     # Logic checks run on the unexpanded program, so the schema 0.3.0
     # `instances` / `replicates` checks see the authored declarations.
-    logic_findings = perform_additional_validations_structured(program, strict=strict)
+    logic_findings = perform_additional_validations_structured(
+        program, strict=strict, workcell=workcell
+    )
     logic_errors = [str(f) for f in logic_findings if f.severity == "error"]
     findings = [
         Finding.legacy_error("schema_error", msg, "program").to_dict()
@@ -668,6 +675,7 @@ def validate_program_file(
     verbose: bool = False,
     json_output: bool = False,
     strict: bool = False,
+    workcell: Any = None,
 ) -> bool:
     """
     Validate a program file against the schema.
@@ -675,7 +683,7 @@ def validate_program_file(
     If strict is True, enforce all tasks must be defined in resourceConstraints.
     """
     result = validate_program_file_structured(
-        program_file, schema_file, verbose, strict
+        program_file, schema_file, verbose, strict, workcell
     )
     if json_output:
         import json as _json

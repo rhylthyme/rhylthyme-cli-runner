@@ -189,3 +189,114 @@ def test_run_refuses_instrument_program_without_workcell(tmp_path, capsys):
     with pytest.raises(SystemExit):
         run_program(str(path), validate=False, record=False)
     assert "pass --workcell" in capsys.readouterr().out
+
+
+# --- Validation (phase 2) --------------------------------------------------
+
+
+def _write(tmp_path, name, data):
+    path = tmp_path / name
+    path.write_text(json.dumps(data))
+    return str(path)
+
+
+def _with_instrument(**changes):
+    program = copy.deepcopy(PROGRAM)
+    program["tracks"][0]["steps"][1]["instrument"].update(changes)
+    return program
+
+
+def _codes(findings):
+    return [(f.code, f.severity) for f in findings]
+
+
+def test_programs_without_instruments_need_no_package(monkeypatch):
+    from rhylthyme_cli_runner.instruments import instrument_findings
+
+    monkeypatch.setitem(sys.modules, "rhylthyme_galago", None)
+    plain = copy.deepcopy(PROGRAM)
+    del plain["tracks"][0]["steps"][1]["instrument"]
+    assert instrument_findings(plain) == []
+
+
+def test_missing_package_warns_without_workcell_and_fails_with_one(monkeypatch):
+    from rhylthyme_cli_runner.instruments import instrument_findings
+
+    monkeypatch.setitem(sys.modules, "rhylthyme_galago", None)
+    [finding] = instrument_findings(PROGRAM)
+    assert _codes([finding]) == [("instrument_unchecked", "warning")]
+    assert "rhylthyme[galago]" in finding.fix
+    [finding] = instrument_findings(PROGRAM, WORKCELL)
+    assert _codes([finding]) == [("instrument_unchecked", "error")]
+
+
+def test_findings_name_the_step_and_field():
+    pytest.importorskip("rhylthyme_galago")
+    from rhylthyme_cli_runner.instruments import instrument_findings
+
+    [finding] = instrument_findings(
+        _with_instrument(toolType="bioshake", params={"speed": "fast"})
+    )
+    assert finding.code == "instrument_invalid_command"
+    assert finding.where == "step:shake"
+    assert finding.message == (
+        "Step 'shake': shaker (bioshake) start_shake: "
+        "param 'speed' must be an integer, got 'fast'"
+    )
+    assert _codes(instrument_findings(PROGRAM)) == [("instrument_unchecked", "warning")]
+    assert instrument_findings(PROGRAM, WORKCELL) == []
+
+
+def test_workcell_findings():
+    pytest.importorskip("rhylthyme_galago")
+    from rhylthyme_cli_runner.instruments import instrument_findings
+
+    assert _codes(instrument_findings(_with_instrument(tool="reader"), WORKCELL)) == [
+        ("instrument_unknown_tool", "error")
+    ]
+    assert _codes(
+        instrument_findings(_with_instrument(toolType="liconic"), WORKCELL)
+    ) == [("instrument_tool_type_mismatch", "error")]
+    [bad] = instrument_findings(PROGRAM, {"tools": [{"name": "shaker"}]})
+    assert (bad.code, bad.where) == ("workcell_invalid", "workcell")
+    assert "missing type, host, port" in bad.message
+
+
+@pytest.mark.cli
+def test_validate_cli_with_workcell(tmp_path):
+    pytest.importorskip("rhylthyme_galago")
+    from click.testing import CliRunner
+
+    from rhylthyme_cli_runner.cli import cli
+
+    good = _write(tmp_path, "good.json", PROGRAM)
+    bad = _write(tmp_path, "bad.json", _with_instrument(command="spin"))
+    workcell = _write(tmp_path, "lab.json", WORKCELL)
+
+    ok = CliRunner().invoke(cli, ["validate", good, "--workcell", workcell])
+    assert ok.exit_code == 0, ok.output
+    assert "instrument_unchecked" not in ok.output
+
+    offline = CliRunner().invoke(cli, ["validate", good])
+    assert offline.exit_code == 0
+    assert "instrument_unchecked" in offline.output
+
+    failed = CliRunner().invoke(
+        cli, ["validate", bad, "--workcell", workcell, "--json"]
+    )
+    assert failed.exit_code == 1
+    result = json.loads(failed.output)
+    [finding] = [f for f in result["findings"] if f["code"].startswith("instrument")]
+    assert finding["where"] == "step:shake"
+    assert "bioshake has no command 'spin'" in finding["message"]
+
+
+def test_run_refuses_invalid_instrument_command(tmp_path, capsys):
+    pytest.importorskip("rhylthyme_galago")
+    from rhylthyme_cli_runner.cli import _default_schema_path
+
+    path = _write(tmp_path, "p.json", _with_instrument(params={"rpm": 5}))
+    workcell = _write(tmp_path, "lab.json", WORKCELL)
+    with pytest.raises(SystemExit):
+        run_program(path, _default_schema_path(), record=False, workcell=workcell)
+    assert "unknown param 'rpm'" in capsys.readouterr().out

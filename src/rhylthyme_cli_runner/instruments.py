@@ -10,6 +10,8 @@ sent on a worker thread; the reply comes back through
 from dataclasses import dataclass
 from typing import Any, Callable, Dict, List, Mapping, Optional
 
+from .instance_checks import Finding
+
 INSTALL_HINT = "Instrument steps need rhylthyme-galago: pip install 'rhylthyme[galago]'"
 
 
@@ -23,6 +25,45 @@ def program_uses_instruments(program: Mapping[str, Any]) -> bool:
         for track in program.get("tracks", [])
         for step in track.get("steps", [])
     )
+
+
+def instrument_findings(
+    program: Mapping[str, Any], workcell_source=None
+) -> List[Finding]:
+    """
+    Validation findings for a program's instrument steps: galago commands and
+    params checked against each step's toolType, or against the workcell's
+    tools when ``workcell_source`` (a path or dict) is given.
+    """
+    if workcell_source is None and not program_uses_instruments(program):
+        return []
+    try:
+        import rhylthyme_galago as galago
+    except ImportError:
+        return [
+            Finding(
+                code="instrument_unchecked",
+                message="Instrument steps were not checked",
+                where="program",
+                fix=INSTALL_HINT,
+                severity="error" if workcell_source is not None else "warning",
+            )
+        ]
+    workcell = None
+    if workcell_source is not None:
+        try:
+            workcell = galago.load_workcell(workcell_source)
+        except galago.WorkcellError as e:
+            return [Finding(code="workcell_invalid", message=str(e), where="workcell")]
+    return [
+        Finding(
+            code=issue.code,
+            message=issue.message,
+            where=f"step:{issue.step_id}",
+            severity=issue.severity,
+        )
+        for issue in galago.check_program(program, workcell)
+    ]
 
 
 def _reply_dict(reply) -> Dict[str, Any]:

@@ -105,7 +105,18 @@ def cli(ctx, environments_dir):
     is_flag=True,
     help="Enforce all tasks must be defined in resourceConstraints (strict mode)",
 )
-def validate(program_files, schema, environment, verbose, json_output, strict):
+@click.option(
+    "--workcell",
+    type=click.Path(exists=True, dir_okay=False),
+    default=None,
+    help=(
+        "Workcell file: check instrument steps against its galago tools "
+        "(tool names, types, commands and params)"
+    ),
+)
+def validate(
+    program_files, schema, environment, verbose, json_output, strict, workcell
+):
     """
     Validate one or more program files against the schema.
 
@@ -115,6 +126,8 @@ def validate(program_files, schema, environment, verbose, json_output, strict):
     Use --json to get machine-readable output for CI or scripting.
     Use --strict to require all tasks used in steps/buffers to be defined in resourceConstraints.
     Use -e/--environment to validate against specific environment constraints.
+    Use --workcell to check instrument steps against a lab's galago tools;
+    without it, commands are checked against each step's toolType.
     """
     # Set up environment for validation if specified
     if environment:
@@ -165,7 +178,7 @@ def validate(program_files, schema, environment, verbose, json_output, strict):
     all_valid = True
     for program_file in program_files:
         success = validate_program_file(
-            program_file, schema, verbose, json_output, strict
+            program_file, schema, verbose, json_output, strict, workcell
         )
         if not success:
             all_valid = False
