@@ -429,6 +429,12 @@ def _load_program(program_file: str) -> dict:
             program = json.loads(text)
     except Exception as e:  # noqa: BLE001
         _fail(f"Could not read {program_file}: {e}")
+    if isinstance(program, dict) and isinstance(program.get("tools"), list):
+        # A workcell (lab tool addresses) must never leave this machine.
+        _fail(
+            f"{program_file} is a workcell file, not a program; workcells stay "
+            "on this machine and are never sent to rhylthyme.com."
+        )
     if not isinstance(program, dict) or not isinstance(program.get("tracks"), list):
         _fail(f"{program_file} is not a Rhylthyme program (no `tracks` list).")
     assert isinstance(program, dict)

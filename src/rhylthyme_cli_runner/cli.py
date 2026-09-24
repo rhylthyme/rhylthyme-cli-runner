@@ -275,8 +275,21 @@ def validate(
     default=None,
     help=(
         "Workcell file mapping the program's instrument tools to galago-tools "
-        "servers; required for programs with instrument steps (runs simulated)"
+        "servers; required for programs with instrument steps"
     ),
+)
+@click.option(
+    "--live",
+    is_flag=True,
+    help=(
+        "Run instrument steps on real hardware instead of galago's simulated "
+        "mode; shows what will run and asks first"
+    ),
+)
+@click.option(
+    "--confirm-live",
+    is_flag=True,
+    help="Answer the --live question in advance (for scripts)",
 )
 def run(
     program_file,
@@ -293,6 +306,8 @@ def run(
     no_history,
     predict_context,
     workcell,
+    live,
+    confirm_live,
 ):
     """
     Run a program file with the interactive UI.
@@ -319,6 +334,11 @@ def run(
     --history FILE to read a specific corpus, --no-history to turn it off,
     and --predict-context KEY=VALUE to predict for a context other than the
     factor answers.
+
+    Programs with instrument steps need --workcell FILE (galago-tools servers,
+    via rhylthyme-galago). Tools run in galago's simulated mode unless you pass
+    --live, which lists the tools and commands and asks you to type 'live'
+    before anything is configured; --confirm-live answers for scripts.
     """
     run_program(
         program_file,
@@ -335,6 +355,8 @@ def run(
         use_history=not no_history,
         predict_context=predict_context,
         workcell=workcell,
+        live=live,
+        confirm_live=confirm_live,
     )
 
 

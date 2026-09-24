@@ -28,7 +28,7 @@ from colorama import Fore, Style
 
 from .instruments import (
     InstrumentSetupError,
-    attach_instruments,
+    open_instruments,
     program_uses_instruments,
 )
 
@@ -3202,6 +3202,20 @@ def prepare_predictions(
     return predictions
 
 
+def _confirm_live_run(pre_confirmed: bool) -> bool:
+    """Ask before a --live run moves real hardware."""
+    if pre_confirmed:
+        return True
+    if not sys.stdin.isatty():
+        print("--live needs confirmation: run it in a terminal or pass --confirm-live.")
+        return False
+    try:
+        answer = input("Type 'live' to send these commands to real instruments: ")
+    except EOFError:
+        return False
+    return answer.strip().lower() == "live"
+
+
 def run_program(
     program_file: str,
     schema_file: str = "program_schema.json",
@@ -3217,6 +3231,8 @@ def run_program(
     use_history: bool = True,
     predict_context: Optional[Sequence[str]] = None,
     workcell: Optional[str] = None,
+    live: bool = False,
+    confirm_live: bool = False,
 ) -> Optional[str]:
     """
     Run a program file with the interactive UI.
@@ -3245,7 +3261,12 @@ def run_program(
             (``--predict-context``), defaulting to the factor answers
         workcell: Workcell file mapping the program's instrument tools to
             galago-tools servers (``--workcell``); required when any step has
-            an ``instrument``. Tools always run simulated for now.
+            an ``instrument``. Tools run in galago's simulated mode unless
+            ``live``.
+        live: Run instrument steps on real hardware (``--live``). Shows what
+            will run and asks for confirmation before any tool is configured.
+        confirm_live: Skip that question (``--confirm-live``); required when
+            stdin is not a terminal.
 
     Returns:
         Path of the written run record, or None if none was written.
@@ -3352,11 +3373,23 @@ def run_program(
             )
             sys.exit(1)
         try:
-            instruments = attach_instruments(runner, workcell)
+            instruments = open_instruments(runner.program, workcell, live=live)
+            if live:
+                print("\n".join(instruments.summary(runner.program)))
+                if not _confirm_live_run(confirm_live):
+                    instruments.shutdown()
+                    print("Live run cancelled; nothing was sent to the instruments.")
+                    sys.exit(1)
+            instruments.prepare()
         except InstrumentSetupError as e:
+            if instruments is not None:
+                instruments.shutdown()
             print(f"Cannot start instruments:\n{e}")
             sys.exit(1)
         print("\n".join(instruments.report()))
+        instruments.attach(runner)
+    elif live:
+        print("--live has no effect: this program has no instrument steps.")
 
     # Predicted offsets: history is read once, before the clock starts, and the
     # predictions are frozen for the whole run.

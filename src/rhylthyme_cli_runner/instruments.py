@@ -7,7 +7,6 @@ sent on a worker thread; the reply comes back through
 ``ProgramRunner.post_instrument_reply`` and ends (or fails) the step.
 """
 
-from dataclasses import dataclass
 from typing import Any, Callable, Dict, List, Mapping, Optional
 
 from .instance_checks import Finding
@@ -75,10 +74,64 @@ def _reply_dict(reply) -> Dict[str, Any]:
     }
 
 
-@dataclass
+def _instrument_steps(program: Mapping[str, Any]) -> List[Dict[str, Any]]:
+    return [
+        step
+        for track in program.get("tracks", [])
+        for step in track.get("steps", [])
+        if step.get("instrument")
+    ]
+
+
+def _params_text(params: Optional[Mapping[str, Any]]) -> str:
+    return ", ".join(f"{k}={v!r}" for k, v in (params or {}).items())
+
+
 class InstrumentSession:
-    executor: Any
-    checks: List[Any]
+    """
+    The workcell tools one run uses. Opening it touches no instrument;
+    ``summary()`` only reads tool status; ``prepare()`` configures the tools
+    (simulated unless the session is live); ``attach()`` wires the runner so
+    each instrument step's command is sent when the step starts.
+    """
+
+    def __init__(self, executor: Any, tools: List[str]):
+        self.executor = executor
+        self.tools = tools
+        self.checks: List[Any] = []
+
+    @property
+    def live(self) -> bool:
+        return not self.executor.simulated
+
+    def summary(self, program: Mapping[str, Any], limit: int = 12) -> List[str]:
+        """What a run will do, for the --live confirmation. Status is read-only."""
+        workcell = self.executor.workcell
+        mode = "LIVE: real hardware will move" if self.live else "simulated"
+        lines = [f"Workcell {workcell.id!r} ({mode})", "Tools:"]
+        for name in self.tools:
+            binding = workcell.tool(name)
+            status = self.executor.client(name).status()
+            lines.append(
+                f"  {name} ({binding.type}) @ {binding.address}: {status.status}"
+            )
+        steps = _instrument_steps(program)
+        lines.append(f"Instrument steps ({len(steps)}):")
+        for step in steps[:limit]:
+            inst = step["instrument"]
+            lines.append(
+                f"  {step['stepId']}: {inst['tool']}.{inst['command']}"
+                f"({_params_text(inst.get('params'))})"
+            )
+        if len(steps) > limit:
+            lines.append(f"  ... and {len(steps) - limit} more")
+        return lines
+
+    def prepare(self) -> None:
+        """Configure every tool; raise InstrumentSetupError unless all are ready."""
+        self.checks = self.executor.prepare(self.tools)
+        if not all(check.ready for check in self.checks):
+            raise InstrumentSetupError("\n".join(self.report()))
 
     def report(self) -> List[str]:
         mode = "simulated" if self.executor.simulated else "LIVE"
@@ -90,24 +143,39 @@ class InstrumentSession:
             lines.append(line + (f" {detail}" if detail and not check.ready else ""))
         return lines
 
+    def attach(self, runner) -> None:
+        executor = self.executor
+
+        def on_reply(step_id: str, reply) -> None:
+            runner.post_instrument_reply(step_id, _reply_dict(reply))
+
+        def on_event(event_type: str, data: Dict[str, Any]) -> None:
+            if event_type != "step_started":
+                return
+            step = runner.steps.get(data["step_id"])
+            if step is not None and step.instrument:
+                executor.submit(step.step_id, step.instrument, on_reply)
+
+        runner.add_event_listener(on_event)
+
     def shutdown(self) -> List[str]:
         """Stop the executor; return steps whose commands were still in flight."""
         return self.executor.shutdown()
 
 
-def attach_instruments(
-    runner,
+def open_instruments(
+    program: Mapping[str, Any],
     workcell_source,
     *,
     client_factory: Optional[Callable] = None,
-    simulated: bool = True,
+    live: bool = False,
 ) -> InstrumentSession:
     """
-    Configure the workcell's tools for ``runner.program`` and wire the runner
-    so each instrument step's command is sent when the step starts.
+    Load the workcell for ``program`` without contacting any tool.
 
-    Raises InstrumentSetupError when rhylthyme-galago is missing, the workcell
-    is invalid, a step names a tool the workcell lacks, or a tool is not ready.
+    Tools run simulated unless ``live`` is true. Raises InstrumentSetupError
+    when rhylthyme-galago is missing, the workcell is invalid, or a step
+    names a tool the workcell lacks.
     """
     try:
         import rhylthyme_galago as galago
@@ -119,7 +187,7 @@ def attach_instruments(
     except galago.WorkcellError as e:
         raise InstrumentSetupError(str(e)) from None
 
-    tools = galago.instrument_tools(runner.program)
+    tools = galago.instrument_tools(program)
     unknown = [t for t in tools if t not in workcell.tools]
     if unknown:
         raise InstrumentSetupError(
@@ -128,24 +196,31 @@ def attach_instruments(
             + f" (tools: {', '.join(sorted(workcell.tools))})"
         )
 
-    kwargs: Dict[str, Any] = {"simulated": simulated}
+    kwargs: Dict[str, Any] = {"simulated": not live}
     if client_factory is not None:
         kwargs["client_factory"] = client_factory
-    executor = galago.InstrumentExecutor(workcell, **kwargs)
-    session = InstrumentSession(executor, executor.prepare(tools))
-    if not all(check.ready for check in session.checks):
-        executor.shutdown()
-        raise InstrumentSetupError("\n".join(session.report()))
+    return InstrumentSession(galago.InstrumentExecutor(workcell, **kwargs), tools)
 
-    def on_reply(step_id: str, reply) -> None:
-        runner.post_instrument_reply(step_id, _reply_dict(reply))
 
-    def on_event(event_type: str, data: Dict[str, Any]) -> None:
-        if event_type != "step_started":
-            return
-        step = runner.steps.get(data["step_id"])
-        if step is not None and step.instrument:
-            executor.submit(step.step_id, step.instrument, on_reply)
-
-    runner.add_event_listener(on_event)
+def attach_instruments(
+    runner,
+    workcell_source,
+    *,
+    client_factory: Optional[Callable] = None,
+    live: bool = False,
+) -> InstrumentSession:
+    """
+    Open, configure and attach in one go (no confirmation step): the tools
+    are configured and ``runner`` sends each instrument step's command when
+    the step starts.
+    """
+    session = open_instruments(
+        runner.program, workcell_source, client_factory=client_factory, live=live
+    )
+    try:
+        session.prepare()
+    except InstrumentSetupError:
+        session.shutdown()
+        raise
+    session.attach(runner)
     return session

@@ -300,3 +300,153 @@ def test_run_refuses_invalid_instrument_command(tmp_path, capsys):
     with pytest.raises(SystemExit):
         run_program(path, _default_schema_path(), record=False, workcell=workcell)
     assert "unknown param 'rpm'" in capsys.readouterr().out
+
+
+# --- Pre-flight and --live (phase 3) ---------------------------------------
+
+
+@pytest.fixture
+def fake_tools(monkeypatch):
+    """Route run_program's tools to one FakeToolClient; never open curses."""
+    pytest.importorskip("rhylthyme_galago")
+    from rhylthyme_galago import FakeToolClient
+
+    import rhylthyme_cli_runner.program_runner as pr
+
+    tool = FakeToolClient()
+    real_open = pr.open_instruments
+    factory_calls = []
+
+    def factory(binding):
+        factory_calls.append(binding.name)
+        return tool
+
+    monkeypatch.setattr(
+        pr,
+        "open_instruments",
+        lambda program, workcell, live=False: real_open(
+            program, workcell, live=live, client_factory=factory
+        ),
+    )
+    ran = []
+    monkeypatch.setattr(pr.curses, "wrapper", lambda fn: ran.append(True))
+    tool.ran = ran
+    tool.factory_calls = factory_calls
+    return tool
+
+
+def _run(tmp_path, **kwargs):
+    program = _write(tmp_path, "p.json", PROGRAM)
+    workcell = _write(tmp_path, "lab.json", WORKCELL)
+    return run_program(
+        program, validate=False, record=False, workcell=workcell, **kwargs
+    )
+
+
+def test_open_instruments_contacts_no_tool():
+    pytest.importorskip("rhylthyme_galago")
+    from rhylthyme_cli_runner.instruments import open_instruments
+
+    made = []
+    session = open_instruments(
+        PROGRAM, WORKCELL, client_factory=lambda b: made.append(b) or None
+    )
+    assert session.tools == ["shaker"] and made == []
+    assert not session.live
+
+
+def test_live_summary_lists_tools_and_commands_without_configuring():
+    pytest.importorskip("rhylthyme_galago")
+    from rhylthyme_galago import FakeToolClient
+
+    from rhylthyme_cli_runner.instruments import open_instruments
+
+    tool = FakeToolClient(status="READY")
+    session = open_instruments(
+        PROGRAM, WORKCELL, client_factory=lambda b: tool, live=True
+    )
+    text = "\n".join(session.summary(PROGRAM))
+    assert "LIVE: real hardware will move" in text
+    assert "shaker (bioshake) @ h:1: READY" in text
+    assert "shake: shaker.start_shake(speed=1000, duration=5)" in text
+    assert tool.configured == []
+
+
+def test_default_run_configures_simulated(fake_tools, tmp_path, capsys):
+    _run(tmp_path)
+    assert [c.simulated for c in fake_tools.configured] == [True]
+    assert fake_tools.ran
+    assert "(simulated)" in capsys.readouterr().out
+
+
+def test_live_without_a_terminal_needs_confirm_live(
+    fake_tools, tmp_path, monkeypatch, capsys
+):
+    monkeypatch.setattr(sys.stdin, "isatty", lambda: False)
+    with pytest.raises(SystemExit):
+        _run(tmp_path, live=True)
+    out = capsys.readouterr().out
+    assert "pass --confirm-live" in out and "nothing was sent" in out
+    assert fake_tools.configured == [] and fake_tools.executed == []
+    assert not fake_tools.ran
+
+
+@pytest.mark.parametrize(
+    "answer, proceeds", [("live", True), ("LIVE ", True), ("yes", False), ("", False)]
+)
+def test_live_asks_in_a_terminal(fake_tools, tmp_path, monkeypatch, answer, proceeds):
+    import builtins
+
+    fake_tools._status = "READY"
+    monkeypatch.setattr(sys.stdin, "isatty", lambda: True)
+    monkeypatch.setattr(builtins, "input", lambda prompt="": answer)
+    if proceeds:
+        _run(tmp_path, live=True)
+        assert [c.simulated for c in fake_tools.configured] == [False]
+        assert fake_tools.ran
+    else:
+        with pytest.raises(SystemExit):
+            _run(tmp_path, live=True)
+        assert fake_tools.configured == [] and not fake_tools.ran
+
+
+def test_confirm_live_skips_the_question(fake_tools, tmp_path, monkeypatch):
+    fake_tools._status = "READY"
+    monkeypatch.setattr(sys.stdin, "isatty", lambda: False)
+    _run(tmp_path, live=True, confirm_live=True)
+    assert [c.simulated for c in fake_tools.configured] == [False]
+
+
+def test_live_refuses_tools_that_are_not_ready(fake_tools, tmp_path, capsys):
+    fake_tools._status = "FAILED"
+    with pytest.raises(SystemExit):
+        _run(tmp_path, live=True, confirm_live=True)
+    out = capsys.readouterr().out
+    assert "shaker @ h:1: FAILED [NOT READY]" in out
+    assert fake_tools.executed == [] and not fake_tools.ran
+
+
+def test_run_record_holds_no_workcell_data(tmp_path):
+    pytest.importorskip("rhylthyme_galago")
+    from rhylthyme_galago import FakeToolClient
+
+    from rhylthyme_cli_runner.history.recorder import RunRecorder
+
+    workcell = copy.deepcopy(WORKCELL)
+    workcell["tools"][0].update(host="10.20.30.40", port=50710)
+    runner = ProgramRunner(copy.deepcopy(PROGRAM), time_scale=100.0)
+    recorder = RunRecorder(
+        runner, source_program=PROGRAM, runs_dir=str(tmp_path)
+    ).attach()
+    session = attach_instruments(
+        runner, workcell, client_factory=lambda b: FakeToolClient()
+    )
+    try:
+        runner.start()
+        runner.command_queue.put("start_program")
+        assert run_until(runner, lambda: not runner.is_running)
+    finally:
+        session.shutdown()
+    written = recorder.finalize()
+    text = open(written).read()
+    assert "10.20.30.40" not in text and "50710" not in text

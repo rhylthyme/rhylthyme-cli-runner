@@ -566,3 +566,43 @@ def test_clock_and_sources_reject_other_schemes():
 
     with pytest.raises(ValueError):
         _fetch_bytes("file:///etc/passwd")
+
+
+# --- Workcells never leave the machine (galago instruments) ---------------
+
+WORKCELL = {
+    "id": "bench",
+    "tools": [
+        {"name": "shaker", "type": "bioshake", "host": "10.20.30.40", "port": 50710}
+    ],
+}
+
+
+@pytest.mark.parametrize("command", ["publish", "analyze"])
+def test_workcell_files_are_refused_before_any_request(
+    command, fake_mcp, config_home, tmp_path
+):
+    f = tmp_path / "lab.json"
+    f.write_text(json.dumps(WORKCELL))
+    result = CliRunner().invoke(cli, [command, str(f)])
+    assert result.exit_code != 0
+    assert "is a workcell file" in result.output
+    assert fake_mcp.calls == []
+
+
+@pytest.mark.parametrize("command", ["publish", "analyze"])
+def test_instrument_programs_are_sent_without_workcell_data(
+    command, fake_mcp, config_home, tmp_path
+):
+    program = json.loads(json.dumps(PROGRAM))
+    program["tracks"][0]["steps"][0]["instrument"] = {
+        "tool": "shaker",
+        "command": "start_shake",
+    }
+    f = tmp_path / "shake.json"
+    f.write_text(json.dumps(program))
+    (tmp_path / "lab.json").write_text(json.dumps(WORKCELL))
+    CliRunner().invoke(cli, [command, str(f)])
+    assert fake_mcp.calls, "the program itself should have been sent"
+    sent = "".join(str(body) for _, body in fake_mcp.calls)
+    assert "10.20.30.40" not in sent and "50710" not in sent
