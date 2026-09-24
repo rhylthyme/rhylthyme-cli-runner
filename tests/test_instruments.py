@@ -913,3 +913,142 @@ def test_hand_step_between_two_incubator_steps_runs_in_order():
         ("step_completed", "store"),
     ]
     assert [c["command"] for c in tool.executed] == ["fetch_plate", "store_plate"]
+
+
+# --- Visibility (phase 6) -----------------------------------------------------
+
+
+class _Screen:
+    """Just enough of a curses window for draw_ui."""
+
+    def __init__(self, height=40, width=140):
+        self.size = (height, width)
+        self.cells = {}
+
+    def getmaxyx(self):
+        return self.size
+
+    def addstr(self, y, x, text, attr=0):
+        self.cells[(y, x)] = text
+
+    def clear(self):
+        self.cells = {}
+
+    def refresh(self):
+        pass
+
+    def text(self):
+        return "\n".join(t for _, t in sorted(self.cells.items()))
+
+
+@pytest.fixture
+def screen(monkeypatch):
+    import rhylthyme_cli_runner.program_runner as pr
+
+    for name in ("start_color", "use_default_colors", "init_pair"):
+        monkeypatch.setattr(pr.curses, name, lambda *a: None)
+    monkeypatch.setattr(pr.curses, "color_pair", lambda n: 0)
+    return _Screen()
+
+
+def test_display_info_badges_and_waiting_on():
+    pytest.importorskip("rhylthyme_galago")
+    from rhylthyme_galago import FakeToolClient
+
+    tool = FakeToolClient(gate=threading.Event())
+    runner, session, _ = started_runner(tool)
+    try:
+        shake = runner.steps["shake"]
+        assert run_until(runner, lambda: shake.status == StepStatus.RUNNING)
+        info = runner.get_step_display_info(shake)
+        assert (info["instrument_tool"], info["waiting_on"]) == ("shaker", "shaker")
+        load = runner.get_step_display_info(runner.steps["load"])
+        assert (load["instrument_tool"], load["waiting_on"]) == (None, None)
+    finally:
+        tool.gate.set()
+        session.shutdown()
+
+
+def test_tui_shows_badge_waiting_and_failure(screen):
+    pytest.importorskip("rhylthyme_galago")
+    from rhylthyme_galago import FakeToolClient
+
+    from rhylthyme_cli_runner.program_runner import draw_ui
+
+    tool = FakeToolClient(gate=threading.Event())
+    runner, session, _ = started_runner(tool)
+    try:
+        assert run_until(
+            runner, lambda: runner.steps["shake"].status == StepStatus.RUNNING
+        )
+        draw_ui(screen, runner)
+        text = screen.text()
+        assert "[shaker]" in text
+        assert "waiting on shaker" in text
+
+        runner.post_instrument_reply(
+            "shake",
+            {
+                "ok": False,
+                "code": "DRIVER_ERROR",
+                "errorMessage": "lid open",
+                "metadata": {},
+            },
+        )
+        runner.update()
+        draw_ui(screen, runner)
+        text = screen.text()
+        assert "FAILED" in text and "DRIVER_ERROR" in text
+        assert "FAILED shake: shaker.start_shake DRIVER_ERROR (lid open)" in text
+        assert "waiting on shaker" not in text
+    finally:
+        tool.gate.set()
+        session.shutdown()
+
+
+def test_run_history_records_every_reply_with_metadata(tmp_path):
+    pytest.importorskip("rhylthyme_galago")
+    from rhylthyme_galago import FakeToolClient, ToolReply
+
+    from rhylthyme_cli_runner.history.recorder import RunRecorder
+    from rhylthyme_cli_runner.history.store import validate_run
+
+    readings = {
+        "wells": {"A1": 0.412, "A2": 1.07},
+        "unit": "OD600",
+        "flags": [True, None],
+    }
+    replies = [
+        ToolReply("DRIVER_ERROR", "lid open"),
+        ToolReply("SUCCESS", metadata=readings),
+    ]
+    tool = FakeToolClient({"start_shake": lambda command: replies.pop(0)})
+    runner = ProgramRunner(copy.deepcopy(PROGRAM), time_scale=100.0)
+    recorder = RunRecorder(
+        runner, source_program=PROGRAM, runs_dir=str(tmp_path)
+    ).attach()
+    session = attach_instruments(runner, WORKCELL, client_factory=lambda b: tool)
+    try:
+        runner.start()
+        runner.command_queue.put("start_program")
+        assert run_until(
+            runner, lambda: runner.steps["shake"].status == StepStatus.FAILED
+        )
+        runner.command_queue.put("retry:shake")
+        assert run_until(runner, lambda: not runner.is_running)
+    finally:
+        session.shutdown()
+    record = json.loads(open(recorder.finalize()).read())
+    assert validate_run(record) == []
+    shake = {s["stepId"]: s for s in record["steps"]}["shake"]
+    log = shake["instrument"]
+    assert (log["tool"], log["command"]) == ("shaker", "start_shake")
+    assert [(r["attempt"], r["code"]) for r in log["replies"]] == [
+        (1, "DRIVER_ERROR"),
+        (2, "SUCCESS"),
+    ]
+    assert log["replies"][0]["errorMessage"] == "lid open"
+    assert log["replies"][1]["metadata"] == readings
+    assert "metadata" not in log["replies"][0]
+    assert 0 <= log["replies"][0]["at"] <= log["replies"][1]["at"]
+    assert "instrument" not in {s["stepId"]: s for s in record["steps"]}["load"]

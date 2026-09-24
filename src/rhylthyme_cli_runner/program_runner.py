@@ -1811,6 +1811,15 @@ class ProgramRunner:
             "trigger": step.manual_trigger_name
             or getattr(step, "manual_start_trigger_name", None)
             or "N/A",
+            # Instrument steps: the tool badge, and which tool a running
+            # step is waiting on (its command is in flight)
+            "instrument_tool": (step.instrument or {}).get("tool"),
+            "waiting_on": (
+                (step.instrument or {}).get("tool")
+                if step.instrument and step.status == StepStatus.RUNNING
+                else None
+            ),
+            "failure_code": (step.failure or {}).get("code"),
         }
 
     def _group_row(
@@ -2822,6 +2831,8 @@ def draw_ui(stdscr, runner: ProgramRunner) -> None:
         attr = curses.A_NORMAL
         if step_info["status"] == "RUNNING":
             attr = curses.A_BOLD
+        elif step_info["status"] == "FAILED":
+            attr = curses.color_pair(4) | curses.A_BOLD
 
         # Draw selection indicator
         if step_info.get("selected", False):
@@ -2844,8 +2855,13 @@ def draw_ui(stdscr, runner: ProgramRunner) -> None:
         )
         safe_addstr(row_y, 55, status_display[:8], attr)
 
+        # Instrument steps: a tool badge instead of a progress bar (only the
+        # instrument knows how far along it is)
+        tool = step_info.get("instrument_tool")
+        if tool and not is_group:
+            safe_addstr(row_y, 65, f"[{tool}]"[:14], attr)
         # Draw progress bar for running steps
-        if step_info["status"] == "RUNNING" and step_info["progress"] >= 0:
+        elif step_info["status"] == "RUNNING" and step_info["progress"] >= 0:
             progress_width = 10
             filled = int((step_info["progress"] / 100) * progress_width)
             # Show at least 1 symbol if progress > 0 but < 10%
@@ -2864,6 +2880,10 @@ def draw_ui(stdscr, runner: ProgramRunner) -> None:
         if is_group:
             summary = step_info.get("summary", "")
             safe_addstr(row_y, 80, summary[: max(0, width - 82)], attr)
+        elif step_info.get("waiting_on"):
+            safe_addstr(row_y, 80, f"waiting on {step_info['waiting_on']}", attr)
+        elif step_info.get("failure_code"):
+            safe_addstr(row_y, 80, str(step_info["failure_code"]), attr)
         else:
             safe_addstr(row_y, 80, step_info["remaining"], attr)
 

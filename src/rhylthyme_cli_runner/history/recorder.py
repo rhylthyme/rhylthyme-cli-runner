@@ -14,6 +14,7 @@ the events it emits are:
 ``program_paused``   {time, wall_time}
 ``program_resumed``  {time, wall_time, paused_seconds}
 ``program_aborted``  {time, reason}  (reason goes to ``context.abortReason``)
+``instrument_reply`` {step_id, time, ok, code, errorMessage, metadata}
 
 All ``time`` values are the runner's program clock (an epoch float that
 advances at ``time_scale``); the record stores them as seconds from the
@@ -218,6 +219,8 @@ class RunRecorder:
         self.context: Dict[str, Any] = self._build_context()
 
         self.actuals: Dict[str, Dict[str, Any]] = {}
+        # step id -> {tool, command, replies: [{attempt, at, code, ...}]}
+        self.instrument_log: Dict[str, Dict[str, Any]] = {}
         self.paused_seconds: Dict[str, float] = {sid: 0.0 for sid in self.step_order}
         self._pause_wall: Optional[float] = None
         self._paused_running: List[str] = []
@@ -272,6 +275,29 @@ class RunRecorder:
             entry.setdefault("start", data["time"])
             entry["end"] = data["time"]
             entry["endedBy"] = "abort"
+        elif event_type == "instrument_reply":
+            sid = data["step_id"]
+            step = getattr(self.runner, "steps", {}).get(sid)
+            instrument = (getattr(step, "instrument", None) or {}) if step else {}
+            log = self.instrument_log.setdefault(
+                sid,
+                {
+                    "tool": str(instrument.get("tool", "")),
+                    "command": str(instrument.get("command", "")),
+                    "replies": [],
+                },
+            )
+            reply: Dict[str, Any] = {
+                "attempt": getattr(step, "instrument_attempts", 0)
+                or len(log["replies"]) + 1,
+                "at": data["time"],
+                "code": str(data.get("code", "")),
+            }
+            if data.get("errorMessage"):
+                reply["errorMessage"] = str(data["errorMessage"])
+            if data.get("metadata"):
+                reply["metadata"] = copy.deepcopy(data["metadata"])
+            log["replies"].append(reply)
         elif event_type == "program_aborted":
             self.context["abortReason"] = data.get("reason") or "aborted"
         elif event_type == "program_paused":
@@ -347,6 +373,13 @@ class RunRecorder:
                     entry["endedBy"] = actual.get("endedBy", "executor")
                 if "triggerFiredAt" in actual:
                     entry["triggerFiredAt"] = rel(actual["triggerFiredAt"])
+            log = self.instrument_log.get(sid)
+            if log:
+                entry["instrument"] = {
+                    "tool": log["tool"],
+                    "command": log["command"],
+                    "replies": [dict(r, at=rel(r["at"])) for r in log["replies"]],
+                }
             steps.append(entry)
 
         started_iso = _iso_utc(start_epoch) if start_epoch is not None else None
