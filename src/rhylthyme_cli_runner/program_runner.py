@@ -925,6 +925,8 @@ class ProgramRunner:
 
             self.tracks[track_id] = track_steps
 
+        self._add_instrument_tool_resources(resource_constraints)
+
         # ---- replicate instance grouping -------------------------------
         # Instances of one replicated step (``instanceOf``) collapse into a
         # single row in the step list; sub-tracks created for instances
@@ -947,6 +949,31 @@ class ProgramRunner:
         # selected group (and turns grouping off entirely on a plain row).
         self.group_instances = True
         self.expanded_groups: Set[str] = set()
+
+    def _add_instrument_tool_resources(self, declared: List[Dict[str, Any]]) -> None:
+        """
+        Every instrument tool is a resource, so two steps never command the
+        same tool at once: capacity 1 unless the program declares a
+        constraint named after the tool. The instrument does the work, so the
+        tool needs no actor unless that constraint says actorsRequired.
+        """
+        declared_by_task = {c.get("task"): c for c in declared if c.get("task")}
+        self.implicit_tool_resources: Set[str] = set()
+        for step in self.steps.values():
+            tool = (step.instrument or {}).get("tool")
+            if not tool:
+                continue
+            if tool not in self.resource_constraints:
+                self.resource_constraints[tool] = 1
+                self.resource_usage[tool] = 0.0
+                self.actor_requirements[tool] = 0.0
+                self.qualified_actor_types[tool] = []
+                self.implicit_tool_resources.add(tool)
+            elif "actorsRequired" not in declared_by_task.get(tool, {}):
+                self.actor_requirements[tool] = 0.0
+            if tool not in step.task_types:
+                step.task_types.append(tool)
+                step.task_fractions[tool] = 1.0
 
     def start(self) -> None:
         """Start the program execution."""
@@ -1267,6 +1294,8 @@ class ProgramRunner:
                         actors_required = (
                             self.actor_requirements.get(task_type, 1.0) * fraction
                         )
+                        if actors_required <= 0:
+                            continue  # e.g. an instrument tool: no person needed
                         qualified_types = self.qualified_actor_types.get(task_type, [])
 
                         if not qualified_types:

@@ -692,3 +692,224 @@ def test_ctrl_c_reports_in_flight_commands(fake_tools, tmp_path, capsys, monkeyp
     assert "Program execution interrupted." in out
     assert "Instrument commands still running when the runner stopped: shake" in out
     fake_tools.gate.set()
+
+
+# --- Tools as resources, mixed programs (phase 5) ----------------------------
+
+
+def _shake_step(step_id):
+    return {
+        "stepId": step_id,
+        "name": step_id,
+        "instrument": {"tool": "shaker", "command": "start_shake"},
+        "startTrigger": {"type": "programStart"},
+    }
+
+
+def _two_shakes(**program_fields):
+    program = {
+        "programId": "two-shakes",
+        "name": "Two shakes",
+        "startTrigger": {"type": "manual"},
+        "tracks": [
+            {"trackId": "a", "name": "A", "steps": [_shake_step("shake-a")]},
+            {"trackId": "b", "name": "B", "steps": [_shake_step("shake-b")]},
+        ],
+        "resourceConstraints": [],
+    }
+    program.update(program_fields)
+    return program
+
+
+class _GatedPerCall:
+    """FakeToolClient whose each execute waits for its own release."""
+
+    def __new__(cls):
+        from rhylthyme_galago import FakeToolClient
+
+        class Tool(FakeToolClient):
+            def __init__(self):
+                super().__init__()
+                self.releases = []
+
+            def execute(self, command, timeout=None):
+                gate = threading.Event()
+                self.releases.append(gate)
+                gate.wait(5)
+                return super().execute(command, timeout)
+
+        return Tool()
+
+
+def test_each_tool_is_an_implicit_resource_of_one():
+    pytest.importorskip("rhylthyme_galago")
+    runner = ProgramRunner(_two_shakes())
+    assert runner.resource_constraints["shaker"] == 1
+    assert runner.implicit_tool_resources == {"shaker"}
+    assert "shaker" in runner.steps["shake-a"].task_types
+
+
+def test_two_steps_on_one_tool_take_turns():
+    pytest.importorskip("rhylthyme_galago")
+    tool = _GatedPerCall()
+    runner, session, _ = started_runner(tool, _two_shakes())
+    a, b = runner.steps["shake-a"], runner.steps["shake-b"]
+    try:
+        assert run_until(
+            runner,
+            lambda: a.status == StepStatus.RUNNING or b.status == StepStatus.RUNNING,
+        )
+        first, second = (a, b) if a.status == StepStatus.RUNNING else (b, a)
+        run_until(runner, lambda: False, timeout=0.3)
+        assert second.status == StepStatus.PENDING  # waiting on the tool, not failed
+        assert second.trigger_fired_time is not None
+        assert len(tool.releases) == 1
+        tool.releases[0].set()
+        assert run_until(runner, lambda: second.status == StepStatus.RUNNING)
+        assert first.status == StepStatus.COMPLETED
+        assert run_until(runner, lambda: len(tool.releases) == 2)
+        tool.releases[1].set()
+        assert run_until(runner, lambda: second.status == StepStatus.COMPLETED)
+    finally:
+        for gate in tool.releases:
+            gate.set()
+        session.shutdown()
+
+
+def test_declared_constraint_overrides_the_capacity():
+    pytest.importorskip("rhylthyme_galago")
+    tool = _GatedPerCall()
+    program = _two_shakes(
+        resourceConstraints=[
+            {"task": "shaker", "maxConcurrent": 2, "description": "two-deck shaker"}
+        ]
+    )
+    runner, session, _ = started_runner(tool, program)
+    try:
+        assert run_until(
+            runner,
+            lambda: all(
+                runner.steps[s].status == StepStatus.RUNNING
+                for s in ("shake-a", "shake-b")
+            ),
+        )
+        assert runner.implicit_tool_resources == set()
+        assert runner.actor_requirements["shaker"] == 0.0
+    finally:
+        for gate in tool.releases:
+            gate.set()
+        session.shutdown()
+
+
+def test_tool_steps_need_no_person():
+    """With the only actor busy on a hand task, the shaker still starts."""
+    pytest.importorskip("rhylthyme_galago")
+    from rhylthyme_galago import FakeToolClient
+
+    program = _two_shakes(
+        actors=1,
+        resourceConstraints=[
+            {
+                "task": "pipetting",
+                "maxConcurrent": 1,
+                "actorsRequired": 1,
+                "description": "hands",
+            }
+        ],
+    )
+    program["tracks"][1]["steps"] = [
+        {
+            "stepId": "pipette",
+            "name": "Pipette by hand",
+            "task": "pipetting",
+            "duration": {"type": "fixed", "seconds": 100},
+            "startTrigger": {"type": "programStart"},
+        }
+    ]
+    tool = FakeToolClient(gate=threading.Event())
+    runner, session, _ = started_runner(tool, program)
+    try:
+        assert run_until(
+            runner,
+            lambda: runner.steps["pipette"].status == StepStatus.RUNNING
+            and runner.steps["shake-a"].status == StepStatus.RUNNING,
+        )
+    finally:
+        tool.gate.set()
+        session.shutdown()
+
+
+def test_hand_step_between_two_incubator_steps_runs_in_order():
+    pytest.importorskip("rhylthyme_galago")
+    from rhylthyme_galago import FakeToolClient
+
+    program = {
+        "programId": "mixed",
+        "name": "Incubate, check, incubate",
+        "startTrigger": {"type": "manual"},
+        "tracks": [
+            {
+                "trackId": "culture",
+                "name": "Culture",
+                "steps": [
+                    {
+                        "stepId": "fetch",
+                        "name": "Fetch plate",
+                        "instrument": {
+                            "tool": "incubator",
+                            "command": "fetch_plate",
+                            "params": {"cassette": 1, "level": 2},
+                        },
+                        "startTrigger": {"type": "programStart"},
+                    },
+                    {
+                        "stepId": "check",
+                        "name": "Check media colour",
+                        "duration": {"type": "fixed", "seconds": 60},
+                        "startTrigger": {"type": "afterStep", "stepId": "fetch"},
+                    },
+                    {
+                        "stepId": "store",
+                        "name": "Store plate",
+                        "instrument": {
+                            "tool": "incubator",
+                            "command": "store_plate",
+                            "params": {"cassette": 1, "level": 2},
+                        },
+                        "startTrigger": {"type": "afterStep", "stepId": "check"},
+                    },
+                ],
+            }
+        ],
+        "resourceConstraints": [],
+    }
+    workcell = {
+        "id": "bench",
+        "tools": [{"name": "incubator", "type": "liconic", "host": "h", "port": 2}],
+    }
+    tool = FakeToolClient()
+    runner = ProgramRunner(program, time_scale=100.0)
+    order = []
+    runner.add_event_listener(
+        lambda kind, data: (
+            order.append((kind, data["step_id"]))
+            if kind in ("step_started", "step_completed")
+            else None
+        )
+    )
+    session = attach_instruments(runner, workcell, client_factory=lambda b: tool)
+    try:
+        runner.start()
+        runner.command_queue.put("start_program")
+        assert run_until(runner, lambda: not runner.is_running)
+    finally:
+        session.shutdown()
+    assert order == [
+        ("step_started", "fetch"),
+        ("step_completed", "fetch"),
+        ("step_started", "check"),
+        ("step_completed", "check"),
+        ("step_started", "store"),
+        ("step_completed", "store"),
+    ]
+    assert [c["command"] for c in tool.executed] == ["fetch_plate", "store_plate"]
