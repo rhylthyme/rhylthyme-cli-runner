@@ -128,6 +128,30 @@ except ImportError:  # pragma: no cover - validator not importable
         return sign * parse_time_string(text.lstrip("+-"))
 
 
+INSTRUMENT_DURATION_PARAMS = (
+    "duration",
+    "duration_seconds",
+    "seconds",
+    "run_time",
+    "time",
+    "timeout",
+)
+
+
+def _instrument_estimate_seconds(instrument: Dict[str, Any]) -> float:
+    """rhylthyme_galago.fill_durations' offline estimate: params, else 60 s."""
+    params = instrument.get("params") or {}
+    for key in INSTRUMENT_DURATION_PARAMS:
+        value = params.get(key)
+        if (
+            isinstance(value, (int, float))
+            and not isinstance(value, bool)
+            and value > 0
+        ):
+            return float(value)
+    return 60.0
+
+
 class StepStatus(Enum):
     """Enum representing the status of a step."""
 
@@ -241,7 +265,9 @@ class Step:
         if self.instrument and self.duration_type is None:
             self.duration_type = DurationType.INDEFINITE
             self.min_seconds = 0.0
-            self.default_seconds = 60.0
+            # For display and upcoming events only: the same estimate as
+            # planning and the timeline (a duration-like param, else 60 s)
+            self.default_seconds = _instrument_estimate_seconds(self.instrument)
 
         # Extract start trigger information
         start_trigger_data = step_data["startTrigger"]
@@ -984,10 +1010,9 @@ class ProgramRunner:
 
         # If auto_start is False, set the program to wait for manual start
         if not self.auto_start:
-            self.status_message = (
-                "Program waiting for manual start. Press 's' to start."
-            )
-            # The clock is running from here (is_running stays True)
+            # The clock is running from here (is_running stays True), so say
+            # so: instrument steps may already be sending commands.
+            self.status_message = "Program running. Press 'p' to pause, 'q' to quit."
             self.emit_event(
                 "program_started",
                 {"time": self.program_start_time, "wall_time": time.time()},
@@ -1100,7 +1125,8 @@ class ProgramRunner:
         if step.step_id not in self.failed_steps:
             self.failed_steps.append(step.step_id)
         self.status_message = (
-            f"FAILED {self.failure_text(step)} | r: retry  x: skip  A: abort program"
+            "Paused new steps: an instrument command failed. "
+            "r retries it, x marks it done, A (twice) aborts the program."
         )
         logging.error(f"Step {step.step_id} failed: {self.failure_text(step)}")
         self.emit_event(
@@ -2981,9 +3007,10 @@ def draw_ui(stdscr, runner: ProgramRunner) -> None:
             events_y + 1, events_col_x + 2, "No upcoming events", curses.color_pair(5)
         )
 
-    # Draw available triggers
+    # Draw available triggers (while a failed step holds the program, its
+    # banner takes this place instead)
     triggers_y = height - 4
-    available_triggers = runner.get_available_triggers()
+    available_triggers = [] if runner.failed_steps else runner.get_available_triggers()
     if available_triggers:
         safe_addstr(triggers_y, 2, "Available Triggers:", curses.A_BOLD)
         trigger_names = [trigger["name"] for trigger in available_triggers]
@@ -2999,7 +3026,7 @@ def draw_ui(stdscr, runner: ProgramRunner) -> None:
         )
         banner += " | r: retry  x: skip (mark done)  A: abort program "
         safe_addstr(
-            height - 3, 2, banner[: width - 4], curses.A_BOLD | curses.A_REVERSE
+            height - 4, 2, banner[: width - 4], curses.A_BOLD | curses.A_REVERSE
         )
 
     # Draw status message

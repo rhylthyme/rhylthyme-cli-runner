@@ -504,8 +504,8 @@ def test_error_replies_fail_the_step(code):
         "errorMessage": "boom",
     }
     assert runner.failed_steps == ["shake"]
-    assert f"FAILED shake: shaker.start_shake {code} (boom)" in runner.status_message
-    assert "r: retry  x: skip  A: abort program" in runner.status_message
+    assert runner.failure_text(shake) == f"shake: shaker.start_shake {code} (boom)"
+    assert "r retries it, x marks it done, A (twice) aborts" in runner.status_message
     failed = [d for k, d in events if k == "step_failed"]
     assert failed[0]["code"] == code
 
