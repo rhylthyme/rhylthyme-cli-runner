@@ -150,10 +150,12 @@ class InstrumentSession:
             runner.post_instrument_reply(step_id, _reply_dict(reply))
 
         def on_event(event_type: str, data: Dict[str, Any]) -> None:
-            if event_type != "step_started":
+            # A step's command goes out when it starts and again on each retry
+            if event_type not in ("step_started", "step_retry"):
                 return
             step = runner.steps.get(data["step_id"])
             if step is not None and step.instrument:
+                step.instrument_attempts += 1
                 executor.submit(step.step_id, step.instrument, on_reply)
 
         runner.add_event_listener(on_event)

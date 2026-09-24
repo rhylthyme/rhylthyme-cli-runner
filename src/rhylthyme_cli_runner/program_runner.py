@@ -136,6 +136,8 @@ class StepStatus(Enum):
     COMPLETED = "COMPLETED"
     WAITING_FOR_MANUAL = "WAITING_FOR_MANUAL"
     ABORTED = "ABORTED"
+    # An instrument command failed; the operator retries, skips or aborts
+    FAILED = "FAILED"
 
 
 class StepVariables:
@@ -233,6 +235,9 @@ class Step:
         # With no authored duration it plans as indefinite.
         self.instrument = step_data.get("instrument")
         self.instrument_reply: Optional[Dict[str, Any]] = None
+        self.instrument_attempts = 0
+        # Set while FAILED: {tool, command, code, errorMessage}
+        self.failure: Optional[Dict[str, Any]] = None
         if self.instrument and self.duration_type is None:
             self.duration_type = DurationType.INDEFINITE
             self.min_seconds = 0.0
@@ -833,6 +838,9 @@ class ProgramRunner:
         self.paused_wall_seconds = 0.0
 
         self.command_queue: queue.Queue[str] = queue.Queue()
+        self.failed_steps: List[str] = []
+        self.program_abort_reason: Optional[str] = None
+        self._abort_armed_at: Optional[float] = None
         # Instrument replies, posted from executor threads by
         # post_instrument_reply() and applied in process_commands().
         self.instrument_replies: queue.Queue = queue.Queue()
@@ -1044,15 +1052,91 @@ class ProgramRunner:
         if reply.get("ok"):
             self.complete_step(step, self.current_time, ended_by="instrument")
             return
+        self.fail_step(step, reply)
+
+    def fail_step(self, step: Step, reply: Dict[str, Any]) -> None:
+        """
+        Mark an instrument step FAILED. It keeps its resources, nothing new
+        starts, and running steps carry on until the operator decides:
+        retry_failed_step, skip_failed_step or abort_program.
+        """
         instrument = step.instrument or {}
-        reason = (
-            f"{instrument.get('tool')}.{instrument.get('command')} failed: "
-            f"{reply.get('code')}"
+        step.status = StepStatus.FAILED
+        step.failure = {
+            "tool": instrument.get("tool"),
+            "command": instrument.get("command"),
+            "code": reply.get("code"),
+            "errorMessage": reply.get("errorMessage") or "",
+        }
+        if step.step_id in self.running_steps:
+            self.running_steps.remove(step.step_id)
+        if step.step_id not in self.failed_steps:
+            self.failed_steps.append(step.step_id)
+        self.status_message = (
+            f"FAILED {self.failure_text(step)} | r: retry  x: skip  A: abort program"
         )
-        if reply.get("errorMessage"):
-            reason += f" ({reply['errorMessage']})"
-        self.status_message = reason
-        self.abort_step(step, self.current_time, reason=reason)
+        logging.error(f"Step {step.step_id} failed: {self.failure_text(step)}")
+        self.emit_event(
+            "step_failed",
+            {"step_id": step.step_id, "time": self.current_time, **step.failure},
+        )
+
+    def failure_text(self, step: Step) -> str:
+        f = step.failure or {}
+        text = f"{step.step_id}: {f.get('tool')}.{f.get('command')} {f.get('code')}"
+        return text + (f" ({f['errorMessage']})" if f.get("errorMessage") else "")
+
+    def _failed_step(self, step_id: Optional[str]) -> Optional[Step]:
+        if step_id is None and self.failed_steps:
+            step_id = self.failed_steps[0]
+        step = self.steps.get(step_id) if step_id else None
+        return step if step is not None and step.status == StepStatus.FAILED else None
+
+    def retry_failed_step(self, step_id: Optional[str] = None) -> bool:
+        """Resend a failed step's instrument command (default: first failure)."""
+        step = self._failed_step(step_id)
+        if step is None or not step.instrument:
+            self.status_message = "No failed instrument step to retry."
+            return False
+        step.status = StepStatus.RUNNING
+        step.failure = None
+        self.failed_steps.remove(step.step_id)
+        self.running_steps.append(step.step_id)
+        self.status_message = f"Retrying {step.step_id}..."
+        self.emit_event(
+            "step_retry",
+            {
+                "step_id": step.step_id,
+                "time": self.current_time,
+                "attempt": step.instrument_attempts + 1,
+            },
+        )
+        return True
+
+    def skip_failed_step(self, step_id: Optional[str] = None) -> bool:
+        """Mark a failed step done by hand; its dependents may start."""
+        step = self._failed_step(step_id)
+        if step is None:
+            self.status_message = "No failed step to skip."
+            return False
+        self.failed_steps.remove(step.step_id)
+        step.failure = None
+        self.complete_step(step, self.current_time, ended_by="skipped")
+        self.status_message = f"Skipped {step.step_id} (marked done)."
+        return True
+
+    def abort_program(self, reason: str = "Aborted by operator") -> None:
+        """End the program: running and failed steps are aborted with reason."""
+        for step in self.steps.values():
+            if step.status in (StepStatus.RUNNING, StepStatus.FAILED):
+                self.abort_step(step, self.current_time, reason=reason)
+        self.failed_steps = []
+        self.program_abort_reason = reason
+        self.is_running = False
+        self.status_message = f"Program aborted: {reason}"
+        self.emit_event(
+            "program_aborted", {"time": self.current_time, "reason": reason}
+        )
 
     def process_commands(self) -> None:
         """Process commands from the command queue."""
@@ -1092,6 +1176,13 @@ class ProgramRunner:
                     else:
                         trigger_name = parts[1]
                         self.trigger_manual_step(trigger_name)
+                elif command.startswith("retry:"):
+                    self.retry_failed_step(command.split(":", 1)[1] or None)
+                elif command.startswith("skip:"):
+                    self.skip_failed_step(command.split(":", 1)[1] or None)
+                elif command.startswith("abort_program"):
+                    reason = command.split(":", 1)[1] if ":" in command else ""
+                    self.abort_program(reason or "Aborted by operator")
                 elif command.startswith("abort:"):
                     step_id = command.split(":", 1)[1]
                     if step_id in self.steps and self.steps[step_id].can_be_aborted():
@@ -1138,6 +1229,10 @@ class ProgramRunner:
 
     def start_ready_steps(self, current_time: float) -> None:
         """Start steps that are ready to start."""
+        # A failed instrument step holds the program: nothing new starts
+        # until the operator retries, skips or aborts (running steps go on).
+        if self.failed_steps:
+            return
         # Sort steps by priority (lower number = higher priority)
         # Include WAITING_FOR_MANUAL steps so they can be started after user triggers them
         pending_steps = [
@@ -1308,7 +1403,9 @@ class ProgramRunner:
             step: The step to complete
             current_time: The current time
             ended_by: "timer" when the planned duration expired, "executor"
-                when a person ended it (manual trigger, 'c' key, direct call)
+                when a person ended it (manual trigger, 'c' key, direct call),
+                "instrument" when its instrument replied, "skipped" when the
+                operator marked a failed instrument step done
         """
         step.status = StepStatus.COMPLETED
         step.end_time = current_time
@@ -1444,6 +1541,8 @@ class ProgramRunner:
         step.status = StepStatus.ABORTED
         step.end_time = current_time
         step.abort_reason = reason
+        if step.step_id in self.failed_steps:
+            self.failed_steps.remove(step.step_id)
 
         # Calculate actor usage to free by type
         freed_actors_by_type = {}
@@ -2138,7 +2237,7 @@ class ProgramRunner:
             return curses.COLOR_BLUE
         elif status == StepStatus.WAITING_FOR_MANUAL:
             return curses.COLOR_YELLOW
-        elif status == StepStatus.ABORTED:
+        elif status in (StepStatus.ABORTED, StepStatus.FAILED):
             return curses.COLOR_RED
         return curses.COLOR_WHITE
 
@@ -2178,6 +2277,8 @@ class ProgramRunner:
                 return "WAITING"
             elif status == StepStatus.ABORTED:
                 return "ABORTED"
+            elif status == StepStatus.FAILED:
+                return "FAILED"
         return "UNKNOWN"  # Default for unhandled status values
 
     def is_step_ready_to_start(self, step: Step, current_time: float) -> bool:
@@ -2840,6 +2941,18 @@ def draw_ui(stdscr, runner: ProgramRunner) -> None:
         triggers_str = ", ".join(trigger_names)
         safe_addstr(triggers_y + 1, 4, triggers_str[: width - 8])
 
+    # Failed instrument steps: what failed and what the operator can do
+    if runner.failed_steps:
+        failed = runner.steps[runner.failed_steps[0]]
+        more = len(runner.failed_steps) - 1
+        banner = f" FAILED {runner.failure_text(failed)}" + (
+            f" (+{more} more)" if more else ""
+        )
+        banner += " | r: retry  x: skip (mark done)  A: abort program "
+        safe_addstr(
+            height - 3, 2, banner[: width - 4], curses.A_BOLD | curses.A_REVERSE
+        )
+
     # Draw status message
     status_y = height - 2
     if runner.status_message:
@@ -2868,6 +2981,21 @@ def handle_input(stdscr, runner: ProgramRunner) -> bool:
         runner.command_queue.put("start_program")
     elif key == "p":
         runner.toggle_pause()
+    elif key in ("r", "x") and runner.failed_steps:
+        # Retry / skip the selected failed step, else the first failure
+        selected = runner.get_selected_step_id()
+        target = selected if selected in runner.failed_steps else ""
+        verb = "retry" if key == "r" else "skip"
+        runner.command_queue.put(f"{verb}:{target}")
+    elif key == "A":
+        # Abort the whole program; press twice to confirm
+        now = time.time()
+        if runner._abort_armed_at and now - runner._abort_armed_at < 3:
+            runner._abort_armed_at = None
+            runner.command_queue.put("abort_program:Aborted by operator")
+        else:
+            runner._abort_armed_at = now
+            runner.status_message = "Press A again within 3 s to abort the program."
     elif key == "KEY_UP" or key == "k":
         # Select previous step
         runner.select_previous_step()

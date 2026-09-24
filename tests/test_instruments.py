@@ -5,6 +5,7 @@ import json
 import sys
 import threading
 import time
+from typing import Any, Dict
 
 import pytest
 
@@ -118,20 +119,6 @@ def test_instrument_step_ends_on_the_reply_not_a_timer():
     assert completed[0]["ended_by"] == "instrument"
     replies = [d for k, d in events if k == "instrument_reply"]
     assert replies[0]["ok"] and replies[0]["code"] == "SUCCESS"
-
-
-def test_failed_command_aborts_the_step_with_the_reason():
-    from rhylthyme_galago import FakeToolClient, ToolReply
-
-    shaker = FakeToolClient({"start_shake": ToolReply("DRIVER_ERROR", "lid open")})
-    runner, session, _ = started_runner(shaker)
-    try:
-        shake = runner.steps["shake"]
-        assert run_until(runner, lambda: shake.status == StepStatus.ABORTED)
-    finally:
-        session.shutdown()
-    assert shake.abort_reason == "shaker.start_shake failed: DRIVER_ERROR (lid open)"
-    assert runner.steps["unload"].status == StepStatus.PENDING
 
 
 def test_late_reply_for_an_aborted_step_is_ignored():
@@ -450,3 +437,258 @@ def test_run_record_holds_no_workcell_data(tmp_path):
     written = recorder.finalize()
     text = open(written).read()
     assert "10.20.30.40" not in text and "50710" not in text
+    from rhylthyme_cli_runner.history.store import validate_run
+
+    record = json.loads(text)
+    assert validate_run(record) == []
+    assert {s["stepId"]: s.get("endedBy") for s in record["steps"]}[
+        "shake"
+    ] == "instrument"
+
+
+# --- Failure handling (phase 4) ---------------------------------------------
+
+# Bench: load -> shake (instrument) -> unload. Side: warm (100 s, running
+# while the shake fails) -> after-warm (becomes ready during the failure).
+TWO_TRACKS: Dict[str, Any] = copy.deepcopy(PROGRAM)
+TWO_TRACKS["tracks"].append(
+    {
+        "trackId": "side",
+        "name": "Side",
+        "steps": [
+            {
+                "stepId": "warm",
+                "name": "Warm media",
+                "duration": {"type": "fixed", "seconds": 100},
+                "startTrigger": {"type": "programStart"},
+            },
+            {
+                "stepId": "after-warm",
+                "name": "Use warm media",
+                "duration": {"type": "fixed", "seconds": 1},
+                "startTrigger": {"type": "afterStep", "stepId": "warm"},
+            },
+        ],
+    }
+)
+
+
+def _failing(code="DRIVER_ERROR", message="lid open"):
+    from rhylthyme_galago import FakeToolClient, ToolReply
+
+    return FakeToolClient({"start_shake": ToolReply(code, message)})
+
+
+@pytest.mark.parametrize(
+    "code",
+    [
+        "DRIVER_ERROR",
+        "ERROR_FROM_TOOL",
+        "NOT_READY",
+        "INVALID_ARGUMENTS",
+        "UNREACHABLE",
+    ],
+)
+def test_error_replies_fail_the_step(code):
+    pytest.importorskip("rhylthyme_galago")
+    runner, session, events = started_runner(_failing(code, "boom"))
+    try:
+        shake = runner.steps["shake"]
+        assert run_until(runner, lambda: shake.status == StepStatus.FAILED)
+    finally:
+        session.shutdown()
+    assert shake.failure == {
+        "tool": "shaker",
+        "command": "start_shake",
+        "code": code,
+        "errorMessage": "boom",
+    }
+    assert runner.failed_steps == ["shake"]
+    assert f"FAILED shake: shaker.start_shake {code} (boom)" in runner.status_message
+    assert "r: retry  x: skip  A: abort program" in runner.status_message
+    failed = [d for k, d in events if k == "step_failed"]
+    assert failed[0]["code"] == code
+
+
+def test_timeout_fails_the_step():
+    pytest.importorskip("rhylthyme_galago")
+    from rhylthyme_galago import FakeToolClient
+
+    program = copy.deepcopy(PROGRAM)
+    program["tracks"][0]["steps"][1]["instrument"]["timeoutSeconds"] = 0.2
+    tool = FakeToolClient(gate=threading.Event())
+    runner, session, _ = started_runner(tool, program)
+    try:
+        shake = runner.steps["shake"]
+        assert run_until(runner, lambda: shake.status == StepStatus.FAILED)
+        assert shake.failure["code"] == "TIMEOUT"
+    finally:
+        tool.gate.set()
+        session.shutdown()
+
+
+def test_failure_holds_new_steps_but_running_ones_finish():
+    pytest.importorskip("rhylthyme_galago")
+    runner, session, _ = started_runner(_failing(), TWO_TRACKS)
+    try:
+        assert run_until(
+            runner, lambda: runner.steps["shake"].status == StepStatus.FAILED
+        )
+        assert runner.steps["warm"].status == StepStatus.RUNNING
+        assert run_until(
+            runner, lambda: runner.steps["warm"].status == StepStatus.COMPLETED
+        )
+        run_until(runner, lambda: False, timeout=0.3)
+        assert runner.steps["after-warm"].status == StepStatus.PENDING
+        assert runner.steps["unload"].status == StepStatus.PENDING
+        assert runner.is_running
+    finally:
+        session.shutdown()
+
+
+def test_retry_resends_and_success_resumes():
+    pytest.importorskip("rhylthyme_galago")
+    from rhylthyme_galago import ToolReply
+
+    tool = _failing()
+    runner, session, events = started_runner(tool, TWO_TRACKS)
+    try:
+        shake = runner.steps["shake"]
+        assert run_until(runner, lambda: shake.status == StepStatus.FAILED)
+        tool.replies["start_shake"] = ToolReply("SUCCESS")
+        runner.command_queue.put("retry:shake")
+        assert run_until(runner, lambda: shake.status == StepStatus.COMPLETED)
+        assert run_until(
+            runner, lambda: runner.steps["unload"].status != StepStatus.PENDING
+        )
+    finally:
+        session.shutdown()
+    assert [c["command"] for c in tool.executed] == ["start_shake", "start_shake"]
+    assert shake.instrument_attempts == 2
+    assert runner.failed_steps == []
+    retries = [d for k, d in events if k == "step_retry"]
+    assert retries[0]["attempt"] == 2
+
+
+def test_retry_that_fails_again_stays_failed():
+    pytest.importorskip("rhylthyme_galago")
+    tool = _failing()
+    runner, session, _ = started_runner(tool)
+    try:
+        shake = runner.steps["shake"]
+        assert run_until(runner, lambda: shake.status == StepStatus.FAILED)
+        runner.command_queue.put("retry:")
+        assert run_until(runner, lambda: len(tool.executed) == 2)
+        assert run_until(runner, lambda: shake.status == StepStatus.FAILED)
+    finally:
+        session.shutdown()
+
+
+def test_skip_marks_done_and_releases_dependents():
+    pytest.importorskip("rhylthyme_galago")
+    runner, session, events = started_runner(_failing(), TWO_TRACKS)
+    try:
+        shake = runner.steps["shake"]
+        assert run_until(runner, lambda: shake.status == StepStatus.FAILED)
+        runner.command_queue.put("skip:shake")
+        assert run_until(
+            runner, lambda: runner.steps["unload"].status != StepStatus.PENDING
+        )
+    finally:
+        session.shutdown()
+    assert shake.status == StepStatus.COMPLETED
+    ended = [d for k, d in events if k == "step_completed" and d["step_id"] == "shake"]
+    assert ended[0]["ended_by"] == "skipped"
+
+
+def test_abort_program_ends_the_run_with_a_reason(tmp_path):
+    pytest.importorskip("rhylthyme_galago")
+    from rhylthyme_cli_runner.history.recorder import RunRecorder
+
+    runner = ProgramRunner(copy.deepcopy(TWO_TRACKS), time_scale=100.0)
+    recorder = RunRecorder(
+        runner, source_program=TWO_TRACKS, runs_dir=str(tmp_path)
+    ).attach()
+    session = attach_instruments(runner, WORKCELL, client_factory=lambda b: _failing())
+    try:
+        runner.start()
+        runner.command_queue.put("start_program")
+        assert run_until(
+            runner, lambda: runner.steps["shake"].status == StepStatus.FAILED
+        )
+        runner.command_queue.put("abort_program:plate cracked")
+        assert run_until(runner, lambda: not runner.is_running)
+    finally:
+        session.shutdown()
+    assert runner.steps["shake"].status == StepStatus.ABORTED
+    assert runner.steps["warm"].status == StepStatus.ABORTED
+    assert runner.steps["unload"].status == StepStatus.PENDING
+    assert runner.program_abort_reason == "plate cracked"
+    record = json.loads(open(recorder.finalize()).read())
+    assert record["outcome"] == "aborted"
+    assert record["context"]["abortReason"] == "plate cracked"
+    from rhylthyme_cli_runner.history.store import validate_run
+
+    assert validate_run(record) == []
+
+
+class _Keys:
+    def __init__(self, *keys):
+        self.keys = list(keys)
+
+    def getkey(self):
+        if not self.keys:
+            raise Exception("no input")
+        return self.keys.pop(0)
+
+
+def test_keys_retry_skip_and_double_press_abort():
+    pytest.importorskip("rhylthyme_galago")
+    from rhylthyme_cli_runner.program_runner import handle_input
+
+    runner, session, _ = started_runner(_failing())
+    try:
+        assert run_until(runner, lambda: runner.failed_steps == ["shake"])
+        handle_input(_Keys("r"), runner)
+        assert runner.command_queue.get_nowait() == "retry:"
+        handle_input(_Keys("x"), runner)
+        assert runner.command_queue.get_nowait() == "skip:"
+        handle_input(_Keys("A"), runner)
+        assert runner.command_queue.empty()
+        assert "Press A again" in runner.status_message
+        handle_input(_Keys("A"), runner)
+        assert runner.command_queue.get_nowait().startswith("abort_program:")
+    finally:
+        session.shutdown()
+
+
+def test_ctrl_c_reports_in_flight_commands(fake_tools, tmp_path, capsys, monkeypatch):
+    import rhylthyme_cli_runner.program_runner as pr
+
+    fake_tools.gate = threading.Event()
+    captured = {}
+    real_runner = pr.ProgramRunner
+
+    class Capturing(real_runner):
+        def __init__(self, *a, **k):
+            super().__init__(*a, **k)
+            captured["runner"] = self
+
+    def wrapper(fn):
+        # Run headlessly until the shake is in flight, then Ctrl-C
+        r = captured["runner"]
+        r.time_scale = 100.0
+        r.start()
+        r.command_queue.put("start_program")
+        assert run_until(r, lambda: r.steps["shake"].status == StepStatus.RUNNING)
+        raise KeyboardInterrupt
+
+    monkeypatch.setattr(pr, "ProgramRunner", Capturing)
+    monkeypatch.setattr(pr.curses, "wrapper", wrapper)
+    started = time.time()
+    _run(tmp_path)
+    assert time.time() - started < 5
+    out = capsys.readouterr().out
+    assert "Program execution interrupted." in out
+    assert "Instrument commands still running when the runner stopped: shake" in out
+    fake_tools.gate.set()

@@ -13,6 +13,7 @@ the events it emits are:
 ``step_aborted``     {step_id, time, reason}
 ``program_paused``   {time, wall_time}
 ``program_resumed``  {time, wall_time, paused_seconds}
+``program_aborted``  {time, reason}  (reason goes to ``context.abortReason``)
 
 All ``time`` values are the runner's program clock (an epoch float that
 advances at ``time_scale``); the record stores them as seconds from the
@@ -271,6 +272,8 @@ class RunRecorder:
             entry.setdefault("start", data["time"])
             entry["end"] = data["time"]
             entry["endedBy"] = "abort"
+        elif event_type == "program_aborted":
+            self.context["abortReason"] = data.get("reason") or "aborted"
         elif event_type == "program_paused":
             self._pause_wall = data.get("wall_time", time.time())
             self._paused_running = list(getattr(self.runner, "running_steps", []))
