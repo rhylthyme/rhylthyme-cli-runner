@@ -606,3 +606,25 @@ def test_instrument_programs_are_sent_without_workcell_data(
     assert fake_mcp.calls, "the program itself should have been sent"
     sent = "".join(str(body) for _, body in fake_mcp.calls)
     assert "10.20.30.40" not in sent and "50710" not in sent
+
+
+def test_analyze_sends_estimated_instrument_durations(fake_mcp, config_home, tmp_path):
+    pytest.importorskip("rhylthyme_galago")
+    program = json.loads(json.dumps(PROGRAM))
+    step = program["tracks"][0]["steps"][0]
+    step.pop("duration", None)
+    step["instrument"] = {
+        "tool": "shaker",
+        "command": "start_shake",
+        "params": {"duration": 90},
+    }
+    f = tmp_path / "shake.json"
+    f.write_text(json.dumps(program))
+    result = CliRunner().invoke(cli, ["analyze", str(f), "--json"])
+    assert result.exit_code == 0, result.output
+    json.loads(result.stdout)  # estimate notes go to stderr, not into the JSON
+    assert "from params.duration" in result.stderr
+    name, args = fake_mcp.tool_calls()[-1][1:]
+    sent = args["program"]["tracks"][0]["steps"][0]
+    assert sent["duration"] == {"type": "fixed", "seconds": 90}
+    assert sent["metadata"]["durationEstimate"]["source"] == "params"

@@ -495,7 +495,13 @@ def _local(iso: Optional[str]) -> str:
 @click.option(
     "--strict", is_flag=True, help="Exit non-zero when there are resource conflicts."
 )
-def analyze(program_file, finish_at, start_at, json_output, strict):
+@click.option(
+    "--workcell",
+    type=click.Path(exists=True, dir_okay=False),
+    default=None,
+    help="Estimate instrument steps without a duration from this workcell's tools.",
+)
+def analyze(program_file, finish_at, start_at, json_output, strict, workcell):
     """Total length, critical path, resource conflicts and clock times. No sign-in needed.
 
     PROGRAM is a JSON or YAML file, an http(s) URL, or - for standard input.
@@ -506,6 +512,16 @@ def analyze(program_file, finish_at, start_at, json_output, strict):
       rhylthyme analyze two-protocols.json --strict
     """
     program = _load_program(program_file)
+    # Instrument steps may leave their duration to the instrument; estimate
+    # them locally (the workcell itself is never sent).
+    from ..instruments import InstrumentSetupError, fill_instrument_durations
+
+    try:
+        program, estimate_lines = fill_instrument_durations(program, workcell)
+    except InstrumentSetupError as e:
+        _fail(str(e))
+    for line in estimate_lines:
+        click.echo(line, err=True)
     args: dict = {"program": program}
     if finish_at:
         args["finishAt"] = _clock_to_iso(finish_at)

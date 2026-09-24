@@ -355,3 +355,11 @@ def test_structured_file_result_shape(tmp_path):
         "[E_EACH_WITH_REPLICATES] " + f["message"] + " (fix: " + f["fix"] + ")"
     ]
     json.dumps(result)  # --json output must stay serializable
+
+
+def test_fractional_seconds_are_not_zero():
+    from rhylthyme_cli_runner.validate_program import parse_duration_to_seconds
+
+    assert parse_duration_to_seconds({"type": "fixed", "seconds": 2.5}) == 2.5
+    assert parse_duration_to_seconds({"type": "fixed", "seconds": 5.0}) == 5
+    assert parse_duration_to_seconds(True) == 0

@@ -370,7 +370,16 @@ def run(
 @click.option(
     "--verbose", "-v", is_flag=True, help="Show detailed planning information"
 )
-def plan(input_file, output_file, environment, verbose):
+@click.option(
+    "--workcell",
+    type=click.Path(exists=True, dir_okay=False),
+    default=None,
+    help=(
+        "Workcell file: estimate instrument steps that have no duration from "
+        "their tools' EstimateDuration"
+    ),
+)
+def plan(input_file, output_file, environment, verbose, workcell):
     """
     Optimize a program schedule to reduce resource contention.
 
@@ -379,9 +388,17 @@ def plan(input_file, output_file, environment, verbose):
     starts to reduce contention at critical junctures.
 
     The optimized program is saved to the specified output file.
+
+    Instrument steps without a duration get an estimated one (flagged in
+    metadata.durationEstimate): from the tool with --workcell, else from a
+    duration-like command param, else a default.
     """
     success = plan_program(
-        input_file, output_file, verbose, environment_file=environment
+        input_file,
+        output_file,
+        verbose,
+        environment_file=environment,
+        workcell=workcell,
     )
     if not success:
         sys.exit(1)

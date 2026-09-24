@@ -1052,3 +1052,78 @@ def test_run_history_records_every_reply_with_metadata(tmp_path):
     assert "metadata" not in log["replies"][0]
     assert 0 <= log["replies"][0]["at"] <= log["replies"][1]["at"]
     assert "instrument" not in {s["stepId"]: s for s in record["steps"]}["load"]
+
+
+# --- Estimated durations (phase 7) -------------------------------------------
+
+
+def test_fill_durations_needs_the_package(monkeypatch):
+    from rhylthyme_cli_runner.instruments import fill_instrument_durations
+
+    monkeypatch.setitem(sys.modules, "rhylthyme_galago", None)
+    program, [note] = fill_instrument_durations(PROGRAM)
+    assert program is PROGRAM
+    assert (
+        "1 instrument step(s) have no duration" in note and "rhylthyme[galago]" in note
+    )
+
+
+def test_nothing_to_fill_needs_nothing(monkeypatch):
+    from rhylthyme_cli_runner.instruments import fill_instrument_durations
+
+    monkeypatch.setitem(sys.modules, "rhylthyme_galago", None)
+    plain = copy.deepcopy(PROGRAM)
+    plain["tracks"][0]["steps"][1]["duration"] = 5
+    assert fill_instrument_durations(plain) == (plain, [])
+
+
+def test_planned_makespan_follows_triggers_and_durations():
+    from rhylthyme_cli_runner.program_planner import planned_makespan
+
+    program = copy.deepcopy(PROGRAM)
+    program["tracks"][0]["steps"][1]["duration"] = {"type": "fixed", "seconds": 5.5}
+    assert planned_makespan(program) == 7.5  # 1 + 5.5 + 1
+
+
+@pytest.mark.cli
+def test_plan_fills_durations_offline(tmp_path):
+    pytest.importorskip("rhylthyme_galago")
+    from click.testing import CliRunner
+
+    from rhylthyme_cli_runner.cli import cli
+
+    src = _write(tmp_path, "p.json", PROGRAM)
+    out = tmp_path / "planned.json"
+    result = CliRunner().invoke(cli, ["plan", src, str(out)])
+    assert result.exit_code == 0, result.output
+    assert "shake: 5 s (from params.duration)" in result.output
+    assert "Makespan (by start triggers and durations): 7 s" in result.output
+    shake = {s["stepId"]: s for s in json.loads(out.read_text())["tracks"][0]["steps"]}[
+        "shake"
+    ]
+    assert shake["duration"] == {"type": "fixed", "seconds": 5}
+    assert shake["metadata"]["durationEstimate"] == {"source": "params", "seconds": 5}
+
+
+@pytest.mark.cli
+def test_plan_with_workcell_asks_the_tools(tmp_path, monkeypatch):
+    galago = pytest.importorskip("rhylthyme_galago")
+    from click.testing import CliRunner
+
+    from rhylthyme_cli_runner.cli import cli
+
+    tool = galago.FakeToolClient(estimates={"start_shake": 42})
+    real = galago.fill_durations
+    monkeypatch.setattr(
+        galago,
+        "fill_durations",
+        lambda p, w=None: real(p, w, client_factory=lambda b: tool),
+    )
+    src = _write(tmp_path, "p.json", PROGRAM)
+    lab = _write(tmp_path, "lab.json", WORKCELL)
+    out = tmp_path / "planned.json"
+    result = CliRunner().invoke(cli, ["plan", src, str(out), "--workcell", lab])
+    assert result.exit_code == 0, result.output
+    assert "shake: 42 s (from shaker EstimateDuration)" in result.output
+    assert "Makespan (by start triggers and durations): 44 s" in result.output
+    assert tool.configured == []  # planning never configures a tool

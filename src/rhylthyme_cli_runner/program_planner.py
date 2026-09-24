@@ -16,6 +16,8 @@ from typing import Any, Dict, List, Optional, Set, Tuple, Union
 
 import yaml
 
+from .instruments import fill_instrument_durations
+
 
 def load_program_file(file_path: str) -> dict:
     """
@@ -965,11 +967,30 @@ def save_optimized_program(program: dict, output_file: str):
             json.dump(program, f, indent=2)
 
 
+def planned_makespan(program: dict) -> float:
+    """
+    Seconds from program start to the end of the last step, following start
+    triggers and durations (resource waits not included). Uses the
+    validator's trigger arithmetic, which reads the current trackId/stepId
+    schema.
+    """
+    from .validate_program import calculate_step_start_time, parse_duration_to_seconds
+
+    end = 0.0
+    for track in program.get("tracks", []):
+        steps = track.get("steps", [])
+        for step in steps:
+            start = calculate_step_start_time(step, steps, program)
+            end = max(end, start + parse_duration_to_seconds(step.get("duration")))
+    return end
+
+
 def plan_program(
     input_file: str,
     output_file: str,
     verbose: bool = False,
     environment_file: Optional[str] = None,
+    workcell: Optional[str] = None,
 ) -> bool:
     """
     Plan and optimize a program schedule.
@@ -979,18 +1000,27 @@ def plan_program(
         output_file: Path to the output program file
         verbose: Whether to print verbose information
         environment_file: Path to the environment file
+        workcell: Workcell file; instrument steps without a duration are
+            estimated from its tools (else from their params, else a default)
 
     Returns:
         True if successful, False otherwise
     """
     try:
         program = load_program_file(input_file)
+        program, estimate_lines = fill_instrument_durations(program, workcell)
+        for line in estimate_lines:
+            print(line)
         environment = None
         if environment_file:
             environment = load_program_file(environment_file)
         planner = ProgramPlanner(program, verbose, environment)
         optimized_program = planner.optimize_schedule()
         save_optimized_program(optimized_program, output_file)
+        print(
+            "Makespan (by start triggers and durations): "
+            f"{planned_makespan(optimized_program):g} s"
+        )
         if verbose:
             print(f"Saved optimized program to {output_file}")
         return True

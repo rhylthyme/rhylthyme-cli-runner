@@ -67,9 +67,13 @@ def parse_time_string_to_seconds(time_value: Any) -> int:
     if not time_value:
         return 0
 
-    # Handle integer format
+    # Handle numeric format (the schema allows fractional seconds)
+    if isinstance(time_value, bool):
+        return 0
     if isinstance(time_value, int):
         return time_value
+    if isinstance(time_value, float):
+        return int(time_value) if time_value.is_integer() else time_value  # type: ignore[return-value]
 
     # Handle string format
     if not isinstance(time_value, str):

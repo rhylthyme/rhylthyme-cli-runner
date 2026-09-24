@@ -7,7 +7,7 @@ sent on a worker thread; the reply comes back through
 ``ProgramRunner.post_instrument_reply`` and ends (or fails) the step.
 """
 
-from typing import Any, Callable, Dict, List, Mapping, Optional
+from typing import Any, Callable, Dict, List, Mapping, Optional, Tuple
 
 from .instance_checks import Finding
 
@@ -63,6 +63,36 @@ def instrument_findings(
         )
         for issue in galago.check_program(program, workcell)
     ]
+
+
+def fill_instrument_durations(
+    program: Dict[str, Any], workcell_source=None
+) -> Tuple[Dict[str, Any], List[str]]:
+    """
+    Give instrument steps without a duration an estimated one, for planning:
+    the tool's EstimateDuration (with a workcell), else a duration-like
+    command param, else a default. Returns the new program and report lines;
+    without rhylthyme-galago the program comes back unchanged with a note.
+    """
+    missing = [step for step in _instrument_steps(program) if "duration" not in step]
+    if not missing:
+        return program, []
+    try:
+        import rhylthyme_galago as galago
+        from rhylthyme_galago.estimates import describe
+    except ImportError:
+        return program, [
+            f"{len(missing)} instrument step(s) have no duration and were not "
+            f"estimated. {INSTALL_HINT}"
+        ]
+    workcell = None
+    if workcell_source is not None:
+        try:
+            workcell = galago.load_workcell(workcell_source)
+        except galago.WorkcellError as e:
+            raise InstrumentSetupError(str(e)) from None
+    filled, estimates = galago.fill_durations(program, workcell)
+    return filled, ["Estimated instrument durations:"] + describe(estimates)
 
 
 def _reply_dict(reply) -> Dict[str, Any]:
