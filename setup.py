@@ -19,7 +19,7 @@ def read_readme():
 
 setup(
     name="rhylthyme-cli-runner",
-    version="0.2.7a0",
+    version="0.2.8a0",
     description="CLI runner for Rhylthyme real-time program schedules",
     long_description=read_readme(),
     long_description_content_type="text/markdown",
@@ -38,9 +38,11 @@ setup(
         "jsonschema>=4.0.0",
         "pyyaml>=6.0",
         "colorama>=0.4.0",
-        "rhylthyme-spec>=0.2.0a0",
+        "rhylthyme-spec>=0.2.1a0",
     ],
     extras_require={
+        # Instrument steps on galago-tools lab instruments (--workcell)
+        "galago": ["rhylthyme-galago>=0.1.0a0"],
         "dev": [
             # Testing framework
             "pytest>=6.0.0",

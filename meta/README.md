@@ -16,10 +16,21 @@ This package installs three others:
 | Package | Gives you |
 |---|---|
 | [rhylthyme-cli-runner](https://pypi.org/project/rhylthyme-cli-runner/) | the `rhylthyme` command: `validate` (offline), `analyze --finish-at 19:00` (conflicts, critical path, when to start each step), `publish` (a live timeline URL), `run` (timers in the terminal), `runs` and `calibrate` (learn real durations) |
-| [rhylthyme-importers](https://pypi.org/project/rhylthyme-importers/) | `rhylthyme-import`: recipes from TheMealDB, Spoonacular and recipe sites; protocols from protocols.io, Opentrons and Benchling; CookLang files |
-| [rhylthyme-timeline](https://pypi.org/project/rhylthyme-timeline/) | `rhylthyme-render`: publication-quality SVG, PNG and PDF figures of a schedule (needs Node.js) |
+| [rhylthyme-importers](https://pypi.org/project/rhylthyme-importers/) | `rhylthyme import`: recipes from TheMealDB, Spoonacular and recipe sites; protocols from protocols.io, Opentrons and Benchling; CookLang files |
+| [rhylthyme-timeline](https://pypi.org/project/rhylthyme-timeline/) | `rhylthyme render`: publication-quality SVG, PNG and PDF figures of a schedule (needs Node.js) |
 
 No account or API key is needed for any of these.
+
+To run steps on lab instruments through
+[galago-tools](https://github.com/sciencecorp/galago-tools) (shakers,
+incubators, plate readers, liquid handlers, robot arms), add the extra:
+
+```bash
+pip install "rhylthyme[galago]"
+rhylthyme run protocol.json --workcell lab.json   # simulated unless --live
+```
+
+See [rhylthyme-galago](https://github.com/rhylthyme/rhylthyme-galago).
 
 Docs: https://docs.rhylthyme.com. Source: https://github.com/rhylthyme.
 Version 0.1.0 of this name was an early internal library; if you depended on

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "rhylthyme"
-version = "0.2.6"
+version = "0.2.7"
 description = "Schedule work a person follows against a clock (recipes, lab protocols, run-of-shows, workouts) and publish it as a live timeline. Installs the rhylthyme command."
 readme = "README.md"
 requires-python = ">=3.12"
@@ -19,10 +19,14 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
 ]
 dependencies = [
-    "rhylthyme-cli-runner>=0.2.7a0",
+    "rhylthyme-cli-runner>=0.2.8a0",
     "rhylthyme-importers>=0.4.6",
     "rhylthyme-timeline>=2.0.0b5",
 ]
+
+[project.optional-dependencies]
+# Run instrument steps on galago-tools lab instruments (rhylthyme run --workcell)
+galago = ["rhylthyme-galago>=0.1.0a0"]
 
 
 [project.urls]
