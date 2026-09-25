@@ -234,6 +234,72 @@ def open_instruments(
     return InstrumentSession(galago.InstrumentExecutor(workcell, **kwargs), tools)
 
 
+def start_bridge(
+    runner,
+    session: "InstrumentSession",
+    program: Mapping[str, Any],
+    *,
+    rest=None,
+    token_fn: Optional[Callable[[], str]] = None,
+    config_path=None,
+):
+    """
+    Start publishing this run to rhylthyme.com (``rhylthyme bridge``): the
+    user's own ``bridges`` / ``bridge_state`` rows, owner-only. Needs
+    ``rhylthyme login``. Returns the running Publisher; call ``stop()`` at the
+    end. Raises InstrumentSetupError if the site cannot be reached or written.
+    """
+    import rhylthyme_galago
+    from rhylthyme_galago import bridge as B
+
+    from .remote import auth
+
+    try:
+        if rest is None or token_fn is None:
+            creds = auth.load_credentials() or {}
+            if not creds.get("supabase_url"):
+                raise InstrumentSetupError(
+                    "rhylthyme bridge needs you signed in: run `rhylthyme login`."
+                )
+            token_fn = token_fn or auth.access_token
+            rest = rest or B.SupabaseRest(
+                creds["supabase_url"], creds["supabase_anon_key"], token_fn
+            )
+        user_id = B.user_id_from_token(token_fn())
+    except (auth.AuthError, B.BridgeError) as e:
+        raise InstrumentSetupError(str(e)) from None
+
+    workcell = session.executor.workcell
+    bridge_id = B.bridge_id_for(
+        workcell, config_path or (auth.config_dir() / "bridges.json")
+    )
+    tools = [
+        {"name": c.tool, "type": workcell.tool(c.tool).type, "status": c.status.status}
+        for c in session.checks
+    ]
+
+    def on_error(message: str) -> None:
+        runner.status_message = f"Bridge: {message}"
+
+    publisher = B.Publisher(
+        runner,
+        rest=rest,
+        bridge_id=bridge_id,
+        user_id=user_id,
+        workcell=workcell,
+        tools=tools,
+        program=program,
+        mode="live" if session.live else "simulated",
+        allows_live=False,  # web-started live runs come in a later slice
+        version=getattr(rhylthyme_galago, "__version__", ""),
+        on_error=on_error,
+    )
+    try:
+        return publisher.start()
+    except B.BridgeError as e:
+        raise InstrumentSetupError(f"Could not publish to rhylthyme.com: {e}") from None
+
+
 def attach_instruments(
     runner,
     workcell_source,

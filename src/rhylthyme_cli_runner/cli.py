@@ -360,6 +360,56 @@ def run(
     )
 
 
+@cli.command()
+@click.argument("program_file", type=click.Path(exists=True))
+@click.option(
+    "--workcell",
+    type=click.Path(exists=True, dir_okay=False),
+    required=True,
+    help="Workcell file mapping the program's instrument tools to galago-tools servers",
+)
+@click.option(
+    "--live",
+    is_flag=True,
+    help="Run on real hardware (asks first, as with rhylthyme run --live)",
+)
+@click.option(
+    "--confirm-live", is_flag=True, help="Answer the --live question in advance"
+)
+@click.option(
+    "--time-scale", type=float, default=1.0, help="Time scale factor (default: 1.0)"
+)
+@click.option(
+    "--no-record",
+    is_flag=True,
+    help="Do not write a run record when the run ends",
+)
+def bridge(program_file, workcell, live, confirm_live, time_scale, no_record):
+    """
+    Run a program on a galago workcell and show it live on rhylthyme.com.
+
+    Works like `rhylthyme run --workcell`, and while the run lasts keeps your
+    Bridges page up to date: every step, the tool it waits on, any failure.
+    Needs `rhylthyme login` and rhylthyme-galago
+    (pip install "rhylthyme[galago]"). Only outbound HTTPS; tool addresses
+    never leave this machine. Watching only, for now: steer the run here.
+    """
+    run_program(
+        program_file,
+        _default_schema_path(),
+        time_scale,
+        True,
+        False,
+        None,
+        record=not no_record,
+        factor_prompt=False,
+        workcell=workcell,
+        live=live,
+        confirm_live=confirm_live,
+        bridge=True,
+    )
+
+
 # Plan command
 @cli.command()
 @click.argument("input_file", type=click.Path(exists=True))

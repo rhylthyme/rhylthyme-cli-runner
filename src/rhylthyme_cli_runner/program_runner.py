@@ -30,6 +30,7 @@ from .instruments import (
     InstrumentSetupError,
     open_instruments,
     program_uses_instruments,
+    start_bridge,
 )
 
 # Instance naming produced by the replicate expander: "Bake tray (2 of 3)".
@@ -3437,6 +3438,7 @@ def run_program(
     workcell: Optional[str] = None,
     live: bool = False,
     confirm_live: bool = False,
+    bridge: bool = False,
 ) -> Optional[str]:
     """
     Run a program file with the interactive UI.
@@ -3471,6 +3473,8 @@ def run_program(
             will run and asks for confirmation before any tool is configured.
         confirm_live: Skip that question (``--confirm-live``); required when
             stdin is not a terminal.
+        bridge: Also show the run live on rhylthyme.com (``rhylthyme
+            bridge``); needs ``rhylthyme login`` and a workcell.
 
     Returns:
         Path of the written run record, or None if none was written.
@@ -3569,6 +3573,7 @@ def run_program(
 
     # Instrument steps: configure the workcell's tools before the clock starts
     instruments = None
+    publisher = None
     if workcell or program_uses_instruments(program):
         if not workcell:
             print(
@@ -3592,6 +3597,14 @@ def run_program(
             sys.exit(1)
         print("\n".join(instruments.report()))
         instruments.attach(runner)
+        if bridge:
+            try:
+                publisher = start_bridge(runner, instruments, runner.program)
+            except InstrumentSetupError as e:
+                instruments.shutdown()
+                print(f"Cannot start the bridge:\n{e}")
+                sys.exit(1)
+            print("Live on rhylthyme.com: open Bridges on the lab site.")
     elif live:
         print("--live has no effect: this program has no instrument steps.")
 
@@ -3630,6 +3643,8 @@ def run_program(
         print("Program execution interrupted.")
         outcome = "abandoned"
     finally:
+        if publisher is not None:
+            publisher.stop()
         if instruments is not None:
             pending = instruments.shutdown()
             if pending:

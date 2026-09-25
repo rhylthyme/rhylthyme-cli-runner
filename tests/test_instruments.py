@@ -1127,3 +1127,106 @@ def test_plan_with_workcell_asks_the_tools(tmp_path, monkeypatch):
     assert "shake: 42 s (from shaker EstimateDuration)" in result.output
     assert "Makespan (by start triggers and durations): 44 s" in result.output
     assert tool.configured == []  # planning never configures a tool
+
+
+# --- The web bridge, slice 1: watch only (phase 10) -------------------------
+
+
+class _RecordingRest:
+    def __init__(self):
+        self.rows = []
+
+    def upsert(self, table, row, on_conflict):
+        self.rows.append((table, json.loads(json.dumps(row))))
+
+    def patch(self, table, match, row):
+        self.rows.append((table, row))
+
+
+def _jwt(sub):
+    import base64
+
+    body = (
+        base64.urlsafe_b64encode(json.dumps({"sub": sub}).encode()).decode().rstrip("=")
+    )
+    return f"h.{body}.s"
+
+
+def test_bridge_publishes_the_run_to_the_users_tables(
+    fake_tools, tmp_path, monkeypatch
+):
+    import rhylthyme_cli_runner.program_runner as pr
+
+    rest = _RecordingRest()
+    real_start = pr.start_bridge
+    monkeypatch.setattr(
+        pr,
+        "start_bridge",
+        lambda runner, session, program: real_start(
+            runner,
+            session,
+            program,
+            rest=rest,
+            token_fn=lambda: _jwt("user-9"),
+            config_path=tmp_path / "bridges.json",
+        ),
+    )
+
+    def run_headless(fn):
+        r = captured["runner"]
+        r.time_scale = 100.0
+        r.start()
+        r.command_queue.put("start_program")
+        assert run_until(r, lambda: not r.is_running)
+
+    captured = {}
+    real_runner = pr.ProgramRunner
+
+    class Capturing(real_runner):
+        def __init__(self, *a, **k):
+            super().__init__(*a, **k)
+            captured["runner"] = self
+
+    monkeypatch.setattr(pr, "ProgramRunner", Capturing)
+    monkeypatch.setattr(pr.curses, "wrapper", run_headless)
+    workcell = copy.deepcopy(WORKCELL)
+    workcell["tools"][0].update(host="10.20.30.40", port=50710)
+    program = _write(tmp_path, "p.json", PROGRAM)
+    run_program(
+        program,
+        validate=False,
+        record=False,
+        workcell=_write(tmp_path, "lab.json", workcell),
+        bridge=True,
+    )
+
+    tables = [t for t, _ in rest.rows]
+    assert tables[0] == "bridges" and "bridge_state" in tables
+    bridge = rest.rows[0][1]
+    assert bridge["user_id"] == "user-9" and bridge["allows_live"] is False
+    assert bridge["tools"] == [
+        {"name": "shaker", "type": "bioshake", "status": "SIMULATED"}
+    ]
+    final = [row for t, row in rest.rows if t == "bridge_state"][-1]
+    assert final["status"] == "completed" and final["mode"] == "simulated"
+    assert [s["status"] for s in final["state"]["steps"]] == ["COMPLETED"] * 3
+    assert "10.20.30.40" not in json.dumps(rest.rows) and "50710" not in json.dumps(
+        rest.rows
+    )
+
+
+def test_bridge_needs_a_login(fake_tools, tmp_path, monkeypatch, capsys):
+    from rhylthyme_cli_runner.remote import auth
+
+    monkeypatch.setattr(auth, "load_credentials", lambda path=None: None)
+    program = _write(tmp_path, "p.json", PROGRAM)
+    with pytest.raises(SystemExit):
+        run_program(
+            program,
+            validate=False,
+            record=False,
+            workcell=_write(tmp_path, "lab.json", WORKCELL),
+            bridge=True,
+        )
+    assert "rhylthyme login" in capsys.readouterr().out
+    assert not fake_tools.ran
