@@ -90,6 +90,7 @@ def test_program_uses_instruments():
 
 
 def test_instrument_step_ends_on_the_reply_not_a_timer():
+    pytest.importorskip("rhylthyme_galago")
     from rhylthyme_galago import FakeToolClient
 
     shaker = FakeToolClient(gate=threading.Event())
@@ -122,6 +123,7 @@ def test_instrument_step_ends_on_the_reply_not_a_timer():
 
 
 def test_late_reply_for_an_aborted_step_is_ignored():
+    pytest.importorskip("rhylthyme_galago")
     from rhylthyme_galago import FakeToolClient
 
     shaker = FakeToolClient(gate=threading.Event())
@@ -148,6 +150,7 @@ def test_unknown_tool_is_refused_before_the_run():
 
 
 def test_tool_not_ready_is_refused_with_a_report():
+    pytest.importorskip("rhylthyme_galago")
     from rhylthyme_galago import FakeToolClient, ToolReply
 
     class OfflineTool(FakeToolClient):
