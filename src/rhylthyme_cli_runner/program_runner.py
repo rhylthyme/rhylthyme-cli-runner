@@ -867,6 +867,9 @@ class ProgramRunner:
         self.command_queue: queue.Queue[str] = queue.Queue()
         self.failed_steps: List[str] = []
         self.program_abort_reason: Optional[str] = None
+        # Commands from the web bridge, by id: {"accepted": bool, "reason": str}.
+        # Written on the runner thread, read by the bridge's thread.
+        self.remote_outcomes: Dict[str, Dict[str, Any]] = {}
         self._abort_armed_at: Optional[float] = None
         # Instrument replies, posted from executor threads by
         # post_instrument_reply() and applied in process_commands().
@@ -1179,6 +1182,55 @@ class ProgramRunner:
         self.status_message = f"Skipped {step.step_id} (marked done)."
         return True
 
+    REMOTE_KINDS = ("pause", "resume", "retry", "skip", "abort")
+
+    def apply_remote_command(self, command: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Apply a command from the web bridge (rhylthyme bridge), on the runner
+        thread, if it makes sense right now. Returns {"accepted", "reason"}.
+        The bridge has already checked who sent it and how old it is.
+        """
+        kind = command.get("kind")
+        args = command.get("args") or {}
+        started = self.program_started and self.program_start_time is not None
+        live = started and self.is_running
+
+        def no(reason: str) -> Dict[str, Any]:
+            return {"accepted": False, "reason": reason}
+
+        if kind not in self.REMOTE_KINDS:
+            return no(f"unknown command {kind!r}")
+        if kind == "pause":
+            if not live:
+                return no("the program is not running")
+            if self.is_paused:
+                return no("already paused")
+            self.toggle_pause()
+        elif kind == "resume":
+            if not self.is_paused:
+                return no("not paused")
+            self.toggle_pause()
+        elif kind in ("retry", "skip"):
+            step_id = args.get("step_id")
+            if step_id not in self.failed_steps:
+                return no(f"step {step_id!r} has not failed")
+            ok = (self.retry_failed_step if kind == "retry" else self.skip_failed_step)(
+                step_id
+            )
+            if not ok:
+                return no(self.status_message)
+        elif kind == "abort":
+            if not live:
+                return no("the program is not running")
+            reason = str(args.get("reason") or "Aborted from the web")[:200]
+            self.abort_program(reason)
+        self.status_message = (
+            f"Remote: {kind}"
+            + (f" {args.get('step_id')}" if args.get("step_id") else "")
+            + " (from the web)"
+        )
+        return {"accepted": True, "reason": ""}
+
     def abort_program(self, reason: str = "Aborted by operator") -> None:
         """End the program: running and failed steps are aborted with reason."""
         for step in self.steps.values():
@@ -1230,6 +1282,20 @@ class ProgramRunner:
                     else:
                         trigger_name = parts[1]
                         self.trigger_manual_step(trigger_name)
+                elif command.startswith("remote:"):
+                    remote = json.loads(command[len("remote:") :])
+                    outcome = self.apply_remote_command(remote)
+                    self.remote_outcomes[str(remote.get("id"))] = outcome
+                    self.emit_event(
+                        "remote_command",
+                        {
+                            "time": self.current_time,
+                            "id": remote.get("id"),
+                            "kind": remote.get("kind"),
+                            "args": remote.get("args") or {},
+                            **outcome,
+                        },
+                    )
                 elif command.startswith("retry:"):
                     self.retry_failed_step(command.split(":", 1)[1] or None)
                 elif command.startswith("skip:"):

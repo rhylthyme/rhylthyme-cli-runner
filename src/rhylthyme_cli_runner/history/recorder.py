@@ -15,6 +15,7 @@ the events it emits are:
 ``program_resumed``  {time, wall_time, paused_seconds}
 ``program_aborted``  {time, reason}  (reason goes to ``context.abortReason``)
 ``instrument_reply`` {step_id, time, ok, code, errorMessage, metadata}
+``remote_command``   {time, id, kind, args, accepted, reason}  (-> ``context.remoteCommands``)
 
 All ``time`` values are the runner's program clock (an epoch float that
 advances at ``time_scale``); the record stores them as seconds from the
@@ -298,6 +299,22 @@ class RunRecorder:
             if data.get("metadata"):
                 reply["metadata"] = copy.deepcopy(data["metadata"])
             log["replies"].append(reply)
+        elif event_type == "remote_command":
+            start = self._start_epoch()
+            self.context.setdefault("remoteCommands", []).append(
+                {
+                    "id": data.get("id"),
+                    "kind": data.get("kind"),
+                    "args": copy.deepcopy(data.get("args") or {}),
+                    "atSeconds": (
+                        round(max(0.0, data["time"] - start), 3)
+                        if start is not None and data.get("time") is not None
+                        else None
+                    ),
+                    "accepted": bool(data.get("accepted")),
+                    "reason": data.get("reason") or "",
+                }
+            )
         elif event_type == "program_aborted":
             self.context["abortReason"] = data.get("reason") or "aborted"
         elif event_type == "program_paused":

@@ -392,7 +392,9 @@ def bridge(program_file, workcell, live, confirm_live, time_scale, no_record):
     Bridges page up to date: every step, the tool it waits on, any failure.
     Needs `rhylthyme login` and rhylthyme-galago
     (pip install "rhylthyme[galago]"). Only outbound HTTPS; tool addresses
-    never leave this machine. Watching only, for now: steer the run here.
+    never leave this machine. From the Bridges page you can pause, resume,
+    retry or skip a failed step and abort; this machine checks and logs each
+    command, and Ctrl-C here always wins.
     """
     run_program(
         program_file,

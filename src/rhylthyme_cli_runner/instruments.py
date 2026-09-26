@@ -281,6 +281,20 @@ def start_bridge(
     def on_error(message: str) -> None:
         runner.status_message = f"Bridge: {message}"
 
+    def submit(command: Dict[str, Any], wait: float = 3.0) -> Optional[Dict[str, Any]]:
+        """Hand a browser command to the runner thread; wait for its decision."""
+        import json as _json
+        import time as _time
+
+        runner.command_queue.put("remote:" + _json.dumps(command))
+        deadline = _time.time() + wait
+        while _time.time() < deadline:
+            outcome = runner.remote_outcomes.get(command["id"])
+            if outcome is not None:
+                return outcome
+            _time.sleep(0.05)
+        return None
+
     publisher = B.Publisher(
         runner,
         rest=rest,
@@ -293,6 +307,7 @@ def start_bridge(
         allows_live=False,  # web-started live runs come in a later slice
         version=getattr(rhylthyme_galago, "__version__", ""),
         on_error=on_error,
+        submit=submit,
     )
     try:
         return publisher.start()

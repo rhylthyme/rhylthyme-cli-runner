@@ -1230,3 +1230,127 @@ def test_bridge_needs_a_login(fake_tools, tmp_path, monkeypatch, capsys):
         )
     assert "rhylthyme login" in capsys.readouterr().out
     assert not fake_tools.ran
+
+
+# --- The web bridge, slice 2: steering from the browser ----------------------
+
+
+def _remote(runner, kind, **args):
+    return runner.apply_remote_command({"id": "x", "kind": kind, "args": args})
+
+
+def test_remote_commands_only_apply_when_they_make_sense():
+    pytest.importorskip("rhylthyme_galago")
+    runner, session, _ = started_runner(_failing())
+    try:
+        assert run_until(runner, lambda: runner.failed_steps == ["shake"])
+        assert _remote(runner, "resume") == {"accepted": False, "reason": "not paused"}
+        assert (
+            _remote(runner, "retry", step_id="load")["reason"]
+            == "step 'load' has not failed"
+        )
+        assert _remote(runner, "reboot")["reason"] == "unknown command 'reboot'"
+        assert _remote(runner, "pause")["accepted"] and runner.is_paused
+        assert _remote(runner, "pause")["reason"] == "already paused"
+        assert _remote(runner, "resume")["accepted"] and not runner.is_paused
+        assert _remote(runner, "skip", step_id="shake")["accepted"]
+        assert runner.steps["shake"].status == StepStatus.COMPLETED
+        assert "(from the web)" in runner.status_message
+        assert _remote(runner, "abort", reason="lid cracked")["accepted"]
+        assert runner.program_abort_reason == "lid cracked"
+        assert _remote(runner, "pause")["reason"] == "the program is not running"
+    finally:
+        session.shutdown()
+
+
+def test_remote_commands_go_into_the_run_record(tmp_path):
+    pytest.importorskip("rhylthyme_galago")
+    from rhylthyme_cli_runner.history.recorder import RunRecorder
+    from rhylthyme_cli_runner.history.store import validate_run
+
+    runner = ProgramRunner(copy.deepcopy(PROGRAM), time_scale=100.0)
+    recorder = RunRecorder(
+        runner, source_program=PROGRAM, runs_dir=str(tmp_path)
+    ).attach()
+    session = attach_instruments(runner, WORKCELL, client_factory=lambda b: _failing())
+    try:
+        runner.start()
+        runner.command_queue.put("start_program")
+        assert run_until(runner, lambda: runner.failed_steps == ["shake"])
+        runner.command_queue.put(
+            'remote:{"id": "c9", "kind": "skip", "args": {"step_id": "shake"}}'
+        )
+        assert run_until(runner, lambda: not runner.is_running)
+    finally:
+        session.shutdown()
+    assert runner.remote_outcomes["c9"] == {"accepted": True, "reason": ""}
+    record = json.loads(open(recorder.finalize()).read())
+    [cmd] = record["context"]["remoteCommands"]
+    assert (cmd["id"], cmd["kind"], cmd["args"], cmd["accepted"]) == (
+        "c9",
+        "skip",
+        {"step_id": "shake"},
+        True,
+    )
+    assert validate_run(record) == []
+
+
+def test_a_browser_retry_reaches_the_runner_through_the_bridge(tmp_path):
+    """The full path: bridge_commands row -> bridge -> runner -> row answered."""
+    pytest.importorskip("rhylthyme_galago")
+    import datetime
+
+    from rhylthyme_galago import FakeToolClient, ToolReply
+
+    from rhylthyme_cli_runner.instruments import start_bridge
+
+    tool = FakeToolClient({"start_shake": ToolReply("DRIVER_ERROR", "lid open")})
+
+    class Rest(_RecordingRest):
+        def __init__(self):
+            super().__init__()
+            self.pending = []
+
+        def select(self, table, query):
+            rows, self.pending = self.pending, []
+            return rows
+
+        def patch(self, table, match, row):
+            self.rows.append((table, dict(row, match=match)))
+
+    rest = Rest()
+    runner = ProgramRunner(copy.deepcopy(PROGRAM), time_scale=100.0)
+    session = attach_instruments(runner, WORKCELL, client_factory=lambda b: tool)
+    publisher = start_bridge(
+        runner,
+        session,
+        runner.program,
+        rest=rest,
+        token_fn=lambda: _jwt("user-9"),
+        config_path=tmp_path / "b.json",
+    )
+    try:
+        runner.start()
+        runner.command_queue.put("start_program")
+        assert run_until(runner, lambda: runner.failed_steps == ["shake"])
+        tool.replies["start_shake"] = ToolReply("SUCCESS")
+        rest.pending = [
+            {
+                "id": "c1",
+                "bridge_id": publisher.bridge_id,
+                "user_id": "user-9",
+                "kind": "retry",
+                "args": {"step_id": "shake"},
+                "status": "pending",
+                "created_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+            }
+        ]
+        assert run_until(runner, lambda: not runner.is_running, timeout=10)
+    finally:
+        publisher.stop()
+        session.shutdown()
+    answered = [row for t, row in rest.rows if t == "bridge_commands"]
+    assert answered[0]["match"] == "id=eq.c1&status=eq.pending"
+    assert answered[0]["status"] == "done"
+    assert runner.steps["shake"].status == StepStatus.COMPLETED
+    assert [c["command"] for c in tool.executed] == ["start_shake", "start_shake"]
