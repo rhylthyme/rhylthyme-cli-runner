@@ -3529,6 +3529,8 @@ def run_program(
     program_data: Optional[Dict[str, Any]] = None,
     program_id: Optional[str] = None,
     exit_when_done: bool = False,
+    prepared_instruments: Optional[Any] = None,
+    bridge_allows_live: bool = False,
 ) -> Optional[str]:
     """
     Run a program file with the interactive UI.
@@ -3570,6 +3572,9 @@ def run_program(
         program_id: The saved program's id, shown on the Bridges page.
         exit_when_done: Leave the terminal UI on its own once the run has
             completed or been aborted (so a bridge can go back to waiting).
+        prepared_instruments: An InstrumentSession already opened and
+            prepared for this program (a bridge configures the tools before it
+            accepts a run from the web); used as is instead of opening one.
 
     Returns:
         Path of the written run record, or None if none was written.
@@ -3682,14 +3687,19 @@ def run_program(
             )
             sys.exit(1)
         try:
-            instruments = open_instruments(runner.program, workcell, live=live)
-            if live:
-                print("\n".join(instruments.summary(runner.program)))
-                if not _confirm_live_run(confirm_live):
-                    instruments.shutdown()
-                    print("Live run cancelled; nothing was sent to the instruments.")
-                    sys.exit(1)
-            instruments.prepare()
+            if prepared_instruments is not None:
+                instruments = prepared_instruments
+            else:
+                instruments = open_instruments(runner.program, workcell, live=live)
+                if live:
+                    print("\n".join(instruments.summary(runner.program)))
+                    if not _confirm_live_run(confirm_live):
+                        instruments.shutdown()
+                        print(
+                            "Live run cancelled; nothing was sent to the instruments."
+                        )
+                        sys.exit(1)
+                instruments.prepare()
         except InstrumentSetupError as e:
             if instruments is not None:
                 instruments.shutdown()
@@ -3700,7 +3710,11 @@ def run_program(
         if bridge:
             try:
                 publisher = start_bridge(
-                    runner, instruments, runner.program, program_id=program_id
+                    runner,
+                    instruments,
+                    runner.program,
+                    program_id=program_id,
+                    allows_live=bridge_allows_live,
                 )
             except InstrumentSetupError as e:
                 instruments.shutdown()

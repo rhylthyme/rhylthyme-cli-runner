@@ -243,6 +243,7 @@ def start_bridge(
     token_fn: Optional[Callable[[], str]] = None,
     config_path=None,
     program_id: Optional[str] = None,
+    allows_live: bool = False,
 ):
     """
     Start publishing this run to rhylthyme.com (``rhylthyme bridge``): the
@@ -305,7 +306,7 @@ def start_bridge(
         tools=tools,
         program=program,
         mode="live" if session.live else "simulated",
-        allows_live=False,  # web-started live runs come in a later slice
+        allows_live=allows_live,
         version=getattr(rhylthyme_galago, "__version__", ""),
         on_error=on_error,
         submit=submit,

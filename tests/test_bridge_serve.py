@@ -11,6 +11,8 @@ pytestmark = pytest.mark.unit
 
 pytest.importorskip("rhylthyme_galago")
 
+from rhylthyme_galago import FakeToolClient, ToolReply  # noqa: E402
+
 from rhylthyme_cli_runner.bridge_serve import check_start, serve  # noqa: E402
 from rhylthyme_cli_runner.cli import _default_schema_path  # noqa: E402
 from rhylthyme_cli_runner.validate_program import load_program_file  # noqa: E402
@@ -80,9 +82,9 @@ def test_a_valid_saved_program_is_accepted():
     "args, program, reason",
     [
         (
-            {"program_id": PID, "mode": "live"},
+            {"program_id": PID, "mode": "live", "confirm": "live"},
             PROGRAM,
-            "only simulated runs can be started from the web for now",
+            "this bridge does not accept live runs (start it with --allow-live)",
         ),
         (
             {"program_id": "../etc"},
@@ -168,6 +170,7 @@ def test_serve_waits_starts_the_run_and_answers(tmp_path):
         run=lambda *a, **k: runs.append((a, k)),
         max_runs=1,
         out=out,
+        client_factory=lambda binding: FakeToolClient(),
     )
     assert started == 1
     [(args, kw)] = runs
@@ -186,3 +189,105 @@ def test_serve_waits_starts_the_run_and_answers(tmp_path):
         and answered[0]["match"] == "id=eq.c1&status=eq.pending"
     )
     assert "Starting 'Shake a plate' from the web (simulated)." in out.getvalue()
+
+
+def test_live_needs_both_keys():
+    no_confirm, _ = check_start(
+        {"program_id": PID, "mode": "live"},
+        fetch(PROGRAM),
+        WORKCELL,
+        SCHEMA,
+        allow_live=True,
+    )
+    assert no_confirm["reason"] == "a live run needs the typed confirmation"
+    both, program = check_start(
+        {"program_id": PID, "mode": "live", "confirm": "live"},
+        fetch(PROGRAM),
+        WORKCELL,
+        SCHEMA,
+        allow_live=True,
+    )
+    assert both["accepted"] and program == PROGRAM
+
+
+def _start_command(cid="c1", **args):
+    now = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    return {
+        "id": cid,
+        "bridge_id": None,
+        "user_id": "user-9",
+        "kind": "start_run",
+        "args": dict({"program_id": PID}, **args),
+        "status": "pending",
+        "created_at": now,
+    }
+
+
+def _serve(tmp_path, rest, tool, **kw):
+    runs, out = [], io.StringIO()
+    serve(
+        WORKCELL,
+        schema_file=_default_schema_path(),
+        rest=rest,
+        token_fn=lambda: _jwt("user-9"),
+        config_path=tmp_path / "b.json",
+        run=lambda *a, **k: runs.append(k),
+        max_runs=1,
+        out=out,
+        client_factory=lambda binding: tool,
+        **kw,
+    )
+    return runs, out.getvalue()
+
+
+def test_a_live_start_configures_real_hardware_and_says_so(tmp_path):
+    rest = Rest([_start_command(mode="live", confirm="live")])
+    tool = FakeToolClient(status="READY")
+    runs, out = _serve(tmp_path, rest, tool, allow_live=True)
+    [kw] = runs
+    assert kw["live"] is True and kw["bridge_allows_live"] is True
+    assert kw["prepared_instruments"] is not None
+    assert [c.simulated for c in tool.configured] == [False]
+    assert "LIVE run started from the web" in out
+    assert rest.rows[0][1]["allows_live"] is True
+
+
+def test_tools_that_are_not_ready_refuse_the_start_without_addresses(tmp_path):
+    import threading
+
+    class Offline(FakeToolClient):
+        def configure(self, config):
+            return ToolReply("UNREACHABLE", "failed to connect to h:1")
+
+    rest = Rest([_start_command(mode="live", confirm="live")])
+    tools = [Offline(status="OFFLINE")]
+    runs, out = [], io.StringIO()
+
+    def later():
+        # A second, simulated start on a ready tool lets serve() return.
+        tools.append(FakeToolClient())
+        rest.commands.append(_start_command("c2"))  # a new id: c1 is handled once
+
+    timer = threading.Timer(2.5, later)
+    timer.start()
+    try:
+        serve(
+            WORKCELL,
+            schema_file=_default_schema_path(),
+            rest=rest,
+            token_fn=lambda: _jwt("user-9"),
+            config_path=tmp_path / "b.json",
+            run=lambda *a, **k: runs.append(k),
+            max_runs=1,
+            out=out,
+            client_factory=lambda binding: tools[-1],
+            allow_live=True,
+        )
+    finally:
+        timer.cancel()
+    answered = [row for t, row in rest.rows if t == "bridge_commands"]
+    assert answered[0]["status"] == "rejected"
+    reason = answered[0]["result"]["reason"]
+    assert reason.startswith("tools not ready:") and "OFFLINE" in reason
+    assert "h:1" not in reason
+    assert answered[1]["status"] == "done" and runs[0]["live"] is False

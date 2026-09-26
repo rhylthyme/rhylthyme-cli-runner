@@ -377,6 +377,14 @@ def run(
     "--confirm-live", is_flag=True, help="Answer the --live question in advance"
 )
 @click.option(
+    "--allow-live",
+    is_flag=True,
+    help=(
+        "Waiting for the web: also accept LIVE runs (each still needs the user "
+        "to type 'live' in the browser after the pre-flight summary)"
+    ),
+)
+@click.option(
     "--time-scale", type=float, default=1.0, help="Time scale factor (default: 1.0)"
 )
 @click.option(
@@ -384,13 +392,17 @@ def run(
     is_flag=True,
     help="Do not write a run record when the run ends",
 )
-def bridge(program_file, workcell, live, confirm_live, time_scale, no_record):
+def bridge(
+    program_file, workcell, live, confirm_live, allow_live, time_scale, no_record
+):
     """
     Run a program on a galago workcell and show it live on rhylthyme.com.
 
     Without PROGRAM_FILE, wait for runs started from the Bridges page: a
     program saved in your library, checked here against the workcell (no code
-    blocks, simulated only for now), run, then back to waiting. Ctrl-C stops.
+    blocks; its tools must come up ready), run, then back to waiting. Runs are
+    simulated unless you pass --allow-live here AND the user types 'live' in
+    the browser. Ctrl-C stops.
 
     Works like `rhylthyme run --workcell`, and while the run lasts keeps your
     Bridges page up to date: every step, the tool it waits on, any failure.
@@ -406,8 +418,8 @@ def bridge(program_file, workcell, live, confirm_live, time_scale, no_record):
 
         if live:
             raise click.UsageError(
-                "--live applies to a PROGRAM_FILE run; runs started from the web "
-                "are simulated for now."
+                "--live applies to a PROGRAM_FILE run; to accept live runs "
+                "from the web, pass --allow-live."
             )
         try:
             serve(
@@ -415,12 +427,18 @@ def bridge(program_file, workcell, live, confirm_live, time_scale, no_record):
                 schema_file=_default_schema_path(),
                 time_scale=time_scale,
                 record=not no_record,
+                allow_live=allow_live,
             )
         except InstrumentSetupError as e:
             raise click.ClickException(str(e))
         except KeyboardInterrupt:
             click.echo("Bridge stopped.")
         return
+    if allow_live:
+        raise click.UsageError(
+            "--allow-live is for waiting for runs from the web (no PROGRAM_FILE); "
+            "use --live to run PROGRAM_FILE on real hardware."
+        )
     run_program(
         program_file,
         _default_schema_path(),

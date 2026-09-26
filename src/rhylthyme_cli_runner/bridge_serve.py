@@ -7,8 +7,14 @@ The bridge stays listed as online on the Bridges page. A ``start_run`` command
 names a program saved in the user's own library; this machine loads it,
 checks it against the local workcell and refuses it unless it is safe to run
 here, then runs it exactly as ``rhylthyme bridge PROGRAM`` would, and goes
-back to waiting when the run completes or is aborted. Only simulated runs can
-be started from the web for now.
+back to waiting when the run completes or is aborted.
+
+Live runs need two keys: the bridge must have been started with
+``--allow-live`` (a decision made at the lab machine), and the browser must
+send the ``live`` the user typed after seeing the pre-flight summary. Before
+a run is accepted, in either mode, its tools are configured and must report
+ready; if not, the start is refused with the pre-flight report (tool addresses
+scrubbed).
 """
 
 import json
@@ -44,6 +50,7 @@ def check_start(
     fetch_program: Callable[[str], Optional[Mapping[str, Any]]],
     workcell_source: Any,
     schema: Mapping[str, Any],
+    allow_live: bool = False,
 ) -> Tuple[Outcome, Optional[Dict[str, Any]]]:
     """
     Decide whether a ``start_run`` may run here. Returns (outcome, program):
@@ -52,8 +59,18 @@ def check_start(
     from .validate_program import perform_additional_validations, validate_program
 
     mode = args.get("mode") or "simulated"
-    if mode != "simulated":
-        return _no("only simulated runs can be started from the web for now"), None
+    if mode not in ("simulated", "live"):
+        return _no(f"unknown mode {mode!r}"), None
+    if mode == "live":
+        if not allow_live:
+            return (
+                _no(
+                    "this bridge does not accept live runs (start it with --allow-live)"
+                ),
+                None,
+            )
+        if args.get("confirm") != "live":
+            return _no("a live run needs the typed confirmation"), None
     program_id = str(args.get("program_id") or "")
     if not UUID_RE.match(program_id):
         return _no("program_id must be the id of a program in your library"), None
@@ -86,6 +103,8 @@ def serve(
     run: Optional[Callable[..., Any]] = None,
     max_runs: Optional[int] = None,
     out=None,
+    allow_live: bool = False,
+    client_factory: Optional[Callable] = None,
 ) -> int:
     """Wait for runs from the web until Ctrl-C (or ``max_runs``). Returns runs started."""
     out = out or sys.stdout
@@ -131,7 +150,8 @@ def serve(
         {"name": t.name, "type": t.type, "status": "idle"}
         for t in workcell.tools.values()
     ]
-    starts: "queue.Queue[Tuple[Dict[str, Any], str]]" = queue.Queue()
+    starts: "queue.Queue[Tuple[Dict[str, Any], str, Any, bool]]" = queue.Queue()
+    scrub = B.scrubber(workcell)
 
     def fetch_program(program_id: str) -> Optional[Mapping[str, Any]]:
         rows = rest.select(
@@ -143,21 +163,47 @@ def serve(
     def submit(command: Dict[str, Any]) -> Outcome:
         if not starts.empty():
             return _no("a run is already starting")
+        args = command.get("args") or {}
         try:
             outcome, program = check_start(
-                command.get("args") or {}, fetch_program, workcell_source, schema
+                args, fetch_program, workcell_source, schema, allow_live=allow_live
             )
         except B.BridgeError as e:
             return _no(f"could not load the program: {e}")
-        if outcome["accepted"] and program is not None:
-            starts.put((program, command["args"]["program_id"]))
+        if not outcome["accepted"] or program is None:
+            print(f"Refused a run from the web: {outcome['reason']}", file=out)
+            return outcome
+        live = args.get("mode") == "live"
+        # Configure the tools now, so a tool that is not ready is a refusal
+        # the browser sees rather than a run that never starts.
+        from .instruments import open_instruments
+
+        session = None
+        try:
+            kwargs: Dict[str, Any] = {"live": live}
+            if client_factory is not None:
+                kwargs["client_factory"] = client_factory
+            session = open_instruments(program, workcell_source, **kwargs)
+            session.prepare()
+        except InstrumentSetupError as e:
+            if session is not None:
+                session.shutdown()
+            reason = "tools not ready: " + scrub(str(e)).replace("\n", "; ")
+            print(f"Refused a run from the web: {reason}", file=out)
+            return _no(reason)
+        starts.put((program, args["program_id"], session, live))
+        if live:
             print(
-                f"Starting {program.get('name')!r} from the web (simulated).",
+                "\n*** LIVE run started from the web: real hardware will move. "
+                "Ctrl-C stops it. ***",
                 file=out,
             )
-        else:
-            print(f"Refused a run from the web: {outcome['reason']}", file=out)
-        return outcome
+        print(
+            f"Starting {program.get('name')!r} from the web "
+            f"({'LIVE' if live else 'simulated'}).",
+            file=out,
+        )
+        return {"accepted": True, "reason": ""}
 
     runs = 0
     while max_runs is None or runs < max_runs:
@@ -168,7 +214,7 @@ def serve(
             user_id=user_id,
             workcell=workcell,
             tools=tools,
-            allows_live=False,
+            allows_live=allow_live,
             version=getattr(galago, "__version__", ""),
             on_error=lambda message: print(f"Bridge: {message}", file=out),
             submit=submit,
@@ -184,10 +230,16 @@ def serve(
             "(Bridges page). Ctrl-C stops it.",
             file=out,
         )
+        if allow_live:
+            print(
+                "LIVE runs may be started from the web (--allow-live); each needs "
+                "the user to type 'live' after the pre-flight summary.",
+                file=out,
+            )
         try:
             while True:
                 try:
-                    program, program_id = starts.get(timeout=0.5)
+                    program, program_id, session, live = starts.get(timeout=0.5)
                     break
                 except queue.Empty:
                     continue
@@ -211,6 +263,9 @@ def serve(
                 program_data=program,
                 program_id=program_id,
                 exit_when_done=True,
+                live=live,
+                prepared_instruments=session,
+                bridge_allows_live=allow_live,
             )
         except SystemExit:
             print("The run could not start; waiting for the next one.", file=out)
