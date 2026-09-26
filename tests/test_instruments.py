@@ -1162,13 +1162,14 @@ def test_bridge_publishes_the_run_to_the_users_tables(
     monkeypatch.setattr(
         pr,
         "start_bridge",
-        lambda runner, session, program: real_start(
+        lambda runner, session, program, **kw: real_start(
             runner,
             session,
             program,
             rest=rest,
             token_fn=lambda: _jwt("user-9"),
             config_path=tmp_path / "bridges.json",
+            **kw,
         ),
     )
 
@@ -1354,3 +1355,31 @@ def test_a_browser_retry_reaches_the_runner_through_the_bridge(tmp_path):
     assert answered[0]["status"] == "done"
     assert runner.steps["shake"].status == StepStatus.COMPLETED
     assert [c["command"] for c in tool.executed] == ["start_shake", "start_shake"]
+
+
+def test_main_loop_leaves_by_itself_after_a_web_started_run(screen, monkeypatch):
+    import rhylthyme_cli_runner.program_runner as pr
+
+    monkeypatch.setattr(pr.curses, "curs_set", lambda n: None)
+
+    class Scr(_Screen):
+        def timeout(self, ms):
+            pass
+
+        def getkey(self):
+            raise Exception("no input")
+
+    runner = ProgramRunner(
+        copy.deepcopy(TWO_TRACKS), time_scale=1000.0, auto_start=True
+    )
+    runner.steps["warm"].duration_seconds = 1
+    for step in list(runner.steps.values()):
+        if step.instrument:
+            step.instrument = None  # hand steps only: the run finishes on timers
+            step.duration_type = pr.DurationType.FIXED
+            step.duration_seconds = 1
+    assert not pr.run_finished(runner)
+    started = time.time()
+    pr.main_loop(Scr(), runner, exit_when_done=True)
+    assert pr.run_finished(runner)
+    assert time.time() - started < 15

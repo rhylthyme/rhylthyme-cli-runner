@@ -3326,8 +3326,22 @@ def handle_input(stdscr, runner: ProgramRunner) -> bool:
     return True
 
 
-def main_loop(stdscr, runner: ProgramRunner) -> None:
-    """Main loop for the program runner."""
+def run_finished(runner: ProgramRunner) -> bool:
+    """True once a started run has completed or been aborted."""
+    return bool(
+        runner.program_started
+        and runner.program_start_time is not None
+        and not runner.is_running
+    )
+
+
+def main_loop(stdscr, runner: ProgramRunner, exit_when_done: bool = False) -> None:
+    """Main loop for the program runner.
+
+    With exit_when_done, return a few seconds after the run has completed or
+    been aborted instead of waiting for 'q' (a bridge then waits for the next
+    run from the web).
+    """
     # Set up curses
     curses.curs_set(0)  # Hide cursor
     stdscr.timeout(100)  # Set non-blocking input timeout
@@ -3337,6 +3351,7 @@ def main_loop(stdscr, runner: ProgramRunner) -> None:
 
     # Main loop
     running = True
+    finished_at: Optional[float] = None
     while running:
         # Update program state
         runner.update()
@@ -3346,6 +3361,12 @@ def main_loop(stdscr, runner: ProgramRunner) -> None:
 
         # Handle input
         running = handle_input(stdscr, runner)
+
+        if exit_when_done and run_finished(runner):
+            if finished_at is None:
+                finished_at = time.time()
+            elif time.time() - finished_at > 3:
+                running = False
 
         # Sleep to limit CPU usage
         time.sleep(0.05)
@@ -3505,6 +3526,9 @@ def run_program(
     live: bool = False,
     confirm_live: bool = False,
     bridge: bool = False,
+    program_data: Optional[Dict[str, Any]] = None,
+    program_id: Optional[str] = None,
+    exit_when_done: bool = False,
 ) -> Optional[str]:
     """
     Run a program file with the interactive UI.
@@ -3541,17 +3565,27 @@ def run_program(
             stdin is not a terminal.
         bridge: Also show the run live on rhylthyme.com (``rhylthyme
             bridge``); needs ``rhylthyme login`` and a workcell.
+        program_data: The program itself, instead of reading program_file
+            (a run started from the web; program_file is then only a label).
+        program_id: The saved program's id, shown on the Bridges page.
+        exit_when_done: Leave the terminal UI on its own once the run has
+            completed or been aborted (so a bridge can go back to waiting).
 
     Returns:
         Path of the written run record, or None if none was written.
     """
     # Load the program
-    program = load_program_file(program_file)
+    if program_data is not None:
+        program = json.loads(json.dumps(program_data))
+    else:
+        program = load_program_file(program_file)
 
     # Keep the program exactly as authored, for the run record's
     # programVersion and for the identical-context prediction lookup.
     source_program = None
-    if record or _wants_predicted_offsets(program):
+    if program_data is not None:
+        source_program = json.loads(json.dumps(program_data))
+    elif record or _wants_predicted_offsets(program):
         try:
             from .history.hash import load_program_for_hash
 
@@ -3665,7 +3699,9 @@ def run_program(
         instruments.attach(runner)
         if bridge:
             try:
-                publisher = start_bridge(runner, instruments, runner.program)
+                publisher = start_bridge(
+                    runner, instruments, runner.program, program_id=program_id
+                )
             except InstrumentSetupError as e:
                 instruments.shutdown()
                 print(f"Cannot start the bridge:\n{e}")
@@ -3704,7 +3740,12 @@ def run_program(
     outcome = None
     written = None
     try:
-        curses.wrapper(lambda stdscr: main_loop(stdscr, runner))
+        # Tests reach the runner through this function's only closure cell,
+        # so exit_when_done rides in a default argument rather than a closure.
+        def _ui(stdscr, _exit: bool = exit_when_done) -> None:
+            main_loop(stdscr, runner, exit_when_done=_exit)
+
+        curses.wrapper(_ui)
     except KeyboardInterrupt:
         print("Program execution interrupted.")
         outcome = "abandoned"

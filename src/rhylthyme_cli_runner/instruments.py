@@ -242,6 +242,7 @@ def start_bridge(
     rest=None,
     token_fn: Optional[Callable[[], str]] = None,
     config_path=None,
+    program_id: Optional[str] = None,
 ):
     """
     Start publishing this run to rhylthyme.com (``rhylthyme bridge``): the
@@ -308,6 +309,7 @@ def start_bridge(
         version=getattr(rhylthyme_galago, "__version__", ""),
         on_error=on_error,
         submit=submit,
+        program_id=program_id,
     )
     try:
         return publisher.start()

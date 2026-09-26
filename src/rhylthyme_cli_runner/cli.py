@@ -361,7 +361,7 @@ def run(
 
 
 @cli.command()
-@click.argument("program_file", type=click.Path(exists=True))
+@click.argument("program_file", type=click.Path(exists=True), required=False)
 @click.option(
     "--workcell",
     type=click.Path(exists=True, dir_okay=False),
@@ -388,6 +388,10 @@ def bridge(program_file, workcell, live, confirm_live, time_scale, no_record):
     """
     Run a program on a galago workcell and show it live on rhylthyme.com.
 
+    Without PROGRAM_FILE, wait for runs started from the Bridges page: a
+    program saved in your library, checked here against the workcell (no code
+    blocks, simulated only for now), run, then back to waiting. Ctrl-C stops.
+
     Works like `rhylthyme run --workcell`, and while the run lasts keeps your
     Bridges page up to date: every step, the tool it waits on, any failure.
     Needs `rhylthyme login` and rhylthyme-galago
@@ -396,6 +400,27 @@ def bridge(program_file, workcell, live, confirm_live, time_scale, no_record):
     retry or skip a failed step and abort; this machine checks and logs each
     command, and Ctrl-C here always wins.
     """
+    if program_file is None:
+        from .bridge_serve import serve
+        from .instruments import InstrumentSetupError
+
+        if live:
+            raise click.UsageError(
+                "--live applies to a PROGRAM_FILE run; runs started from the web "
+                "are simulated for now."
+            )
+        try:
+            serve(
+                workcell,
+                schema_file=_default_schema_path(),
+                time_scale=time_scale,
+                record=not no_record,
+            )
+        except InstrumentSetupError as e:
+            raise click.ClickException(str(e))
+        except KeyboardInterrupt:
+            click.echo("Bridge stopped.")
+        return
     run_program(
         program_file,
         _default_schema_path(),
