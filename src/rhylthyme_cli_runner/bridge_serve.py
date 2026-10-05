@@ -109,7 +109,6 @@ def serve(
     """Wait for runs from the web until Ctrl-C (or ``max_runs``). Returns runs started."""
     out = out or sys.stdout
     try:
-        import rhylthyme_galago as galago
         from rhylthyme_galago import bridge as B
     except ImportError:
         raise InstrumentSetupError(INSTALL_HINT) from None
@@ -123,10 +122,19 @@ def serve(
         run = run_program
     run_fn: Callable[..., Any] = run
 
+    from .drivers import DriverUnavailable, WorkcellError, load_workcell
+    from .instruments import bridge_workcell, open_drivers
+
     try:
-        workcell = galago.load_workcell(workcell_source)
-    except galago.WorkcellError as e:
+        workcell = load_workcell(workcell_source)
+    except (WorkcellError, DriverUnavailable) as e:
         raise InstrumentSetupError(str(e)) from None
+    # Opened only to describe the tools and what to scrub; touches nothing
+    described = open_drivers(workcell, workcell.by_driver())
+    for driver in described.values():
+        driver.shutdown()
+    view = bridge_workcell(workcell, described)
+    version = ", ".join(v for v in (d.version for d in described.values()) if v)
     try:
         if rest is None or token_fn is None:
             creds = auth.load_credentials() or {}
@@ -143,15 +151,19 @@ def serve(
         raise InstrumentSetupError(str(e)) from None
 
     bridge_id = B.bridge_id_for(
-        workcell, config_path or (auth.config_dir() / "bridges.json")
+        view, config_path or (auth.config_dir() / "bridges.json")
     )
     schema = load_program_file(schema_file)
     tools: List[Dict[str, str]] = [
-        {"name": t.name, "type": t.type, "status": "idle"}
-        for t in workcell.tools.values()
+        {
+            "name": e.name,
+            "type": described[e.driver].tool_type(e.name),
+            "status": "idle",
+        }
+        for e in sorted(workcell.tools.values(), key=lambda e: e.index)
     ]
     starts: "queue.Queue[Tuple[Dict[str, Any], str, Any, bool]]" = queue.Queue()
-    scrub = B.scrubber(workcell)
+    scrub = B.scrubber(view)
 
     def fetch_program(program_id: str) -> Optional[Mapping[str, Any]]:
         rows = rest.select(
@@ -212,10 +224,10 @@ def serve(
             rest=rest,
             bridge_id=bridge_id,
             user_id=user_id,
-            workcell=workcell,
+            workcell=view,
             tools=tools,
             allows_live=allow_live,
-            version=getattr(galago, "__version__", ""),
+            version=version,
             on_error=lambda message: print(f"Bridge: {message}", file=out),
             submit=submit,
         )

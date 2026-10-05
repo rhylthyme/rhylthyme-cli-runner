@@ -31,6 +31,7 @@ import time
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Set, Tuple
 
+from ..drivers import blocking_action
 from .hash import program_version
 from .store import write_run
 
@@ -280,11 +281,12 @@ class RunRecorder:
             sid = data["step_id"]
             step = getattr(self.runner, "steps", {}).get(sid)
             instrument = (getattr(step, "instrument", None) or {}) if step else {}
+            main = blocking_action(instrument) or {}
             log = self.instrument_log.setdefault(
                 sid,
                 {
                     "tool": str(instrument.get("tool", "")),
-                    "command": str(instrument.get("command", "")),
+                    "command": str(main.get("command") or ""),
                     "replies": [],
                 },
             )
@@ -294,6 +296,12 @@ class RunRecorder:
                 "at": data["time"],
                 "code": str(data.get("code", "")),
             }
+            if data.get("phase"):
+                # Which call this answers: a start/end/onAbort action, or the
+                # step's own command or until
+                reply["phase"] = str(data["phase"])
+                reply["tool"] = str(data.get("tool") or "")
+                reply["command"] = str(data.get("command") or "")
             if data.get("errorMessage"):
                 reply["errorMessage"] = str(data["errorMessage"])
             if data.get("metadata"):

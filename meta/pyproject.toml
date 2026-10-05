@@ -27,6 +27,8 @@ dependencies = [
 [project.optional-dependencies]
 # Run instrument steps on galago-tools lab instruments (rhylthyme run --workcell, rhylthyme bridge)
 galago = ["rhylthyme-galago>=0.2.0a0"]
+# Run instrument steps on LabMCP instrument servers (driver "labmcp" in a workcell)
+labmcp = ["rhylthyme-labmcp>=0.1.0a0"]
 
 
 [project.urls]

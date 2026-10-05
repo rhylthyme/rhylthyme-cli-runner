@@ -26,6 +26,7 @@ from typing import Any, Dict, List, Optional, Sequence, Set, Tuple, Union
 import yaml  # Add import for YAML support
 from colorama import Fore, Style
 
+from .drivers import blocking_action, step_tools
 from .instruments import (
     InstrumentSetupError,
     open_instruments,
@@ -255,20 +256,25 @@ class Step:
                     )
                     self.manual_trigger_name = duration.get("triggerName")
 
-        # A galago instrument command (rhylthyme-galago): sent when the step
-        # starts; the step ends when the instrument replies, never on a timer.
-        # With no authored duration it plans as indefinite.
+        # Instrument calls (each through its workcell tool's driver): start
+        # actions when the step starts, then its command or until; end
+        # actions when it ends. A step with a command or an until ends when
+        # that call replies, never on a timer, and with no authored duration
+        # plans as indefinite. A step with only start/end actions runs on its
+        # own duration (or until the operator ends it).
         self.instrument = step_data.get("instrument")
+        blocking = blocking_action(self.instrument) if self.instrument else None
+        self.instrument_blocking = blocking is not None
         self.instrument_reply: Optional[Dict[str, Any]] = None
         self.instrument_attempts = 0
         # Set while FAILED: {tool, command, code, errorMessage}
         self.failure: Optional[Dict[str, Any]] = None
-        if self.instrument and self.duration_type is None:
+        if blocking is not None and self.duration_type is None:
             self.duration_type = DurationType.INDEFINITE
             self.min_seconds = 0.0
             # For display and upcoming events only: the same estimate as
             # planning and the timeline (a duration-like param, else 60 s)
-            self.default_seconds = _instrument_estimate_seconds(self.instrument)
+            self.default_seconds = _instrument_estimate_seconds(blocking)
 
         # Extract start trigger information
         start_trigger_data = step_data["startTrigger"]
@@ -874,6 +880,9 @@ class ProgramRunner:
         # Instrument replies, posted from executor threads by
         # post_instrument_reply() and applied in process_commands().
         self.instrument_replies: queue.Queue = queue.Queue()
+        # Safe stops sent for a failed or aborted step and not yet answered,
+        # by step id; a step is not retried while its tools are being stopped.
+        self.safe_stops_pending: Dict[str, int] = {}
 
         # Initialize tracks - will be populated later during step processing
         tracks = program.get("tracks", [])
@@ -983,27 +992,31 @@ class ProgramRunner:
     def _add_instrument_tool_resources(self, declared: List[Dict[str, Any]]) -> None:
         """
         Every instrument tool is a resource, so two steps never command the
-        same tool at once: capacity 1 unless the program declares a
-        constraint named after the tool. The instrument does the work, so the
-        tool needs no actor unless that constraint says actorsRequired.
+        same tool at once (a step holds every tool its actions name):
+        capacity 1 unless the program declares a constraint named after the
+        tool. The instrument does the work, so the tool needs no actor unless
+        that constraint says actorsRequired.
         """
-        declared_by_task = {c.get("task"): c for c in declared if c.get("task")}
+        declared_by_task = {str(c["task"]): c for c in declared if c.get("task")}
         self.implicit_tool_resources: Set[str] = set()
         for step in self.steps.values():
-            tool = (step.instrument or {}).get("tool")
-            if not tool:
-                continue
-            if tool not in self.resource_constraints:
-                self.resource_constraints[tool] = 1
-                self.resource_usage[tool] = 0.0
-                self.actor_requirements[tool] = 0.0
-                self.qualified_actor_types[tool] = []
-                self.implicit_tool_resources.add(tool)
-            elif "actorsRequired" not in declared_by_task.get(tool, {}):
-                self.actor_requirements[tool] = 0.0
-            if tool not in step.task_types:
-                step.task_types.append(tool)
-                step.task_fractions[tool] = 1.0
+            for tool in step_tools(step.instrument or {}):
+                self._add_tool_resource(step, tool, declared_by_task)
+
+    def _add_tool_resource(
+        self, step: "Step", tool: str, declared_by_task: Dict[str, Any]
+    ) -> None:
+        if tool not in self.resource_constraints:
+            self.resource_constraints[tool] = 1
+            self.resource_usage[tool] = 0.0
+            self.actor_requirements[tool] = 0.0
+            self.qualified_actor_types[tool] = []
+            self.implicit_tool_resources.add(tool)
+        elif "actorsRequired" not in declared_by_task.get(tool, {}):
+            self.actor_requirements[tool] = 0.0
+        if tool not in step.task_types:
+            step.task_types.append(tool)
+            step.task_fractions[tool] = 1.0
 
     def start(self) -> None:
         """Start the program execution."""
@@ -1094,17 +1107,78 @@ class ProgramRunner:
         """
         self.instrument_replies.put((step_id, reply))
 
-    def _apply_instrument_reply(self, step_id: str, reply: Dict[str, Any]) -> None:
+    def apply_instrument_replies(self) -> None:
+        """Apply every instrument reply posted so far (on the runner thread)."""
+        while not self.instrument_replies.empty():
+            try:
+                step_id, reply = self.instrument_replies.get_nowait()
+            except queue.Empty:
+                break
+            self._apply_instrument_reply(step_id, reply)
+
+    FAILED_PROMPT = (
+        "Paused new steps: an instrument command failed. "
+        "r retries it, x marks it done, A (twice) aborts the program."
+    )
+
+    def note_safe_stops(self, step_id: str, count: int) -> None:
+        """``count`` safe stops are being sent for ``step_id`` (runner thread)."""
+        self.safe_stops_pending[step_id] = (
+            self.safe_stops_pending.get(step_id, 0) + count
+        )
         step = self.steps.get(step_id)
+        if step is not None and step.status == StepStatus.FAILED:
+            self.status_message = (
+                f"{step_id} failed: stopping its instruments safely "
+                "before you retry, skip or abort..."
+            )
+
+    def _apply_instrument_reply(self, step_id: str, reply: Dict[str, Any]) -> None:
+        """
+        A reply's ``phase`` says what it answers: ``start`` actions fail the
+        step when they fail; ``call`` and ``until`` (the default) end it;
+        ``end`` and ``onAbort`` replies come after it ended and are only
+        recorded.
+        """
+        step = self.steps.get(step_id)
+        phase = reply.get("phase") or "call"
+        if step is not None and phase in ("end", "onAbort"):
+            self.emit_event(
+                "instrument_reply",
+                {"step_id": step_id, "time": self.current_time, **reply},
+            )
+            if phase == "onAbort":
+                left = self.safe_stops_pending.get(step_id, 1) - 1
+                if left > 0:
+                    self.safe_stops_pending[step_id] = left
+                else:
+                    self.safe_stops_pending.pop(step_id, None)
+                    if step.status == StepStatus.FAILED and reply.get("ok"):
+                        self.status_message = (
+                            f"Instruments stopped. {self.FAILED_PROMPT}"
+                        )
+            if not reply.get("ok"):
+                self.status_message = (
+                    f"{step_id}: {phase} action {reply.get('tool')}."
+                    f"{reply.get('command')} failed: {reply.get('code')} "
+                    f"{reply.get('errorMessage') or ''}".rstrip()
+                )
+                logging.error(self.status_message)
+            return
         if step is None or step.status != StepStatus.RUNNING:
             # Ended some other way first (aborted, completed by hand)
             logging.info(f"Ignoring instrument reply for {step_id}: not running")
             return
-        step.instrument_reply = reply
+        if phase != "start":
+            step.instrument_reply = reply
         self.emit_event(
             "instrument_reply",
             {"step_id": step_id, "time": self.current_time, **reply},
         )
+        if phase == "start":
+            if not reply.get("ok"):
+                self.fail_step(step, reply)
+            return
         if reply.get("ok"):
             self.complete_step(step, self.current_time, ended_by="instrument")
             return
@@ -1117,10 +1191,11 @@ class ProgramRunner:
         retry_failed_step, skip_failed_step or abort_program.
         """
         instrument = step.instrument or {}
+        main = blocking_action(instrument) or {}
         step.status = StepStatus.FAILED
         step.failure = {
-            "tool": instrument.get("tool"),
-            "command": instrument.get("command"),
+            "tool": reply.get("tool") or instrument.get("tool"),
+            "command": reply.get("command") or main.get("command"),
             "code": reply.get("code"),
             "errorMessage": reply.get("errorMessage") or "",
         }
@@ -1128,10 +1203,7 @@ class ProgramRunner:
             self.running_steps.remove(step.step_id)
         if step.step_id not in self.failed_steps:
             self.failed_steps.append(step.step_id)
-        self.status_message = (
-            "Paused new steps: an instrument command failed. "
-            "r retries it, x marks it done, A (twice) aborts the program."
-        )
+        self.status_message = self.FAILED_PROMPT
         logging.error(f"Step {step.step_id} failed: {self.failure_text(step)}")
         self.emit_event(
             "step_failed",
@@ -1154,6 +1226,12 @@ class ProgramRunner:
         step = self._failed_step(step_id)
         if step is None or not step.instrument:
             self.status_message = "No failed instrument step to retry."
+            return False
+        if self.safe_stops_pending.get(step.step_id):
+            self.status_message = (
+                f"{step.step_id}: its instruments are still being stopped; "
+                "retry once the stops have replied."
+            )
             return False
         step.status = StepStatus.RUNNING
         step.failure = None
@@ -1246,12 +1324,7 @@ class ProgramRunner:
 
     def process_commands(self) -> None:
         """Process commands from the command queue."""
-        while not self.instrument_replies.empty():
-            try:
-                step_id, reply = self.instrument_replies.get_nowait()
-            except queue.Empty:
-                break
-            self._apply_instrument_reply(step_id, reply)
+        self.apply_instrument_replies()
         while not self.command_queue.empty():
             try:
                 command = self.command_queue.get_nowait()
@@ -1498,7 +1571,7 @@ class ProgramRunner:
         executor ends them); indefinite steps never end on their own.
         """
         for step in self.steps.values():
-            if step.status != StepStatus.RUNNING or step.instrument:
+            if step.status != StepStatus.RUNNING or step.instrument_blocking:
                 continue
             if step.duration_type == DurationType.FIXED:
                 if step.is_ready_to_complete(self.current_time):
@@ -1908,8 +1981,8 @@ class ProgramRunner:
             # step is waiting on (its command is in flight)
             "instrument_tool": (step.instrument or {}).get("tool"),
             "waiting_on": (
-                (step.instrument or {}).get("tool")
-                if step.instrument and step.status == StepStatus.RUNNING
+                (blocking_action(step.instrument) or {}).get("tool")
+                if step.instrument_blocking and step.status == StepStatus.RUNNING
                 else None
             ),
             "failure_code": (step.failure or {}).get("code"),
@@ -3693,6 +3766,15 @@ def run_program(
                 instruments = open_instruments(runner.program, workcell, live=live)
                 if live:
                     print("\n".join(instruments.summary(runner.program)))
+                    problems = instruments.preflight_problems()
+                    if problems:
+                        instruments.shutdown()
+                        print(
+                            "Live run refused: every instrument must be ready "
+                            "first. Nothing was sent to the instruments.\n  "
+                            + "\n  ".join(problems)
+                        )
+                        sys.exit(1)
                     if not _confirm_live_run(confirm_live):
                         instruments.shutdown()
                         print(
@@ -3767,6 +3849,8 @@ def run_program(
         if publisher is not None:
             publisher.stop()
         if instruments is not None:
+            # Stop what an unfinished run left running, and record the stops
+            instruments.finish(runner)
             pending = instruments.shutdown()
             if pending:
                 print(

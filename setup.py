@@ -43,6 +43,8 @@ setup(
     extras_require={
         # Instrument steps on galago-tools lab instruments (--workcell, rhylthyme bridge)
         "galago": ["rhylthyme-galago>=0.2.0a0"],
+        # Instrument steps on LabMCP instrument servers (driver "labmcp" in a workcell)
+        "labmcp": ["rhylthyme-labmcp>=0.1.0a0"],
         "dev": [
             # Testing framework
             "pytest>=6.0.0",
