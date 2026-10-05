@@ -110,8 +110,8 @@ def cli(ctx, environments_dir):
     type=click.Path(exists=True, dir_okay=False),
     default=None,
     help=(
-        "Workcell file: check instrument steps against its galago tools "
-        "(tool names, types, commands and params)"
+        "Workcell file: check instrument steps against its tools (galago or "
+        "LabMCP: tool names, types, commands, params and limits)"
     ),
 )
 def validate(
@@ -126,8 +126,9 @@ def validate(
     Use --json to get machine-readable output for CI or scripting.
     Use --strict to require all tasks used in steps/buffers to be defined in resourceConstraints.
     Use -e/--environment to validate against specific environment constraints.
-    Use --workcell to check instrument steps against a lab's galago tools;
-    without it, commands are checked against each step's toolType.
+    Use --workcell to check instrument steps against a lab's tools (galago
+    or LabMCP); without it, commands are checked against each step's
+    toolType (a galago tool type, or a LabMCP server such as labmcp-ika).
     """
     # Set up environment for validation if specified
     if environment:
@@ -275,15 +276,15 @@ def validate(
     default=None,
     help=(
         "Workcell file mapping the program's instrument tools to galago-tools "
-        "servers; required for programs with instrument steps"
+        "or LabMCP servers; required for programs with instrument steps"
     ),
 )
 @click.option(
     "--live",
     is_flag=True,
     help=(
-        "Run instrument steps on real hardware instead of galago's simulated "
-        "mode; shows what will run and asks first"
+        "Run instrument steps on real hardware instead of simulated mode; "
+        "shows what will run and asks first"
     ),
 )
 @click.option(
@@ -335,10 +336,12 @@ def run(
     and --predict-context KEY=VALUE to predict for a context other than the
     factor answers.
 
-    Programs with instrument steps need --workcell FILE (galago-tools servers,
-    via rhylthyme-galago). Tools run in galago's simulated mode unless you pass
-    --live, which lists the tools and commands and asks you to type 'live'
-    before anything is configured; --confirm-live answers for scripts.
+    Programs with instrument steps need --workcell FILE, which maps each tool
+    to a galago-tools server (rhylthyme[galago]) or a LabMCP server
+    (rhylthyme[labmcp]). Tools run simulated unless you pass --live, which
+    shows each instrument, its limits and every hazardous action and asks you
+    to type 'live' before anything is configured; --confirm-live answers for
+    scripts.
     """
     run_program(
         program_file,
@@ -366,7 +369,7 @@ def run(
     "--workcell",
     type=click.Path(exists=True, dir_okay=False),
     required=True,
-    help="Workcell file mapping the program's instrument tools to galago-tools servers",
+    help="Workcell file mapping the program's instrument tools to galago-tools or LabMCP servers",
 )
 @click.option(
     "--live",
@@ -396,7 +399,7 @@ def bridge(
     program_file, workcell, live, confirm_live, allow_live, time_scale, no_record
 ):
     """
-    Run a program on a galago workcell and show it live on rhylthyme.com.
+    Run a program on a workcell and show it live on rhylthyme.com.
 
     Without PROGRAM_FILE, wait for runs started from the Bridges page: a
     program saved in your library, checked here against the workcell (no code
@@ -406,9 +409,9 @@ def bridge(
 
     Works like `rhylthyme run --workcell`, and while the run lasts keeps your
     Bridges page up to date: every step, the tool it waits on, any failure.
-    Needs `rhylthyme login` and rhylthyme-galago
-    (pip install "rhylthyme[galago]"). Only outbound HTTPS; tool addresses
-    never leave this machine. From the Bridges page you can pause, resume,
+    Needs `rhylthyme login` and the workcell's drivers (pip install
+    "rhylthyme[galago]" and/or "rhylthyme[labmcp]"). Only outbound HTTPS;
+    tool addresses never leave this machine. From the Bridges page you can pause, resume,
     retry or skip a failed step and abort; this machine checks and logs each
     command, and Ctrl-C here always wins.
     """
@@ -471,7 +474,7 @@ def bridge(
     default=None,
     help=(
         "Workcell file: estimate instrument steps that have no duration from "
-        "their tools' EstimateDuration"
+        "their tools (galago's EstimateDuration, LabMCP's params and defaults)"
     ),
 )
 def plan(input_file, output_file, environment, verbose, workcell):
@@ -485,8 +488,9 @@ def plan(input_file, output_file, environment, verbose, workcell):
     The optimized program is saved to the specified output file.
 
     Instrument steps without a duration get an estimated one (flagged in
-    metadata.durationEstimate): from the tool with --workcell, else from a
-    duration-like command param, else a default.
+    metadata.durationEstimate) by their tool's driver: galago asks the tool
+    with --workcell, else reads a duration-like param; LabMCP reads series
+    lengths, run lengths and wait timeouts from the params; else a default.
     """
     success = plan_program(
         input_file,

@@ -1137,12 +1137,12 @@ class ProgramRunner:
         """
         A reply's ``phase`` says what it answers: ``start`` actions fail the
         step when they fail; ``call`` and ``until`` (the default) end it;
-        ``end`` and ``onAbort`` replies come after it ended and are only
-        recorded.
+        ``end``, ``onAbort``, ``pause`` and ``resume`` replies are only
+        recorded (and a failed one reported).
         """
         step = self.steps.get(step_id)
         phase = reply.get("phase") or "call"
-        if step is not None and phase in ("end", "onAbort"):
+        if step is not None and phase in ("end", "onAbort", "pause", "resume"):
             self.emit_event(
                 "instrument_reply",
                 {"step_id": step_id, "time": self.current_time, **reply},
@@ -3631,8 +3631,8 @@ def run_program(
         predict_context: ``key=value`` context to predict for
             (``--predict-context``), defaulting to the factor answers
         workcell: Workcell file mapping the program's instrument tools to
-            galago-tools servers (``--workcell``); required when any step has
-            an ``instrument``. Tools run in galago's simulated mode unless
+            galago-tools or LabMCP servers (``--workcell``); required when any
+            step has an ``instrument``. Tools run simulated unless
             ``live``.
         live: Run instrument steps on real hardware (``--live``). Shows what
             will run and asks for confirmation before any tool is configured.
@@ -3756,7 +3756,7 @@ def run_program(
         if not workcell:
             print(
                 "This program has instrument steps; pass --workcell FILE "
-                "naming the galago tools to run them on."
+                "naming the tools to run them on."
             )
             sys.exit(1)
         try:

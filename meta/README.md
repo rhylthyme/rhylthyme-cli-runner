@@ -21,16 +21,19 @@ This package installs three others:
 
 No account or API key is needed for any of these.
 
-To run steps on lab instruments through
-[galago-tools](https://github.com/sciencecorp/galago-tools) (shakers,
-incubators, plate readers, liquid handlers, robot arms), add the extra:
+To run steps on lab instruments, add an extra; a local workcell file maps
+each tool a program uses to an instrument:
+
+| Extra | Instruments |
+|---|---|
+| `rhylthyme[galago]` | [galago-tools](https://github.com/sciencecorp/galago-tools): shakers, incubators, plate readers, liquid handlers, robot arms. See [rhylthyme-galago](https://github.com/rhylthyme/rhylthyme-galago) |
+| `rhylthyme[labmcp]` | [LabMCP](https://github.com/K-Dense-AI/lab-instrument-mcps): balances, stirrers, syringe pumps, sensors, spectrometers, Opentrons, and SiLA 2, SCPI and Modbus devices. See [rhylthyme-labmcp](https://github.com/rhylthyme/rhylthyme-labmcp) |
 
 ```bash
-pip install "rhylthyme[galago]"
+pip install "rhylthyme[labmcp]"
+rhylthyme validate protocol.json --workcell lab.json
 rhylthyme run protocol.json --workcell lab.json   # simulated unless --live
 ```
-
-See [rhylthyme-galago](https://github.com/rhylthyme/rhylthyme-galago).
 
 Docs: https://docs.rhylthyme.com. Source: https://github.com/rhylthyme.
 Version 0.1.0 of this name was an early internal library; if you depended on

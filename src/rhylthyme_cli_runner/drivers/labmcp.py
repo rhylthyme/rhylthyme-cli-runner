@@ -139,13 +139,9 @@ class LabMCPDriver(InstrumentDriver):
         return self.tools[tool].location
 
     def tool_view(self, tool: str) -> ToolView:
-        t = self.tools[tool]
-        values = t.private_values()
-        return ToolView(
-            tool,
-            values[0] if values else "",
-            config={f"v{i}": v for i, v in enumerate(values[1:])},
-        )
+        # The address in every form it may surface in (serial path, TCP
+        # host and port, VISA parts, server URL host) and the options
+        return ToolView(tool, private=tuple(self.tools[tool].private_values()))
 
     # -- Offline -----------------------------------------------------------
 
@@ -242,6 +238,17 @@ class LabMCPDriver(InstrumentDriver):
         self.executor.submit(
             key, instrument, lambda k, result: on_reply(k, _reply_dict(result))
         )
+
+    def pause_calls(self, tool: str) -> List[Dict[str, Any]]:
+        # e.g. Opentrons pause_run: the robot finishes its step and holds
+        if self.executor is None:
+            return []
+        return [{"command": n, "params": {}} for n in self.executor.pause_tools(tool)]
+
+    def resume_calls(self, tool: str) -> List[Dict[str, Any]]:
+        if self.executor is None:
+            return []
+        return [{"command": n, "params": {}} for n in self.executor.resume_tools(tool)]
 
     def default_stops(self, tool: str) -> List[Dict[str, Any]]:
         # The server's safety tools that need no arguments (stop_all, ...)

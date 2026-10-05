@@ -109,12 +109,32 @@ class Estimate:
 
 @dataclass(frozen=True)
 class ToolView:
-    """A tool as the bridge's scrubber sees it: every local value to hide."""
+    """
+    A tool as the bridge's scrubber sees it: every local value to hide.
+    ``host``/``port``/``config`` are galago's (host and host:port become the
+    tool's name, config values ``<config>``); ``private`` values, any
+    driver's, become ``<name address>``.
+    """
 
     name: str
-    host: str
+    host: str = ""
     port: Any = ""
     config: Mapping[str, Any] = field(default_factory=dict)
+    private: Tuple[str, ...] = ()
+
+    def secrets(self) -> List[Tuple[str, str]]:
+        pairs: List[Tuple[str, str]] = []
+        if self.host and self.port not in ("", None):
+            pairs.append((f"{self.host}:{self.port}", self.name))
+        if self.host:
+            pairs.append((self.host, self.name))
+        for value in (self.config or {}).values():
+            if isinstance(value, str) and value:
+                pairs.append((value, "<config>"))
+        for value in self.private:
+            if value:
+                pairs.append((value, f"<{self.name} address>"))
+        return pairs
 
 
 class InstrumentDriver(ABC):
@@ -166,7 +186,7 @@ class InstrumentDriver(ABC):
 
     def tool_view(self, tool: str) -> ToolView:
         """What the bridge must scrub for ``tool``."""
-        return ToolView(tool, self.tool_address(tool))
+        return ToolView(tool, private=(self.tool_address(tool),))
 
     # -- Offline: validation and planning ----------------------------------
 
@@ -202,6 +222,18 @@ class InstrumentDriver(ABC):
         read, and readiness is left to ``prepare``.
         """
         return [ToolCheck(t, self.tool_address(t), self.status(t), True) for t in tools]
+
+    def pause_calls(self, tool: str) -> List[Dict[str, Any]]:
+        """
+        Calls (``{command, params}``) that hold ``tool``'s work when the
+        schedule is paused, so it can resume; none by default (the tool
+        carries on while the schedule's clock is stopped).
+        """
+        return []
+
+    def resume_calls(self, tool: str) -> List[Dict[str, Any]]:
+        """Calls that continue what ``pause_calls`` held."""
+        return []
 
     def call_kind(self, tool: str, command: str) -> Optional[str]:
         """``read``, ``control``, ``hazard`` or ``safety`` if the driver knows."""
@@ -529,16 +561,29 @@ def call_program(
     """
     A program of one-call steps, ``(step_id, call)`` each, for drivers that
     check and estimate single commands: every call a driver should see,
-    whatever phase it belongs to, looks like a plain instrument step.
+    whatever phase it belongs to, looks like a plain instrument step. Its
+    ``instrument.phase`` says which phase, and its ``duration`` (when the
+    call carries ``stepSeconds``) how long the real step may run.
     """
     steps = []
     for step_id, call in calls:
         instrument = {
             k: call[k]
-            for k in ("tool", "command", "params", "toolType", "timeoutSeconds")
+            for k in (
+                "tool",
+                "command",
+                "params",
+                "toolType",
+                "timeoutSeconds",
+                "phase",
+            )
             if call.get(k) not in (None, "")
         }
-        steps.append({"stepId": step_id, "instrument": instrument})
+        step: Dict[str, Any] = {"stepId": step_id, "instrument": instrument}
+        if call.get("stepSeconds") is not None:
+            # How long the call's step may run, for drivers that check timing
+            step["duration"] = {"type": "fixed", "seconds": call["stepSeconds"]}
+        steps.append(step)
     return {
         "programId": program.get("programId", ""),
         "tracks": [{"trackId": "calls", "steps": steps}],

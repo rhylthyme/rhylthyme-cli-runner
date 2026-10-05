@@ -410,7 +410,7 @@ def test_summary_and_describe(fake_driver):
         {"name": "balance", "type": "scale", "status": "READY"}
     ]
     view = session.bridge_workcell()
-    assert view.id == "bench" and view.tools["balance"].host == "COM9"
+    assert view.id == "bench" and view.tools["balance"].private == ("COM9",)
     session.shutdown()
 
 

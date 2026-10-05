@@ -23,7 +23,7 @@ import re
 import sys
 from typing import Any, Callable, Dict, List, Mapping, Optional, Tuple
 
-from .instruments import INSTALL_HINT, InstrumentSetupError
+from .instruments import InstrumentSetupError
 
 UUID_RE = re.compile(
     r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$", re.I
@@ -105,14 +105,11 @@ def serve(
     out=None,
     allow_live: bool = False,
     client_factory: Optional[Callable] = None,
+    driver_options: Optional[Mapping[str, Mapping[str, Any]]] = None,
 ) -> int:
     """Wait for runs from the web until Ctrl-C (or ``max_runs``). Returns runs started."""
     out = out or sys.stdout
-    try:
-        from rhylthyme_galago import bridge as B
-    except ImportError:
-        raise InstrumentSetupError(INSTALL_HINT) from None
-
+    from . import bridge as B
     from .remote import auth
     from .validate_program import load_program_file
 
@@ -192,7 +189,7 @@ def serve(
 
         session = None
         try:
-            kwargs: Dict[str, Any] = {"live": live}
+            kwargs: Dict[str, Any] = {"live": live, "driver_options": driver_options}
             if client_factory is not None:
                 kwargs["client_factory"] = client_factory
             session = open_instruments(program, workcell_source, **kwargs)

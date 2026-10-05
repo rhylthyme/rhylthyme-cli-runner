@@ -527,3 +527,121 @@ def test_without_a_workcell_labmcp_steps_are_estimated_by_their_tool_type():
     assert lines[-1] == (
         "  wait: 600 s (from params.timeout_s, tool defaults (an upper bound))"
     )
+
+
+# --- One Opentrons program, two backends (phase 12) ---------------------------
+
+OT_SCRIPT = "def run(protocol):\n    pass\n"
+OT_PROGRAM = {
+    "programId": "ot",
+    "name": "OT",
+    "startTrigger": {"type": "manual"},
+    "tracks": [
+        {
+            "trackId": "robot",
+            "name": "Robot",
+            "steps": [
+                {
+                    "stepId": "transfer",
+                    "name": "Transfer",
+                    "instrument": {
+                        "tool": "ot2",
+                        "command": "run_program",
+                        "params": {"script_content": OT_SCRIPT},
+                    },
+                    "startTrigger": {"type": "programStart"},
+                }
+            ],
+        }
+    ],
+    "resourceConstraints": [],
+}
+
+
+def test_the_same_opentrons_program_validates_and_runs_on_galago(tmp_path):
+    pytest.importorskip("rhylthyme_galago")
+    from rhylthyme_galago import FakeToolClient
+
+    from rhylthyme_cli_runner.instruments import instrument_findings
+
+    galago = {
+        "id": "ot",
+        "tools": [{"name": "ot2", "type": "opentrons2", "host": "h", "port": 1}],
+    }
+    labmcp_wc = {
+        "id": "ot",
+        "tools": [{"name": "ot2", "driver": "labmcp", "server": "opentrons"}],
+    }
+    assert instrument_findings(OT_PROGRAM, galago) == []
+    pytest.importorskip("rhylthyme_labmcp")
+    assert instrument_findings(OT_PROGRAM, labmcp_wc) == []
+    tool = FakeToolClient()
+    runner = ProgramRunner(copy.deepcopy(OT_PROGRAM), time_scale=100.0)
+    session = attach_instruments(runner, galago, client_factory=lambda b: tool)
+    try:
+        runner.start()
+        runner.command_queue.put("start_program")
+        assert run_until(runner, lambda: not runner.is_running)
+    finally:
+        session.shutdown()
+    assert [c["command"] for c in tool.executed] == ["run_program"]
+
+
+def test_labmcp_opentrons_commands_are_checked_like_galagos():
+    pytest.importorskip("rhylthyme_labmcp")
+    from rhylthyme_cli_runner.instruments import instrument_findings
+
+    labmcp_wc = {
+        "id": "ot",
+        "tools": [{"name": "ot2", "driver": "labmcp", "server": "opentrons"}],
+    }
+    bad = copy.deepcopy(OT_PROGRAM)
+    bad["tracks"][0]["steps"][0]["instrument"]["params"] = {"script": "x"}
+    messages = [f.message for f in instrument_findings(bad, labmcp_wc)]
+    assert any("'script_content' is a required property" in m for m in messages)
+    assert any("'script' was unexpected" in m for m in messages)
+
+
+def test_pausing_the_schedule_holds_tools_that_can_be_held(fakes):
+    """A running step's tool with a pause tool is paused with the schedule
+    and resumed with it, and the replies are recorded under the step."""
+    import threading
+
+    server = fakes["server"]
+    server.tools += [
+        {"name": "pause_run", "kind": "safety", "required": []},
+        {"name": "resume_run", "kind": "hazard", "required": []},
+    ]
+    release = threading.Event()
+    server.replies["tare"] = lambda args: (release.wait(5), {})[1]
+    runner = ProgramRunner(copy.deepcopy(PROGRAM), time_scale=100.0)
+    events = []
+    runner.add_event_listener(lambda kind, data: events.append((kind, data)))
+    session = attach(runner, fakes)
+
+    def held():
+        return [
+            (d.get("phase"), d.get("command"), d.get("code"))
+            for k, d in events
+            if k == "instrument_reply" and d.get("phase") in ("pause", "resume")
+        ]
+
+    try:
+        runner.start()
+        runner.command_queue.put("start_program")
+        assert run_until(
+            runner, lambda: runner.steps["tare"].status == StepStatus.RUNNING
+        )
+        runner.toggle_pause()
+        assert run_until(runner, lambda: len(held()) == 1)
+        runner.toggle_pause()
+        assert run_until(runner, lambda: len(held()) == 2)
+        release.set()
+        assert run_until(runner, lambda: not runner.is_running)
+    finally:
+        release.set()
+        session.shutdown()
+    assert held() == [
+        ("pause", "pause_run", "SUCCESS"),
+        ("resume", "resume_run", "SUCCESS"),
+    ]

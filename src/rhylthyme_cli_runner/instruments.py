@@ -38,17 +38,38 @@ def program_uses_instruments(program: Mapping[str, Any]) -> bool:
 Call = Tuple[str, Dict[str, Any]]  # (stepId, resolved action)
 
 
+def _step_seconds(step: Mapping[str, Any]) -> Optional[float]:
+    """The longest a step can run on its own clock: None if open-ended."""
+    from .validate_program import parse_time_string_to_seconds
+
+    duration = step.get("duration")
+    if duration is None:
+        return None
+    if isinstance(duration, Mapping):
+        if duration.get("type") == "indefinite":
+            return None
+        value = duration.get("maxSeconds", duration.get("seconds"))
+        if value is None:
+            return None
+        return float(parse_time_string_to_seconds(value))
+    return float(parse_time_string_to_seconds(duration))
+
+
 def _calls(
     program: Mapping[str, Any], steps: Optional[List[Mapping[str, Any]]] = None
 ) -> List[Call]:
-    """Every call of every instrument step, in program order."""
+    """Every call of every instrument step, in program order, each knowing
+    how long its step may run (``stepSeconds``)."""
     if steps is None:
         steps = list(D.instrument_steps(program))
-    return [
-        (str(step.get("stepId")), call)
-        for step in steps
-        for call in D.step_calls(step["instrument"])
-    ]
+    out: List[Call] = []
+    for step in steps:
+        seconds = _step_seconds(step)
+        for call in D.step_calls(step["instrument"]):
+            if seconds is not None:
+                call["stepSeconds"] = seconds
+            out.append((str(step.get("stepId")), call))
+    return out
 
 
 def _route(
@@ -323,6 +344,8 @@ class InstrumentSession:
         self._last_step: Dict[str, str] = {}
         self._safe: set = set()
         self._stopped_steps: set = set()
+        # tool -> the step whose tool was held when the schedule paused
+        self._held: Dict[str, str] = {}
         self._stops_in_flight = 0
         self._stops_done = threading.Condition()
 
@@ -466,6 +489,12 @@ class InstrumentSession:
             if event_type == "program_aborted":
                 self.stop_all(runner)
                 return
+            if event_type == "program_paused":
+                self._hold(runner, "pause")
+                return
+            if event_type == "program_resumed":
+                self._hold(runner, "resume")
+                return
             step = runner.steps.get(data.get("step_id"))
             if step is None or not step.instrument:
                 return
@@ -481,6 +510,49 @@ class InstrumentSession:
                     self._safe_stop(runner, step.step_id, self.stop_plan(step))
 
         runner.add_event_listener(on_event)
+
+    # -- Pause and resume ----------------------------------------------------
+
+    def _hold(self, runner, phase: str) -> None:
+        """
+        When the schedule pauses, hold the work of every running step's
+        tools that can be held (e.g. an Opentrons run); when it resumes,
+        continue exactly those. Replies are recorded under the step.
+        """
+        if phase == "pause":
+            self._held = {}
+            for step in runner.steps.values():
+                if (
+                    not step.instrument
+                    or getattr(step.status, "value", "") != "RUNNING"
+                ):
+                    continue
+                for tool in D.step_tools(step.instrument):
+                    if tool in self._held or self.workcell.driver_of(tool) is None:
+                        continue
+                    calls = self.driver(tool).pause_calls(tool)
+                    if calls:
+                        self._held[tool] = step.step_id
+                        self._send_all(runner, step.step_id, tool, calls, "pause")
+        else:
+            held, self._held = self._held, {}
+            for tool, step_id in held.items():
+                calls = self.driver(tool).resume_calls(tool)
+                self._send_all(runner, step_id, tool, calls, "resume")
+
+    def _send_all(self, runner, step_id: str, tool: str, calls, phase: str) -> None:
+        for i, c in enumerate(calls):
+            call = {
+                "phase": phase,
+                "tool": tool,
+                "command": c["command"],
+                "params": dict(c.get("params") or {}),
+            }
+            self._execute(
+                f"{step_id}/{phase}{i}",
+                call,
+                lambda _k, reply, call=call: self._post(runner, step_id, call, reply),
+            )
 
     # -- Safe stops --------------------------------------------------------
 
@@ -623,7 +695,7 @@ class InstrumentSession:
         send(0)
 
     def _execute(self, key: str, call: Mapping[str, Any], on_reply) -> None:
-        if call.get("phase") != "onAbort" and call.get("tool"):
+        if call.get("phase") not in ("onAbort", "pause") and call.get("tool"):
             # This tool may be doing something again until it is stopped
             self._safe.discard(call["tool"])
             step_id = key.split("/", 1)[0]
@@ -742,11 +814,7 @@ def start_bridge(
     ``rhylthyme login``. Returns the running Publisher; call ``stop()`` at the
     end. Raises InstrumentSetupError if the site cannot be reached or written.
     """
-    try:
-        from rhylthyme_galago import bridge as B
-    except ImportError:
-        raise InstrumentSetupError(INSTALL_HINT) from None
-
+    from . import bridge as B
     from .remote import auth
 
     try:
