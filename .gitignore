@@ -12,3 +12,6 @@ tests/__pycache__/
 # Bytecode
 __pycache__/
 *.pyc
+.DS_Store
+.claude/
+*.mp4
