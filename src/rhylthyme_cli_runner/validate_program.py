@@ -16,6 +16,7 @@ from typing import Any, Dict, List, Tuple
 import yaml
 from jsonschema import SchemaError, ValidationError, validate
 
+from .alert_checks import alert_findings
 from .instance_checks import Finding, validate_instances
 from .instruments import instrument_findings
 
@@ -120,6 +121,11 @@ def normalize_time_fields(data: Any) -> Any:
     if isinstance(data, dict):
         normalized = {}
         for key, value in data.items():
+            # Step alerts keep their signed offsets ("-2m"): this parser drops
+            # the sign, and the schema accepts the strings as written.
+            if key == "alerts":
+                normalized[key] = value
+                continue
             # Check if this is a time-related field
             if key in [
                 "seconds",
@@ -194,13 +200,15 @@ def perform_additional_validations_structured(
     All logic checks as structured findings: the pre-existing checks (each
     rendered by ``str()`` exactly as before) followed by the schema 0.3.0
     `instances` / `replicates` checks from :mod:`instance_checks`, which
-    include warnings, and the instrument-step checks (galago commands, against
-    ``workcell`` — a path or dict — when given). Pass the UNEXPANDED program
-    for the `instances` checks to fire.
+    include warnings, the instrument-step checks (galago commands, against
+    ``workcell`` — a path or dict — when given) and the step `alerts` checks
+    from :mod:`alert_checks`. Pass the UNEXPANDED program for the `instances`
+    checks to fire.
     """
     findings = [_legacy_finding(msg) for msg in _legacy_logic_errors(program, strict)]
     findings.extend(validate_instances(program))
     findings.extend(instrument_findings(program, workcell))
+    findings.extend(alert_findings(program))
     return findings
 
 

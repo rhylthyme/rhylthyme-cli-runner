@@ -192,6 +192,26 @@ the rotor holds 6" and "three landings, the taxiway holds two".
 | `W_UNBARRIERED_CHAIN`   | warning: an `"each"` chain has no `"all"` barrier, yet later steps do not wait for it |
 | `I_IMPLICIT_BARRIER`    | info: a reference to a replicated step with no `instances`; the default `"all"` barrier applies. Add `"all"` to confirm it, or `"each"` if the work is per instance |
 
+## Alerts
+
+A step may carry `alerts`: notifications the live runner shows (in-page, and
+as phone notifications in the iOS/Android apps) at a moment of that step.
+
+```json
+"alerts": [
+  { "event": "end", "offsetSeconds": "-2m", "message": "Preheat the oven now" },
+  { "event": "start" },
+  { "event": "end", "level": "alarm" }
+]
+```
+
+- `event` (required): `"start"` or `"end"` of this step. Alerts never name another step; replicates get a copy per instance.
+- `offsetSeconds`: signed, relative to the event; negative = before (`"-2m"`), positive = after. Default 0.
+- `message`: plain text, 1-200 characters. Leave it out for a default ("Ends in 2 min", "Done").
+- `level`: `"notice"` (default) or `"alarm"` (may ring as a device alarm where the person allows it). Keep alarms for moments that must not be missed.
+- An alert before the start of a `manual` step, or before the end of an `indefinite` one, cannot be predicted and never fires (`W_ALERT_BEFORE_MANUAL_START`, `W_ALERT_BEFORE_INDEFINITE_END`); nor can one before the program starts (`W_ALERT_BEFORE_PROGRAM_START`). Anchor it on the end of the step before instead. An offset that does not parse is `E_ALERT_BAD_OFFSET`.
+- Use alerts for moments the person might miss while doing something else (a timer ending, a step to start soon), not on every step. `analyze_schedule` lists each step's planned `alerts` with their times.
+
 ## Predicted offsets (experimental)
 
 **`metadata.offsetsUse`.** Set it to `"predicted"` to let a negative `offsetSeconds` be resolved against a *predicted* end of the step it is anchored on instead of that step's authored `defaultSeconds`. It only affects negative offsets on `indefinite` anchors, and only when the program has enough recorded runs for a prediction whose interval is narrower than the authored `defaultSeconds`; otherwise the authored number is used unchanged. Nothing else in the program changes: every other trigger, and the plan `analyze_schedule` reports, still come from the durations as written. Leave it out (or set `"planned"`) and behaviour is exactly as before. It is worth setting on a program whose key step is genuinely open-ended (a roast, an incubation) and whose duration depends on something the program declares in `metadata.varianceFactors`; it is pointless on a program of fixed durations.
